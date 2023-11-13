@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+        .tabs {
+            width: 100%;
+            height: 100%;
+            padding: 0px;
+            margin: 0 auto;
+        }
+
+        .tabs>input {
+            display: none;
+        }
+
+        .tabs>div {
+            display: none;
+            padding: 12px;
+            border: 1px solid #bd7676;
+            background: #FFFFFF;
+        }
+
+        .tabs>label {
+            display: inline-block;
+            padding: 7px;
+            margin: 0 -5px -1px 0;
+            text-align: center;
+            color: #bd8989;
+            border: 1px solid #C0C0C0;
+            background: #E0E0E0;
+            cursor: pointer;
+        }
+
+        .tabs>input:checked+label {
+            color: #000000;
+            border: 5px solid #635e5e;
+            border-bottom: 3px solid #FFFFFF;
+            background: #da8282;
+        }
+
+        #tab_1:checked~#txt_1,
+        #tab_2:checked~#txt_2,
+        #tab_3:checked~#txt_3,
+        #tab_4:checked~#txt_4 {
+            display: block;
+        }
+
+
+
+
+    </style>
+
+    <!-- ============================= -->
+
+
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 100%;
+        }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: 2px;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #d89999;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: rgb(233, 64, 64);
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 2px solid #2c2929;
+            border-top: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="tab" width="100%">
+        <button class="tablinks" onclick="openTab(event, 'status')" height="100%">Статус</button>
+        <button class="tablinks" onclick="openTab(event, 'editor')" height="100%">Редактор</button>
+        <button class="tablinks" onclick="openTab(event, 'sender')" height="100%">Рассылка</button>
+        <button class="tablinks" onclick="openTab(event, 'history')" height="100%">История</button>
+        <!-- <button class="tablinks" onclick="openTab(event, 'map')" height="100%">Карта</button> -->
+        <button class="tablinks" onclick="openTab(event, 'order')" height="100%">Заявки на заказы</button>
+        <button class="tablinks" onclick="openTab(event, 'config')" height="100%">Конфигурации</button>
+
+    </div>
+
+    <!-- =================================================== -->
+    <!-- =================================================== -->
+    <!-- =================================================== -->
+    <!-- =================================================== -->
+    <!-- =================================================== -->
+
+
+    <div id="status" class="tabcontent" height="100%" width="100%">
+        <iframe src="http://be1.ru/stat/book-rzn.ru" width="100%" height="100%"></iframe>
+    </div>
+
+    <!-- =================================================== -->
+
+
+    <div id="config" class="tabcontent">
+
+        <p>Настройки платформы.</p>
+        <table>
+            <tr>
+                <td><label for="IP">IP</label></td>
+                <td><input type="text" id="IP" name="IP" placeholder="{{ .Ip}}" value="{{ .Ip}}"></td>
+            </tr>
+            <tr>
+                <td><label for="PORT">PORT</label></td>
+                <td><input type="text" id="PORT" name="PORT" placeholder="{{ .Port}}" value="{{ .Port}}"></td>
+            </tr>
+            <tr>
+                <td><label for="BD ADMIN LIST">BD ADMIN LIST</label></td>
+                <td><input type="text" id="BD ADMIN LIST" name="BD ADMIN LIST" placeholder="{{ .Bd_admin_list}}"
+                        value="{{ .Bd_admin_list}}"></td>
+            </tr>
+            <tr>
+                <td><label for="BD USERS LIST">BD USERS LIST</label></td>
+                <td><input type="text" id="BD USERS LIST" name="BD USERS LIST" placeholder="{{ .Bd_users_list}}"
+                        value="{{ .Bd_users_list}}"></td>
+            </tr>
+            <tr>
+                <td><label for="URL PREFIX">URL PREFIX</label></td>
+                <td><input type="text" id="URL PREFIX" name="URL PREFIX" placeholder="{{ .Url_prefix}}"
+                        value="{{ .Url_prefix}}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- =================================================== -->
+
+
+    <div id="editor" class="tabcontent" height="100%">
+        <div class="tabs">
+            <input type="radio" name="inset" value="" id="tab_1" checked>
+            <label for="tab_1">Логотип</label>
+
+            <input type="radio" name="inset" value="" id="tab_2">
+            <label for="tab_2">Баннеры</label>
+
+            <input type="radio" name="inset" value="" id="tab_3">
+            <label for="tab_3">Топ 3 на главной</label>
+
+            <input type="radio" name="inset" value="" id="tab_4">
+            <label for="tab_4">PDF и файлы</label>
+
+            <div id="txt_1">
+                <p>Установленный логотип</p>
+                <img src="{{ .Path_logo_company}}" alt="Лого">
+                <form method="post" action="/cms_load_logo_company" enctype="multipart/form-data">
+                    <label class="input-file">
+                        <input type="file" name="file">
+                        <br>
+                        <span class="input-file-text">max 10мб</span>
+                        <br>
+                        <button type="submit" value="Load logo">Загрузить</button>
+                    </label>
+                </form>
+            </div>
+
+            <div id="txt_2">
+                <p>Установленный баннер-реклама на главной</p>
+                <img src="{{ .Path_banner_home}}" alt="banner">
+
+                <form method="post" action="/cms_load_banner_company" enctype="multipart/form-data">
+                    <label class="input-file">
+                        <input type="file" name="file">
+                        <br>
+                        <span class="input-file-text">max 10мб</span>
+                        <br>
+                        <button type="submit" value="Load logo">Загрузить</button>
+                    </label>
+                </form>
+            </div>
+            <div id="txt_4">
+                <img src="{{ .Path_banner_home}}" width="100" height="70" alt="Лого">
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- =================================================== -->
+
+    <div id="sender" class="tabcontent">
+        <iframe src="http://app.sendsay.ru/subscribers/import/setup?listId=pl91833" width="100%"
+            height="500px"></iframe>
+    </div>
+
+    <!-- =================================================== -->
+
+    <div id="history" class="tabcontent">
+        <h3>История</h3>
+        <p>Журнал действий для отслеживания инцедентов.</p>
+        <table>
+            <tr>
+                <td><label for="surname">Surname:</label></td>
+                <td><input type="text" id="surname" name="surname"></td>
+            </tr>
+            <tr>
+                <td><label for="othernames">Other Names:</label></td>
+                <td><input type="text" id="othernames" name="othernames"></td>
+            </tr>
+            <tr>
+                <td><label for="email">Email:</label></td>
+                <td><input type="email" id="email" name="email"></td>
+            </tr>
+            <tr>
+                <td><label for="phone">Phone:</label></td>
+                <td><input type="tel" id="phone" name="phone"></td>
+            </tr>
+            <tr>
+                <td><label for="address">Address:</label></td>
+                <td><input type="text" id="address" name="address"></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <!-- =================================================== -->
+
+    <div id="help" class="tabcontent">
+        <h3>Справка</h3>
+        <p>Советы и быстрые ответы на вопросы.</p>
+    </div>
+
+    <!-- =================================================== -->
+
+
+    <!-- <div id="map" class="tabcontent">
+        <iframe
+            src="https://yandex.ru/map-widget/v1/?um=constructor%3A9ad8a5b9cc1b822bf0bfa6c1ea1c7c162c3239692d316f064bc17e2b889621b5&amp;source=constructor"
+            width="100%" height="464" frameborder="0"></iframe>
+    </div> -->
+
+
+    <!-- =================================================== -->
+
+    <div id="order" class="tabcontent">
+        <h3>Заявки на заказы</h3>
+        <p>Список заявок</p>
+    </div>
+
+
+    <!-- =================================================== -->
+
+
+    <script>
+        function openTab(evt, modeName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(modeName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+
+</body>
+
+</html>

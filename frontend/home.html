@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="ru-ru">
+
+<head>
+    <!-- U: template22@addshop.ru -->
+    <!-- shop_id: 1010 -->
+
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="keywords" content="книги, купить книгу, книга цена, каталог книг, книги недорого, магазин книг" />
+    <meta name="description"
+        content="Магазин книг - интернет-магазин, который занимается продажей и доставкой книг от известных крупнейших поставщиков." />
+    <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport">
+    <title>Магазин книг</title>
+
+    <link rel="icon" type="image/png"
+        href="http://new15942715563356.myaddshop.ru/img/64x64/1010/favicon/favikonka_15942854458688.png" />
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+    <link href="http://new15942715563356.myaddshop.ru/css/normalize.css" rel="stylesheet" type="text/css">
+
+    <link href="http://new15942715563356.myaddshop.ru/css/framework7-icons.css" rel="stylesheet">
+    <link href="http://new15942715563356.myaddshop.ru/css/swiper.css" rel="stylesheet" type="text/css">
+
+
+
+    <style>
+        :root {
+            --mainSchemeColor: #804C3E;
+            --mainContrastSchemeColor: #FF9E75;
+            --catalogTitleColor: #333;
+
+            --mainSchemeColorHover: #764234;
+            --mainContrastSchemeColorHover: #f5946b;
+
+            --menuBorderDarken: #7b4739;
+
+            --mainSchemeColor-darken10: #764234;
+            --mainSchemeColor-darken20: #6c382a;
+            --mainSchemeColor-darken30: #622e20;
+            --mainSchemeColor-lighten10: #8a5648;
+            --mainSchemeColor-lighten20: #946052;
+
+            --mainContrastSchemeColor-darken10: #f5946b;
+            --mainContrastSchemeColor-darken20: #eb8a61;
+            --mainContrastSchemeColor-darken30: #e18057;
+            --mainContrastSchemeColor-lighten10: #ffa87f;
+            --mainContrastSchemeColor-lighten20: #ffb289;
+        }
+    </style>
+
+    <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/base/style.css?ver=1691644398" rel="stylesheet"
+        type="text/css">
+    <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/templates/michigan.css?ver=1691644398"
+        rel="stylesheet" type="text/css">
+    <link href="http://new15942715563356.myaddshop.ru/css/shop/mobile.css?ver=1691644398" rel="stylesheet"
+        type="text/css" media="(max-width: 1366px)">
+
+    <script>
+        window.shop_currency = 'руб.';
+        window.shop_id = '1010';
+        window.customer_discount = '';
+        window.template_class = 'ryazan';
+        window.item_img_zoom = '0';
+        window.promo_discount = null;
+        window.promo_title = null;
+        window.one_click_buy = 1;
+    </script>
+
+
+
+    <!-- gsc start -->
+
+    <!-- gsc end -->
+
+    <!-- ywm start -->
+
+    <!-- ywm end -->
+
+
+
+    <!-- Подключите тут важные скрипты и стили. -->
+</head>
+
+<body class=" michigan main_page rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
+
+
+
+    <div class="wrapper">
+
+        <header>
+            <div class="header-top">
+                <div class="inner">
+                    <div class="email-wrapper">
+                        <a href="mailto:{{ .Email}}">book-rzn@email.com</a>
+                    </div>
+
+                    <div class="phone">
+                        <a href="tel:88009008090">8-800-900-80-90</a>
+
+
+
+                    </div>
+
+                    <div class="login_or_reg">
+                        <a href="{{ .Full_url_addr}}/login">Вход</a> / <a
+                            href="{{ .Full_url_addr}}/registration">Регистрация</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-middle">
+                <div class="inner">
+                    <div class="header-middle-left">
+                        <div class="logo_wrapper">
+                            <a href="{{ .Full_url_addr}}/home" class="logo">
+                                <img src="{{ .Path_logo_company}}" srcset="{{ .Path_logo_company}} 2x"
+                                    alt="{{ .Company_name}}" width="250px" height="70px" />
+                            </a>
+                        </div>
+                        <div class="slogan">Интернет-магазин книг</div>
+                    </div>
+                    <div class="search_form">
+                        <form method="GET" action="{{ .Full_url_addr}}/search">
+                            <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
+                                autocomplete="off" autofocus value="" />
+                            <button type="submit">Поиск</button>
+                            <div id="autocomplete"></div>
+                        </form>
+                    </div>
+                    <div class="header-middle-right">
+                        <div class="search_open bars" title="Поиск по товарам">
+                            <i data-feather="search"></i>
+                            <span>Поиск</span>
+                        </div>
+                        <div class="orders bars" title="Мои заказы">
+                            <a href="{{ .Full_url_addr}}/login">
+                                <i data-feather="archive"></i>
+                                <span>Мои заказы</span>
+                            </a>
+                        </div>
+                        <div class="favorite bars">
+                            <a href="http://new15942715563356.myaddshop.ru/favorites/">
+                                <i data-feather="heart"></i>
+                                <span>Избранное</span>
+                            </a>
+                        </div>
+                        <div class="basket bars" title="Корзина товаров">
+                            <a href="http://new15942715563356.myaddshop.ru/basket/">
+                                <i data-feather="shopping-bag"></i>
+                                <span>Корзина</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-bottom">
+                <div class="inner">
+                    <div class="categories-menu">
+                        <div class="catalog_title"><i data-feather="grid"></i>Главная</div>
+                        <!-- <div class="catalog_wrapper">
+                            <div class="catalog_subtitle">Разделы магазина</div>
+                            <ul class="level_1">
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/shkafy-i-mebelnye-stenki/"
+                                        class="" title="Шкафы и мебельные стенки">Шкафы и мебельные стенки</a></li>
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/stellazhi-i-polki/"
+                                        class="" title="Стеллажи и полки">Стеллажи и полки</a></li>
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/komody-i-garderoby/"
+                                        class="" title="Комоды и гардеробы">Комоды и гардеробы</a></li>
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/stoly-i-stulya/" class=""
+                                        title="Столы и стулья">Столы и стулья</a></li>
+                            </ul>
+                        </div> -->
+                    </div>
+                    <div class="page-menu">
+                        <ul id="menu_list" class="level_1">
+                            <!-- <li class="li"><a href="{{ .Full_url_addr}}/sales" class="" title="Акции">Акции</a></li> -->
+                            <li class="li"><a href="{{ .Full_url_addr}}/804" class="" title="О компании">Приказ 804</a>
+                            </li>
+
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class="" title="О компании">Просвещение</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class="" title="О компании">Агат</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/agat" class="" title="О компании">Строникум</a>
+                            </li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/naura" class="" title="О компании">Нау-раша</a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="mob_menu"><i data-feather="menu"></i>Навигация</div>
+                    <div class="menu_popup_mob">
+                        <div class="catalog_subtitle">Навигация по сайту</div>
+                        <ul id="menu_mob">
+                            <!-- <li class="li"><a href="{{ .Full_url_addr}}/sales" class="" title="Акции">Акции</a></li> -->
+                            <li class="li"><a href="{{ .Full_url_addr}}/804" class="" title="О компании">Приказ 804</a>
+                            </li>
+
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                                    title="О компании">Просвещение</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class="" title="О компании">Агат</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/agat" class="" title="О компании">Строникум/a>
+                            </li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/naura" class="" title="О компании">Нау-раша</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </header>
+
+
+
+
+
+
+
+    <main>
+        <div class="block main">
+            <div class="inner">
+
+                <div class="content  ">
+
+
+                    <div class="slider">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="bg"></div> <img srcset="{{ .Path_banner_home}} 360w,
+                                                {{ .Path_banner_home}} 440w,
+                                                {{ .Path_banner_home}} 520w,
+                                                {{ .Path_banner_home}} 670w,
+                                                {{ .Path_banner_home}} 800w,
+                                                {{ .Path_banner_home}} 1000w,
+                                                {{ .Path_banner_home}} 1200w,
+                                                {{ .Path_banner_home}} 1366w" sizes="(max-width: 1000px) calc(100vw - 60px), 
+                             (max-width: 1200px) 960px, 
+                             (max-width: 1366px) calc(100vw - 60px), 
+                             (min-width: 1366px) 1300px" src="{{ .Path_banner_home}}" alt="{{ .Text_banner}}"
+                                        class="slider-image" width="1300px" height="500px" loading="lazy">
+                                    <div class="item_content">
+                                        <div class="title">{{ .Text_banner}}</div>
+                                        <div class="descr">{{ .Description_banner}}</div>
+                                        <!-- <a class="slide_btn" href="http://new15942715563356.myaddshop.ru/categories/">В -->
+                                        <!-- каталог</a> -->
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="bg"></div> <img srcset="{{ .Path_banner_home}} 360w,
+                                                {{ .Path_banner_home}} 440w,
+                                                {{ .Path_banner_home}} 520w,
+                                                {{ .Path_banner_home}} 670w,
+                                                {{ .Path_banner_home}} 800w,
+                                                {{ .Path_banner_home}} 1000w,
+                                                {{ .Path_banner_home}} 1200w,
+                                                {{ .Path_banner_home}} 1366w" sizes="(max-width: 1000px) calc(100vw - 60px), 
+                             (max-width: 1200px) 960px, 
+                             (max-width: 1366px) calc(100vw - 60px), 
+                             (min-width: 1366px) 1300px" src="{{ .Path_banner_home}}"
+                                        alt="Оставьте отзыв о товаре и получите скидку!" class="slider-image"
+                                        width="1300px" height="500px" loading="lazy">
+                                    <div class="item_content">
+                                        <div class="title">Оставьте отзыв о товаре и получите скидку!</div>
+                                        <div class="descr">Вы приобрели корпусную мебель в нашем интернет-магазине?
+                                            Оставьте отзыв и получите скидку до 900 рублей на следующую покупку!</div>
+                                        <!-- <a class="slide_btn" href="http://new15942715563356.myaddshop.ru/categories/">В -->
+                                        <!-- каталог</a> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-next swiper-button-white"></div>
+                            <div class="swiper-button-prev swiper-button-white"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="triggers">
+                        <div class="trigger">
+                            <i class="fas fa-truck-loading"></i>
+                            <span>
+                                <p>Доставляем заказ до дома от 3000 рублей</p>
+                            </span>
+                        </div>
+                        <div class="trigger">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>
+                                <p>На всю продукцию предоставляется гарантия на 5 лет</p>
+                            </span>
+                        </div>
+                        <div class="trigger">
+                            <i class="fas fa-money-bill-alt"></i>
+                            <span>
+                                <p>В интернет-магазине доступны любые удобные способы оплаты</p>
+                            </span>
+                        </div>
+                        <div class="trigger">
+                            <i class="fas fa-cubes"></i>
+                            <span>
+                                <p>Широкий ассортимент корпусной мебели от крупнейших поставщиков</p>
+                            </span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="items_wrapper">
+                        <h2 class="shop-title">Новинки</h2>
+                        <div class="items">
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60817">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="novelty">Новинка</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/12_1594281886.png"
+                                        alt="Комод Уфимка 12" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/12_1_1594281889.png"
+                                        alt="Комод Уфимка 12" data-switch="1" style="display: none;" width="250px"
+                                        height="250px" />
+
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-ufimka-12/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-ufimka-12/"
+                                        class="descr">Комод Уфимка 12</a>
+                                    <div class="short_descr">Простой и лаконичный прикроватный комод идеально дополнит
+                                        любую из кроватей.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">5550.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/komod-ufimka-12/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60820">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="novelty">Новинка</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/14_1594282183.png"
+                                        alt="Комод Анталия 1200" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/14_1_1594282186.png"
+                                        alt="Комод Анталия 1200" data-switch="1" style="display: none;" width="250px"
+                                        height="250px" />
+
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-antaliya-1200/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-antaliya-1200/"
+                                        class="descr">Комод Анталия 1200</a>
+                                    <div class="short_descr">Современный комод в гостиную Анталия 1200, под дерево с
+                                        подсветкой.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">5990.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/komod-antaliya-1200/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60805">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="novelty">Новинка</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/7_1594280529.png"
+                                        alt="Стеллаж Manhattan Comfort" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/7_1_1594280532.png"
+                                        alt="Стеллаж Manhattan Comfort" data-switch="1" style="display: none;"
+                                        width="250px" height="250px" />
+
+                                    <a
+                                        href="http://new15942715563356.myaddshop.ru/items/stellazh-manhattan-comfort/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/stellazh-manhattan-comfort/"
+                                        class="descr">Стеллаж Manhattan Comfort</a>
+                                    <div class="short_descr">Сборка в различных вариантах, используя несколько
+                                        стеллажей.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">5690.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/stellazh-manhattan-comfort/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60808">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="novelty">Новинка</div>
+                                        <div class="recommend">Рекомендуем</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/9_1594280794.png"
+                                        alt="Стеллаж MANHATTAN COMFORT Parana" data-switch="0" width="250px"
+                                        height="250px" loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/9_1_1594280797.png"
+                                        alt="Стеллаж MANHATTAN COMFORT Parana" data-switch="1" style="display: none;"
+                                        width="250px" height="250px" />
+
+                                    <a
+                                        href="http://new15942715563356.myaddshop.ru/items/stellazh-manhattan-comfort-parana/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/stellazh-manhattan-comfort-parana/"
+                                        class="descr">Стеллаж MANHATTAN COMFORT Parana</a>
+                                    <div class="short_descr">Место для хранения и демонстрации книг, фотографий,
+                                        предметов интерьера.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">4690.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/stellazh-manhattan-comfort-parana/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60819">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="novelty">Новинка</div>
+                                        <div class="recommend">Рекомендуем</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/13_1594282021.png"
+                                        alt="Комод Соренто 13" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/13_1_1594282024.png"
+                                        alt="Комод Соренто 13" data-switch="1" style="display: none;" width="250px"
+                                        height="250px" />
+
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-sorento-13/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-sorento-13/"
+                                        class="descr">Комод Соренто 13</a>
+                                    <div class="short_descr">Комод Соренто докажет свою необходимость в любой комнате,
+                                        где нужна дополнительная система хранения.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">10690.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/komod-sorento-13/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="absolute" data-discount="0.00" data-code="94133">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="novelty">Новинка</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/pt-ldr-st160kh88_38-v2_24-35_1635926619.jpg"
+                                        alt="Стол письменный 160x90x75 дуб скальный коллекции" data-switch="0"
+                                        width="250px" height="250px" loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/pt-ldr-st160kh88_38-v2_24-35_1635926619.jpg"
+                                        alt="Стол письменный 160x90x75 дуб скальный коллекции" data-switch="1"
+                                        style="display: none;" width="250px" height="250px" />
+
+                                    <a
+                                        href="http://new15942715563356.myaddshop.ru/items/stol-pismennyj-160x90x75-dub-skalnyj-kollekcii/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/stol-pismennyj-160x90x75-dub-skalnyj-kollekcii/"
+                                        class="descr">Стол письменный 160x90x75 дуб скальный коллекции</a>
+                                    <div class="short_descr">Стол рабочий изготовлен из ДСП плиты толщиной 25мм и
+                                        накладок той же толщины, прикрепленных по периметру к плите с помощью шурупов
+                                    </div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">3350.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/stol-pismennyj-160x90x75-dub-skalnyj-kollekcii/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="absolute" data-discount="0.00" data-code="94134">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="novelty">Новинка</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/r-ssm-0117-99_1635927225.jpg"
+                                        alt="Стол эргономичный 140x90x75 клен коллекции Система-M" data-switch="0"
+                                        width="250px" height="250px" loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/r-ssm-0117-99_1635927225.jpg"
+                                        alt="Стол эргономичный 140x90x75 клен коллекции Система-M" data-switch="1"
+                                        style="display: none;" width="250px" height="250px" />
+
+                                    <a
+                                        href="http://new15942715563356.myaddshop.ru/items/stol-ergonomichnyj-140x90x75-klen-kollekcii-sistema-m/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/stol-ergonomichnyj-140x90x75-klen-kollekcii-sistema-m/"
+                                        class="descr">Стол эргономичный 140x90x75 клен коллекции Система-M</a>
+                                    <div class="short_descr">Стол рабочий изготовлен из ДСП плиты толщиной 25мм и
+                                        накладок той же толщины, прикрепленных по периметру к плите с помощью шурупов
+                                    </div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">3350.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/stol-ergonomichnyj-140x90x75-klen-kollekcii-sistema-m/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="absolute" data-discount="0.00" data-code="94135">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="novelty">Новинка</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/r-si-0234-99_1635927288.jpg"
+                                        alt="Композиция 56x120x74 клен коллекции Система-M" data-switch="0"
+                                        width="250px" height="250px" loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/r-si-0234-99_1635927288.jpg"
+                                        alt="Композиция 56x120x74 клен коллекции Система-M" data-switch="1"
+                                        style="display: none;" width="250px" height="250px" />
+
+                                    <a
+                                        href="http://new15942715563356.myaddshop.ru/items/kompoziciya-56x120x74-klen-kollekcii-sistema-m/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/kompoziciya-56x120x74-klen-kollekcii-sistema-m/"
+                                        class="descr">Композиция 56x120x74 клен коллекции Система-M</a>
+                                    <div class="short_descr">Стол рабочий изготовлен из ДСП плиты толщиной 25мм и
+                                        накладок той же толщины, прикрепленных по периметру к плите с помощью шурупов
+                                    </div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">3350.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/kompoziciya-56x120x74-klen-kollekcii-sistema-m/">Купить</a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="items_wrapper bestseller_items">
+                        <h2 class="shop-title">Каталог товаров</h2>
+                        <div class="items">
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="bestseller">Каталог товаров</div>
+                                        <div class="recommend">Рекомендуем</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/2_1594279653.png"
+                                        alt="Шкаф Бланка 2" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/2_1_1594279656.png"
+                                        alt="Шкаф Бланка 2" data-switch="1" style="display: none;" width="250px"
+                                        height="250px" />
+
+                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/"
+                                        class="descr">Шкаф Бланка 2</a>
+                                    <div class="short_descr">Четырехдверный шкаф из коллекции Бланка вместительная и
+                                        эффектная система хранения.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">10350.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60814">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="bestseller">Каталог товаров</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/11_1594281805.png"
+                                        alt="Комод Санди 13100" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/11_2_1594281803.png"
+                                        alt="Комод Санди 13100" data-switch="1" style="display: none;" width="250px"
+                                        height="250px" />
+
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-sandi-13100/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-sandi-13100/"
+                                        class="descr">Комод Санди 13100</a>
+                                    <div class="short_descr">Лаконичная модель комода предназначена специально для
+                                        малогабаритного помещения.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">4990.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/komod-sandi-13100/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60791">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="bestseller">Каталог товаров</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/1_1594278621.png"
+                                        alt="Шкаф Соренто 3" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/1_1_1594278625.png"
+                                        alt="Шкаф Соренто 3" data-switch="1" style="display: none;" width="250px"
+                                        height="250px" />
+
+                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-sorento-3/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-sorento-3/"
+                                        class="descr">Шкаф Соренто 3</a>
+                                    <div class="short_descr">Модель, которая вместит и одежду, и домашний текстиль, и
+                                        еще множество других вещей.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">8690.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/shkaf-sorento-3/">Купить</a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="items_wrapper">
+                        <h2 class="shop-title">Рекомендуем</h2>
+                        <div class="items">
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60799">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="recommend">Рекомендуем</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/4_1594279956.png"
+                                        alt="Мебельная стенка Марта 11" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/4_1594279956.png"
+                                        alt="Мебельная стенка Марта 11" data-switch="1" style="display: none;"
+                                        width="250px" height="250px" />
+
+                                    <a
+                                        href="http://new15942715563356.myaddshop.ru/items/mebelnaya-stenka-marta-11/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/mebelnaya-stenka-marta-11/"
+                                        class="descr">Мебельная стенка Марта 11</a>
+                                    <div class="short_descr">Мебельная стенка Марта 11 сочетает в себе все необходимое
+                                        для гостиной.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">10350.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/mebelnaya-stenka-marta-11/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60808">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="novelty">Новинка</div>
+                                        <div class="recommend">Рекомендуем</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/9_1594280794.png"
+                                        alt="Стеллаж MANHATTAN COMFORT Parana" data-switch="0" width="250px"
+                                        height="250px" loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/9_1_1594280797.png"
+                                        alt="Стеллаж MANHATTAN COMFORT Parana" data-switch="1" style="display: none;"
+                                        width="250px" height="250px" />
+
+                                    <a
+                                        href="http://new15942715563356.myaddshop.ru/items/stellazh-manhattan-comfort-parana/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/stellazh-manhattan-comfort-parana/"
+                                        class="descr">Стеллаж MANHATTAN COMFORT Parana</a>
+                                    <div class="short_descr">Место для хранения и демонстрации книг, фотографий,
+                                        предметов интерьера.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">4690.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/stellazh-manhattan-comfort-parana/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="bestseller">Каталог товаров</div>
+                                        <div class="recommend">Рекомендуем</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/2_1594279653.png"
+                                        alt="Шкаф Бланка 2" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/2_1_1594279656.png"
+                                        alt="Шкаф Бланка 2" data-switch="1" style="display: none;" width="250px"
+                                        height="250px" />
+
+                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/"
+                                        class="descr">Шкаф Бланка 2</a>
+                                    <div class="short_descr">Четырехдверный шкаф из коллекции Бланка вместительная и
+                                        эффектная система хранения.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">10350.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60819">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="novelty">Новинка</div>
+                                        <div class="recommend">Рекомендуем</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/13_1594282021.png"
+                                        alt="Комод Соренто 13" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/13_1_1594282024.png"
+                                        alt="Комод Соренто 13" data-switch="1" style="display: none;" width="250px"
+                                        height="250px" />
+
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-sorento-13/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-sorento-13/"
+                                        class="descr">Комод Соренто 13</a>
+                                    <div class="short_descr">Комод Соренто докажет свою необходимость в любой комнате,
+                                        где нужна дополнительная система хранения.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">10690.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/komod-sorento-13/">Купить</a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="news_main">
+                        <h2 class="shop-title">Последние новости<a
+                                href="http://new15942715563356.myaddshop.ru/news/">Смотреть все <i
+                                    data-feather="chevrons-right"></i></a></h2>
+                        <div class="one_news_wrapp">
+                            <div class="one_news">
+                                <a class="news_img"
+                                    href="http://new15942715563356.myaddshop.ru/news/shkafy-specialnogo-naznacheniya/">
+                                    <div class="n_watch">Смотреть</div>
+                                    <img src="http://new15942715563356.myaddshop.ru/img/400x250/1010/news/novosti2_15942842675524.jpg"
+                                        srcset="http://new15942715563356.myaddshop.ru/img/800x500/1010/news/novosti2_15942842675524.jpg 2x"
+                                        alt="Шкафы специального назначения" width="400px" height="250px" loading="lazy">
+                                </a>
+                                <div class="news_title">
+                                    <div class="n_date">2020-07-09 08:12:38</div>
+                                    <a class="n_title"
+                                        href="http://new15942715563356.myaddshop.ru/news/shkafy-specialnogo-naznacheniya/">Шкафы
+                                        специального назначения</a>
+                                    <div class="n_descr">
+                                        За последнее столетие под влиянием прогресса шкаф как предмет и как понятие стал
+                                        применяться в новых областях человеческой деятельности, частично утрачивая или
+                                        изменяя свою мебельную функцию.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="one_news">
+                                <a class="news_img"
+                                    href="http://new15942715563356.myaddshop.ru/news/materialy-dlya-izgotovleniya-shkafa/">
+                                    <div class="n_watch">Смотреть</div>
+                                    <img src="http://new15942715563356.myaddshop.ru/img/400x250/1010/news/novosti1_1594283997397.jpg"
+                                        srcset="http://new15942715563356.myaddshop.ru/img/800x500/1010/news/novosti1_1594283997397.jpg 2x"
+                                        alt="Материалы для изготовления шкафа" width="400px" height="250px"
+                                        loading="lazy">
+                                </a>
+                                <div class="news_title">
+                                    <div class="n_date">2020-07-09 08:12:38</div>
+                                    <a class="n_title"
+                                        href="http://new15942715563356.myaddshop.ru/news/materialy-dlya-izgotovleniya-shkafa/">Материалы
+                                        для изготовления шкафа</a>
+                                    <div class="n_descr">
+                                        Шкаф - мебельное изделие (преимущественно с дверками, с ящиками или без них) для
+                                        хранения предметов различного функционального назначения. История шкафа в
+                                        привычном для человека XXI века смысле началась не так уж давно, - в XVII-XVIII
+                                        веке.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="maintext_wrapper">
+                        <p>Мебель (фр. meuble, от лат. mobile) &mdash; совокупность передвижных или встроенных изделий
+                            для обстановки жилых и общественных помещений и различных зон пребывания человека.
+                            Предназначается для сидения, лежания, приготовления пищи, выполнения письменных и других
+                            работ, разделения помещения на отдельные зоны.</p>
+
+                        <p>К мебели относятся столы, стулья и табуреты, комоды, кровати, кресла и диваны, шкафы
+                            различных типов и назначений, полки и некоторые другие виды. Мебель может выпускаться как в
+                            виде отдельного предмета мебели, так и в составе набора или гарнитура.</p>
+
+                        <p>Производство мебели является наиболее проблемным из всех известных видов производственных
+                            процессов, в связи с тем, что в большинстве случаев невозможно продавать (производить)
+                            только лишь серийные изделия.</p>
+
+                        <p>Оно оснащено оборудованием, предназначенным для выполнения как узкоспециальных, так и
+                            широкого применения технологических операций - как правило, дорогостоящим и
+                            крупногабаритным, потребляющим большое количество электроэнергии.</p>
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+    </div>
+
+
+
+
+    <footer class="block">
+        <div class="top">
+            <div class="inner">
+                <div class="fmenu">
+                    <div class="logo_wrapper">
+                        <a class="logo" href="{{ .Full_url_addr}}/home">
+                            <img src="{{.Path_logo_company}}" alt="{{ .Company_name}}" />
+                        </a>
+                    </div>
+                    <div class="copyright">&copy;
+                        {{ .copyright}}</div>
+                    <a class="policy" href="http://new15942715563356.myaddshop.ru/politika-konfidencialnosti/">Политика
+                        конфиденциальности</a>
+                    <a class="user_agreement_link"
+                        href="http://new15942715563356.myaddshop.ru/soglasie-na-obrabotku-personalnyh-dannyh/">Согласие
+                        на обработку персональных данных</a>
+                    <div class="footer_site_info">
+                        <p>Используя данный сайт, вы автоматически принимаете условия пользовательского соглашения и
+                            соглашаетесь с политикой конфиденциальности.</p>
+                    </div>
+                </div>
+                <!-- <div class="fmenu">
+                    <div class="footer_subtitle">О магазине</div>
+                    <ul>
+                        <li>
+                            <a href="{{ .Full_url_addr}}/home">Главная</a>
+                        </li>
+                        <li>
+                            <a href="{{ .Full_url_addr}}/sales">Акции</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/prosv">Просвещение</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/agat">Агат</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/stronikum">Строникум</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/naura">Нау-раша</a>
+                        </li>
+
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/contacts">Контакты</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/news" class="" title="Блог">Блог</a>
+                        </li>
+
+
+                    </ul> -->
+
+            </div>
+            <div class="fmenu catalog">
+                <div class="footer_subtitle">Каталог</div>
+                <ul>
+                    <li>
+                        <a href="http://new15942715563356.myaddshop.ru/categories/shkafy-i-mebelnye-stenki/" class=""
+                            title="Шкафы и мебельные стенки">Шкафы и мебельные стенки</a>
+
+                    </li>
+                    <li>
+                        <a href="http://new15942715563356.myaddshop.ru/categories/stellazhi-i-polki/" class=""
+                            title="Стеллажи и полки">Стеллажи и полки</a>
+
+                    </li>
+                    <li>
+                        <a href="http://new15942715563356.myaddshop.ru/categories/komody-i-garderoby/" class=""
+                            title="Комоды и гардеробы">Комоды и гардеробы</a>
+
+                    </li>
+                    <li>
+                        <a href="http://new15942715563356.myaddshop.ru/categories/stoly-i-stulya/" class=""
+                            title="Столы и стулья">Столы и стулья</a>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="fmenu contact_us">
+                <div class="footer_subtitle">Свяжитесь с нами</div>
+                <div class="address">109145, г.Москва, Московская обл., ТЦ Твой дом на Каширке, МКАД 24 км (внешн.),
+                    д. 1, корп. 1</div>
+                <div>
+                    <span class="mail_span">E-mail:</span>
+                    <a href="mailto:{{ .Email}}">{{ .Email}}</a>
+                </div>
+
+                <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a>
+
+
+
+
+                <div class="social">
+                    <a target="_blank" href="https://vk.com/#" class="link_vk"></a>
+                    <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
+                    <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
+                    <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
+                    <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </footer>
+
+
+
+
+    <script src="../code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
+    <script>$(function () { feather.replace(); });</script>
+    <script src="http://new15942715563356.myaddshop.ru/js/swiper-min.js" type="text/javascript" type="module"></script>
+    <script src="http://new15942715563356.myaddshop.ru/js/script-min.js" type="text/javascript"></script>
+
+    <link rel="stylesheet"
+        href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" />
+    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" />
+    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" />
+
+
+
+
+    <script>
+        $(function () {
+            var swiper = new Swiper('.swiper-container', {
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                autoplay: {
+                    delay: 5000,
+                },
+                resizeReInit: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                noSwipingClass: 'noSwipingClass'
+            });
+
+
+        });
+
+    </script>
+
+
+
+
+    <!-- ym start -->
+
+    <!-- ym end -->
+
+    <!-- ym start -->
+
+    <!-- ym end -->
+
+    <!-- vkpixel start -->
+
+    <!-- vkpixel end -->
+
+    <!-- fbpixel start -->
+
+    <!-- fbpixel end -->
+
+    <!-- jivosite start -->
+
+    <!-- jivosite end -->
+
+    <!-- callbackhunter  start -->
+
+    <!-- callbackhunter  end -->
+
+    <!-- roistat  start -->
+
+    <!-- roistat  end -->
+
+
+
+    <!-- Стастистики, Пиксели и прочее лучше размещать тут. -->
+
+
+
+    <!-- 19 ms -->
+</body>
+
+</html>

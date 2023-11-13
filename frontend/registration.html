@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ru-ru">
+
+<head>
+    <!-- U: template22@addshop.ru -->
+    <!-- shop_id: 1010 -->
+
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport">
+    <title>Регистрация / Интернет-магазин Мир мебели</title>
+
+    <link rel="icon" type="image/png"
+        href="http://new15942715563356.myaddshop.ru/img/64x64/1010/favicon/favikonka_15942854458688.png" />
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+    <link href="http://new15942715563356.myaddshop.ru/css/normalize.css" rel="stylesheet" type="text/css">
+
+    <link href="http://new15942715563356.myaddshop.ru/css/framework7-icons.css" rel="stylesheet">
+    <link href="http://new15942715563356.myaddshop.ru/css/swiper.css" rel="stylesheet" type="text/css">
+
+
+
+    <style>
+        :root {
+            --mainSchemeColor: #804C3E;
+            --mainContrastSchemeColor: #FF9E75;
+            --catalogTitleColor: #333;
+
+            --mainSchemeColorHover: #764234;
+            --mainContrastSchemeColorHover: #f5946b;
+
+            --menuBorderDarken: #7b4739;
+
+            --mainSchemeColor-darken10: #764234;
+            --mainSchemeColor-darken20: #6c382a;
+            --mainSchemeColor-darken30: #622e20;
+            --mainSchemeColor-lighten10: #8a5648;
+            --mainSchemeColor-lighten20: #946052;
+
+            --mainContrastSchemeColor-darken10: #f5946b;
+            --mainContrastSchemeColor-darken20: #eb8a61;
+            --mainContrastSchemeColor-darken30: #e18057;
+            --mainContrastSchemeColor-lighten10: #ffa87f;
+            --mainContrastSchemeColor-lighten20: #ffb289;
+        }
+    </style>
+
+    <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/base/style.css?ver=1691644398" rel="stylesheet"
+        type="text/css">
+    <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/templates/michigan.css?ver=1691644398"
+        rel="stylesheet" type="text/css">
+    <link href="http://new15942715563356.myaddshop.ru/css/shop/mobile.css?ver=1691644398" rel="stylesheet"
+        type="text/css" media="(max-width: 1366px)">
+
+    <script>
+        window.shop_currency = 'руб.';
+        window.shop_id = '1010';
+        window.customer_discount = '';
+        window.template_class = 'michigan';
+        window.item_img_zoom = '0';
+        window.promo_discount = null;
+        window.promo_title = null;
+        window.one_click_buy = 1;
+    </script>
+
+
+
+    <!-- gsc start -->
+
+    <!-- gsc end -->
+
+    <!-- ywm start -->
+
+    <!-- ywm end -->
+
+
+
+
+
+
+    <!-- Подключите тут важные скрипты и стили. -->
+</head>
+
+<body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
+
+
+
+    <div class="wrapper">
+
+        <header>
+            <div class="header-top">
+                <div class="inner">
+                    <div class="email-wrapper">
+                        <a href="mailto:{{ .Email}}">{{ .Email}}</a>
+                    </div>
+
+                    <div class="phone">
+                        <a href="tel:{{ .Phone}}">{{ .Phone}}</a>
+
+
+
+                    </div>
+
+                    <div class="login_or_reg">
+                        <a href="{{ .Full_url_addr}}/login">Вход</a>
+                        <a href="{{ .Full_url_addr}}/registration">Регистрация</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-middle">
+                <div class="inner">
+                    <div class="header-middle-left">
+                        <div class="logo_wrapper">
+                            <ahref="{{ .Full_url_addr}}/home" class="logo">
+                                <img src="{{ .Path_logo_company}}" srcset="{{ .Path_logo_company}} 2x"
+                                    alt="{{ .Company_name}}" width="250px" height="70px" />
+                                </a>
+                        </div>
+                        <div class="slogan">Магазин книг</div>
+                    </div>
+                    <div class="search_form">
+                        <form method="GET" action="{{ .Full_url_addr}}/search">
+                            <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
+                                autocomplete="off" autofocus value="" />
+                            <button type="submit">Поиск</button>
+                            <div id="autocomplete"></div>
+                        </form>
+                    </div>
+                    <div class="header-middle-right">
+                        <div class="search_open bars" title="Поиск по товарам">
+                            <i data-feather="search"></i>
+                            <span>Поиск</span>
+                        </div>
+                        <div class="orders bars" title="Мои заказы">
+                            <a href="{{ .Full_url_addr}}/login">
+                                <i data-feather="archive"></i>
+                                <span>Мои заказы</span>
+                            </a>
+                        </div>
+                        <div class="favorite bars">
+                            <a href="http://new15942715563356.myaddshop.ru/favorites/">
+                                <i data-feather="heart"></i>
+                                <span>Избранное</span>
+                            </a>
+                        </div>
+                        <div class="basket bars" title="Корзина товаров">
+                            <a href="http://new15942715563356.myaddshop.ru/basket/">
+                                <i data-feather="shopping-bag"></i>
+                                <span>Корзина</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-bottom">
+                <div class="inner">
+                    <div class="categories-menu">
+                        <div class="catalog_title"><i data-feather="grid"></i>Главная</div>
+                        <!-- <div class="catalog_wrapper">
+                            <div class="catalog_subtitle">Разделы магазина</div>
+                            <ul class="level_1">
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/shkafy-i-mebelnye-stenki/"
+                                        class="" title="Шкафы и мебельные стенки">Шкафы и мебельные стенки</a></li>
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/stellazhi-i-polki/"
+                                        class="" title="Стеллажи и полки">Стеллажи и полки</a></li>
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/komody-i-garderoby/"
+                                        class="" title="Комоды и гардеробы">Комоды и гардеробы</a></li>
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/stoly-i-stulya/" class=""
+                                        title="Столы и стулья">Столы и стулья</a></li>
+                            </ul>
+                        </div> -->
+                    </div>
+                    <div class="page-menu">
+                        <ul id="menu_list" class="level_1">
+                            <!-- <li class="li"><a href="{{ .Full_url_addr}}/sales" class="" title="Акции">Акции</a></li> -->
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                                    title="О компании">Просвещение</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                                    title="О компании">Агат</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/agat" class=""
+                                    title="О компании">Строникум</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/naura" class=""
+                                    title="О компании">Нау-раша</a></li>
+                            
+                        </ul>
+                    </div>
+
+                    <div class="mob_menu"><i data-feather="menu"></i>Навигация</div>
+                    <div class="menu_popup_mob">
+                        <div class="catalog_subtitle">Навигация по сайту</div>
+                        <ul id="menu_mob">
+                            <!-- <li class="li"><a href="{{ .Full_url_addr}}/sales" class="" title="Акции">Акции</a></li> -->
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                                    title="О компании">Просвещение</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                                    title="О компании">Агат</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/agat" class=""
+                                    title="О компании">Строникум/a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/naura" class=""
+                                    title="О компании">Нау-раша</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </header>
+
+
+
+
+
+
+
+    <main>
+        <div class="block main">
+            <div class="inner">
+
+                <div class="content  nositebar  ">
+
+                    <div class="auth-inner">
+
+                        <div class="breadcrumb">
+                            <span><a href="http://new15942715563356.myaddshop.ru/">Главная</a> / </span>
+                            <span>Регистрация</span>
+                        </div>
+
+                        <h1 class="shop-title">Регистрация</h1>
+
+                        <div class="registration_login_wrapper">
+
+                            <div class="form">
+
+
+
+
+                                <form method="POST">
+                                    <input type="hidden" name="action" value="registr">
+                                    <div class="field">
+                                        <input name="customer_email" autocomplete="false" type="email"
+                                            placeholder="Укажите Ваш E-mail" value="">
+                                        <div class="field_title">Укажите Ваш E-mail <sup>*</sup></div>
+                                        <i class="far fa-envelope"></i>
+                                    </div>
+                                    <div class="field">
+                                        <input name="customer_phone" autocomplete="false" type="phone"
+                                            placeholder="Укажите Ваш телефон" value="">
+                                        <div class="field_title">Укажите Ваш телефон <sup>*</sup></div>
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="field">
+                                        <input name="customer_password_first" autocomplete="false" type="password"
+                                            placeholder="Придумайте пароль">
+                                        <div class="field_title">Придумайте пароль <sup>*</sup></div>
+                                    </div>
+                                    <div class="field">
+                                        <input name="customer_password" autocomplete="false" type="password"
+                                            placeholder="Повторите пароль ">
+                                        <div class="field_title">Повторите пароль <sup>*</sup></div>
+                                    </div>
+
+
+                                    <!-- <img src="data:image/png;base64,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" alt="captcha code" title=""><input type="hidden" name="captcha_hash" value="UZ1nZ2FJSBFYMDFOfMxorP8gwdFtOHGgSl/m01z9etxa0jIdtNAHD7Zzn1w0s220wVBAd00kNVYr5MskzvpUXw=="><input type="text" name="captcha_value" placeholder="Введите код с картиники"> -->
+                                    <div class="btn_wrapper">
+
+                                        <!-- <button>Зарегистрировать</button> -->
+                                        <form action="{{ .Full_url_addr}}/create_user">
+                                            <input type="submit" value="Go to Google" />
+                                        </form>
+
+
+                                        <label class="checkbox_container">
+                                            <div class="radio_title">Согласен(на) на обработку персональных данных</div>
+                                            <input type="checkbox" name="agreement" checked="checked">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="registr_descr">
+                                <div class="title">Зачем нужна регистрация?</div>
+                                <p>Зарегистрировавшись на сайте, Вы сможете получить личный кабинет, что позволит Вам
+                                    отслеживать историю заказов, быстрее оформлять заказы в нашем Интернет магазине. Вся
+                                    информация о Вас будет доступна в любое время, и ее не нужно будет вводить повторно.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+    </div>
+
+
+
+
+    <footer class="block">
+        <div class="top">
+            <div class="inner">
+                <div class="fmenu">
+                    <div class="logo_wrapper">
+                        <a class="logo" href="{{ .Full_url_addr}}/home">
+                            <img src="{{ .Path_logo_company}}" alt="Мир книг" />
+                        </a>
+                    </div>
+                    <div class="copyright">&copy;
+                        {{ .copyright}}</div>
+                    <a class="policy" href="http://new15942715563356.myaddshop.ru/politika-konfidencialnosti/">Политика
+                        конфиденциальности</a>
+                    <a class="user_agreement_link"
+                        href="http://new15942715563356.myaddshop.ru/soglasie-na-obrabotku-personalnyh-dannyh/">Согласие
+                        на обработку персональных данных</a>
+                    <div class="footer_site_info">
+                        <p>Используя данный сайт, вы автоматически принимаете условия пользовательского соглашения и
+                            соглашаетесь с политикой конфиденциальности.</p>
+                    </div>
+                </div>
+                <div class="fmenu">
+                    <div class="footer_subtitle">О магазине</div>
+                    <ul>
+                        <li>
+                            <a href="{{ .Full_url_addr}}/home">Главная</a>
+                        </li>
+                        <!-- <li>
+                            <a href="{{ .Full_url_addr}}/sales">Акции</a>
+                        </li> -->
+                        <li>
+                            <a href="{{ .Full_url_addr}}/prosv">Просвещение</a>
+                        </li>
+                        <li>
+                            <a href="{{ .Full_url_addr}}/agat">Агат</a>
+                        </li>
+                        <li>
+                            <a href="{{ .Full_url_addr}}/contacts">Контакты</a>
+                        </li>
+                        <li>
+                            <a href="{{ .Full_url_addr}}/news" class="" title="Блог">Блог</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <div class="fmenu catalog">
+                    <div class="footer_subtitle">Каталог</div>
+                    <ul>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/shkafy-i-mebelnye-stenki/"
+                                class="" title="Шкафы и мебельные стенки">Шкафы и мебельные стенки</a>
+
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/stellazhi-i-polki/" class=""
+                                title="Стеллажи и полки">Стеллажи и полки</a>
+
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/komody-i-garderoby/" class=""
+                                title="Комоды и гардеробы">Комоды и гардеробы</a>
+
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/stoly-i-stulya/" class=""
+                                title="Столы и стулья">Столы и стулья</a>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="fmenu contact_us">
+                    <div class="footer_subtitle">Свяжитесь с нами</div>
+                    <div class="address">{{ .location_office}}</div>
+                    <div>
+                        <span class="mail_span">E-mail:</span>
+                        <a href="mailto:{{ .Email}}">{{ .Email}}</a>
+                    </div>
+
+                    <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a>
+
+
+
+
+                    <div class="social">
+                        <a target="_blank" href="https://vk.com/#" class="link_vk"></a>
+                        <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
+                        <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
+                        <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
+                        <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <script src="../../code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
+    <script>$(function () { feather.replace(); });</script>
+    <script src="http://new15942715563356.myaddshop.ru/js/swiper-min.js" type="text/javascript" type="module"></script>
+    <script src="http://new15942715563356.myaddshop.ru/js/script-min.js" type="text/javascript"></script>
+
+    <link rel="stylesheet"
+        href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" />
+    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" />
+    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" />
+
+
+
+
+    <!-- ym start -->
+
+    <!-- ym end -->
+
+    <!-- ym start -->
+
+    <!-- ym end -->
+
+    <!-- vkpixel start -->
+
+    <!-- vkpixel end -->
+
+    <!-- fbpixel start -->
+
+    <!-- fbpixel end -->
+
+    <!-- jivosite start -->
+
+    <!-- jivosite end -->
+
+    <!-- callbackhunter  start -->
+
+    <!-- callbackhunter  end -->
+
+    <!-- roistat  start -->
+
+    <!-- roistat  end -->
+
+
+
+    <!-- Стастистики, Пиксели и прочее лучше размещать тут. -->
+
+
+
+    <!-- 16 ms -->
+</body>
+
+</html>

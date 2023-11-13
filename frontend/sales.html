@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ru-ru">
+
+<head>
+    <!-- U: template22@addshop.ru -->
+    <!-- shop_id: 1010 -->
+
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport">
+    <title>{{ .Text_banner}}</title>
+
+    <link rel="icon" type="image/png"
+        href="http://new15942715563356.myaddshop.ru/img/64x64/1010/favicon/favikonka_15942854458688.png" />
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+    <link href="http://new15942715563356.myaddshop.ru/css/normalize.css" rel="stylesheet" type="text/css">
+
+    <link href="http://new15942715563356.myaddshop.ru/css/framework7-icons.css" rel="stylesheet">
+    <link href="http://new15942715563356.myaddshop.ru/css/swiper.css" rel="stylesheet" type="text/css">
+
+
+
+    <style>
+        :root {
+            --mainSchemeColor: #804C3E;
+            --mainContrastSchemeColor: #FF9E75;
+            --catalogTitleColor: #333;
+
+            --mainSchemeColorHover: #764234;
+            --mainContrastSchemeColorHover: #f5946b;
+
+            --menuBorderDarken: #7b4739;
+
+            --mainSchemeColor-darken10: #764234;
+            --mainSchemeColor-darken20: #6c382a;
+            --mainSchemeColor-darken30: #622e20;
+            --mainSchemeColor-lighten10: #8a5648;
+            --mainSchemeColor-lighten20: #946052;
+
+            --mainContrastSchemeColor-darken10: #f5946b;
+            --mainContrastSchemeColor-darken20: #eb8a61;
+            --mainContrastSchemeColor-darken30: #e18057;
+            --mainContrastSchemeColor-lighten10: #ffa87f;
+            --mainContrastSchemeColor-lighten20: #ffb289;
+        }
+    </style>
+
+    <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/base/style.css?ver=1691644398" rel="stylesheet"
+        type="text/css">
+    <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/templates/michigan.css?ver=1691644398"
+        rel="stylesheet" type="text/css">
+    <link href="http://new15942715563356.myaddshop.ru/css/shop/mobile.css?ver=1691644398" rel="stylesheet"
+        type="text/css" media="(max-width: 1366px)">
+
+    <script>
+        window.shop_currency = 'руб.';
+        window.shop_id = '1010';
+        window.customer_discount = '';
+        window.template_class = 'michigan';
+        window.item_img_zoom = '0';
+        window.promo_discount = null;
+        window.promo_title = null;
+        window.one_click_buy = 1;
+    </script>
+
+
+
+    <!-- gsc start -->
+
+    <!-- gsc end -->
+
+    <!-- ywm start -->
+
+    <!-- ywm end -->
+
+
+
+
+    <!-- Подключите тут важные скрипты и стили. -->
+</head>
+
+<body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
+
+
+
+    <div class="wrapper">
+
+        <header>
+            <div class="header-top">
+                <div class="inner">
+                    <div class="email-wrapper">
+                        <a href="mailto:{{ .Email}}">{{ .Email}}</a>
+                    </div>
+
+                    <div class="phone">
+                        <a href="tel:{{ .Phone}}">{{ .Phone}}</a>
+
+
+
+                    </div>
+
+                    <div class="login_or_reg">
+                        <a href="{{ .Full_url_addr}}/login">Вход</a>
+                        <a href="{{ .Full_url_addr}}/registration">Регистрация</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-middle">
+                <div class="inner">
+                    <div class="header-middle-left">
+                        <div class="logo_wrapper">
+                            <ahref="{{ .Full_url_addr}}/home" class="logo">
+                                <img src="{{ .Path_logo_company}}" srcset="{{ .Path_logo_company}} 2x"
+                                    alt="{{ .Company_name}}" width="250px" height="70px" />
+                                </a>
+                        </div>
+                        <div class="slogan">Магазин книг</div>
+                    </div>
+                    <div class="search_form">
+                        <form method="GET" action="{{ .Full_url_addr}}/search">
+                            <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
+                                autocomplete="off" autofocus value="" />
+                            <button type="submit">Поиск</button>
+                            <div id="autocomplete"></div>
+                        </form>
+                    </div>
+                    <div class="header-middle-right">
+                        <div class="search_open bars" title="Поиск по товарам">
+                            <i data-feather="search"></i>
+                            <span>Поиск</span>
+                        </div>
+                        <div class="orders bars" title="Мои заказы">
+                            <a href="{{ .Full_url_addr}}/login">
+                                <i data-feather="archive"></i>
+                                <span>Мои заказы</span>
+                            </a>
+                        </div>
+                        <div class="favorite bars">
+                            <a href="http://new15942715563356.myaddshop.ru/favorites/">
+                                <i data-feather="heart"></i>
+                                <span>Избранное</span>
+                            </a>
+                        </div>
+                        <div class="basket bars" title="Корзина товаров">
+                            <a href="http://new15942715563356.myaddshop.ru/basket/">
+                                <i data-feather="shopping-bag"></i>
+                                <span>Корзина</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-bottom">
+                <div class="inner">
+                    <div class="categories-menu">
+                        <div class="catalog_title"><i data-feather="grid"></i>Главная</div>
+                        <!-- <div class="catalog_wrapper">
+                            <div class="catalog_subtitle">Разделы магазина</div>
+                            <ul class="level_1">
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/shkafy-i-mebelnye-stenki/"
+                                        class="current" title="Шкафы и мебельные стенки">Шкафы и мебельные стенки</a>
+                                </li>
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/stellazhi-i-polki/"
+                                        class="current" title="Стеллажи и полки">Стеллажи и полки</a></li>
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/komody-i-garderoby/"
+                                        class="current" title="Комоды и гардеробы">Комоды и гардеробы</a></li>
+                                <li><a href="http://new15942715563356.myaddshop.ru/categories/stoly-i-stulya/"
+                                        class="current" title="Столы и стулья">Столы и стулья</a></li>
+                            </ul>
+                        </div> -->
+                    </div>
+                    <div class="page-menu">
+                        <ul id="menu_list" class="level_1">
+                            <!-- <li class="li"><a href="{{ .Full_url_addr}}/sales" class="" title="Акции">Акции</a></li> -->
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                                    title="О компании">Просвещение</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                                    title="О компании">Агат</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/agat" class=""
+                                    title="О компании">Строникум</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/naura" class=""
+                                    title="О компании">Нау-раша</a></li>
+                            
+                        </ul>
+                    </div>
+
+                    <div class="mob_menu"><i data-feather="menu"></i>Навигация</div>
+                    <div class="menu_popup_mob">
+                        <div class="catalog_subtitle">Навигация по сайту</div>
+                        <ul id="menu_mob">
+                            <!-- <li class="li"><a href="{{ .Full_url_addr}}/sales" class="" title="Акции">Акции</a></li> -->
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                                    title="О компании">Просвещение</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                                    title="О компании">Агат</a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/agat" class=""
+                                    title="О компании">Строникум/a></li>
+                            <li class="li"><a href="{{ .Full_url_addr}}/naura" class=""
+                                    title="О компании">Нау-раша</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </header>
+
+
+
+
+
+
+
+    <main>
+        <div class="block main">
+            <div class="inner">
+
+                <div class="content  ">
+
+                    
+
+                    <div class="items_wrapper">
+                        <h2 class="shop-title">Каталог товаров</h2>
+                        <div class="items">
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="bestseller">Каталог товаров</div>
+                                        <div class="recommend">Рекомендуем</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/2_1594279653.png"
+                                        alt="Шкаф Бланка 2" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/2_1_1594279656.png"
+                                        alt="Шкаф Бланка 2" data-switch="1" style="display: none;" width="250px"
+                                        height="250px" />
+
+                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/"
+                                        class="descr">Шкаф Бланка 2</a>
+                                    <div class="short_descr">Четырехдверный шкаф из коллекции Бланка вместительная и
+                                        эффектная система хранения.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">10350.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60814">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="bestseller">Каталог товаров</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/11_1594281805.png"
+                                        alt="Комод Санди 13100" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/11_2_1594281803.png"
+                                        alt="Комод Санди 13100" data-switch="1" style="display: none;" width="250px"
+                                        height="250px" />
+
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-sandi-13100/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/komod-sandi-13100/"
+                                        class="descr">Комод Санди 13100</a>
+                                    <div class="short_descr">Лаконичная модель комода предназначена специально для
+                                        малогабаритного помещения.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">4990.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/komod-sandi-13100/">Купить</a>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60791">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <div class="item_tags">
+                                        <div class="bestseller">Каталог товаров</div>
+                                    </div>
+
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/1_1594278621.png"
+                                        alt="Шкаф Соренто 3" data-switch="0" width="250px" height="250px"
+                                        loading="lazy" />
+                                    <img src="http://new15942715563356.myaddshop.ru/img/250x250/1010/items/1_1_1594278625.png"
+                                        alt="Шкаф Соренто 3" data-switch="1" style="display: none;" width="250px"
+                                        height="250px" />
+
+                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-sorento-3/"></a>
+                                </div>
+                                <div class="item_content " data-discount="0.00">
+                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-sorento-3/"
+                                        class="descr">Шкаф Соренто 3</a>
+                                    <div class="short_descr">Модель, которая вместит и одежду, и домашний текстиль, и
+                                        еще множество других вещей.</div>
+
+                                    <div class="item_price_big">
+                                        <span class="new">8690.00 руб.</span>
+                                    </div>
+
+                                    <a class="more"
+                                        href="http://new15942715563356.myaddshop.ru/items/shkaf-sorento-3/">Купить</a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+    </div>
+
+
+
+
+    <footer class="block">
+        <div class="top">
+            <div class="inner">
+                <div class="fmenu">
+                    <div class="logo_wrapper">
+                        <a class="logo" href="{{ .Full_url_addr}}/home">
+                            <img src="{{ .Path_logo_company}}" alt="Мир книг" />
+                        </a>
+                    </div>
+                    <div class="copyright">&copy;
+                        {{ .copyright}}</div>
+                    <a class="policy" href="http://new15942715563356.myaddshop.ru/politika-konfidencialnosti/">Политика
+                        конфиденциальности</a>
+                    <a class="user_agreement_link"
+                        href="http://new15942715563356.myaddshop.ru/soglasie-na-obrabotku-personalnyh-dannyh/">Согласие
+                        на обработку персональных данных</a>
+                    <div class="footer_site_info">
+                        <p>Используя данный сайт, вы автоматически принимаете условия пользовательского соглашения и
+                            соглашаетесь с политикой конфиденциальности.</p>
+                    </div>
+                </div>
+                <div class="fmenu">
+                    <div class="footer_subtitle">О магазине</div>
+                    <ul>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/">Главная</a>
+                        </li>
+                        <!-- <li>
+                            <a href="{{ .Full_url_addr}}/home">Акции</a>
+                        </li> -->
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/o-kompanii/">О компании</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/dostavka-i-oplata/">Доставка и оплата</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/kontakty/">Контакты</a>
+                        </li>
+                        <li>
+                            <span class="current" title="Новости">Новости</span>
+                        </li>
+                        <li>
+                            <span class="current" title="Статьи">Статьи</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <div class="fmenu catalog">
+                    <div class="footer_subtitle">Каталог</div>
+                    <ul>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/shkafy-i-mebelnye-stenki/"
+                                class="current" title="Шкафы и мебельные стенки">Шкафы и мебельные стенки</a>
+
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/stellazhi-i-polki/"
+                                class="current" title="Стеллажи и полки">Стеллажи и полки</a>
+
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/komody-i-garderoby/"
+                                class="current" title="Комоды и гардеробы">Комоды и гардеробы</a>
+
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/stoly-i-stulya/" class="current"
+                                title="Столы и стулья">Столы и стулья</a>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="fmenu contact_us">
+                    <div class="footer_subtitle">Свяжитесь с нами</div>
+                    <div class="address">{{ .location_office}}</div>
+                    <div>
+                        <span class="mail_span">E-mail:</span>
+                        <a href="mailto:{{ .Email}}">{{ .Email}}</a>
+                    </div>
+
+                    <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a>
+
+
+
+
+                    <div class="social">
+                        <a target="_blank" href="https://vk.com/#" class="link_vk"></a>
+                        <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
+                        <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
+                        <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
+                        <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <script src="../../code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
+    <script>$(function () { feather.replace(); });</script>
+    <script src="http://new15942715563356.myaddshop.ru/js/swiper-min.js" type="text/javascript" type="module"></script>
+    <script src="http://new15942715563356.myaddshop.ru/js/script-min.js" type="text/javascript"></script>
+
+    <link rel="stylesheet"
+        href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" />
+    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" />
+    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" />
+
+
+
+
+
+    <!-- ym start -->
+
+    <!-- ym end -->
+
+    <!-- ym start -->
+
+    <!-- ym end -->
+
+    <!-- vkpixel start -->
+
+    <!-- vkpixel end -->
+
+    <!-- fbpixel start -->
+
+    <!-- fbpixel end -->
+
+    <!-- jivosite start -->
+
+    <!-- jivosite end -->
+
+    <!-- callbackhunter  start -->
+
+    <!-- callbackhunter  end -->
+
+    <!-- roistat  start -->
+
+    <!-- roistat  end -->
+
+
+
+    <!-- Стастистики, Пиксели и прочее лучше размещать тут. -->
+
+
+
+    <!-- 21 ms -->
+</body>
+
+</html>
