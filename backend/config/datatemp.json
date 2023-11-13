@@ -1,0 +1,17 @@
+{
+    "path_banner_home": "/static/banner.jpg",
+    "path_logo_company": "/static/logo.jpg",
+    
+    "phone": "88009008090",
+    "email": "EX@EX.COM",
+    "footer_years": "2010-2023",
+    "copyright": "BOOK-RZN",
+    "location_office": "халтурина 1б",
+    "location_shops": ["халтурина 1б", "халтурина 1б"],
+    "company_name":"World books",
+
+    "full_url_addr":"http://book_rzn",
+    "text_banner":"Распродажа - большие скидки до 40%!",
+    "description_banner":"Сроки проведения акции: 07.07.24г. — 13.07.24г. Доставка исборка в черте и за чертой города рассчитывается согласно действующему прайс-листу на услуги."
+
+}
