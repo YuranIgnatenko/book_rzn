@@ -46,7 +46,7 @@ func GetCookieUser(w http.ResponseWriter, r *http.Request) bool {
 		switch {
 		case errors.Is(err, http.ErrNoCookie):
 			// http.Error(w, "cookie not found", http.StatusBadRequest)
-			http.Redirect(w, r, Config.Full_url_addr+"/404", http.StatusSeeOther)
+			http.Redirect(w, r, Config.Ip+Config.Split_ip_port+Config.Port+"/404", http.StatusSeeOther)
 		default:
 			log.Println(err)
 			http.Error(w, "server error", http.StatusInternalServerError)
@@ -92,7 +92,7 @@ func GetCookieAdmin(w http.ResponseWriter, r *http.Request) bool {
 		switch {
 		case errors.Is(err, http.ErrNoCookie):
 			// http.Error(w, "cookie not found", http.StatusBadRequest)
-			http.Redirect(w, r, Config.Full_url_addr+"/404", http.StatusSeeOther)
+			http.Redirect(w, r, Config.Ip+Config.Split_ip_port+Config.Port+"/404", http.StatusSeeOther)
 
 		default:
 			log.Println(err)

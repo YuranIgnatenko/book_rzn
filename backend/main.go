@@ -3,18 +3,15 @@ package main
 import (
 	"backend/config"
 	"backend/middleware"
-	"backend/parsing"
 	"backend/routes"
 	"fmt"
 	"log"
 	"net/http"
 )
 
-// func HandlerOpenPage(namehtml string)
 
 func main() {
 	fmt.Println("run app")
-	parsing.GetLinks()
 	Conf := config.NewConfiguration()
 
 	http.HandleFunc("/about", routes.OpenHtmlAbout)
@@ -40,14 +37,13 @@ func main() {
 	http.HandleFunc("/prosv", routes.OpenHtmlProsv)
 	http.HandleFunc("/naura", routes.OpenHtmlNaura)
 	http.HandleFunc("/agat", routes.OpenHtmlAgat)
+	http.HandleFunc("/804", routes.OpenHtml804)
 	http.HandleFunc("/stronikum", routes.OpenHtmlStronikum)
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	fmt.Println(Conf.Full_url_addr, Conf.HostAndPort)
-
-	fmt.Printf("Starting server : [ %v ]\n", Conf.Full_url_addr)
-	log.Fatal(http.ListenAndServe(":8083", nil))
+	fmt.Printf("Starting server : [ %v ]\n", Conf.Port)
+	log.Fatal(http.ListenAndServe(":"+Conf.Port, nil))
 
 }

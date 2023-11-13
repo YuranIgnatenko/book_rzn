@@ -30,7 +30,7 @@ type Configuration struct {
 	Location_shops     []string `json:"location_shops"`
 	Path_logo_company  string   `json:"path_logo_company"`
 	Path_banner_home   string   `json:"path_banner_home"`
-	Company_name       string   `json:"compny_name"`
+	Company_name       string   `json:"company_name"`
 	Text_banner        string   `json:"text_banner"`
 	Description_banner string   `json:"description_banner"`
 
@@ -39,9 +39,7 @@ type Configuration struct {
 	Cards_stronikum []string
 	Cards_agat      []string
 
-	Prosv_cards   []parsing.ProsvCard
-	Full_url_addr string
-	HostAndPort   string
+	Prosv_cards []parsing.ProsvCard
 }
 
 func NewConfiguration() Configuration {
@@ -50,6 +48,6 @@ func NewConfiguration() Configuration {
 	byteValue, _ := ioutil.ReadAll(file)
 	var conf Configuration
 	json.Unmarshal(byteValue, &conf)
-	conf.Prosv_cards = parsing.GetLinks()
+	// conf.Prosv_cards = parsing.GetLinks()
 	return conf
 }

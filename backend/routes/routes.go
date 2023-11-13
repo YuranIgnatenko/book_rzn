@@ -103,14 +103,14 @@ func OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 
 	if is_admin {
 		auth.SetCookieAdmin(w, r, cookie_admin)
-		http.Redirect(w, r, Config.Full_url_addr+"/cms", http.StatusSeeOther)
+		http.Redirect(w, r, Config.Ip+Config.Split_ip_port+Config.Port+"/cms", http.StatusSeeOther)
 		// OpenHtmlCms(w, r)
 		return
 	}
 	if is_user {
 		auth.SetCookieUser(w, r, cookie_user)
 		// OpenHtmlProfile(w, r)
-		http.Redirect(w, r, Config.Full_url_addr+"/home", http.StatusSeeOther)
+		http.Redirect(w, r, Config.Ip+Config.Split_ip_port+Config.Port+"/home", http.StatusSeeOther)
 		return
 	}
 
@@ -141,7 +141,7 @@ func OpenHtmlSales(w http.ResponseWriter, r *http.Request) {
 }
 
 func OpenHtmlProsv(w http.ResponseWriter, r *http.Request) {
-	
+
 	tmpl, _ := template.ParseFiles(Config.Path_prefix + Config.Path_frontend + "prosv.html")
 	tmpl.Execute(w, Config)
 }
@@ -155,5 +155,10 @@ func OpenHtmlStronikum(w http.ResponseWriter, r *http.Request) {
 }
 func OpenHtmlNaura(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(Config.Path_prefix + Config.Path_frontend + "naura.html")
+	tmpl.Execute(w, Config)
+}
+
+func OpenHtml804(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(Config.Path_prefix + Config.Path_frontend + "804.html")
 	tmpl.Execute(w, Config)
 }
