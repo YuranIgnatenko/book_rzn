@@ -1,0 +1,34 @@
+{
+    "url_prefix" : "http://",
+    
+    "path_frontend": "/frontend/",
+    "path_backend": "/backend/",
+    "path_config": "/backend/config/",
+    "path_static": "static/",
+    "path_bd": "bd/",
+    "path_prefix":"/home/yu/Desktop/code/book_rzn/",
+    "path_logo_company":"/static/logo_new.jpg",
+    "path_banner_home":"/static/ads3.jpg",
+
+    "bd_admin_list": "bd_admin_data.csv",
+    "bd_users_list": "bd_users_data.csv",
+
+    "bd_prosv": "bd_prosv.csv",
+
+    "ip": "localhost",
+    "port": "8082",
+    "split_ip_port":":",
+    
+    "link_prosv":"https://shop.prosv.ru/katalog",
+    "copyright":"2023",
+    "phone":"89008009080",
+    "email":"test@test.test",
+    "footer_years":"1995-2023",
+    "location_office":"Халтурина 1Б",
+    "location_shops" : ["address 1", "address 2"],
+    "company_name":"Учколлектор Рязань 1995",
+
+    "text_banner":"",
+    "description_banner":""
+
+}

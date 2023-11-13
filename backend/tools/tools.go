@@ -2,7 +2,6 @@ package tools
 
 import (
 	"encoding/csv"
-	"fmt"
 	"os"
 )
 
@@ -22,11 +21,9 @@ func ReadCsvFile(filePath string) [][]string {
 	for {
 		record, e := reader.Read()
 		if e != nil {
-			// fmt.Println(e)
 			break
 		}
 		s = append(s, record)
-		fmt.Println(record)
 	}
 	return s
 

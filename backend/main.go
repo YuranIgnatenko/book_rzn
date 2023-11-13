@@ -9,9 +9,8 @@ import (
 	"net/http"
 )
 
-
 func main() {
-	fmt.Println("run app")
+	fmt.Println("init server")
 	Conf := config.NewConfiguration()
 
 	http.HandleFunc("/about", routes.OpenHtmlAbout)

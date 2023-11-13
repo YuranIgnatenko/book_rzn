@@ -3,7 +3,6 @@ package bd
 import (
 	"backend/config"
 	"encoding/csv"
-	"fmt"
 	"os"
 )
 
@@ -14,7 +13,6 @@ func readCsvFileRows(filePath string) [][]string {
 
 	file, err := os.Open(filePath)
 
-	fmt.Println("||||||||||", err, filePath)
 	if err != nil {
 		panic(err)
 	}
@@ -27,11 +25,9 @@ func readCsvFileRows(filePath string) [][]string {
 	for {
 		record, e := reader.Read()
 		if e != nil {
-			// fmt.Println(e)
 			break
 		}
 		s = append(s, record)
-		fmt.Println(record)
 	}
 	return s
 

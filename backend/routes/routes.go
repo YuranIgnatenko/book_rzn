@@ -3,7 +3,6 @@ package routes
 import (
 	"backend/auth"
 	"backend/config"
-	"fmt"
 	"net/http"
 	"text/template"
 )
@@ -44,7 +43,6 @@ func OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, Config)
 }
 func OpenHtmlHome(w http.ResponseWriter, r *http.Request) {
-	// fmt.Println("open home", Config.Path_prefix + Config.Path_frontend)
 	tmpl, _ := template.ParseFiles(Config.Path_prefix + Config.Path_frontend + "home.html")
 	tmpl.Execute(w, Config)
 }
@@ -73,7 +71,6 @@ func OpenHtmlRegistry(w http.ResponseWriter, r *http.Request) {
 
 func OpenHtmlCms(w http.ResponseWriter, r *http.Request) {
 	res := auth.GetCookieAdmin(w, r)
-	fmt.Println(res, "res cookie admin -- 404 ??")
 	if res {
 		tmpl, _ := template.ParseFiles(Config.Path_prefix + Config.Path_frontend + "cms.html")
 		tmpl.Execute(w, Config)
@@ -93,28 +90,20 @@ func OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 	login := r.FormValue("login")
 	password := r.FormValue("password")
 
-	fmt.Println(login, password)
-
 	is_admin, cookie_admin := auth.CheckAdmin(login, password)
 	is_user, cookie_user := auth.CheckLoginUser(login, password)
-
-	fmt.Println(login, password)
-	fmt.Println("user mode:", is_user, "\n", "admin mode:", is_admin)
 
 	if is_admin {
 		auth.SetCookieAdmin(w, r, cookie_admin)
 		http.Redirect(w, r, Config.Ip+Config.Split_ip_port+Config.Port+"/cms", http.StatusSeeOther)
-		// OpenHtmlCms(w, r)
 		return
 	}
 	if is_user {
 		auth.SetCookieUser(w, r, cookie_user)
-		// OpenHtmlProfile(w, r)
 		http.Redirect(w, r, Config.Ip+Config.Split_ip_port+Config.Port+"/home", http.StatusSeeOther)
 		return
 	}
 
-	// OpenHtmlLogin(w, r)
 	http.Redirect(w, r, Config.Bd_admin_list+"/login", http.StatusSeeOther)
 	return
 

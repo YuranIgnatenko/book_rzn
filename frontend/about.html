@@ -2,8 +2,7 @@
 <html lang="ru-ru">
 
 <head>
-    <!-- U: template22@addshop.ru -->
-    <!-- shop_id: 1010 -->
+ 
 
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta name="keywords" content="" />
@@ -21,11 +20,7 @@
     <link href="http://new15942715563356.myaddshop.ru/css/normalize.css" rel="stylesheet" type="text/css">
 
     <link href="http://new15942715563356.myaddshop.ru/css/framework7-icons.css" rel="stylesheet">
-    <link href="http://new15942715563356.myaddshop.ru/css/swiper.css" rel="stylesheet" type="text/css">
-
-
-
-    <style>
+    <link href="http://new15942715563356.myaddshop.ru/css/swiper.css" rel="stylesheet" type="text/css">     <style>
         :root {
             --mainSchemeColor: #804C3E;
             --mainContrastSchemeColor: #FF9E75;
@@ -66,28 +61,16 @@
         window.promo_discount = null;
         window.promo_title = null;
         window.one_click_buy = 1;
-    </script>
-
-
-
-    <!-- gsc start -->
+    </script>     <!-- gsc start -->
 
     <!-- gsc end -->
 
     <!-- ywm start -->
 
-    <!-- ywm end -->
-
-
-
-    <!-- Подключите тут важные скрипты и стили. -->
+    <!-- ywm end -->     <!-- Подключите тут важные скрипты и стили. -->
 </head>
 
-<body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
-
-
-
-    <div class="wrapper">
+<body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">     <div class="wrapper">
 
         <header>
             <div class="header-top">
@@ -97,15 +80,11 @@
                     </div>
 
                     <div class="phone">
-                        <a href="tel:{{ .Phone}}">{{ .Phone}}</a>
-
-
-
-                    </div>
+                        <a href="tel:{{ .Phone}}">{{ .Phone}}</a>                     </div>
 
                     <div class="login_or_reg">
-                        <a href="{{ .Full_url_addr}}/login">Вход</a>
-                        <a href="{{ .Full_url_addr}}/registration">Регистрация</a>
+                        <a href="h/login">Вход</a>
+                        <a href="http://localhost:{{ .Port }}/registration">Регистрация</a>
                     </div>
                 </div>
             </div>
@@ -114,15 +93,15 @@
                 <div class="inner">
                     <div class="header-middle-left">
                         <div class="logo_wrapper">
-                            <a href="{{ .Full_url_addr}}/home" class="logo">
+                            <a href="http://localhost:{{ .Port }}/home" class="logo">
                                 <img src="{{ .Path_logo_company}}" srcset="{{ .Path_logo_company}} 2x"
                                     alt="{{ .Company_name}}" width="250px" height="70px" />
                             </a>
                         </div>
-                        <div class="slogan">Магазин книг</div>
+                        <div class="slogan">{{ .Location_office}}</div>
                     </div>
                     <div class="search_form">
-                        <form method="GET" action="{{ .Full_url_addr}}/search">
+                        <form method="GET" action="http://localhost:{{ .Port }}/search">
                             <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
                                 autocomplete="off" autofocus value="" />
                             <button type="submit">Поиск</button>
@@ -135,7 +114,7 @@
                             <span>Поиск</span>
                         </div>
                         <div class="orders bars" title="Мои заказы">
-                            <a href="{{ .Full_url_addr}}/login">
+                            <a href="http://localhost:{{ .Port }}/login">
                                 <i data-feather="archive"></i>
                                 <span>Мои заказы</span>
                             </a>
@@ -147,7 +126,7 @@
                             </a>
                         </div>
                         <div class="basket bars" title="Корзина товаров">
-                            <a href="http://new15942715563356.myaddshop.ru/basket/">
+                            <a href="http://localhost:{{ .Port }}/order">
                                 <i data-feather="shopping-bag"></i>
                                 <span>Корзина</span>
                             </a>
@@ -160,26 +139,14 @@
                 <div class="inner">
                     <div class="categories-menu">
                         <div class="catalog_title"><i data-feather="grid"></i>Главная</div>
-                        <!-- <div class="catalog_wrapper">
-                            <div class="catalog_subtitle">Разделы магазина</div>
-                            <ul class="level_1">
-                                <li><a href="http://new15942715563356.myaddshop.ru/categories/shkafy-i-mebelnye-stenki/"
-                                        class="" title="Шкафы и мебельные стенки">Шкафы и мебельные стенки</a></li>
-                                <li><a href="http://new15942715563356.myaddshop.ru/categories/stellazhi-i-polki/"
-                                        class="" title="Стеллажи и полки">Стеллажи и полки</a></li>
-                                <li><a href="http://new15942715563356.myaddshop.ru/categories/komody-i-garderoby/"
-                                        class="" title="Комоды и гардеробы">Комоды и гардеробы</a></li>
-                                <li><a href="http://new15942715563356.myaddshop.ru/categories/stoly-i-stulya/" class=""
-                                        title="Столы и стулья">Столы и стулья</a></li>
-                            </ul>
-                        </div> -->
+                         
                     </div>
                     <!-- <ul>
                         <li>
-                            <a href="{{ .Full_url_addr}}/home">Главная</a>
+                            <a href="http://localhost:{{ .Port }}/home">Главная</a>
                         </li>
                         <li>
-                            <a href="{{ .Full_url_addr}}/sales">Акции</a>
+                            <a href="http://localhost:{{ .Port }}/sales">Акции</a>
                         </li>
                         <li>
                             <a href="http://new15942715563356.myaddshop.ru/prosv">Просвещение</a>
@@ -208,7 +175,7 @@
                     <div class="menu_popup_mob">
                         <div class="catalog_subtitle">Навигация по сайту</div>
                         <ul id="menu_mob">
-                            <!-- <li class="li"><a href="{{ .Full_url_addr}}/sales" class="current" title="Акции">А5555кции</a> -->
+                            <!-- <li class="li"><a href="http://localhost:{{ .Port }}/sales" class="current" title="Акции">А5555кции</a> -->
                             </li>
                             <li class="li"><span class="current">О компании</span></li>
                             <li class="li"><a href="http://new15942715563356.myaddshop.ru/otzyvy/" class="current"
@@ -222,15 +189,7 @@
                 </div>
             </div>
     </div>
-    </header>
-
-
-
-
-
-
-
-    <main>
+    </header>      <main>
         <div class="block main">
             <div class="inner">
 
@@ -284,30 +243,26 @@
             </div>
         </div>
     </main>
-    </div>
-
-
-
-
+    </div> 
     <footer class="block">
         <div class="top">
             <div class="inner">
                 <div class="fmenu">
                     <div class="logo_wrapper">
-                        <a class="logo" href="{{ .Full_url_addr}}/home">
+                        <a class="logo" href="http://localhost:{{ .Port }}/home">
                             <img src="{{ .Path_logo_company}}" alt="Мир книг" />
                         </a>
                     </div>
                     <div class="copyright">&copy;
                         {{ .Сopyright}}</div>
-                    <a class="policy" href="http://new15942715563356.myaddshop.ru/politika-konfidencialnosti/">Политика
+                    <!-- <a class="policy" href="http://new15942715563356.myaddshop.ru/politika-konfidencialnosti/">Политика
                         конфиденциальности</a>
                     <a class="user_agreement_link"
                         href="http://new15942715563356.myaddshop.ru/soglasie-na-obrabotku-personalnyh-dannyh/">Согласие
                         на обработку персональных данных</a>
                     <div class="footer_site_info">
                         <p>Используя данный сайт, вы автоматически принимаете условия пользовательского соглашения и
-                            соглашаетесь с политикой конфиденциальности.</p>
+                            соглашаетесь с политикой конфиденциальности.</p> -->
                     </div>
                 </div>
                 <div class="fmenu">
@@ -317,10 +272,10 @@
                             <a href="http://new15942715563356.myaddshop.ru/">Главная</a>
                         </li>
                         <!-- <li>
-                            <a href="{{ .Full_url_addr}}/sales">Акции</a>
+                            <a href="http://localhost:{{ .Port }}/sales">Акции</a>
                         </li> -->
                         <li>
-                            <a href="{{ .Full_url_addr}}/home">О компании</a>
+                            <a href="http://localhost:{{ .Port }}/home">О компании</a>
                         </li>
                         <li>
                             <a href="http://new15942715563356.myaddshop.ru/dostavka-i-oplata/">Доставка и оплата</a>
@@ -371,11 +326,7 @@
                         <a href="mailto:{{ .Email}}">{{ .Email}}</a>
                     </div>
 
-                    <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a>
-
-
-
-
+                    <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a> 
                     <div class="social">
                         <a target="_blank" href="https://vk.com/#" class="link_vk"></a>
                         <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
@@ -387,11 +338,7 @@
                 </div>
             </div>
         </div>
-    </footer>
-
-
-
-
+    </footer> 
     <script src="../../code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
     <script>$(function () { feather.replace(); });</script>
@@ -401,46 +348,8 @@
     <link rel="stylesheet"
         href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" />
     <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" />
-    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" />
-
-
-
-
-    <!-- ym start -->
-
-    <!-- ym end -->
-
-    <!-- ym start -->
-
-    <!-- ym end -->
-
-    <!-- vkpixel start -->
-
-    <!-- vkpixel end -->
-
-    <!-- fbpixel start -->
-
-    <!-- fbpixel end -->
-
-    <!-- jivosite start -->
-
-    <!-- jivosite end -->
-
-    <!-- callbackhunter  start -->
-
-    <!-- callbackhunter  end -->
-
-    <!-- roistat  start -->
-
-    <!-- roistat  end -->
-
-
-
-    <!-- Стастистики, Пиксели и прочее лучше размещать тут. -->
-
-
-
-    <!-- 12 ms -->
+    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" /> 
+      <!-- 12 ms -->
 </body>
 
 </html>

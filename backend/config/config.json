@@ -8,7 +8,7 @@
     "path_bd": "bd/",
     "path_prefix":"/home/yu/Desktop/code/book_rzn/",
     "path_logo_company":"/static/logo_new.jpg",
-    "path_banner_home":"/static/ads2.jpg",
+    "path_banner_home":"/static/ads3.jpg",
 
     "bd_admin_list": "bd_admin_data.csv",
     "bd_users_list": "bd_users_data.csv",

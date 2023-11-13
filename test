@@ -1,9 +1,0 @@
-x1 = 1
-x2 = 2.6456
-x3 = "abcdef"
-x4 = {x:"1bcd}
-x5 = ["abd", 1, 2, "a"]
-x6 = random(0,10)
-x7 = get_html(google/weather/rzn)
-x8 = nil
-x9 = "file.txt"

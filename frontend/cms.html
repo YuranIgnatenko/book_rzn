@@ -45,11 +45,7 @@
         #tab_3:checked~#txt_3,
         #tab_4:checked~#txt_4 {
             display: block;
-        }
-
-
-
-
+        } 
     </style>
 
     <!-- ============================= -->
@@ -140,6 +136,15 @@
                 <td><input type="text" id="PORT" name="PORT" placeholder="{{ .Port}}" value="{{ .Port}}"></td>
             </tr>
             <tr>
+                <td><label for="URL PREFIX">URL PREFIX</label></td>
+                <td><input type="text" id="URL PREFIX" name="URL PREFIX" placeholder="{{ .Url_prefix}}"
+                        value="{{ .Url_prefix}}"></td>
+            </tr>
+
+
+
+
+            <tr>
                 <td><label for="BD ADMIN LIST">BD ADMIN LIST</label></td>
                 <td><input type="text" id="BD ADMIN LIST" name="BD ADMIN LIST" placeholder="{{ .Bd_admin_list}}"
                         value="{{ .Bd_admin_list}}"></td>
@@ -150,11 +155,45 @@
                         value="{{ .Bd_users_list}}"></td>
             </tr>
             <tr>
-                <td><label for="URL PREFIX">URL PREFIX</label></td>
-                <td><input type="text" id="URL PREFIX" name="URL PREFIX" placeholder="{{ .Url_prefix}}"
-                        value="{{ .Url_prefix}}"></td>
+                <td><label for="BD Prosv">BD Prosv</label></td>
+                <td><input type="text" id="BD Prosv" name="BD Prosv" placeholder="{{ .Bd_prosv}}"
+                        value="{{ .Bd_prosv}}"></td>
             </tr>
+
+
+            <tr>
+                <td><label for="COPYRIGHT TEXT">COPYRIGHT TEXT</label></td>
+                <td><input type="text" id="COPYRIGHT TEXT" name="COPYRIGHT TEXT" placeholder="{{ .Copyright}}"
+                        value="{{ .Copyright}}"></td>
+            </tr>
+            <tr>
+                <td><label for="PHONE NUMBER">PHONE NUMBER</label></td>
+                <td><input type="text" id="PHONE NUMBER" name="PHONE NUMBER" placeholder="{{ .Phone}}"
+                        value="{{ .Copyright}}"></td>
+            </tr>
+            <tr>
+                <td><label for="EMAIL ADDRESS">EMAIL ADDRESS</label></td>
+                <td><input type="text" id="EMAIL ADDRESS" name="EMAIL ADDRESS" placeholder="{{ .Email}}"
+                        value="{{ .Copyright}}"></td>
+            </tr>
+            <tr>
+                <td><label for="FOOTER YEARS">FOOTER YEARS</label></td>
+                <td><input type="text" id="FOOTER YEARS" name="FOOTER YEARS" placeholder="{{ .Footer_years}}"
+                        value="{{ .Copyright}}"></td>
+            </tr>
+            <tr>
+                <td><label for="LOCATION OFFICE">LOCATION OFFICE</label></td>
+                <td><input type="text" id="LOCATION OFFICE" name="LOCATION OFFICE" placeholder="{{ .Location_office}}"
+                        value="{{ .Copyright}}"></td>
+            </tr>
+            <tr>
+                <td><label for="COMPANY NAME">COMPANY NAME</label></td>
+                <td><input type="text" id="COMPANY NAME" name="COMPANY NAME" placeholder="{{ .Company_name}}"
+                        value="{{ .Copyright}}"></td>
+            </tr>
+
         </table>
+        <input type="submit" value="Save values">
     </div>
 
     <!-- =================================================== -->

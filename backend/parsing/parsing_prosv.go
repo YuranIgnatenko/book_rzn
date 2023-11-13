@@ -1,8 +1,6 @@
 package parsing
 
 import (
-	"fmt"
-
 	"github.com/gocolly/colly/v2"
 )
 
@@ -14,7 +12,6 @@ type ProsvCard struct {
 }
 
 // https://shop.prosv.ru/katalog?pagenumber=2
-
 var url = "http://shop.prosv.ru/katalog"
 
 func GetLinks() []ProsvCard {
@@ -33,7 +30,6 @@ func GetLinks() []ProsvCard {
 			dts = append(dts, dt)
 		})
 	})
-	fmt.Println(len(dts))
 
 	c.Visit(url)
 	return dts

@@ -8,6 +8,7 @@ import (
 )
 
 var path_config = "/home/yu/Desktop/code/book_rzn/backend/config/config.json"
+var path_config_default = "/home/yu/Desktop/code/book_rzn/backend/config/default.json"
 
 type Configuration struct {
 	Url_prefix         string   `json:"url_prefix"`
@@ -22,6 +23,7 @@ type Configuration struct {
 	Path_bd            string   `json:"path_bd"`
 	Bd_admin_list      string   `json:"bd_admin_list"`
 	Bd_users_list      string   `json:"bd_users_list"`
+	Bd_prosv           string   `json:"bd_prosv"`
 	Phone              string   `json:"phone"`
 	Email              string   `json:"email"`
 	Footer_years       string   `json:"footer_years"`

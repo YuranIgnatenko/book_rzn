@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"backend/auth"
-	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -10,25 +9,21 @@ import (
 
 func CookieAdmin(next http.Handler) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("middleware -- ok A admin")
 		isFindCookie := auth.GetCookieAdmin(w, r)
 		if isFindCookie == true {
 			next.ServeHTTP(w, r)
 		}
 
-		fmt.Println("middleware -- ok B admin")
 	})
 }
 
 func CookieUser(next http.Handler) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("middleware -- ok A")
 		isFindCookie := auth.GetCookieUser(w, r)
 		if isFindCookie == true {
 			next.ServeHTTP(w, r)
 		}
 
-		fmt.Println("middleware -- ok B")
 	})
 }
 

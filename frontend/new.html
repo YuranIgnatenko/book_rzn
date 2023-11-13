@@ -2,8 +2,7 @@
 <html lang="ru-ru">
 
 <head>
-    <!-- U: template22@addshop.ru -->
-    <!-- shop_id: 1010 -->
+ 
 
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta name="keywords" content="" />
@@ -20,11 +19,7 @@
     <link href="/css/normalize.css" rel="stylesheet" type="text/css">
 
     <link href="/css/framework7-icons.css" rel="stylesheet">
-    <link href="/css/swiper.css" rel="stylesheet" type="text/css">
-
-
-
-    <style>
+    <link href="/css/swiper.css" rel="stylesheet" type="text/css">     <style>
         :root {
             --mainSchemeColor: #804C3E;
             --mainContrastSchemeColor: #FF9E75;
@@ -62,28 +57,16 @@
         window.promo_discount = null;
         window.promo_title = null;
         window.one_click_buy = 1;
-    </script>
-
-
-
-    <!-- gsc start -->
+    </script>     <!-- gsc start -->
 
     <!-- gsc end -->
 
     <!-- ywm start -->
 
-    <!-- ywm end -->
-
-
-
-    <!-- Подключите тут важные скрипты и стили. -->
+    <!-- ywm end -->     <!-- Подключите тут важные скрипты и стили. -->
 </head>
 
-<body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
-
-
-
-    <div class="wrapper">
+<body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">     <div class="wrapper">
 
         <header>
             <div class="header-top">
@@ -93,15 +76,11 @@
                     </div>
 
                     <div class="phone">
-                        <a href="tel:{{ .Phone}}">{{ .Phone}}</a>
-
-
-
-                    </div>
+                        <a href="tel:{{ .Phone}}">{{ .Phone}}</a>                     </div>
 
                     <div class="login_or_reg">
-                        <a href="{{ .Full_url_addr}}/login/">Вход</a>
-                        <a href="{{ .Full_url_addr}}/registration/">Регистрация</a>
+                        <a href="http://localhost:{{ .Port }}/login/">Вход</a>
+                        <a href="http://localhost:{{ .Port }}/registration/">Регистрация</a>
                     </div>
                 </div>
             </div>
@@ -116,7 +95,7 @@
                                     width="250px" height="70px" />
                             </a>
                         </div>
-                        <div class="slogan">Магазин книг</div>
+                        <div class="slogan">{{ .Location_office}}</div>
                     </div>
                     <div class="search_form">
                         <form method="GET" action="/search/">
@@ -173,16 +152,18 @@
                     </div>
                     <div class="page-menu">
                         <ul id="menu_list" class="level_1">
-                            <!-- <li class="li"><a href="{{ .Full_url_addr}}/sales" class="" title="Акции">Акции</a></li> -->
-                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                             <li class="li"><a href="http://localhost:{{ .Port }}/804" class="" title="О компании">Приказ
+                                    804</a></li>
+
+                            <li class="li"><a href="http://localhost:{{ .Port }}/prosv" class=""
                                     title="О компании">Просвещение</a></li>
-                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                            <li class="li"><a href="http://localhost:{{ .Port }}/prosv" class=""
                                     title="О компании">Агат</a></li>
-                            <li class="li"><a href="{{ .Full_url_addr}}/agat" class=""
+                            <li class="li"><a href="http://localhost:{{ .Port }}/agat" class=""
                                     title="О компании">Строникум</a></li>
-                            <li class="li"><a href="{{ .Full_url_addr}}/naura" class=""
+                            <li class="li"><a href="http://localhost:{{ .Port }}/naura" class=""
                                     title="О компании">Нау-раша</a></li>
-                            
+
                         </ul>
                     </div>
 
@@ -190,30 +171,26 @@
                     <div class="menu_popup_mob">
                         <div class="catalog_subtitle">Навигация по сайту</div>
                         <ul id="menu_mob">
-                            <!-- <li class="li"><a href="{{ .Full_url_addr}}/sales" class="" title="Акции">Акции</a></li> -->
-                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                             <li class="li"><a href="http://localhost:{{ .Port }}/804" class=""
+                                    title="О компании">Приказ804</a></li>
+
+                            <li class="li"><a href="http://localhost:{{ .Port }}/prosv" class=""
                                     title="О компании">Просвещение</a></li>
-                            <li class="li"><a href="{{ .Full_url_addr}}/prosv" class=""
+                            <li class="li"><a href="http://localhost:{{ .Port }}/prosv" class=""
                                     title="О компании">Агат</a></li>
-                            <li class="li"><a href="{{ .Full_url_addr}}/agat" class=""
-                                    title="О компании">Строникум/a></li>
-                            <li class="li"><a href="{{ .Full_url_addr}}/naura" class=""
-                                    title="О компании">Нау-раша</a></li>
-                            
+                            <li class="li"><a href="http://localhost:{{ .Port }}/agat" class=""
+                                    title="О компании">Строникум/a>
+                            </li>
+                            <li class="li"><a href="http://localhost:{{ .Port }}/naura" class=""
+                                    title="О компании">Нау-раша</a>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
             </div>
     </div>
-    </header>
-
-
-
-
-
-
-
-    <main>
+    </header>      <main>
         <div class="block main">
             <div class="inner">
 
@@ -256,11 +233,7 @@
             </div>
         </div>
     </main>
-    </div>
-
-
-
-
+    </div> 
     <footer class="block">
         <div class="top">
             <div class="inner">
@@ -271,7 +244,7 @@
                         </a>
                     </div>
                     <div class="copyright">&copy;
-                        {{ .copyright}}</div>
+                        {{ .Copyright}}</div>
                     <a class="policy" href="/politika-konfidencialnosti/">Политика конфиденциальности</a>
                     <a class="user_agreement_link" href="/soglasie-na-obrabotku-personalnyh-dannyh/">Согласие на
                         обработку персональных данных</a>
@@ -340,11 +313,7 @@
                         <a href="mailto:{{ .Email}}">{{ .Email}}</a>
                     </div>
 
-                    <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a>
-
-
-
-
+                    <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a> 
                     <div class="social">
                         <a target="_blank" href="https://vk.com/#" class="link_vk"></a>
                         <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
@@ -356,11 +325,7 @@
                 </div>
             </div>
         </div>
-    </footer>
-
-
-
-
+    </footer> 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
     <script>$(function () { feather.replace(); });</script>
@@ -369,46 +334,8 @@
 
     <link rel="stylesheet" href="/modules/fontawesome/fa-free-v4-font-face.min.css" />
     <link rel="stylesheet" href="/modules/fontawesome/fa-free-v4-shims.min.css" />
-    <link rel="stylesheet" href="/modules/fontawesome/fa-free.min.css" />
-
-
-
-
-    <!-- ym start -->
-
-    <!-- ym end -->
-
-    <!-- ym start -->
-
-    <!-- ym end -->
-
-    <!-- vkpixel start -->
-
-    <!-- vkpixel end -->
-
-    <!-- fbpixel start -->
-
-    <!-- fbpixel end -->
-
-    <!-- jivosite start -->
-
-    <!-- jivosite end -->
-
-    <!-- callbackhunter  start -->
-
-    <!-- callbackhunter  end -->
-
-    <!-- roistat  start -->
-
-    <!-- roistat  end -->
-
-
-
-    <!-- Стастистики, Пиксели и прочее лучше размещать тут. -->
-
-
-
-    <!-- 16 ms -->
+    <link rel="stylesheet" href="/modules/fontawesome/fa-free.min.css" /> 
+      <!-- 16 ms -->
 </body>
 
 </html>
