@@ -7,9 +7,13 @@ import (
 	"time"
 )
 
-func CookieAdmin(next http.Handler) http.HandlerFunc {
+type Middleware struct {
+	auth.Auth
+}
+
+func (m *Middleware) CookieAdmin(next http.Handler) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		isFindCookie := auth.GetCookieAdmin(w, r)
+		isFindCookie := m.GetCookieAdmin(w, r)
 		if isFindCookie == true {
 			next.ServeHTTP(w, r)
 		}
@@ -17,9 +21,9 @@ func CookieAdmin(next http.Handler) http.HandlerFunc {
 	})
 }
 
-func CookieUser(next http.Handler) http.HandlerFunc {
+func (m *Middleware) CookieUser(next http.Handler) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		isFindCookie := auth.GetCookieUser(w, r)
+		isFindCookie := m.GetCookieUser(w, r)
 		if isFindCookie == true {
 			next.ServeHTTP(w, r)
 		}
@@ -27,7 +31,7 @@ func CookieUser(next http.Handler) http.HandlerFunc {
 	})
 }
 
-func Logging(next http.Handler) http.Handler {
+func (m *Middleware) Logging(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		start := time.Now()
 		next.ServeHTTP(w, req)

@@ -1,7 +1,6 @@
 package config
 
 import (
-	"backend/parsing"
 	"encoding/json"
 	"io/ioutil"
 	"os"
@@ -23,6 +22,8 @@ type Configuration struct {
 	Path_bd            string   `json:"path_bd"`
 	Bd_admin_list      string   `json:"bd_admin_list"`
 	Bd_users_list      string   `json:"bd_users_list"`
+	Bd_favorites       string   `json:"bd_favorites"`
+	Bd_orders          string   `json:"bd_orders"`
 	Bd_prosv           string   `json:"bd_prosv"`
 	Phone              string   `json:"phone"`
 	Email              string   `json:"email"`
@@ -50,6 +51,10 @@ func NewConfiguration() Configuration {
 	byteValue, _ := ioutil.ReadAll(file)
 	var conf Configuration
 	json.Unmarshal(byteValue, &conf)
-	// conf.Prosv_cards = parsing.GetLinks()
+
+	// if len(bd.ReadProsv()) <= 1 {
+	conf.Prosv_cards = parsing.GetLinks()
+	// }
+
 	return conf
 }

@@ -1,20 +1,40 @@
 package parsing
 
 import (
+	"encoding/csv"
+	"os"
+
 	"github.com/gocolly/colly/v2"
 )
 
 type ProsvCard struct {
-	Autor string
-	Title string
-	Price string
-	Link  string
+	Autor string `csv:"autor"`
+	Title string `csv:"title"`
+	Price string `csv:"price"`
+	Link  string `csv:"link"`
+}
+
+type ParsingService struct{}
+
+func (ps *ParsingService) WriteProsvToCsv(data []*ProsvCard) {
+	file, _ := os.Open("bd_prosv.csv")
+	writer := csv.NewWriter(file)
+	for _, dt := range data {
+		row := []string{dt.Autor, dt.Title, dt.Price, dt.Link}
+		err := writer.Write(row)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	writer.Flush()
+
 }
 
 // https://shop.prosv.ru/katalog?pagenumber=2
 var url = "http://shop.prosv.ru/katalog"
 
-func GetLinks() []ProsvCard {
+func (ps *ParsingService) GetLinks() []ProsvCard {
 	c := colly.NewCollector()
 	dts := make([]ProsvCard, 0)
 
@@ -32,6 +52,7 @@ func GetLinks() []ProsvCard {
 	})
 
 	c.Visit(url)
+
 	return dts
 
 }

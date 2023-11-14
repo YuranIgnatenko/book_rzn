@@ -12,7 +12,8 @@
 
     "bd_admin_list": "bd_admin_data.csv",
     "bd_users_list": "bd_users_data.csv",
-
+    "bd_favorites": "bd_favorites.csv",
+    "bd_orders": "bd_orders.csv",
     "bd_prosv": "bd_prosv.csv",
 
     "ip": "localhost",

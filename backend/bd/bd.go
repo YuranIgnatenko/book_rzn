@@ -6,9 +6,11 @@ import (
 	"os"
 )
 
-var Config = config.NewConfiguration()
+type Bd struct {
+	Config config.Configuration
+}
 
-func readCsvFileRows(filePath string) [][]string {
+func (b *Bd) readCsvFileRows(filePath string) [][]string {
 	s := make([][]string, 0)
 
 	file, err := os.Open(filePath)
@@ -33,20 +35,26 @@ func readCsvFileRows(filePath string) [][]string {
 
 }
 
-func ReadUsersData() [][]string {
-	rows := readCsvFileRows(Config.Path_bd + Config.Bd_users_list)
+func (b *Bd) ReadUsersData() [][]string {
+	rows := b.readCsvFileRows(b.Config.Path_bd + b.Config.Bd_users_list)
 	return rows
 }
 
-func ReadAdminData() [][]string {
-	rows := readCsvFileRows(Config.Path_bd + Config.Bd_admin_list)
+func (b *Bd) ReadAdminData() [][]string {
+	rows := b.readCsvFileRows(b.Config.Path_bd + b.Config.Bd_admin_list)
 	return rows
 }
 
-func SaveParsingProsv() {
-
+func (b *Bd) ReadFavorites() [][]string {
+	rows := b.readCsvFileRows(b.Config.Path_bd + b.Config.Bd_favorites)
+	return rows
 }
 
-func ReadConfigPLatform() {}
+func (b *Bd) ReadOrders() [][]string {
+	rows := b.readCsvFileRows(b.Config.Path_bd + b.Config.Bd_orders)
+	return rows
+}
 
-func ReadOrdersList() {}
+func (b *Bd) SaveParsingProsv() {}
+
+func (b *Bd) ReadConfigPLatform() {}
