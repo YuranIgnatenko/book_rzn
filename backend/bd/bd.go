@@ -82,7 +82,7 @@ func (b *Bd) SaveTarget(token, id_target string) {
 
 }
 
-func (b *Bd) FindTarget(token string) []models.FavoritesCards {
+func (b *Bd) FindTarget(token_user string) []models.FavoritesCards {
 	fmt.Println("find target (in /favorites)")
 	data_tokens := make([]string, 0)
 
@@ -99,7 +99,8 @@ func (b *Bd) FindTarget(token string) []models.FavoritesCards {
 		panic(err)
 	}
 	for _, row := range rec_all {
-		if row[0] == token {
+		fmt.Println("row[0] == token_user", row[0], token_user)
+		if row[0] == token_user {
 			data_tokens = append(data_tokens, row[1])
 		}
 	}
@@ -119,7 +120,8 @@ func (b *Bd) FindTarget(token string) []models.FavoritesCards {
 		panic(err)
 	}
 	for _, row := range rec_all {
-		if row[4] == token {
+		fmt.Println("row[4] == token_user", row[4], token_user)
+		if row[4] == token_user {
 			cards = append(cards, models.FavoritesCards{
 				Autor: row[0],
 				Title: row[1],

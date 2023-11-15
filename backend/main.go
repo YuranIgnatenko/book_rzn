@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println("init server")
+	fmt.Println("initial server")
 	Core := core.NewCore()
 	Core.SetHandlers()
 }

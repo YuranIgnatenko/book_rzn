@@ -125,27 +125,29 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("find target (in /add_favorites)")
+	fmt.Println("save target (in /add_favorites)")
 
 	fmt.Println(r.URL.Path)
 	url := strings.Split(r.URL.Path, "/")
-	if url[0] != "add_favorites" {
-		http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/home", http.StatusSeeOther)
-	}
+	// if url[0] != "add_favorites" {
+	// 	http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/home", http.StatusSeeOther)
+	// }
 	token, err := r.Cookie("token")
 	if err != nil {
 		return
 	}
-	path_parts := strings.Split(r.URL.Path, "/")
 	path := r.URL.Path
 
-	if len(path_parts) == 2 {
-		if string(path[0]) == "add_favorites" {
-			order_id := path[1]
-			// fmt.Println(path, token, order_id)
-			rout.SaveTarget(token.Value, string(order_id))
-		}
+	fmt.Println("url:", url)
+
+	// if len(path_parts) == 2 {
+	//todo : strip trim spaces
+	if string(url[1]) == "add_favorites" {
+		order_id := url[2]
+		fmt.Println("to be saved ++++++", path, token, order_id)
+		rout.SaveTarget(token.Value, string(order_id))
 	} else {
+
 		return
 	}
 	fmt.Println(r.Cookies())
