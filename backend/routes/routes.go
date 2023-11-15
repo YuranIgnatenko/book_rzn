@@ -141,7 +141,7 @@ func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
 			// fmt.Println(path, token, order_id)
 			rout.SaveTarget(token.Value, string(order_id))
 		}
-	}else{
+	} else {
 		return
 	}
 	fmt.Println(r.Cookies())
@@ -157,7 +157,7 @@ func (rout *Rout) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println(r.Cookies())
-	rout.DataTemp.ProsvCards = rout.FindTarget(token.Value)
+	rout.DataTemp.FavoritesCards = rout.FindTarget(token.Value)
 
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "favorites.html")
 	tmpl.Execute(w, rout.DataTemp)
@@ -180,6 +180,8 @@ func (rout *Rout) OpenHtmlSales(w http.ResponseWriter, r *http.Request) {
 
 func (rout *Rout) OpenHtmlProsv(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(w, r)
+	// rout.ProsvCards = parsing.ParsingService.ReadFromCsv()
+	rout.DataTemp.ProsvCards = rout.ProsvCards
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
 	fmt.Println("----------", len(rout.DataTemp.ProsvCards))
 	tmpl.Execute(w, rout.DataTemp)

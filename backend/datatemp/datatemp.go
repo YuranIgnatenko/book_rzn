@@ -7,7 +7,8 @@ import (
 
 type DataTemp struct {
 	config.Configuration
-	ProsvCards []models.ProsvCard
+	ProsvCards     []models.ProsvCard
+	FavoritesCards []models.FavoritesCards
 }
 
 func NewDataTemp(c config.Configuration, ps []models.ProsvCard) *DataTemp {

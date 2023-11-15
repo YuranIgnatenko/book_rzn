@@ -14,3 +14,11 @@ type ProsvCard struct {
 	Link  string //`csv:"link"`
 	Id    string
 }
+
+type FavoritesCards struct {
+	Autor string //`csv:"autor"`
+	Title string //`csv:"title"`
+	Price string //`csv:"price"`
+	Link  string //`csv:"link"`
+	Id    string
+}

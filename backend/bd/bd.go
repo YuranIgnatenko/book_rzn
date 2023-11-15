@@ -82,7 +82,7 @@ func (b *Bd) SaveTarget(token, id_target string) {
 
 }
 
-func (b *Bd) FindTarget(token string) []models.ProsvCard {
+func (b *Bd) FindTarget(token string) []models.FavoritesCards {
 	fmt.Println("find target (in /favorites)")
 	data_tokens := make([]string, 0)
 
@@ -104,7 +104,7 @@ func (b *Bd) FindTarget(token string) []models.ProsvCard {
 		}
 	}
 
-	cards := make([]models.ProsvCard, 0)
+	cards := make([]models.FavoritesCards, 0)
 
 	file, err = os.Open(b.Path_bd + b.Bd_prosv)
 	if err != nil {
@@ -120,7 +120,7 @@ func (b *Bd) FindTarget(token string) []models.ProsvCard {
 	}
 	for _, row := range rec_all {
 		if row[4] == token {
-			cards = append(cards, models.ProsvCard{
+			cards = append(cards, models.FavoritesCards{
 				Autor: row[0],
 				Title: row[1],
 				Price: row[2],
