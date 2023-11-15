@@ -1,12 +1,13 @@
 package main
 
 import (
-	"backend/core"
+	"backend/connector"
 	"fmt"
 )
 
 func main() {
 	fmt.Println("initial server")
-	Core := core.NewCore()
-	Core.SetHandlers()
+	connector.Connect()
+	// Core := core.NewCore()
+	// Core.SetHandlers()
 }
