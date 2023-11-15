@@ -6,6 +6,7 @@ import (
 	"backend/datatemp"
 	"fmt"
 	"net/http"
+	"strings"
 	"text/template"
 )
 
@@ -127,8 +128,20 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rout *Rout) OpenHtmlBuy(w http.ResponseWriter, r *http.Request) {
-	
 	fmt.Println(r.URL.Path)
+	token, err := r.Cookie("token")
+	if err != nil {
+		return
+	}
+	path_parts := strings.Split(r.URL.Path, "/")
+	path := r.URL.Path
+
+	if len(path_parts) == 2 {
+		if string(path[0]) == "buy" {
+			order_id := path[1]
+			fmt.Println(path, token, order_id)
+		}
+	}
 	fmt.Println(r.Cookies())
 
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "404.html")

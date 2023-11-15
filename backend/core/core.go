@@ -38,7 +38,7 @@ func (c *Core) SetHandlers() {
 	http.HandleFunc("/registration", c.OpenHtmlRegistry)
 	http.HandleFunc("/cms", c.CookieAdmin(http.HandlerFunc(c.OpenHtmlCms)))
 	http.HandleFunc("/profile", c.CookieUser(http.HandlerFunc(c.OpenHtmlProfile)))
-	http.HandleFunc("/buy/{id}", c.OpenHtmlBuy)
+	http.HandleFunc("/", c.OpenHtmlBuy)
 	http.HandleFunc("/404", c.OpenHtml404)
 	http.HandleFunc("/create_user", c.OpenHtmlCreateUser)
 	http.HandleFunc("/login_check", c.OpenHtmlLoginCheck)
@@ -49,6 +49,8 @@ func (c *Core) SetHandlers() {
 	http.HandleFunc("/804", c.OpenHtml804)
 	http.HandleFunc("/stronikum", c.OpenHtmlStronikum)
 
+	// http.HandleFunc("/", c.SwitchUrl)
+
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
@@ -56,6 +58,26 @@ func (c *Core) SetHandlers() {
 	log.Fatal(http.ListenAndServe(":"+c.Configuration.Port, nil))
 	// fmt.Printf("c.Configuration: %v\n", c.Configuration)
 }
+
+// func (c *Core) SwitchUrl(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println(r.URL.Path)
+// 	path := strings.Split(r.URL.Path, "/")
+
+// 	switch r.URL.Path{
+// 	case "/":
+// 	case "/home":
+// 	default:
+// 		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "404.html")
+// 		tmpl.Execute(w, rout.DataTemp)
+// 	}
+// 	if len(path) == 2 {
+// 		if path[0] == "buy" {
+// 			order_id := path[1]
+// 			fmt.Println(order_id)
+// 		}
+// 	}
+// 	fmt.Println(r.Cookies())
+// }
 
 func NewCore() *Core {
 	c := config.NewConfiguration()
