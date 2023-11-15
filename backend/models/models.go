@@ -8,8 +8,8 @@ type ParsingServicer interface {
 }
 
 type ProsvCard struct {
-	Autor string `csv:"autor"`
-	Title string `csv:"title"`
-	Price string `csv:"price"`
-	Link  string `csv:"link"`
+	Autor string //`csv:"autor"`
+	Title string //`csv:"title"`
+	Price string //`csv:"price"`
+	Link  string //`csv:"link"`
 }

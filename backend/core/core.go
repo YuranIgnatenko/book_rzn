@@ -14,12 +14,12 @@ import (
 )
 
 type Core struct {
-	config.Configuration
-	bd.Bd
-	auth.Auth
-	middleware.Middleware
-	parsing.ParsingService
-	routes.Rout
+	*config.Configuration
+	*bd.Bd
+	*auth.Auth
+	*middleware.Middleware
+	*parsing.ParsingService
+	*routes.Rout
 }
 
 func (c *Core) SetHandlers() {
@@ -63,17 +63,17 @@ func NewCore() *Core {
 	a := auth.NewAuth(*c, *bd)
 	mw := middleware.NewMiddleware(*a)
 	ps := parsing.NewParsingService(*c, *bd)
-	dt := datatemp.NewDataTemp(*c, ps.ProsvCardCache)
 
-	fmt.Println(len(ps.ProsvCardCache))
+	fmt.Println(len(ps.ProsvCards))
+	dt := datatemp.NewDataTemp(*c, ps.ProsvCards)
 	rout := routes.NewRout(*a, *bd, *dt)
 
 	return &Core{
-		Configuration:  *c,
-		Bd:             *bd,
-		Auth:           *a,
-		Middleware:     *mw,
-		ParsingService: *ps,
-		Rout:           *rout,
+		Configuration:  c,
+		Bd:             bd,
+		Auth:           a,
+		Middleware:     mw,
+		ParsingService: ps,
+		Rout:           rout,
 	}
 }

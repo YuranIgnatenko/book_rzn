@@ -12,8 +12,8 @@ import (
 )
 
 type ParsingService struct {
-	LinkVisit      []string
-	ProsvCardCache []models.ProsvCard
+	LinkVisit  []string
+	ProsvCards []models.ProsvCard
 	config.Configuration
 	bd.Bd
 }
@@ -27,18 +27,20 @@ func NewParsingService(c config.Configuration, bd bd.Bd) *ParsingService {
 			"https://shop.prosv.ru/katalog?pagenumber=2",
 		},
 	}
+	
 	data, _ := ps.ReadFromCsv()
+	ps.ProsvCards = make([]models.ProsvCard, 0)
 	// fmt.Println(data, err)
 	fmt.Println("++++")
 	if len(data) <= 1 {
-		ps.ProsvCardCache = ps.ScrapSource()
-		ps.WriteToCsv(ps.ProsvCardCache)
+		ps.ProsvCards = ps.ScrapSource()
+		ps.WriteToCsv(ps.ProsvCards)
 		return &ps
 
 	} else {
 		// data = ps.ScrapSource()
 		fmt.Println(len(data))
-		ps.ProsvCardCache = data
+		ps.ProsvCards = data
 		// ps.WriteToCsv(data)
 	}
 
