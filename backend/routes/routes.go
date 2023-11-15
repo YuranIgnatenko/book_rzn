@@ -141,6 +141,8 @@ func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
 			// fmt.Println(path, token, order_id)
 			rout.SaveTarget(token.Value, string(order_id))
 		}
+	}else{
+		return
 	}
 	fmt.Println(r.Cookies())
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
