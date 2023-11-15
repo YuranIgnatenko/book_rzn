@@ -146,13 +146,26 @@ func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
 		order_id := url[2]
 		fmt.Println("to be saved ++++++", path, token, order_id)
 		rout.SaveTarget(token.Value, string(order_id))
+		fmt.Println(r.Cookies())
+		// tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
+		// tmpl.Execute(w, rout.DataTemp)
 	} else {
-
 		return
 	}
-	fmt.Println(r.Cookies())
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
-	tmpl.Execute(w, rout.DataTemp)
+
+	if string(url[1]) == "delete_favorites" {
+		order_id := url[2]
+		fmt.Println("to be deleted -----", path, token, order_id)
+		// rout.SaveTarget(token.Value, string(order_id))
+		rout.DeleteTarget(token.Value, string(order_id))
+
+		fmt.Println(r.Cookies())
+		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
+		tmpl.Execute(w, rout.DataTemp)
+	} else {
+		return
+	}
+
 }
 
 func (rout *Rout) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {

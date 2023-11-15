@@ -82,9 +82,42 @@ func (b *Bd) SaveTarget(token, id_target string) {
 
 }
 
+func (b *Bd) DeleteTarget(token_user, id_target string) {
+	fmt.Println("delete target (in /add favorites)")
+
+	rows := make([][]string, 0)
+
+	file, err := os.Open(b.Path_bd + b.Bd_favorites)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	reader := csv.NewReader(file)
+	reader.FieldsPerRecord = 0
+	reader.Comment = '#'
+	rec_all, err := reader.ReadAll()
+	if err != nil {
+		panic(err)
+	}
+	for _, row := range rec_all {
+		fmt.Println("row[0] == token_user", row[0], token_user)
+		if row[0] != token_user {
+			rows = append(rows, row)
+		}
+	}
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	err = writer.WriteAll(rows)
+	if err != nil {
+		panic(err)
+	}
+
+}
+
 func (b *Bd) FindTarget(token_user string) []models.FavoritesCards {
 	fmt.Println("find target (in /favorites)")
-	data_tokens := make([]string, 0)
+	data_tokens_target := make([]string, 0)
 
 	file, err := os.Open(b.Path_bd + b.Bd_favorites)
 	if err != nil {
@@ -101,7 +134,7 @@ func (b *Bd) FindTarget(token_user string) []models.FavoritesCards {
 	for _, row := range rec_all {
 		fmt.Println("row[0] == token_user", row[0], token_user)
 		if row[0] == token_user {
-			data_tokens = append(data_tokens, row[1])
+			data_tokens_target = append(data_tokens_target, row[1])
 		}
 	}
 
@@ -112,6 +145,7 @@ func (b *Bd) FindTarget(token_user string) []models.FavoritesCards {
 		// return nil, err
 	}
 	defer file.Close()
+
 	reader = csv.NewReader(file)
 	reader.FieldsPerRecord = 0
 	reader.Comment = '#'
@@ -120,16 +154,18 @@ func (b *Bd) FindTarget(token_user string) []models.FavoritesCards {
 		panic(err)
 	}
 	for _, row := range rec_all {
-		fmt.Println("row[4] == token_user", row[4], token_user)
-		if row[4] == token_user {
-			cards = append(cards, models.FavoritesCards{
-				Autor: row[0],
-				Title: row[1],
-				Price: row[2],
-				Link:  row[3],
-				Id:    row[4],
-			})
+		for _, token_target := range data_tokens_target {
+			fmt.Println("row[4] == token_user", row[4], token_target)
+			if row[4] == token_target {
+				cards = append(cards, models.FavoritesCards{
+					Autor: row[0],
+					Title: row[1],
+					Price: row[2],
+					Link:  row[3],
+					Id:    row[4],
+				})
 
+			}
 		}
 	}
 	fmt.Println(len(cards), "len cards")
