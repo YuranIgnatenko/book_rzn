@@ -65,7 +65,7 @@ func NewCore() *Core {
 	ps := parsing.NewParsingService(*c, *bd)
 	dt := datatemp.NewDataTemp(*c, ps.ProsvCardCache)
 
-	// fmt.Println(ps.ProsvCardCache)
+	fmt.Println(len(ps.ProsvCardCache))
 	rout := routes.NewRout(*a, *bd, *dt)
 
 	return &Core{

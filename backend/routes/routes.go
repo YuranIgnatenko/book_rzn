@@ -21,7 +21,7 @@ func NewRout(a auth.Auth, bd bd.Bd, dt datatemp.DataTemp) *Rout {
 		Bd:       bd,
 		DataTemp: dt,
 	}
-	fmt.Println(rout)
+	// fmt.Println(rout)
 	return &rout
 }
 
@@ -147,6 +147,7 @@ func (rout *Rout) OpenHtmlSales(w http.ResponseWriter, r *http.Request) {
 
 func (rout *Rout) OpenHtmlProsv(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
+	fmt.Println("----------", len(rout.DataTemp.ProsvCards))
 	tmpl.Execute(w, rout.DataTemp)
 }
 func (rout *Rout) OpenHtmlAgat(w http.ResponseWriter, r *http.Request) {

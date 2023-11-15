@@ -5,7 +5,6 @@ import (
 	"backend/config"
 	"backend/models"
 	"encoding/csv"
-	"errors"
 	"fmt"
 	"os"
 
@@ -28,20 +27,26 @@ func NewParsingService(c config.Configuration, bd bd.Bd) *ParsingService {
 			"https://shop.prosv.ru/katalog?pagenumber=2",
 		},
 	}
-	data, err := ps.ReadFromCsv()
-	fmt.Println(data, err)
-	if err != nil {
+	data, _ := ps.ReadFromCsv()
+	// fmt.Println(data, err)
+	fmt.Println("++++")
+	if len(data) <= 1 {
 		ps.ProsvCardCache = ps.ScrapSource()
+		ps.WriteToCsv(ps.ProsvCardCache)
+		return &ps
+
 	} else {
+		// data = ps.ScrapSource()
+		fmt.Println(len(data))
 		ps.ProsvCardCache = data
-		ps.WriteToCsv(data)
+		// ps.WriteToCsv(data)
 	}
 
 	return &ps
 }
 
 func (ps *ParsingService) WriteToCsv(data []models.ProsvCard) {
-	file, err := os.Open(ps.Path_bd + ps.Bd_prosv)
+	file, err := os.OpenFile(ps.Path_bd+ps.Bd_prosv, os.O_CREATE|os.O_WRONLY|os.O_APPEND, os.ModePerm)
 
 	if err != nil {
 		panic(err)
@@ -98,10 +103,16 @@ func (ps *ParsingService) ReadFromCsv() ([]models.ProsvCard, error) {
 	reader.Comment = '#'
 
 	for {
-		rec, e := reader.Read()
-		if e != nil {
-			break
+		rec, err := reader.Read()
+		if err != nil {
+			if len(data) >= 0 {
+				err = nil
+				return data, err
+			} else {
+				return nil, err
+			}
 		}
+		fmt.Println(rec)
 		card := models.ProsvCard{
 			Autor: rec[0],
 			Title: rec[1],
@@ -110,9 +121,9 @@ func (ps *ParsingService) ReadFromCsv() ([]models.ProsvCard, error) {
 		}
 		data = append(data, card)
 	}
-	if len(data) < 1 {
-		return nil, errors.New("BD empty, not found records")
-	}
+	// if len(data) < 5 {
+	// 	return nil, errors.New("BD empty, not found records")
+	// }
 	return data, err
 
 }
