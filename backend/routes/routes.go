@@ -125,7 +125,6 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("save target (in /add_favorites)")
 
 	fmt.Println(r.URL.Path)
 	url := strings.Split(r.URL.Path, "/")
@@ -149,8 +148,6 @@ func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(r.Cookies())
 		// tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
 		// tmpl.Execute(w, rout.DataTemp)
-	} else {
-		return
 	}
 
 	if string(url[1]) == "delete_favorites" {
@@ -158,12 +155,11 @@ func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("to be deleted -----", path, token, order_id)
 		// rout.SaveTarget(token.Value, string(order_id))
 		rout.DeleteTarget(token.Value, string(order_id))
+		rout.DataTemp.FavoritesCards = rout.FindTarget(token.Value)
 
 		fmt.Println(r.Cookies())
-		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
-		tmpl.Execute(w, rout.DataTemp)
-	} else {
-		return
+		// tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
+		// tmpl.Execute(w, rout.DataTemp)
 	}
 
 }

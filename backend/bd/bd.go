@@ -87,7 +87,8 @@ func (b *Bd) DeleteTarget(token_user, id_target string) {
 
 	rows := make([][]string, 0)
 
-	file, err := os.Open(b.Path_bd + b.Bd_favorites)
+	file, err := os.OpenFile(b.Path_bd+b.Bd_favorites, os.O_CREATE|os.O_WRONLY|os.O_APPEND, os.ModePerm)
+
 	if err != nil {
 		panic(err)
 	}
@@ -100,10 +101,16 @@ func (b *Bd) DeleteTarget(token_user, id_target string) {
 		panic(err)
 	}
 	for _, row := range rec_all {
-		fmt.Println("row[0] == token_user", row[0], token_user)
-		if row[0] != token_user {
+		fmt.Println("row[0] == token_user", row[1], id_target)
+		if row[1] != id_target {
 			rows = append(rows, row)
 		}
+	}
+
+	file, err = os.OpenFile(b.Path_bd+b.Bd_favorites, os.O_CREATE|os.O_WRONLY|os.O_APPEND, os.ModePerm)
+
+	if err != nil {
+		panic(err)
 	}
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
@@ -155,7 +162,7 @@ func (b *Bd) FindTarget(token_user string) []models.FavoritesCards {
 	}
 	for _, row := range rec_all {
 		for _, token_target := range data_tokens_target {
-			fmt.Println("row[4] == token_user", row[4], token_target)
+			// fmt.Println("row[4] == token_user", row[4], token_target)
 			if row[4] == token_target {
 				cards = append(cards, models.FavoritesCards{
 					Autor: row[0],
