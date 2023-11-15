@@ -7,7 +7,7 @@ import (
 )
 
 var path_config = "/home/yu/Desktop/code/book_rzn/backend/config/config.json"
-var path_config_default = "/home/yu/Desktop/code/book_rzn/backend/config/default.json"
+// var path_config_default = "/home/yu/Desktop/code/book_rzn/backend/config/default.json"
 
 type Configuration struct {
 	Url_prefix         string   `json:"url_prefix"`
@@ -38,16 +38,16 @@ type Configuration struct {
 	Description_banner string   `json:"description_banner"`
 }
 
-func NewConfiguration() Configuration {
+func NewConfiguration() *Configuration {
 	file, _ := os.Open(path_config)
 	defer file.Close()
 	byteValue, _ := ioutil.ReadAll(file)
 	var conf Configuration
 	json.Unmarshal(byteValue, &conf)
 
-	// if len(bd.ReadProsv()) <= 1 {
-	// conf.Prosv_cards = core.ScrapSource()
-	// }
-
-	return conf
+	return &conf
 }
+
+// func (c *Configuration) AddProsvCards(pc []ProsvCard) {
+// 	c.DataTemp = DataTemp{ProsvCards: pc}
+// }

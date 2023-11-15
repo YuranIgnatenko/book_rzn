@@ -11,6 +11,12 @@ type Middleware struct {
 	auth.Auth
 }
 
+func NewMiddleware(a auth.Auth) *Middleware {
+	return &Middleware{
+		Auth: a,
+	}
+}
+
 func (m *Middleware) CookieAdmin(next http.Handler) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		isFindCookie := m.GetCookieAdmin(w, r)

@@ -2,155 +2,167 @@ package routes
 
 import (
 	"backend/auth"
-	"backend/config"
+	"backend/bd"
+	"backend/datatemp"
+	"fmt"
 	"net/http"
 	"text/template"
 )
 
-type Router struct{
-	Auth auth.Auth
-	Config config.Configuration
+type Rout struct {
+	auth.Auth
+	bd.Bd
+	datatemp.DataTemp
 }
 
-
-func (router *Router) OpenHtmlAbout(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "about.html")
-	tmpl.Execute(w, router.Config)
+func NewRout(a auth.Auth, bd bd.Bd, dt datatemp.DataTemp) *Rout {
+	rout := Rout{
+		Auth:     a,
+		Bd:       bd,
+		DataTemp: dt,
+	}
+	fmt.Println(rout)
+	return &rout
 }
 
-func (router *Router) OpenHtmlBlog(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "blog.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlAbout(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "about.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtmlCart(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "cart.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlBlog(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "blog.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtmlContacts(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "contacts.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlCart(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "cart.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtmlDelivery(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "delivery.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlContacts(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "contacts.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtmlExchange(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "exchange.html")
-	tmpl.Execute(w, router.Config)
-}
-func (router *Router) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "cart.html")
-	tmpl.Execute(w, router.Config)
-}
-func (router *Router) OpenHtmlHome(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "home.html")
-	tmpl.Execute(w, router.Config)
-}
-func (router *Router) OpenHtmlNew(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "new.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlDelivery(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "delivery.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtmlPayment(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "payment.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlExchange(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "exchange.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
-func (router *Router) OpenHtmlCollectschool(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "collect-school.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "cart.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
-func (router *Router) OpenHtmlLogin(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "login.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlHome(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
+	tmpl.Execute(w, rout.DataTemp)
+}
+func (rout *Rout) OpenHtmlNew(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "new.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtmlRegistry(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "registration.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlPayment(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "payment.html")
+	tmpl.Execute(w, rout.DataTemp)
+}
+func (rout *Rout) OpenHtmlCollectschool(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "collect-school.html")
+	tmpl.Execute(w, rout.DataTemp)
+}
+func (rout *Rout) OpenHtmlLogin(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "login.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtmlCms(w http.ResponseWriter, r *http.Request) {
-	res := router.Auth.GetCookieAdmin(w, r)
+func (rout *Rout) OpenHtmlRegistry(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "registration.html")
+	tmpl.Execute(w, rout.DataTemp)
+}
+
+func (rout *Rout) OpenHtmlCms(w http.ResponseWriter, r *http.Request) {
+	res := rout.Auth.GetCookieAdmin(w, r)
 	if res {
-		tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "cms.html")
-		tmpl.Execute(w, router.Config)
+		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "cms.html")
+		tmpl.Execute(w, rout.DataTemp)
 	} else {
-		tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "404.html")
-		tmpl.Execute(w, router.Config)
+		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "404.html")
+		tmpl.Execute(w, rout.DataTemp)
 	}
 
 }
 
-func (router *Router) OpenHtmlProfile(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "home.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlProfile(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
+func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 	login := r.FormValue("login")
 	password := r.FormValue("password")
 
-	is_admin, cookie_admin := router.Auth.CheckAdmin(login, password)
-	is_user, cookie_user := router.Auth.CheckLoginUser(login, password)
+	is_admin, cookie_admin := rout.Auth.CheckAdmin(login, password)
+	is_user, cookie_user := rout.Auth.CheckLoginUser(login, password)
 
 	if is_admin {
-		router.Auth.SetCookieAdmin(w, r, cookie_admin)
-		http.Redirect(w, r, router.Config.Ip+router.Config.Split_ip_port+router.Config.Port+"/cms", http.StatusSeeOther)
+		rout.Auth.SetCookieAdmin(w, r, cookie_admin)
+		http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/cms", http.StatusSeeOther)
 		return
 	}
 	if is_user {
-		router.Auth.SetCookieUser(w, r, cookie_user)
-		http.Redirect(w, r, router.Config.Ip+router.Config.Split_ip_port+router.Config.Port+"/home", http.StatusSeeOther)
+		rout.Auth.SetCookieUser(w, r, cookie_user)
+		http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/home", http.StatusSeeOther)
 		return
 	}
 
-	http.Redirect(w, r, router.Config.Bd_admin_list+"/login", http.StatusSeeOther)
+	http.Redirect(w, r, rout.DataTemp.Bd_admin_list+"/login", http.StatusSeeOther)
 	return
 
 }
 
-func (router *Router) OpenHtmlBuyOrder(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "buy_order.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlBuyOrder(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "buy_order.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtml404(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "404.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtml404(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "404.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtmlCreateUser(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "login.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlCreateUser(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "login.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtmlSales(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "sales.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlSales(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "sales.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtmlProsv(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "prosv.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlProsv(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
-func (router *Router) OpenHtmlAgat(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "agat.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlAgat(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "agat.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
-func (router *Router) OpenHtmlStronikum(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "stronikum.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlStronikum(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "stronikum.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
-func (router *Router) OpenHtmlNaura(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "naura.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtmlNaura(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "naura.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
-func (router *Router) OpenHtml804(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "804.html")
-	tmpl.Execute(w, router.Config)
+func (rout *Rout) OpenHtml804(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "804.html")
+	tmpl.Execute(w, rout.DataTemp)
 }

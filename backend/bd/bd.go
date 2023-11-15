@@ -10,6 +10,12 @@ type Bd struct {
 	config.Configuration
 }
 
+func NewBd(c config.Configuration) *Bd {
+	return &Bd{
+		Configuration: c,
+	}
+}
+
 func (b *Bd) readCsvFileRows(filePath string) [][]string {
 	s := make([][]string, 0)
 

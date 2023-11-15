@@ -9,9 +9,18 @@ import (
 )
 
 type Auth struct {
-	Config config.Configuration
+	config.Configuration
+	bd.Bd
+
 	MaxAge int //3600
-	Bd     bd.Bd
+
+}
+
+func NewAuth(c config.Configuration, bd bd.Bd) *Auth {
+	return &Auth{
+		Configuration: c,
+		Bd:            bd,
+	}
 }
 
 func (a *Auth) SetCookieUser(w http.ResponseWriter, r *http.Request, token string) {
@@ -36,7 +45,7 @@ func (a *Auth) GetCookieUser(w http.ResponseWriter, r *http.Request) bool {
 	if err != nil {
 		switch {
 		case errors.Is(err, http.ErrNoCookie):
-			http.Redirect(w, r, a.Config.Ip+a.Config.Split_ip_port+a.Config.Port+"/404", http.StatusSeeOther)
+			http.Redirect(w, r, a.Ip+a.Split_ip_port+a.Port+"/404", http.StatusSeeOther)
 		default:
 			log.Println(err)
 			http.Error(w, "server error", http.StatusInternalServerError)
@@ -69,7 +78,7 @@ func (a *Auth) GetCookieAdmin(w http.ResponseWriter, r *http.Request) bool {
 	if err != nil {
 		switch {
 		case errors.Is(err, http.ErrNoCookie):
-			http.Redirect(w, r, a.Config.Ip+a.Config.Split_ip_port+a.Config.Port+"/404", http.StatusSeeOther)
+			http.Redirect(w, r, a.Ip+a.Split_ip_port+a.Port+"/404", http.StatusSeeOther)
 
 		default:
 			log.Println(err)

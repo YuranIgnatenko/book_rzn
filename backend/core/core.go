@@ -1,8 +1,12 @@
 package core
 
 import (
+	"backend/auth"
+	"backend/bd"
 	"backend/config"
+	"backend/datatemp"
 	"backend/middleware"
+	"backend/parsing"
 	"backend/routes"
 	"fmt"
 	"log"
@@ -10,10 +14,12 @@ import (
 )
 
 type Core struct {
-	routes.Router
-	middleware.Middleware
 	config.Configuration
-	ParsingServicer
+	bd.Bd
+	auth.Auth
+	middleware.Middleware
+	parsing.ParsingService
+	routes.Rout
 }
 
 func (c *Core) SetHandlers() {
@@ -46,11 +52,28 @@ func (c *Core) SetHandlers() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	fmt.Printf("Starting server : [ %v ]\n", c.Port)
-	log.Fatal(http.ListenAndServe(":"+c.Port, nil))
-
+	fmt.Printf("Starting server : [ %v ]\n", c.Configuration.Port)
+	log.Fatal(http.ListenAndServe(":"+c.Configuration.Port, nil))
+	// fmt.Printf("c.Configuration: %v\n", c.Configuration)
 }
 
 func NewCore() *Core {
-	return &Core{}
+	c := config.NewConfiguration()
+	bd := bd.NewBd(*c)
+	a := auth.NewAuth(*c, *bd)
+	mw := middleware.NewMiddleware(*a)
+	ps := parsing.NewParsingService(*c, *bd)
+	dt := datatemp.NewDataTemp(*c, ps.ProsvCardCache)
+
+	// fmt.Println(ps.ProsvCardCache)
+	rout := routes.NewRout(*a, *bd, *dt)
+
+	return &Core{
+		Configuration:  *c,
+		Bd:             *bd,
+		Auth:           *a,
+		Middleware:     *mw,
+		ParsingService: *ps,
+		Rout:           *rout,
+	}
 }
