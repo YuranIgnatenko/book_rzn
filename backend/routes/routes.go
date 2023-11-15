@@ -128,6 +128,10 @@ func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("find target (in /add_favorites)")
 
 	fmt.Println(r.URL.Path)
+	url := strings.Split(r.URL.Path, "/")
+	if url[0] != "add_favorites" {
+		http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/home", http.StatusSeeOther)
+	}
 	token, err := r.Cookie("token")
 	if err != nil {
 		return
