@@ -125,8 +125,10 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (rout *Rout) OpenHtmlBuyOrder(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "buy_order.html")
+func (rout *Rout) OpenHtmlBuy(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("buy --- ok")
+	fmt.Println(r.Cookies())
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "404.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 
@@ -146,6 +148,7 @@ func (rout *Rout) OpenHtmlSales(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rout *Rout) OpenHtmlProsv(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(w, r)
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
 	fmt.Println("----------", len(rout.DataTemp.ProsvCards))
 	tmpl.Execute(w, rout.DataTemp)
