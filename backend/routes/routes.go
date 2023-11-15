@@ -154,7 +154,8 @@ func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
 		order_id := url[2]
 		fmt.Println("to be deleted -----", path, token, order_id)
 		// rout.SaveTarget(token.Value, string(order_id))
-		rout.DeleteTarget(token.Value, string(order_id))
+		rows := rout.DeleteTarget(token.Value, string(order_id))
+		rout.ReWriteAllFavorites(rows)
 		rout.DataTemp.FavoritesCards = rout.FindTarget(token.Value)
 
 		fmt.Println(r.Cookies())

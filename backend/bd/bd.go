@@ -82,12 +82,12 @@ func (b *Bd) SaveTarget(token, id_target string) {
 
 }
 
-func (b *Bd) DeleteTarget(token_user, id_target string) {
+func (b *Bd) DeleteTarget(token_user, id_target string) [][]string {
 	fmt.Println("delete target (in /add favorites)")
 
 	rows := make([][]string, 0)
 
-	file, err := os.OpenFile(b.Path_bd+b.Bd_favorites, os.O_CREATE|os.O_WRONLY|os.O_APPEND, os.ModePerm)
+	file, err := os.Open(b.Path_bd + b.Bd_favorites)
 
 	if err != nil {
 		panic(err)
@@ -100,26 +100,41 @@ func (b *Bd) DeleteTarget(token_user, id_target string) {
 	if err != nil {
 		panic(err)
 	}
+
 	for _, row := range rec_all {
 		fmt.Println("row[0] == token_user", row[1], id_target)
 		if row[1] != id_target {
 			rows = append(rows, row)
 		}
 	}
+	fmt.Println(len(rec_all), "////", len(rows))
 
-	file, err = os.OpenFile(b.Path_bd+b.Bd_favorites, os.O_CREATE|os.O_WRONLY|os.O_APPEND, os.ModePerm)
+	// b.ReWriteAllFavorites(rows)
+	return rows
+
+}
+
+func (b *Bd) ReWriteAllFavorites(rows [][]string) {
+	err := os.Remove(b.Path_bd+b.Bd_favorites)
 
 	if err != nil {
 		panic(err)
 	}
+
+	file, err := os.Create(b.Path_bd+b.Bd_favorites)
+	if err != nil{
+		panic(err)
+	}
+	
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
+
+	
 
 	err = writer.WriteAll(rows)
 	if err != nil {
 		panic(err)
 	}
-
 }
 
 func (b *Bd) FindTarget(token_user string) []models.FavoritesCards {
