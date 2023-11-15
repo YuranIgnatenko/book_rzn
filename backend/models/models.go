@@ -22,3 +22,37 @@ type FavoritesCards struct {
 	Link  string //`csv:"link"`
 	Id    string
 }
+
+type Users struct {
+	Id              int
+	Login, Password string
+	Token, Name     string
+	Phone           string
+	Type, Email     string
+}
+
+type Favorites struct {
+	Id         int
+	Token      string
+	TargetHash string
+	Count      string
+	Datetime   string
+}
+
+type Orders struct {
+	Id         int
+	Token      string
+	TargetHash string
+	Count      string
+	Datetime   string
+}
+
+type Targets struct {
+	Id         int
+	TargetHash string
+	Autor      string
+	Title      string
+	Price      string
+	Image      string
+	Comment    string
+}
