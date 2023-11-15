@@ -115,42 +115,42 @@ func (router *Router) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request)
 
 func (router *Router) OpenHtmlBuyOrder(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "buy_order.html")
-	tmpl.Execute(w, Config)
+	tmpl.Execute(w, router.Config)
 }
 
 func (router *Router) OpenHtml404(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "404.html")
-	tmpl.Execute(w, Config)
+	tmpl.Execute(w, router.Config)
 }
 
 func (router *Router) OpenHtmlCreateUser(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "login.html")
-	tmpl.Execute(w, Config)
+	tmpl.Execute(w, router.Config)
 }
 
 func (router *Router) OpenHtmlSales(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "sales.html")
-	tmpl.Execute(w, Config)
+	tmpl.Execute(w, router.Config)
 }
 
 func (router *Router) OpenHtmlProsv(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "prosv.html")
-	tmpl.Execute(w, Config)
+	tmpl.Execute(w, router.Config)
 }
 func (router *Router) OpenHtmlAgat(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "agat.html")
-	tmpl.Execute(w, Config)
+	tmpl.Execute(w, router.Config)
 }
 func (router *Router) OpenHtmlStronikum(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "stronikum.html")
-	tmpl.Execute(w, Config)
+	tmpl.Execute(w, router.Config)
 }
 func (router *Router) OpenHtmlNaura(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "naura.html")
-	tmpl.Execute(w, Config)
+	tmpl.Execute(w, router.Config)
 }
 
 func (router *Router) OpenHtml804(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(router.Config.Path_prefix + router.Config.Path_frontend + "804.html")
-	tmpl.Execute(w, Config)
+	tmpl.Execute(w, router.Config)
 }

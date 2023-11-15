@@ -7,7 +7,7 @@ import (
 )
 
 type Bd struct {
-	Config config.Configuration
+	config.Configuration
 }
 
 func (b *Bd) readCsvFileRows(filePath string) [][]string {
@@ -36,22 +36,22 @@ func (b *Bd) readCsvFileRows(filePath string) [][]string {
 }
 
 func (b *Bd) ReadUsersData() [][]string {
-	rows := b.readCsvFileRows(b.Config.Path_bd + b.Config.Bd_users_list)
+	rows := b.readCsvFileRows(b.Path_bd + b.Bd_users_list)
 	return rows
 }
 
 func (b *Bd) ReadAdminData() [][]string {
-	rows := b.readCsvFileRows(b.Config.Path_bd + b.Config.Bd_admin_list)
+	rows := b.readCsvFileRows(b.Path_bd + b.Bd_admin_list)
 	return rows
 }
 
 func (b *Bd) ReadFavorites() [][]string {
-	rows := b.readCsvFileRows(b.Config.Path_bd + b.Config.Bd_favorites)
+	rows := b.readCsvFileRows(b.Path_bd + b.Bd_favorites)
 	return rows
 }
 
 func (b *Bd) ReadOrders() [][]string {
-	rows := b.readCsvFileRows(b.Config.Path_bd + b.Config.Bd_orders)
+	rows := b.readCsvFileRows(b.Path_bd + b.Bd_orders)
 	return rows
 }
 

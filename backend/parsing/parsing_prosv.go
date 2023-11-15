@@ -16,7 +16,7 @@ type ProsvCard struct {
 
 type ParsingService struct{}
 
-func (ps *ParsingService) WriteProsvToCsv(data []*ProsvCard) {
+func (ps *ParsingService) WriteToCsv(data []*ProsvCard) {
 	file, _ := os.Open("bd_prosv.csv")
 	writer := csv.NewWriter(file)
 	for _, dt := range data {
@@ -34,7 +34,7 @@ func (ps *ParsingService) WriteProsvToCsv(data []*ProsvCard) {
 // https://shop.prosv.ru/katalog?pagenumber=2
 var url = "http://shop.prosv.ru/katalog"
 
-func (ps *ParsingService) GetLinks() []ProsvCard {
+func (ps *ParsingService) ScrapSource() []ProsvCard {
 	c := colly.NewCollector()
 	dts := make([]ProsvCard, 0)
 

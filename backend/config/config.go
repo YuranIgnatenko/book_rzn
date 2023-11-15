@@ -36,13 +36,6 @@ type Configuration struct {
 	Company_name       string   `json:"company_name"`
 	Text_banner        string   `json:"text_banner"`
 	Description_banner string   `json:"description_banner"`
-
-	Cards_prosv     []string
-	Cards_naura     []string
-	Cards_stronikum []string
-	Cards_agat      []string
-
-	Prosv_cards []parsing.ProsvCard
 }
 
 func NewConfiguration() Configuration {
@@ -53,7 +46,7 @@ func NewConfiguration() Configuration {
 	json.Unmarshal(byteValue, &conf)
 
 	// if len(bd.ReadProsv()) <= 1 {
-	conf.Prosv_cards = parsing.GetLinks()
+	// conf.Prosv_cards = core.ScrapSource()
 	// }
 
 	return conf

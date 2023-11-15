@@ -13,6 +13,7 @@ type Core struct {
 	routes.Router
 	middleware.Middleware
 	config.Configuration
+	ParsingServicer
 }
 
 func (c *Core) SetHandlers() {
