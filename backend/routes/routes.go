@@ -125,6 +125,8 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("find target (in /add_favorites)")
+
 	fmt.Println(r.URL.Path)
 	token, err := r.Cookie("token")
 	if err != nil {
@@ -136,7 +138,7 @@ func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
 	if len(path_parts) == 2 {
 		if string(path[0]) == "add_favorites" {
 			order_id := path[1]
-			fmt.Println(path, token, order_id)
+			// fmt.Println(path, token, order_id)
 			rout.SaveTarget(token.Value, string(order_id))
 		}
 	}
@@ -154,6 +156,7 @@ func (rout *Rout) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(r.Cookies())
 	rout.DataTemp.ProsvCards = rout.FindTarget(token.Value)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "favorites.html")
 	tmpl.Execute(w, rout.DataTemp)
 }

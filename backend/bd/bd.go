@@ -4,6 +4,7 @@ import (
 	"backend/config"
 	"backend/models"
 	"encoding/csv"
+	"fmt"
 	"os"
 )
 
@@ -63,6 +64,7 @@ func (b *Bd) ReadOrders() [][]string {
 }
 
 func (b *Bd) SaveTarget(token, id_target string) {
+	fmt.Println("save target (in /add favorites)")
 
 	file, err := os.OpenFile(b.Path_bd+b.Bd_favorites, os.O_CREATE|os.O_WRONLY|os.O_APPEND, os.ModePerm)
 
@@ -81,12 +83,12 @@ func (b *Bd) SaveTarget(token, id_target string) {
 }
 
 func (b *Bd) FindTarget(token string) []models.ProsvCard {
-
+	fmt.Println("find target (in /favorites)")
 	data_tokens := make([]string, 0)
 
 	file, err := os.Open(b.Path_bd + b.Bd_favorites)
 	if err != nil {
-		// return nil, err
+		panic(err)
 	}
 	defer file.Close()
 	reader := csv.NewReader(file)
@@ -128,7 +130,7 @@ func (b *Bd) FindTarget(token string) []models.ProsvCard {
 
 		}
 	}
-
+	fmt.Println(len(cards), "len cards")
 	return cards
 }
 
