@@ -39,6 +39,7 @@ func (c *Core) SetHandlers() {
 	http.HandleFunc("/cms", c.CookieAdmin(http.HandlerFunc(c.OpenHtmlCms)))
 	http.HandleFunc("/profile", c.CookieUser(http.HandlerFunc(c.OpenHtmlProfile)))
 	http.HandleFunc("/buy", c.OpenHtmlBuy)
+	http.HandleFunc("/buy/*", c.OpenHtmlBuy)
 	http.HandleFunc("/404", c.OpenHtml404)
 	http.HandleFunc("/create_user", c.OpenHtmlCreateUser)
 	http.HandleFunc("/login_check", c.OpenHtmlLoginCheck)

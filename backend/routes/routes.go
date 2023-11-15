@@ -127,8 +127,10 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rout *Rout) OpenHtmlBuy(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.URL.Path)
 	fmt.Println("buy --- ok")
 	fmt.Println(r.Cookies())
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "404.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
