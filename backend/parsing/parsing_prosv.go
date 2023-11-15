@@ -27,21 +27,16 @@ func NewParsingService(c config.Configuration, bd bd.Bd) *ParsingService {
 			"https://shop.prosv.ru/katalog?pagenumber=2",
 		},
 	}
-	
+
 	data, _ := ps.ReadFromCsv()
 	ps.ProsvCards = make([]models.ProsvCard, 0)
-	// fmt.Println(data, err)
-	fmt.Println("++++")
 	if len(data) <= 1 {
 		ps.ProsvCards = ps.ScrapSource()
 		ps.WriteToCsv(ps.ProsvCards)
 		return &ps
 
 	} else {
-		// data = ps.ScrapSource()
-		fmt.Println(len(data))
 		ps.ProsvCards = data
-		// ps.WriteToCsv(data)
 	}
 
 	return &ps
@@ -56,7 +51,7 @@ func (ps *ParsingService) WriteToCsv(data []models.ProsvCard) {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 	for _, dt := range data {
-		row := []string{dt.Autor, dt.Title, dt.Price, dt.Link}
+		row := []string{dt.Autor, dt.Title, dt.Price, dt.Link, dt.Id}
 		err := writer.Write(row)
 		if err != nil {
 			panic(err)
@@ -77,6 +72,7 @@ func (ps *ParsingService) ScrapSource() []models.ProsvCard {
 					Title: el.ChildText(".product-title"),
 					Price: el.ChildText(".prices"),
 					Link:  el.ChildAttr("img", "src"),
+					Id:    el.ChildText(".autor") + el.ChildText(".prices"),
 				}
 
 				dts = append(dts, dt)
@@ -120,12 +116,8 @@ func (ps *ParsingService) ReadFromCsv() ([]models.ProsvCard, error) {
 			Title: rec[1],
 			Price: rec[2],
 			Link:  rec[3],
+			Id:    rec[4],
 		}
 		data = append(data, card)
 	}
-	// if len(data) < 5 {
-	// 	return nil, errors.New("BD empty, not found records")
-	// }
-	return data, err
-
 }

@@ -12,4 +12,5 @@ type ProsvCard struct {
 	Title string //`csv:"title"`
 	Price string //`csv:"price"`
 	Link  string //`csv:"link"`
+	Id    string
 }

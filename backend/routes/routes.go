@@ -55,10 +55,7 @@ func (rout *Rout) OpenHtmlExchange(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "exchange.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
-func (rout *Rout) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "cart.html")
-	tmpl.Execute(w, rout.DataTemp)
-}
+
 func (rout *Rout) OpenHtmlHome(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Cookies())
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
@@ -127,7 +124,7 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (rout *Rout) OpenHtmlBuy(w http.ResponseWriter, r *http.Request) {
+func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.URL.Path)
 	token, err := r.Cookie("token")
 	if err != nil {
@@ -137,14 +134,27 @@ func (rout *Rout) OpenHtmlBuy(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 
 	if len(path_parts) == 2 {
-		if string(path[0]) == "buy" {
+		if string(path[0]) == "add_favorites" {
 			order_id := path[1]
 			fmt.Println(path, token, order_id)
+			rout.SaveTarget(token.Value, string(order_id))
 		}
 	}
 	fmt.Println(r.Cookies())
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
+	tmpl.Execute(w, rout.DataTemp)
+}
 
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "404.html")
+func (rout *Rout) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.URL.Path)
+	token, err := r.Cookie("token")
+	if err != nil {
+		return
+	}
+
+	fmt.Println(r.Cookies())
+	rout.DataTemp.ProsvCards = rout.FindTarget(token.Value)
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "favorites.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 

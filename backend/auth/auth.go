@@ -60,10 +60,10 @@ func (a *Auth) GetCookieUser(w http.ResponseWriter, r *http.Request) bool {
 func (a *Auth) SetCookieAdmin(w http.ResponseWriter, r *http.Request, token string) {
 
 	cookie := http.Cookie{
-		Name:     "token",
-		Value:    token,
-		Path:     "/",
-		MaxAge:   3600,
+		Name:  "token",
+		Value: token,
+		Path:  "/",
+		// MaxAge:   3600,
 		HttpOnly: true,
 		Secure:   true,
 		SameSite: http.SameSiteLaxMode,
