@@ -59,6 +59,7 @@ func (rout *Rout) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, rout.DataTemp)
 }
 func (rout *Rout) OpenHtmlHome(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.Cookies())
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
