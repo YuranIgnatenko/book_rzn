@@ -1,8 +1,8 @@
 package parsing
 
 import (
-	"backend/bd"
 	"backend/config"
+	"backend/connector"
 	"backend/models"
 	"encoding/csv"
 	"fmt"
@@ -15,13 +15,13 @@ type ParsingService struct {
 	LinkVisit  []string
 	ProsvCards []models.ProsvCard
 	config.Configuration
-	bd.Bd
+	connector.Connector
 }
 
-func NewParsingService(c config.Configuration, bd bd.Bd) *ParsingService {
+func NewParsingService(c config.Configuration, conn connector.Connector) *ParsingService {
 	ps := ParsingService{
 		Configuration: c,
-		Bd:            bd,
+		Connector:     conn,
 		LinkVisit: []string{
 			"http://shop.prosv.ru/katalog",
 			"https://shop.prosv.ru/katalog?pagenumber=2",

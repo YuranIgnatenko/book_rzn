@@ -2,7 +2,7 @@ package routes
 
 import (
 	"backend/auth"
-	"backend/bd"
+	"backend/connector"
 	"backend/datatemp"
 	"fmt"
 	"net/http"
@@ -12,15 +12,15 @@ import (
 
 type Rout struct {
 	auth.Auth
-	bd.Bd
+	connector.Connector
 	datatemp.DataTemp
 }
 
-func NewRout(a auth.Auth, bd bd.Bd, dt datatemp.DataTemp) *Rout {
+func NewRout(a auth.Auth, conn connector.Connector, dt datatemp.DataTemp) *Rout {
 	rout := Rout{
-		Auth:     a,
-		Bd:       bd,
-		DataTemp: dt,
+		Auth:      a,
+		Connector: conn,
+		DataTemp:  dt,
 	}
 	// fmt.Println(rout)
 	return &rout
@@ -105,20 +105,21 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 	login := r.FormValue("login")
 	password := r.FormValue("password")
 
-	is_admin, cookie_admin := rout.Auth.CheckAdmin(login, password)
-	is_user, cookie_user := rout.Auth.CheckLoginUser(login, password)
+	token, access := rout.VerifyLogin(login, password)
 
-	if is_admin {
-		rout.Auth.SetCookieAdmin(w, r, cookie_admin)
+	switch access {
+	case "admin":
+		rout.Auth.SetCookieAdmin(w, r, token)
 		http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/cms", http.StatusSeeOther)
 		return
-	}
-	if is_user {
-		rout.Auth.SetCookieUser(w, r, cookie_user)
+	case "user":
+		rout.Auth.SetCookieUser(w, r, token)
 		http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/home", http.StatusSeeOther)
 		return
+	default:
+		http.Redirect(w, r, rout.DataTemp.Bd_admin_list+"/login", http.StatusSeeOther)
+		return
 	}
-
 	http.Redirect(w, r, rout.DataTemp.Bd_admin_list+"/login", http.StatusSeeOther)
 	return
 
@@ -139,12 +140,10 @@ func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("url:", url)
 
-	// if len(path_parts) == 2 {
-	//todo : strip trim spaces
 	if string(url[1]) == "add_favorites" {
 		order_id := url[2]
 		fmt.Println("to be saved ++++++", path, token, order_id)
-		rout.SaveTarget(token.Value, string(order_id))
+		rout.SaveTargetFavorites(token.Value, string(order_id))
 		fmt.Println(r.Cookies())
 		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
 		tmpl.Execute(w, rout.DataTemp)
@@ -154,9 +153,11 @@ func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
 		order_id := url[2]
 		fmt.Println("to be deleted -----", path, token, order_id)
 		// rout.SaveTarget(token.Value, string(order_id))
-		rows := rout.DeleteTarget(token.Value, string(order_id))
-		rout.ReWriteAllFavorites(rows)
-		rout.DataTemp.FavoritesCards = rout.FindTarget(token.Value)
+		err := rout.DeleteTargetFavorites(token.Value, string(order_id))
+		if err != nil{
+			panic(err)
+		}
+		rout.DataTemp.FavoritesCards = rout.GetListFavorites(token.Value)
 
 		fmt.Println(r.Cookies())
 		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "favorites.html")

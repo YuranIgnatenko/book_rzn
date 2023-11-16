@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"backend/bd"
 	"backend/config"
+	"backend/connector"
 	"errors"
 	"log"
 	"net/http"
@@ -10,16 +10,16 @@ import (
 
 type Auth struct {
 	config.Configuration
-	bd.Bd
+	connector.Connector
 
 	MaxAge int //3600
 
 }
 
-func NewAuth(c config.Configuration, bd bd.Bd) *Auth {
+func NewAuth(c config.Configuration, conn connector.Connector) *Auth {
 	return &Auth{
 		Configuration: c,
-		Bd:            bd,
+		Connector:     conn,
 	}
 }
 
@@ -90,30 +90,12 @@ func (a *Auth) GetCookieAdmin(w http.ResponseWriter, r *http.Request) bool {
 	return true
 }
 
-func (a *Auth) CheckLoginUser(login, password string) (bool, string) {
-	data_rows := a.Bd.ReadUsersData()
-	for _, row := range data_rows {
-		if login == row[0] {
-			if password == row[1] {
-				if row[2] == "token" {
-					return true, row[3]
-				}
-			}
-		}
+func (a *Auth) VerifyLogin(login, password string) (string, string) {
+	user, err := a.FindUserFromLoginPassword(login, password)
+	if err != nil {
+		panic(err)
 	}
-	return false, "error"
-}
+	access := a.GetAccessUser(login, password)
 
-func (a *Auth) CheckAdmin(login, password string) (bool, string) {
-	data_rows := a.Bd.ReadAdminData()
-	for _, row := range data_rows {
-		if login == row[0] {
-			if password == row[1] {
-				if row[2] == "token" {
-					return true, row[3]
-				}
-			}
-		}
-	}
-	return false, "error"
+	return user.Token, access
 }

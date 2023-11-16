@@ -2,8 +2,8 @@ package core
 
 import (
 	"backend/auth"
-	"backend/bd"
 	"backend/config"
+	"backend/connector"
 	"backend/datatemp"
 	"backend/middleware"
 	"backend/parsing"
@@ -15,7 +15,7 @@ import (
 
 type Core struct {
 	*config.Configuration
-	*bd.Bd
+	*connector.Connector
 	*auth.Auth
 	*middleware.Middleware
 	*parsing.ParsingService
@@ -81,18 +81,19 @@ func (c *Core) SetHandlers() {
 
 func NewCore() *Core {
 	c := config.NewConfiguration()
-	bd := bd.NewBd(*c)
-	a := auth.NewAuth(*c, *bd)
+	// bd := bd.NewBd(*c)
+	conn := connector.NewConnector("bookrzn", "book1995", "127.0.0.1:3306", "bookrzn")
+	a := auth.NewAuth(*c, *conn)
 	mw := middleware.NewMiddleware(*a)
-	ps := parsing.NewParsingService(*c, *bd)
+	ps := parsing.NewParsingService(*c, *conn)
 
 	fmt.Println(len(ps.ProsvCards))
 	dt := datatemp.NewDataTemp(*c, ps.ProsvCards)
-	rout := routes.NewRout(*a, *bd, *dt)
+	rout := routes.NewRout(*a, *conn, *dt)
 
 	return &Core{
 		Configuration:  c,
-		Bd:             bd,
+		Connector:      conn,
 		Auth:           a,
 		Middleware:     mw,
 		ParsingService: ps,

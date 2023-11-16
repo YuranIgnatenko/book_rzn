@@ -27,7 +27,7 @@ type Users struct {
 	Id              int
 	Login, Password string
 	Token, Name     string
-	Phone           string
+	Phone, Family   string
 	Type, Email     string
 }
 
