@@ -57,10 +57,20 @@ func (rout *Rout) OpenHtmlExchange(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rout *Rout) OpenHtmlHome(w http.ResponseWriter, r *http.Request) {
-	// fmt.Println(r.Cookies())
+	res := rout.Auth.GetCookieUser(w, r)
+	rout.DataTemp.IsLogin = res
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
+
+func (rout *Rout) OpenHtmlLogout(w http.ResponseWriter, r *http.Request) {
+	// res := rout.Auth.GetCookieUser(w, r)
+	rout.DeleteCookie(w, r)
+	rout.DataTemp.IsLogin = false
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "login.html")
+	tmpl.Execute(w, rout.DataTemp)
+}
+
 func (rout *Rout) OpenHtmlNew(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "new.html")
 	tmpl.Execute(w, rout.DataTemp)
@@ -90,7 +100,7 @@ func (rout *Rout) OpenHtmlRegistry(w http.ResponseWriter, r *http.Request) {
 	token := rout.CreateUser(login, password, name, family, phone, email)
 	fmt.Println(token)
 
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "registration.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 
@@ -114,18 +124,26 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(token, access)
 	switch access {
 	case "admin":
+		rout.DataTemp.IsLogin = true
 		rout.Connector.ReSaveCookieDB(login, password, token)
 		rout.Auth.SetCookieAdmin(w, r, token)
-		http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/cms", http.StatusSeeOther)
+		// http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/cms", http.StatusSeeOther)
+		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "cms.html")
+		tmpl.Execute(w, rout.DataTemp)
 		return
 	case "user":
+		rout.DataTemp.IsLogin = true
 		rout.Connector.ReSaveCookieDB(login, password, token)
-
 		rout.Auth.SetCookieUser(w, r, token)
-		http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/home", http.StatusSeeOther)
+		// http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/home", http.StatusSeeOther)
+		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
+		tmpl.Execute(w, rout.DataTemp)
 		return
 	default:
-		http.Redirect(w, r, rout.DataTemp.Bd_admin_list+"/login", http.StatusSeeOther)
+		// http.Redirect(w, r, rout.DataTemp.Bd_admin_list+"/login", http.StatusSeeOther)
+		rout.DataTemp.IsLogin = false
+		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "login.html")
+		tmpl.Execute(w, rout.DataTemp)
 		return
 	}
 }

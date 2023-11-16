@@ -60,6 +60,22 @@ func (a *Auth) GetCookieUser(w http.ResponseWriter, r *http.Request) bool {
 
 }
 
+func (a *Auth) DeleteCookie(w http.ResponseWriter, r *http.Request) {
+
+	cookie := http.Cookie{
+		Name:  "token",
+		Value: "",
+		Path:  "/",
+		// MaxAge:   3600,
+		HttpOnly: true,
+		Secure:   true,
+		SameSite: http.SameSiteLaxMode,
+	}
+
+	http.SetCookie(w, &cookie)
+
+}
+
 func (a *Auth) SetCookieAdmin(w http.ResponseWriter, r *http.Request, token string) {
 
 	cookie := http.Cookie{

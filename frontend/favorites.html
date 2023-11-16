@@ -83,8 +83,12 @@
                     </div>
 
                     <div class="login_or_reg">
-                        <a href="http://localhost:{{ .Port }}/login">Вход</a>
-                        <a href="http://localhost:{{ .Port }}/registration">Регистрация</a>
+                        {{if .IsLogin}}
+                            <a href="http://localhost:{{ .Port }}/logout">Выход</a>
+                        {{else}}
+                        <a href="http://localhost:{{ .Port }}/login">Вход</a> / <a
+                            href="http://localhost:{{ .Port }}/registration">Регистрация</a>
+                        {{end}}
                     </div>
                 </div>
             </div>

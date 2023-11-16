@@ -2,7 +2,7 @@
 <html lang="ru-ru">
 
 <head>
- 
+
 
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta name="keywords" content="книги, купить книгу, книга цена, каталог книг, книги недорого, магазин книг" />
@@ -21,7 +21,8 @@
     <link href="http://new15942715563356.myaddshop.ru/css/normalize.css" rel="stylesheet" type="text/css">
 
     <link href="http://new15942715563356.myaddshop.ru/css/framework7-icons.css" rel="stylesheet">
-    <link href="http://new15942715563356.myaddshop.ru/css/swiper.css" rel="stylesheet" type="text/css">     <style>
+    <link href="http://new15942715563356.myaddshop.ru/css/swiper.css" rel="stylesheet" type="text/css">
+    <style>
         :root {
             --mainSchemeColor: #804C3E;
             --mainContrastSchemeColor: #FF9E75;
@@ -62,16 +63,17 @@
         window.promo_discount = null;
         window.promo_title = null;
         window.one_click_buy = 1;
-    </script>     <!-- gsc start -->
+    </script> <!-- gsc start -->
 
     <!-- gsc end -->
 
     <!-- ywm start -->
 
-    <!-- ywm end -->     <!-- Подключите тут важные скрипты и стили. -->
+    <!-- ywm end --> <!-- Подключите тут важные скрипты и стили. -->
 </head>
 
-<body class=" michigan main_page rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">     <div class="wrapper">
+<body class=" michigan main_page rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
+    <div class="wrapper">
 
         <header>
             <div class="header-top">
@@ -81,11 +83,16 @@
                     </div>
 
                     <div class="phone">
-                        <a href="tel:88009008090">8-800-900-80-90</a>                     </div>
+                        <a href="tel:88009008090">8-800-900-80-90</a>
+                    </div>
 
                     <div class="login_or_reg">
+                        {{if .IsLogin}}
+                            <a href="http://localhost:{{ .Port }}/logout">Выход</a>
+                        {{else}}
                         <a href="http://localhost:{{ .Port }}/login">Вход</a> / <a
                             href="http://localhost:{{ .Port }}/registration">Регистрация</a>
+                        {{end}}
                     </div>
                 </div>
             </div>
@@ -126,7 +133,7 @@
                                 <span>Избранное</span>
                             </a>
                         </div>
- 
+
                     </div>
                 </div>
             </div>
@@ -140,8 +147,8 @@
                     <div class="page-menu">
                         <ul id="menu_list" class="level_1">
                             <li class="li"><a href="http://localhost:{{ .Port }}/home" class=""
-                                title="О компании">Главная</a></li>
-                             <li class="li"><a href="http://localhost:{{ .Port }}/804" class="" title="О компании">Приказ
+                                    title="О компании">Главная</a></li>
+                            <li class="li"><a href="http://localhost:{{ .Port }}/804" class="" title="О компании">Приказ
                                     804</a></li>
 
                             <li class="li"><a href="http://localhost:{{ .Port }}/prosv" class=""
@@ -160,7 +167,7 @@
                     <div class="menu_popup_mob">
                         <div class="catalog_subtitle">Навигация по сайту</div>
                         <ul id="menu_mob">
-                             <li class="li"><a href="http://localhost:{{ .Port }}/804" class=""
+                            <li class="li"><a href="http://localhost:{{ .Port }}/804" class=""
                                     title="О компании">Приказ804</a></li>
 
                             <li class="li"><a href="http://localhost:{{ .Port }}/prosv" class=""
@@ -179,7 +186,8 @@
                 </div>
             </div>
     </div>
-    </header>      <main>
+    </header>
+    <main>
         <div class="block main">
             <div class="inner">
 
@@ -220,10 +228,9 @@
                                                 {{ .Path_banner_home}} 1366w" sizes="(max-width: 1000px) calc(100vw - 60px), 
                              (max-width: 1200px) 960px, 
                              (max-width: 1366px) calc(100vw - 60px), 
-                             (min-width: 1366px) 1300px" src="{{ .Path_banner_home}}"
-                                        class="slider-image"
+                             (min-width: 1366px) 1300px" src="{{ .Path_banner_home}}" class="slider-image"
                                         width="1300px" height="500px" loading="lazy">
-                                    
+
                                 </div>
                             </div>
                             <div class="swiper-pagination"></div>
@@ -254,7 +261,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
 
 
                 </div>
@@ -283,22 +290,22 @@
                     <div class="footer_site_info">
                         <p>Используя данный сайт, вы автоматически принимаете условия пользовательского соглашения и
                             соглашаетесь с политикой конфиденциальности.</p> -->
-                    </div>
                 </div>
-
-
-                <div class="social">
-                    <a target="_blank" href="https://vk.com/#" class="link_vk"></a>
-                    <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
-                    <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
-                    <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
-                    <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a>
-                </div>
-
             </div>
+
+
+            <div class="social">
+                <a target="_blank" href="https://vk.com/#" class="link_vk"></a>
+                <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
+                <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
+                <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
+                <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a>
+            </div>
+
         </div>
         </div>
-    </footer> 
+        </div>
+    </footer>
     <script src="../code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
     <script>$(function () { feather.replace(); });</script>
@@ -308,7 +315,7 @@
     <link rel="stylesheet"
         href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" />
     <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" />
-    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" /> 
+    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" />
     <script>
         $(function () {
             var swiper = new Swiper('.swiper-container', {

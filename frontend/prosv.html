@@ -83,8 +83,12 @@
                     </div>
 
                     <div class="login_or_reg">
-                        <a href="http://localhost:{{ .Port }}/login">Вход</a>
-                        <a href="http://localhost:{{ .Port }}/registration">Регистрация</a>
+                        {{if .IsLogin}}
+                            <a href="http://localhost:{{ .Port }}/logout">Выход</a>
+                        {{else}}
+                        <a href="http://localhost:{{ .Port }}/login">Вход</a> / <a
+                            href="http://localhost:{{ .Port }}/registration">Регистрация</a>
+                        {{end}}
                     </div>
                 </div>
             </div>
@@ -132,10 +136,10 @@
 
             <div class="header-bottom">
                 <div class="inner">
-                    <div class="categories-menu">
+                    <!-- <div class="categories-menu">
                         <div class="catalog_title"><i data-feather="grid"></i>Главная</div>
 
-                    </div>
+                    </div> -->
                     <div class="page-menu">
                         <ul id="menu_list" class="level_1">
                             <li class="li"><a href="http://localhost:{{ .Port }}/home" class=""
