@@ -7,13 +7,13 @@ import (
 
 type DataTemp struct {
 	config.Configuration
-	ProsvCards     []models.ProsvCard
+	TargetCards    []models.TargetCard
 	FavoritesCards []models.FavoritesCards
 }
 
-func NewDataTemp(c config.Configuration, ps []models.ProsvCard) *DataTemp {
+func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 	return &DataTemp{
 		Configuration: c,
-		ProsvCards:    ps,
+		TargetCards:   ps,
 	}
 }

@@ -1,26 +1,38 @@
 package models
 
-type ProsvCarder interface{}
+type TargetCarder interface{}
 
 type ParsingServicer interface {
-	ScrapSource() []ProsvCarder
-	WriteToCsv(data []*ProsvCarder)
+	ScrapSource() []TargetCarder
+	WriteToCsv(data []*TargetCarder)
 }
 
-type ProsvCard struct {
-	Autor string //`csv:"autor"`
-	Title string //`csv:"title"`
-	Price string //`csv:"price"`
-	Link  string //`csv:"link"`
-	Id    string
+type TargetCard struct {
+	Autor      string //`csv:"autor"`
+	Title      string //`csv:"title"`
+	Price      string //`csv:"price"`
+	Link       string //`csv:"link"`
+	Id         string
+	Comment    string
+	TargetHash string
 }
+
+// type ProsvCard struct {
+// 	Autor string //`csv:"autor"`
+// 	Title string //`csv:"title"`
+// 	Price string //`csv:"price"`
+// 	Link  string //`csv:"link"`
+// 	Id    string
+// }
 
 type FavoritesCards struct {
-	Autor string //`csv:"autor"`
-	Title string //`csv:"title"`
-	Price string //`csv:"price"`
-	Link  string //`csv:"link"`
-	Id    string
+	Autor      string //`csv:"autor"`
+	Title      string //`csv:"title"`
+	Price      string //`csv:"price"`
+	Link       string //`csv:"link"`
+	Id         string
+	Comment    string
+	TargetHash string
 }
 
 type Users struct {
@@ -32,11 +44,14 @@ type Users struct {
 }
 
 type Favorites struct {
-	Id         int
-	Token      string
+	Autor      string //`csv:"autor"`
+	Title      string //`csv:"title"`
+	Price      string //`csv:"price"`
+	Link       string //`csv:"link"`
+	Id         string
+	Comment    string
 	TargetHash string
 	Count      string
-	Datetime   string
 }
 
 type Orders struct {

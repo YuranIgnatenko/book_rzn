@@ -30,6 +30,11 @@
     "company_name":"Учколлектор Рязань 1995",
 
     "text_banner":"",
-    "description_banner":""
+    "description_banner":"",
+
+    "db_user":"bookrzn",
+    "db_password":"book1995",
+    "db_hostname":"localhost:3306",
+    "db_database":"bookrzn"
 
 }

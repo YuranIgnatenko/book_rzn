@@ -138,6 +138,8 @@
                     </div>
                     <div class="page-menu">
                         <ul id="menu_list" class="level_1">
+                            <li class="li"><a href="http://localhost:{{ .Port }}/home" class=""
+                                title="О компании">Главная</a></li>
                             <li class="li"><a href="http://localhost:{{ .Port }}/804" class="" title="О компании">Приказ
                                     804</a></li>
 
@@ -189,7 +191,7 @@
 
                         <div class="items">
 
-                            {{ range .ProsvCards }}
+                            {{ range .TargetCards }}
                             <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
 
                                 <div class="image">
@@ -211,7 +213,7 @@
                                     </div>
                                     <div>
                                         <a class="more"
-                                            href="http://localhost:8082/add_favorites/{{ .Autor }}{{ .Price }}">В корзину</a>
+                                            href="http://localhost:8082/add_favorites/{{ .Autor }}{{ .Title }}{{ .Price }}{{ .Link }}">В корзину</a>
                                     </div>
                                 </div>
                             </div>

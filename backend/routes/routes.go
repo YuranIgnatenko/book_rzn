@@ -57,7 +57,7 @@ func (rout *Rout) OpenHtmlExchange(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rout *Rout) OpenHtmlHome(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.Cookies())
+	// fmt.Println(r.Cookies())
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
@@ -80,7 +80,17 @@ func (rout *Rout) OpenHtmlLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rout *Rout) OpenHtmlRegistry(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "registration.html")
+	login := r.FormValue("login")
+	password := r.FormValue("password")
+	name := r.FormValue("name")
+	family := r.FormValue("family")
+	phone := r.FormValue("phone")
+	email := r.FormValue("email")
+
+	token := rout.CreateUser(login, password, name, family, phone, email)
+	fmt.Println(token)
+
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 
@@ -96,23 +106,21 @@ func (rout *Rout) OpenHtmlCms(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (rout *Rout) OpenHtmlProfile(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
-	tmpl.Execute(w, rout.DataTemp)
-}
-
 func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 	login := r.FormValue("login")
 	password := r.FormValue("password")
 
 	token, access := rout.VerifyLogin(login, password)
-
+	fmt.Println(token, access)
 	switch access {
 	case "admin":
+		rout.Connector.ReSaveCookieDB(login, password, token)
 		rout.Auth.SetCookieAdmin(w, r, token)
 		http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/cms", http.StatusSeeOther)
 		return
 	case "user":
+		rout.Connector.ReSaveCookieDB(login, password, token)
+
 		rout.Auth.SetCookieUser(w, r, token)
 		http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/home", http.StatusSeeOther)
 		return
@@ -120,50 +128,6 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, rout.DataTemp.Bd_admin_list+"/login", http.StatusSeeOther)
 		return
 	}
-	http.Redirect(w, r, rout.DataTemp.Bd_admin_list+"/login", http.StatusSeeOther)
-	return
-
-}
-
-func (rout *Rout) OpenHtmlAddFavorites(w http.ResponseWriter, r *http.Request) {
-
-	fmt.Println(r.URL.Path)
-	url := strings.Split(r.URL.Path, "/")
-	// if url[0] != "add_favorites" {
-	// 	http.Redirect(w, r, rout.DataTemp.Ip+rout.DataTemp.Split_ip_port+rout.DataTemp.Port+"/home", http.StatusSeeOther)
-	// }
-	token, err := r.Cookie("token")
-	if err != nil {
-		return
-	}
-	path := r.URL.Path
-
-	fmt.Println("url:", url)
-
-	if string(url[1]) == "add_favorites" {
-		order_id := url[2]
-		fmt.Println("to be saved ++++++", path, token, order_id)
-		rout.SaveTargetFavorites(token.Value, string(order_id))
-		fmt.Println(r.Cookies())
-		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
-		tmpl.Execute(w, rout.DataTemp)
-	}
-
-	if string(url[1]) == "delete_favorites" {
-		order_id := url[2]
-		fmt.Println("to be deleted -----", path, token, order_id)
-		// rout.SaveTarget(token.Value, string(order_id))
-		err := rout.DeleteTargetFavorites(token.Value, string(order_id))
-		if err != nil{
-			panic(err)
-		}
-		rout.DataTemp.FavoritesCards = rout.GetListFavorites(token.Value)
-
-		fmt.Println(r.Cookies())
-		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "favorites.html")
-		tmpl.Execute(w, rout.DataTemp)
-	}
-
 }
 
 func (rout *Rout) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
@@ -173,8 +137,9 @@ func (rout *Rout) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(r.Cookies())
-	rout.DataTemp.FavoritesCards = rout.FindTarget(token.Value)
+	// fmt.Println(r.Cookies())
+	rout.DataTemp.FavoritesCards = rout.GetListFavorites(token.Value)
+	fmt.Println("len favorites cards::::", rout.DataTemp.FavoritesCards)
 
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "favorites.html")
 	tmpl.Execute(w, rout.DataTemp)
@@ -196,11 +161,10 @@ func (rout *Rout) OpenHtmlSales(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rout *Rout) OpenHtmlProsv(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(w, r)
+	// fmt.Println(w, r)
 	// rout.ProsvCards = parsing.ParsingService.ReadFromCsv()
-	rout.DataTemp.ProsvCards = rout.ProsvCards
+	rout.DataTemp.TargetCards = rout.TargetCards
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
-	fmt.Println("----------", len(rout.DataTemp.ProsvCards))
 	tmpl.Execute(w, rout.DataTemp)
 }
 func (rout *Rout) OpenHtmlAgat(w http.ResponseWriter, r *http.Request) {
@@ -219,4 +183,69 @@ func (rout *Rout) OpenHtmlNaura(w http.ResponseWriter, r *http.Request) {
 func (rout *Rout) OpenHtml804(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "804.html")
 	tmpl.Execute(w, rout.DataTemp)
+}
+
+func (rout *Rout) OpenHtmlProfile(w http.ResponseWriter, r *http.Request) {
+	// fmt.Println(r.URL.Path)
+	url := strings.Split(r.URL.Path, "/")
+	if url[0] == "" {
+		url = url[1:]
+	}
+
+	token, err := r.Cookie("token")
+	if err != nil {
+		return
+	}
+
+	switch url[0] {
+	case "add_favorites":
+		// target_hash := strings.Join(url[1:], "//")
+		data := r.URL.Path
+		data = strings.ReplaceAll(data, ":/", "://")
+		fmt.Println("start url add favorites:::", data)
+
+		data = strings.ReplaceAll(data, `"`, "")
+		// data = strings.ReplaceAll(data, "'", "")
+		target_hash := strings.ReplaceAll(data, "/add_favorites/", "")
+		// target_hash = strings.TrimSpace(target_hash)
+		// target_hash = strings.ReplaceAll(target_hash, "/", "")
+		// target_hash = strings.ReplaceAll(target_hash, "\\", "")
+
+		fmt.Println("add_favorite::::[", target_hash, "]")
+		// count := rout.CountRows("bookrzn.Favorites")
+		rout.SaveTargetFavorites(token.Value, string(target_hash))
+		// fmt.Println(r.Cookies())
+		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
+		tmpl.Execute(w, rout.DataTemp)
+	case "delete_favorites":
+	case "add_orders":
+	case "delete_orders":
+	default:
+	}
+
+	// if string(url[1]) == "add_favorites" {
+	// 	order_id := url[2]
+	// 	fmt.Println("to be saved ++++++", path, token, order_id)
+	// 	count := rout.CountRows("bookrzn.Favorites")
+	// 	rout.SaveTargetFavorites(token.Value, string(order_id), string(count))
+	// 	fmt.Println(r.Cookies())
+	// 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
+	// 	tmpl.Execute(w, rout.DataTemp)
+	// }
+
+	// if string(url[1]) == "delete_favorites" {
+	// 	order_id := url[2]
+	// 	fmt.Println("to be deleted -----", path, token, order_id)
+	// 	// rout.SaveTarget(token.Value, string(order_id))
+	// 	err := rout.DeleteTargetFavorites(token.Value, string(order_id))
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
+	// 	rout.DataTemp.FavoritesCards = rout.GetListFavorites(token.Value)
+
+	// 	fmt.Println(r.Cookies())
+	// 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "favorites.html")
+	// 	tmpl.Execute(w, rout.DataTemp)
+	// }
+
 }

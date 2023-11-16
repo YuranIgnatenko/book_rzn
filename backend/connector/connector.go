@@ -1,315 +1,100 @@
 package connector
 
 import (
+	"backend/config"
 	"backend/models"
 	"database/sql"
 	"fmt"
 	"strconv"
-	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-const (
-	username = "bookrzn"
-	password = "book1995"
-	hostname = "127.0.0.1:3306"
-	dbname   = "bookrzn"
-)
-
-func dsn(dbName string) string {
-	return fmt.Sprintf("%s:%s@tcp(%s)/%s", username, password, hostname, dbName)
-}
-
-func Connect() {
-	db, err := sql.Open("mysql", dsn(""))
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-		return
-	}
-	err = db.Ping()
-	if err != nil {
-		fmt.Println(err)
-	}
-	res, err := db.Exec(`SHOW DATABASES;`)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(res)
-}
-
-var sql_create_users = `CREATE TABLE Users (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    login VARCHAR(30) NOT NULL,
-    password VARCHAR(30) NOT NULL,
-	type VARCHAR(30) NOT NULL,
-	token VARCHAR(30) NOT NULL,
-    name VARCHAR(30) ,
-	family VARCHAR(30),
-	phone VARCHAR(30),
-	email VARCHAR(30));`
-
-var sql_create_favorites = `CREATE TABLE Favorites (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-	token VARCHAR(30) NOT NULL,
-	target_hash VARCHAR(200) NOT NULL,
-	count VARCHAR(30),
-	datetime DATETIME
-);`
-
-var sql_create_orders = `CREATE TABLE Orders (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-	token VARCHAR(30) NOT NULL,
-	target_hash VARCHAR(200) NOT NULL,
-	count VARCHAR(30),
-	datetime DATETIME);`
-
-var sql_create_targets = `CREATE TABLE Targets (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-	target_hash VARCHAR(200) NOT NULL,
-	autor VARCHAR(30) NOT NULL,
-	title VARCHAR(30) NOT NULL,
-	price VARCHAR(30) NOT NULL,
-	image VARCHAR(100) NOT NULL,
-	comment VARCHAR(500));`
-
-// type (
-// 	TableUsers     []models.Users
-// 	TableFavorites []models.Favorites
-// 	TableOrders    []models.Orders
-// 	TableTargets   []models.Targets
-// )
-
 type Connector struct {
-	username    string
-	password    string
-	hostname    string
-	dbname      string
-	BdUsers     string
-	BdFavorites string
-	BdOrders    string
-	BdTargets   string
-	Db          *sql.DB
+	config.Configuration
+	Db *sql.DB
 }
 
-func NewConnector(user, pswd, host, dbname string) *Connector {
+func (conn *Connector) dsn() string {
+	return fmt.Sprintf("%s:%s@tcp(%s)/%s", conn.DB_user, conn.DB_password, conn.DB_hostname, conn.DB_database)
+}
+
+func NewConnector(c config.Configuration) *Connector {
 	conn := Connector{
-		username:    user,
-		password:    pswd,
-		hostname:    host,
-		dbname:      dbname,
-		BdUsers:     "Users",
-		BdFavorites: "Favorites",
-		BdOrders:    "Orders",
-		BdTargets:   "Targets",
+		Configuration: c,
 	}
 
-	db, err := sql.Open("mysql", dsn(""))
+	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
 		fmt.Printf("Error %s when opening DB\n", err)
 
 	}
 	conn.Db = db
-	defer db.Close()
+	//
 	return &conn
 
 }
 
-func (conn *Connector) AddUser(Login, Password, Type, Token, Name, Family, Phone, Email string) {
-	db, err := sql.Open("mysql", dsn(""))
+func (conn *Connector) ReSaveCookieDB(login, password, token string) {
+	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
 		fmt.Printf("Error %s when opening DB\n", err)
-
 	}
 	conn.Db = db
-	defer db.Close()
-	// token := "010101"
-	namedb := "bookrzn.Users"
-	rows, err := conn.Db.Query(
-		fmt.Sprintf(`INSERT %s (id,login,password,type,token,name,family,phone,email) 
-		VALUES ('%v','%s', '%s','%s','%s','%s',' %s', '%s', '%s','%s');`,
-			namedb, conn.CountRows(namedb)+1, Login, Password, Type, Token, Name, Family, Phone, Email)) //,
-	//login, password, name, phone, email, tp, token)
+
+	type User struct {
+		login, password, tp, token, name, family, phone, email string
+	}
+	var user User
+
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Users WHERE login='%s' and password='%s';`, login, password)) //,
 	if err != nil {
 		panic(err)
 	}
 
 	defer rows.Close()
 
-	users := []models.Users{}
-
 	for rows.Next() {
-		u := models.Users{}
-		err := rows.Scan(
-			&u.Id,
-			&u.Login,
-			&u.Password,
-			&u.Type,
-			&u.Token,
-			&u.Name,
-			&u.Family,
-			&u.Phone,
-			&u.Email)
+		rows.Scan(
+			&user.login,
+			&user.password,
+			&user.tp,
+			&user.token,
+			&user.name,
+			&user.family,
+			&user.phone,
+			&user.email,
+		)
 
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
-		users = append(users, u)
 	}
-	fmt.Println(len(users))
-	for _, u := range users {
-		fmt.Println(u.Login, u.Password, u.Phone, u.Phone)
-	}
-}
 
-func (conn *Connector) FindUserFromToken(token string) []models.Users {
-	db, err := sql.Open("mysql", dsn(""))
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-
-	}
-	conn.Db = db
-	defer db.Close()
-	rows, err := conn.Db.Query(`select * from bookrzn.Users where Token = '` + token + `';`) //,
+	rows, err = conn.Db.Query(
+		// fmt.Sprintf(`INSERT bookrzn.Users (login,password,type, token,name,family, phone,email)
+		fmt.Sprintf(`UPDATE bookrzn.Users SET token='%s' WHERE login='%s' AND password='%s';`,
+		token, login, password)) //,
 	if err != nil {
 		panic(err)
 	}
-
+	//
+	// обязательно иначе привысит лимит подключений и будет сбой
 	defer rows.Close()
-
-	users := []models.Users{}
-
-	for rows.Next() {
-		u := models.Users{}
-		err := rows.Scan(
-			&u.Id,
-			&u.Login,
-			&u.Password,
-			&u.Type,
-			&u.Token,
-			&u.Name,
-			&u.Family,
-			&u.Phone,
-			&u.Email)
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-		users = append(users, u)
-	}
-
-	return users
-}
-
-func (conn *Connector) FindUserFromLoginPassword(Login, Password string) (models.Users, error) {
-	db, err := sql.Open("mysql", dsn(""))
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-		return models.Users{}, err
-
-	}
-	conn.Db = db
-	defer db.Close()
-	rows, err := conn.Db.Query(fmt.Sprintf(`select * from bookrzn.Users where Login = '%s' AND Password = '%s';`, Login, Password)) //,
-	if err != nil {
-		return models.Users{}, err
-	}
-
-	defer rows.Close()
-
-	users := models.Users{}
-
-	for rows.Next() {
-		u := models.Users{}
-		err := rows.Scan(
-			&u.Id,
-			&u.Login,
-			&u.Password,
-			&u.Type,
-			&u.Token,
-			&u.Name,
-			&u.Family,
-			&u.Phone,
-			&u.Email)
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-	}
-
-	return users, err
-}
-
-func (conn *Connector) GetTokenUser(Login, Password string) string {
-	db, err := sql.Open("mysql", dsn(""))
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-
-	}
-	conn.Db = db
-	defer db.Close()
-	rows, err := conn.Db.Query(fmt.Sprintf(`select token from bookrzn.Users where Login='%s' AND Password = '%s';`, Login, Password)) //,
-	if err != nil {
-		panic(err)
-	}
-
-	defer rows.Close()
-
-	var token string
-
-	for rows.Next() {
-		err := rows.Scan(
-			&token)
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-
-	}
-
-	return token
-}
-
-func (conn *Connector) GetAccessUser(Login, Password string) string {
-	db, err := sql.Open("mysql", dsn(""))
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-
-	}
-	conn.Db = db
-	defer db.Close()
-	rows, err := conn.Db.Query(fmt.Sprintf(`select type from bookrzn.Users where Login='%s' AND Password = '%s';`, Login, Password)) //,
-	if err != nil {
-		panic(err)
-	}
-
-	defer rows.Close()
-
-	var access string
-
-	for rows.Next() {
-		err := rows.Scan(
-			&access)
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-
-	}
-
-	return access
 }
 
 func (conn *Connector) GetListFavorites(token string) []models.FavoritesCards {
-	db, err := sql.Open("mysql", dsn(""))
+	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
 		fmt.Printf("Error %s when opening DB\n", err)
 
 	}
 	conn.Db = db
-	defer db.Close()
-	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT TargetHash FROM bookrzn.Favorites;`)) //,
+
+	list_targets_hash := []string{}
+
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT target_hash FROM bookrzn.Favorites WHERE token='%s';`, token)) //,
 	if err != nil {
 		panic(err)
 	}
@@ -318,52 +103,52 @@ func (conn *Connector) GetListFavorites(token string) []models.FavoritesCards {
 
 	var favcards []models.FavoritesCards
 	for rows.Next() {
-		card := models.FavoritesCards{}
-		err := rows.Scan(
-			&card.Autor,
-			&card.Title,
-			&card.Price,
-			&card.Link,
-			&card.Id)
+		var target_hash string
+		rows.Scan(&target_hash)
 
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
-		favcards = append(favcards, card)
+		list_targets_hash = append(list_targets_hash, target_hash)
 	}
 
-	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT TargetHash FROM bookrzn.Favorites;`)) //,
-	if err != nil {
-		panic(err)
-	}
-
-
-	var list_targethash []string
-	var th string
-	for rows.Next() {
-		
-		err := rows.Scan(&th)
-
+	for _, hash := range list_targets_hash {
+		rows, err = conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Targets WHERE target_hash='%s';`, hash))
 		if err != nil {
-			fmt.Println(err)
-			continue
+			panic(err)
 		}
-		list_targethash = append(list_targethash, th)
+
+		for rows.Next() {
+			card := models.FavoritesCards{}
+			err := rows.Scan(
+				&card.Id,
+				&card.TargetHash,
+				&card.Autor,
+				&card.Title,
+				&card.Price,
+				&card.Link,
+				&card.Comment,
+			)
+
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			favcards = append(favcards, card)
+		}
 	}
-
-
-	return c
+	return favcards
 }
 
 func (conn *Connector) CountRows(namebd string) int {
-	db, err := sql.Open("mysql", dsn(""))
+	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
 		fmt.Printf("Error %s when opening DB\n", err)
 
 	}
 	conn.Db = db
-	defer db.Close()
+
 	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT COUNT(*) FROM %s;`, namebd)) //,
 	if err != nil {
 		panic(err)
@@ -380,7 +165,7 @@ func (conn *Connector) CountRows(namebd string) int {
 			fmt.Println(err)
 			continue
 		}
-		fmt.Println(count)
+		// fmt.Println(count)
 	}
 	c, err := strconv.Atoi(count)
 	if err != nil {
@@ -390,37 +175,37 @@ func (conn *Connector) CountRows(namebd string) int {
 	return c
 }
 
-func (conn *Connector) SaveTargetFavorites(token, targethash, count string) {
-	dt := time.Now()
-	db, err := sql.Open("mysql", dsn(""))
+func (conn *Connector) SaveTargetFavorites(token, targethash string) {
+	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
 		fmt.Printf("Error %s when opening DB\n", err)
 	}
 	conn.Db = db
-	defer db.Close()
-	namedb := "bookrzn.Favorites"
+
+	// namedb := "bookrzn.Favorites"
 	rows, err := conn.Db.Query(
-		fmt.Sprintf(`INSERT bookrzn.Favorites (id,token,target_hash,count, datetime) 
-		VALUES ('%s', '%s','%s','%s','%s',' %s');`,
-			conn.CountRows(namedb)+1, token, targethash, count, dt)) //,
+		fmt.Sprintf(`INSERT bookrzn.Favorites (token,target_hash,count) 
+		VALUES ( '%s','%s','%s');`,
+			token, targethash, "1")) //,
 	if err != nil {
 		panic(err)
 	}
-
+	//
+	// обязательно иначе привысит лимит подключений и будет сбой
 	defer rows.Close()
 
 }
 
 func (conn *Connector) DeleteTargetFavorites(token, targethash string) error {
-	db, err := sql.Open("mysql", dsn(""))
+	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
 		fmt.Printf("Error %s when opening DB\n", err)
 	}
 	conn.Db = db
-	defer db.Close()
+
 	rows, err := conn.Db.Query(
 		fmt.Sprintf(`DELETE FROM bookrzn.Favorites
-		WHERE Token='%s' AND TargetHash='%s';`, token, targethash))
+		WHERE token='%s' AND target_hash='%s';`, token, targethash))
 	if err != nil {
 		panic(err)
 	}
@@ -431,13 +216,13 @@ func (conn *Connector) DeleteTargetFavorites(token, targethash string) error {
 }
 
 func (conn *Connector) AccessLogin(login, password string) string {
-	db, err := sql.Open("mysql", dsn(""))
+	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
 		fmt.Printf("Error %s when opening DB\n", err)
 
 	}
 	conn.Db = db
-	defer db.Close()
+
 	rows, err := conn.Db.Query(fmt.Sprintf(`select type from bookrzn.Users where Login='%s' AND Password = '%s';`, login, password)) //,
 
 	if err != nil {

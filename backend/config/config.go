@@ -7,6 +7,7 @@ import (
 )
 
 var path_config = "/home/yu/Desktop/code/book_rzn/backend/config/config.json"
+
 // var path_config_default = "/home/yu/Desktop/code/book_rzn/backend/config/default.json"
 
 type Configuration struct {
@@ -36,6 +37,10 @@ type Configuration struct {
 	Company_name       string   `json:"company_name"`
 	Text_banner        string   `json:"text_banner"`
 	Description_banner string   `json:"description_banner"`
+	DB_user            string   `json:"db_user"`
+	DB_password        string   `json:"db_password"`
+	DB_hostname        string   `json:"db_hostname"`
+	DB_database        string   `json:"db_database"`
 }
 
 func NewConfiguration() *Configuration {
@@ -47,7 +52,3 @@ func NewConfiguration() *Configuration {
 
 	return &conf
 }
-
-// func (c *Configuration) AddProsvCards(pc []ProsvCard) {
-// 	c.DataTemp = DataTemp{ProsvCards: pc}
-// }

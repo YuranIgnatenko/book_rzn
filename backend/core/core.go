@@ -37,8 +37,6 @@ func (c *Core) SetHandlers() {
 	http.HandleFunc("/login", c.OpenHtmlLogin)
 	http.HandleFunc("/registration", c.OpenHtmlRegistry)
 	http.HandleFunc("/cms", c.CookieAdmin(http.HandlerFunc(c.OpenHtmlCms)))
-	http.HandleFunc("/profile", c.CookieUser(http.HandlerFunc(c.OpenHtmlProfile)))
-	http.HandleFunc("/", c.OpenHtmlAddFavorites)
 	http.HandleFunc("/404", c.OpenHtml404)
 	http.HandleFunc("/create_user", c.OpenHtmlCreateUser)
 	http.HandleFunc("/login_check", c.OpenHtmlLoginCheck)
@@ -49,7 +47,9 @@ func (c *Core) SetHandlers() {
 	http.HandleFunc("/804", c.OpenHtml804)
 	http.HandleFunc("/stronikum", c.OpenHtmlStronikum)
 
-	// http.HandleFunc("/", c.SwitchUrl)
+	// hanlder: favorites, profiles, orders, targets ..
+	// unique content for users
+	http.HandleFunc("/", c.CookieUser(http.HandlerFunc(c.OpenHtmlProfile)))
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -81,14 +81,13 @@ func (c *Core) SetHandlers() {
 
 func NewCore() *Core {
 	c := config.NewConfiguration()
-	// bd := bd.NewBd(*c)
-	conn := connector.NewConnector("bookrzn", "book1995", "127.0.0.1:3306", "bookrzn")
+	conn := connector.NewConnector(*c)
 	a := auth.NewAuth(*c, *conn)
 	mw := middleware.NewMiddleware(*a)
 	ps := parsing.NewParsingService(*c, *conn)
 
-	fmt.Println(len(ps.ProsvCards))
-	dt := datatemp.NewDataTemp(*c, ps.ProsvCards)
+	// fmt.Println(len(ps.TargetCards))
+	dt := datatemp.NewDataTemp(*c, ps.TargetCards)
 	rout := routes.NewRout(*a, *conn, *dt)
 
 	return &Core{

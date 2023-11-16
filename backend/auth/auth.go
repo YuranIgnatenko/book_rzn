@@ -4,8 +4,11 @@ import (
 	"backend/config"
 	"backend/connector"
 	"errors"
+	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 type Auth struct {
@@ -89,6 +92,14 @@ func (a *Auth) GetCookieAdmin(w http.ResponseWriter, r *http.Request) bool {
 
 	return true
 }
+func (a *Auth) CreateUser(login, password, name, family, phone, email string) string {
+	// user, err := a.FindUserFromLoginPassword(login, password)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	a.AddUser(login, password, "user", a.NewToken(), name, family, phone, email)
+	return a.NewToken()
+}
 
 func (a *Auth) VerifyLogin(login, password string) (string, string) {
 	user, err := a.FindUserFromLoginPassword(login, password)
@@ -96,6 +107,14 @@ func (a *Auth) VerifyLogin(login, password string) (string, string) {
 		panic(err)
 	}
 	access := a.GetAccessUser(login, password)
+	fmt.Println(user.Token, access, "verifyyyyy")
+	return a.NewToken(), access
+}
 
-	return user.Token, access
+// todo: add func
+func (a *Auth) NewToken() string {
+	rand.Seed(time.Now().UnixNano())
+	token := rand.Intn(999999999999)
+	fmt.Println(token)
+	return fmt.Sprintf("%d", token)
 }
