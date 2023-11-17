@@ -47,6 +47,8 @@ func (c *Core) SetHandlers() {
 	http.HandleFunc("/agat", c.OpenHtmlAgat)
 	http.HandleFunc("/804", c.OpenHtml804)
 	http.HandleFunc("/stronikum", c.OpenHtmlStronikum)
+	http.HandleFunc("/search", c.OpenHtmlSearch)
+
 
 	// hanlder: favorites, profiles, orders, targets ..
 	// unique content for users

@@ -148,6 +148,25 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (rout *Rout) OpenHtmlSearch(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.URL.Path)
+	request := r.FormValue("search")
+
+	// token, err := r.Cookie("token")
+	// if err != nil {
+	// 	return
+	// }
+
+	// fmt.Println(r.Cookies())
+	// rout.DataTemp.FavoritesCards = rout.GetListFavorites(token.Value)
+
+	rout.DataTemp.SearchTarget = rout.Connector.SearchTargetList(request)
+	fmt.Println("len favorites cards::::", rout.DataTemp.SearchTarget)
+
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "search.html")
+	tmpl.Execute(w, rout.DataTemp)
+}
+
 func (rout *Rout) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.URL.Path)
 	token, err := r.Cookie("token")

@@ -9,6 +9,7 @@ type DataTemp struct {
 	config.Configuration
 	TargetCards    []models.TargetCard
 	FavoritesCards []models.FavoritesCards
+	SearchTarget   []models.TargetCard
 	IsLogin        bool
 }
 

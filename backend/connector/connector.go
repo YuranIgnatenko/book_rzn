@@ -35,6 +35,48 @@ func NewConnector(c config.Configuration) *Connector {
 
 }
 
+func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
+	db, err := sql.Open("mysql", conn.dsn())
+	if err != nil {
+		fmt.Printf("Error %s when opening DB\n", err)
+	}
+	conn.Db = db
+
+	var target_search []models.TargetCard
+
+	rows, err := conn.Db.Query(`
+	SELECT * FROM bookrzn.Targets 
+	WHERE title 
+	LIKE '%` + request + `%' OR autor LIKE '%` + request + `%' OR price LIKE '%` + request + `%';`)
+
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var ts models.TargetCard
+		rows.Scan(
+			&ts.TargetHash,
+			&ts.Autor,
+			&ts.Price,
+			&ts.Title,
+			&ts.Price,
+			&ts.Link,
+			&ts.Comment,
+		)
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		target_search = append(target_search, ts)
+	}
+	fmt.Println(len(target_search))
+	return target_search
+}
+
 func (conn *Connector) ReSaveCookieDB(login, password, token string) {
 	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
@@ -75,7 +117,7 @@ func (conn *Connector) ReSaveCookieDB(login, password, token string) {
 	rows, err = conn.Db.Query(
 		// fmt.Sprintf(`INSERT bookrzn.Users (login,password,type, token,name,family, phone,email)
 		fmt.Sprintf(`UPDATE bookrzn.Users SET token='%s' WHERE login='%s' AND password='%s';`,
-		token, login, password)) //,
+			token, login, password)) //,
 	if err != nil {
 		panic(err)
 	}
