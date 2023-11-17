@@ -214,13 +214,13 @@
                     </form> -->
 
                                 <form class="login-form" action="/login_check" method="POST">
-                                    <input type="login" name="login" placeholder="Номер телефона или почта" />
+                                    <input type="text" name="login" placeholder="Номер телефона или почта" />
                                     <input type="password" name="password" placeholder="Пароль" />
                                     <!-- <button>login</button> -->
                                     <br>
-                                    <input type="submit" value="Submit" style="background-color: #ffb289;" />
+                                    <input type="submit" value="Войти" style="background-color: #ffb289;" />
                                     <br>
-                                    <p class="message">Не зарегистрированы? <a href="#">Создать аккаунт</a></p>
+                                    <p class="message">Не зарегистрированы? <a href="http://localhost:8082/registration">Создать аккаунт</a></p>
                                 </form>
 
 
@@ -261,15 +261,15 @@
                             соглашаетесь с политикой конфиденциальности.</p> -->
                     </div>
                 </div>
-                <div class="fmenu">
+                <!-- <div class="fmenu">
                     <div class="footer_subtitle">О магазине</div>
                     <ul>
                         <li>
                             <a href="http://localhost:{{ .Port }}">Главная</a>
                         </li>
-                        <!-- <li>
+                        <li>
                             <a href="http://localhost:{{ .Port }}/sales">Акции</a>
-                        </li> -->
+                        </li>
                         <li>
                             <a href="{{ .Full_url_add}}/about">О компании</a>
                         </li>
@@ -331,7 +331,7 @@
                         <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a>
                     </div>
 
-                </div>
+                </div> -->
             </div>
         </div>
     </footer> 

@@ -1,3 +1,5 @@
+// https://agatmk.ru/moduli-sistemyi-xraneniya-fresh#menustart
+
 package parsing
 
 import (
@@ -7,7 +9,7 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
-func (ps *ParsingService) ScrapSourceProsv() []models.TargetCard {
+func (ps *ParsingService) ScrapSourceAgat() []models.TargetCard {
 	c := colly.NewCollector()
 	dts := make([]models.TargetCard, 0)
 

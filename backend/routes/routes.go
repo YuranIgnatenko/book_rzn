@@ -144,7 +144,7 @@ func (rout *Rout) OpenHtmlRegistry(w http.ResponseWriter, r *http.Request) {
 	token := rout.CreateUser(login, password, name, family, phone, email)
 	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
 
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "registration.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 
