@@ -11,6 +11,7 @@ type DataTemp struct {
 	FavoritesCards []models.FavoritesCards
 	SearchTarget   []models.TargetCard
 	IsLogin        bool
+	NameLogin      string
 }
 
 func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {

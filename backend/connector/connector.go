@@ -35,6 +35,39 @@ func NewConnector(c config.Configuration) *Connector {
 
 }
 
+func (conn *Connector) GetNameLoginFromToken(token string) string {
+	db, err := sql.Open("mysql", conn.dsn())
+	if err != nil {
+		fmt.Printf("Error %s when opening DB\n", err)
+
+	}
+	conn.Db = db
+
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT login FROM bookrzn.Users WHERE token = '%s' ;`, token)) //,
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	var login_name string
+
+	for rows.Next() {
+		err := rows.Scan(&login_name)
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+
+	}
+
+	if login_name == "" {
+		return "Гость"
+	}
+	return login_name
+}
+
 func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
 	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
@@ -45,8 +78,7 @@ func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
 	var target_search []models.TargetCard
 
 	rows, err := conn.Db.Query(`
-	SELECT * FROM bookrzn.Targets 
-	WHERE title 
+	SELECT * FROM bookrzn.Targets WHERE title 
 	LIKE '%` + request + `%' OR autor LIKE '%` + request + `%' OR price LIKE '%` + request + `%';`)
 
 	if err != nil {
@@ -73,7 +105,6 @@ func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
 		}
 		target_search = append(target_search, ts)
 	}
-	fmt.Println(len(target_search))
 	return target_search
 }
 
@@ -84,45 +115,22 @@ func (conn *Connector) ReSaveCookieDB(login, password, token string) {
 	}
 	conn.Db = db
 
-	type User struct {
-		login, password, tp, token, name, family, phone, email string
-	}
-	var user User
+	old_token := conn.GetTokenUser(login, password)
+	new_token := token
 
-	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Users WHERE login='%s' and password='%s';`, login, password)) //,
+	rows, err := conn.Db.Query(fmt.Sprintf(`UPDATE bookrzn.Users SET token = REPLACE(token, '%s', '%s');`, old_token, new_token))
 	if err != nil {
 		panic(err)
 	}
-
 	defer rows.Close()
 
-	for rows.Next() {
-		rows.Scan(
-			&user.login,
-			&user.password,
-			&user.tp,
-			&user.token,
-			&user.name,
-			&user.family,
-			&user.phone,
-			&user.email,
-		)
-
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-	}
-
 	rows, err = conn.Db.Query(
-		// fmt.Sprintf(`INSERT bookrzn.Users (login,password,type, token,name,family, phone,email)
-		fmt.Sprintf(`UPDATE bookrzn.Users SET token='%s' WHERE login='%s' AND password='%s';`,
-			token, login, password)) //,
+		fmt.Sprintf(`UPDATE bookrzn.Favorites SET token = REPLACE(token, '%s', '%s');`,
+			old_token, token))
 	if err != nil {
 		panic(err)
 	}
-	//
-	// обязательно иначе привысит лимит подключений и будет сбой
+	fmt.Printf("token [%s], old_token [%s]\n", token, old_token)
 	defer rows.Close()
 }
 
@@ -207,7 +215,7 @@ func (conn *Connector) CountRows(namebd string) int {
 			fmt.Println(err)
 			continue
 		}
-		// fmt.Println(count)
+
 	}
 	c, err := strconv.Atoi(count)
 	if err != nil {

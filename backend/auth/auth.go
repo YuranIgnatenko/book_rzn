@@ -26,6 +26,8 @@ func NewAuth(c config.Configuration, conn connector.Connector) *Auth {
 	}
 }
 
+// func GetNameLogin
+
 func (a *Auth) SetCookieUser(w http.ResponseWriter, r *http.Request, token string) {
 
 	cookie := http.Cookie{
@@ -56,6 +58,22 @@ func (a *Auth) GetCookieUser(w http.ResponseWriter, r *http.Request) bool {
 		return false
 	} else {
 		return true
+	}
+
+}
+
+func (a *Auth) GetCookieToken(w http.ResponseWriter, r *http.Request) string {
+	token, err := r.Cookie("token")
+
+	if err != nil {
+		switch {
+		case errors.Is(err, http.ErrNoCookie):
+			return "no cookies"
+		default:
+			return "default: no cookies"
+		}
+	} else {
+		return token.Value
 	}
 
 }
@@ -109,21 +127,20 @@ func (a *Auth) GetCookieAdmin(w http.ResponseWriter, r *http.Request) bool {
 	return true
 }
 func (a *Auth) CreateUser(login, password, name, family, phone, email string) string {
-	// user, err := a.FindUserFromLoginPassword(login, password)
+
 	// if err != nil {
-	// 	panic(err)
+
 	// }
 	a.AddUser(login, password, "user", a.NewToken(), name, family, phone, email)
 	return a.NewToken()
 }
 
 func (a *Auth) VerifyLogin(login, password string) (string, string) {
-	user, err := a.FindUserFromLoginPassword(login, password)
+	_, err := a.FindUserFromLoginPassword(login, password)
 	if err != nil {
 		panic(err)
 	}
 	access := a.GetAccessUser(login, password)
-	fmt.Println(user.Token, access, "verifyyyyy")
 	return a.NewToken(), access
 }
 
@@ -131,6 +148,5 @@ func (a *Auth) VerifyLogin(login, password string) (string, string) {
 func (a *Auth) NewToken() string {
 	rand.Seed(time.Now().UnixNano())
 	token := rand.Intn(999999999999)
-	fmt.Println(token)
 	return fmt.Sprintf("%d", token)
 }

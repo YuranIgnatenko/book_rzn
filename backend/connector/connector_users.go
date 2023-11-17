@@ -3,6 +3,7 @@ package connector
 import (
 	"backend/models"
 	"database/sql"
+	"errors"
 	"fmt"
 )
 
@@ -19,7 +20,7 @@ func (conn *Connector) AddUser(Login, Password, Type, Token, Name, Family, Phone
 		fmt.Sprintf(`INSERT INTO %s (login,password,type,token,name,family,phone,email) 
 		VALUES ('%s','%s', '%s','%s','%s','%s',' %s', '%s');`,
 			namedb, Login, Password, Type, Token, Name, Family, Phone, Email)) //,
-	//login, password, name, phone, email, tp, token)
+
 	if err != nil {
 		panic(err)
 	}
@@ -47,13 +48,13 @@ func (conn *Connector) AddUser(Login, Password, Type, Token, Name, Family, Phone
 		}
 		users = append(users, u)
 	}
-	// fmt.Println(len(users))
+
 	for _, u := range users {
 		fmt.Println(u.Login, u.Password, u.Phone, u.Phone)
 	}
 }
 
-func (conn *Connector) FindUserFromToken(token string) []models.Users {
+func (conn *Connector) FindUserFromToken(token string) (models.Users, error) {
 	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
 		fmt.Printf("Error %s when opening DB\n", err)
@@ -88,8 +89,11 @@ func (conn *Connector) FindUserFromToken(token string) []models.Users {
 		}
 		users = append(users, u)
 	}
-
-	return users
+	if len(users) > 0 {
+		return users[0], nil
+	} else {
+		return models.Users{}, errors.New("error not found user")
+	}
 }
 
 func (conn *Connector) FindUserFromLoginPassword(Login, Password string) (models.Users, error) {
@@ -138,7 +142,6 @@ func (conn *Connector) GetTokenUser(Login, Password string) string {
 
 	}
 	conn.Db = db
-	defer db.Close()
 	rows, err := conn.Db.Query(fmt.Sprintf(`select token from bookrzn.Users where Login='%s' AND Password = '%s';`, Login, Password)) //,
 	if err != nil {
 		panic(err)

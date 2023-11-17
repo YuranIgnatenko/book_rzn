@@ -14,7 +14,7 @@ func NewConnectorTargets() *ConnectorTargets {
 }
 
 func (conn *Connector) SaveTargetTargets(targethash, autor, title, price, image string) {
-	// fmt.Println(autor, title, price)
+
 	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
 		fmt.Printf("Error %s when opening DB\n", err)
@@ -61,7 +61,7 @@ func (conn *Connector) GetListTargets() []models.TargetCard {
 			&card.Price,
 			&card.Link,
 			&card.Comment,
-			)
+		)
 
 		if err != nil {
 			fmt.Println(err)

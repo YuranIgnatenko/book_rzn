@@ -49,7 +49,6 @@ func (c *Core) SetHandlers() {
 	http.HandleFunc("/stronikum", c.OpenHtmlStronikum)
 	http.HandleFunc("/search", c.OpenHtmlSearch)
 
-
 	// hanlder: favorites, profiles, orders, targets ..
 	// unique content for users
 	http.HandleFunc("/", c.CookieUser(http.HandlerFunc(c.OpenHtmlProfile)))
@@ -59,28 +58,8 @@ func (c *Core) SetHandlers() {
 
 	fmt.Printf("Starting server : [ %v ]\n", c.Configuration.Port)
 	log.Fatal(http.ListenAndServe(":"+c.Configuration.Port, nil))
-	// fmt.Printf("c.Configuration: %v\n", c.Configuration)
+
 }
-
-// func (c *Core) SwitchUrl(w http.ResponseWriter, r *http.Request) {
-// 	fmt.Println(r.URL.Path)
-// 	path := strings.Split(r.URL.Path, "/")
-
-// 	switch r.URL.Path{
-// 	case "/":
-// 	case "/home":
-// 	default:
-// 		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "404.html")
-// 		tmpl.Execute(w, rout.DataTemp)
-// 	}
-// 	if len(path) == 2 {
-// 		if path[0] == "buy" {
-// 			order_id := path[1]
-// 			fmt.Println(order_id)
-// 		}
-// 	}
-// 	fmt.Println(r.Cookies())
-// }
 
 func NewCore() *Core {
 	c := config.NewConfiguration()
@@ -89,7 +68,6 @@ func NewCore() *Core {
 	mw := middleware.NewMiddleware(*a)
 	ps := parsing.NewParsingService(*c, *conn)
 
-	// fmt.Println(len(ps.TargetCards))
 	dt := datatemp.NewDataTemp(*c, ps.TargetCards)
 	rout := routes.NewRout(*a, *conn, *dt)
 
