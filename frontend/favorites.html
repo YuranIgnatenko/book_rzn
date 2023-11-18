@@ -107,6 +107,13 @@
                         <div class="slogan">{{ .Location_office}}</div>
                     </div>
                     <div class="search_form">
+                        <!-- FART ORDER  -->
+                        <form action="http://localhost:{{ .Port }}/fast_order">
+                            <button style="width: 100%;" type="submit">Быстрая заявка-заказ*</button>
+                        </form>
+
+                        <br>
+
                         <form method="GET" action="http://localhost:{{ .Port }}/search">
                             <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
                                 autocomplete="off" autofocus value="" />

@@ -25,6 +25,24 @@ type TargetCard struct {
 // 	Id    string
 // }
 
+type OrdersRows struct {
+	Link         string //`csv:"link"`
+	Id           string
+	Comment      string
+	Price        string //`csv:"price"`
+	CountTargets string
+}
+
+type OrdersCards struct {
+	Autor      string //`csv:"autor"`
+	Title      string //`csv:"title"`
+	Price      string //`csv:"price"`
+	Link       string //`csv:"link"`
+	Id         string
+	Comment    string
+	TargetHash string
+}
+
 type FavoritesCards struct {
 	Autor      string //`csv:"autor"`
 	Title      string //`csv:"title"`

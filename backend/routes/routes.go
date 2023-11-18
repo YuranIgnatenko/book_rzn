@@ -4,6 +4,7 @@ import (
 	"backend/auth"
 	"backend/connector"
 	"backend/datatemp"
+	"fmt"
 	"net/http"
 	"strings"
 	"text/template"
@@ -23,6 +24,15 @@ func NewRout(a auth.Auth, conn connector.Connector, dt datatemp.DataTemp) *Rout 
 	}
 
 	return &rout
+}
+
+func (rout *Rout) OpenHtmlFastOrder(w http.ResponseWriter, r *http.Request) {
+	// res := rout.Auth.GetCookieUser(w, r)
+	// rout.DataTemp.IsLogin = res
+	// token := rout.GetCookieToken(w, r)
+	// rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "fast_order.html")
+	tmpl.Execute(w, rout.DataTemp)
 }
 
 func (rout *Rout) OpenHtmlAbout(w http.ResponseWriter, r *http.Request) {
@@ -171,6 +181,7 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 
 	switch access {
 	case "admin":
+		fmt.Println("admin -- ok")
 		rout.DataTemp.IsLogin = true
 		rout.Connector.ReSaveCookieDB(login, password, token)
 		rout.Auth.SetCookieAdmin(w, r, token)
@@ -221,6 +232,21 @@ func (rout *Rout) OpenHtmlFavorites(w http.ResponseWriter, r *http.Request) {
 	rout.DataTemp.FavoritesCards = rout.GetListFavorites(token.Value)
 
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "favorites.html")
+	tmpl.Execute(w, rout.DataTemp)
+}
+
+func (rout *Rout) OpenHtmlOrders(w http.ResponseWriter, r *http.Request) {
+	token, err := r.Cookie("token")
+	if err != nil {
+		return
+	}
+
+	res := rout.Auth.GetCookieUser(w, r)
+	rout.DataTemp.IsLogin = res
+	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token.Value)
+	rout.DataTemp.OrdersRows = rout.GetListOrdersRow(token.Value)
+
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "orders.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 

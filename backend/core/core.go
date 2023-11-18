@@ -30,6 +30,8 @@ func (c *Core) SetHandlers() {
 	http.HandleFunc("/delivery", c.CookieUser(http.HandlerFunc(c.OpenHtmlDelivery)))
 	http.HandleFunc("/exchange", c.CookieUser(http.HandlerFunc(c.OpenHtmlExchange)))
 	http.HandleFunc("/favorites", c.CookieUser(http.HandlerFunc(c.OpenHtmlFavorites)))
+	http.HandleFunc("/orders", c.CookieUser(http.HandlerFunc(c.OpenHtmlOrders)))
+	http.HandleFunc("/fast_order", c.OpenHtmlFastOrder)
 	http.HandleFunc("/home", c.CookieUser(http.HandlerFunc(c.OpenHtmlHome)))
 	http.HandleFunc("/logout", c.CookieUser(http.HandlerFunc(c.OpenHtmlLogout)))
 	http.HandleFunc("/new", c.CookieUser(http.HandlerFunc(c.OpenHtmlNew)))

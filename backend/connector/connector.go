@@ -78,7 +78,7 @@ func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
 	var target_search []models.TargetCard
 
 	rows, err := conn.Db.Query(`
-	SELECT * FROM bookrzn.Targets WHERE title 
+	SELECT * FROM bookrzn.Orders WHERE title 
 	LIKE '%` + request + `%' OR autor LIKE '%` + request + `%' OR price LIKE '%` + request + `%';`)
 
 	if err != nil {
@@ -190,6 +190,65 @@ func (conn *Connector) GetListFavorites(token string) []models.FavoritesCards {
 	}
 	return favcards
 }
+
+
+
+func (conn *Connector) GetListOrdersRow(token string) []models.OrdersRows {
+	db, err := sql.Open("mysql", conn.dsn())
+	if err != nil {
+		fmt.Printf("Error %s when opening DB\n", err)
+
+	}
+	conn.Db = db
+
+	list_targets_hash := []string{}
+
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT target_hash FROM bookrzn.Orders WHERE token='%s';`, token))
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	var ordcards []models.OrdersRows
+	for rows.Next() {
+		
+		var target_hash string
+		rows.Scan(&target_hash)
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		list_targets_hash = append(list_targets_hash, target_hash)
+	}
+
+	for _, hash := range list_targets_hash {
+		rows, err = conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Targets WHERE target_hash='%s';`, hash))
+		if err != nil {
+			panic(err)
+		}
+
+		for rows.Next() {
+			card := models.OrdersRows{}
+			err := rows.Scan(
+				&card.Id,
+		
+				&card.Price,
+				&card.Link,
+				&card.Comment,
+			)
+
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			ordcards = append(ordcards, card)
+		}
+	}
+	return ordcards
+}
+
 
 func (conn *Connector) CountRows(namebd string) int {
 	db, err := sql.Open("mysql", conn.dsn())

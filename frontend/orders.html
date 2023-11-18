@@ -107,6 +107,13 @@
                         <div class="slogan">{{ .Location_office}}</div>
                     </div>
                     <div class="search_form">
+                        <!-- FART ORDER  -->
+                        <form action="http://localhost:{{ .Port }}/fast_order">
+                            <button style="width: 100%;" type="submit">Быстрая заявка-заказ*</button>
+                        </form>
+
+                        <br>
+
                         <form method="GET" action="http://localhost:{{ .Port }}/search">
                             <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
                                 autocomplete="off" autofocus value="" />
@@ -120,7 +127,7 @@
                             <span>Поиск</span>
                         </div>
                         <div class="orders bars" title="Мои заказы">
-                            <a href="http://localhost:{{ .Port }}/login">
+                            <a href="http://localhost:{{ .Port }}/orders">
                                 <i data-feather="archive"></i>
                                 <span>Мои заказы</span>
                             </a>
@@ -131,12 +138,12 @@
                                 <span>Избранное</span>
                             </a>
                         </div>
-                        <div class="basket bars" title="Корзина товаров">
+                        <!-- <div class="basket bars" title="Корзина товаров">
                             <a href="http://localhost:{{ .Port }}/home">
                                 <i data-feather="shopping-bag"></i>
                                 <span>Корзина</span>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -193,15 +200,51 @@
                 <div class="content  nositebar  ">
 
                     <div class="breadcrumb">
-                        <span><a href="http://new15942715563356.myaddshop.ru/">Главная</a> / </span>
-                        <span>Корзина</span>
+                        <span><a href="http://localhost:{{ .Port }}">Главная</a> / </span>
+                        <span>Заказы</span>
                     </div>
 
-                    <h1 class="shop-title">Корзина</h1>
+                    <h1 class="shop-title">Заказы</h1>
 
                     <div class="promo-descr" style=""></div>
 
                     <div id="basket_list"></div>
+
+                    
+
+
+                    <font-size=”15″ face=”Times New Roman” >
+                    <table border="1" width="100%" style="background-color: cadetblue;">
+                        <caption>Список заказов</caption>
+                        <tr style="background-color: #ffb289;">
+                          <th>Номер заказа</th>
+                          <th>Дата создания</th>                          
+                          <th>Примечание</th>
+                          <th>Количество именований</th>
+                          <!-- <th>Количество всех позиций</th> -->
+                          <th>Стоимость</th>
+                          <th>Перейти</th>
+                        </tr>
+                        </font>
+
+                        {{ range .OrdersRows }}
+                        <font-size=”10″ face=”Calibri” >
+                        <tr>
+                          <td>{{  .Id}} </td>
+                          <td>12.09.2023</td>
+                          <td>{{ .Comment }}</td>
+                          <td>{{ .CountTargets }}</td>
+                          <!-- <td>200</td> -->
+                          <td>{{ .Price }}</td>
+                          <td style="background-color: chartreuse;"><a href="http://localhost:{{ .Port }}/edit_orders/{{.Link}}">редакт.</a></td>
+                        </tr>
+                        {{ end }}
+                        
+                      </table>
+                    </font>
+
+
+
 
 
                 </div>

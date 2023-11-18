@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сделать Заказ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 18%;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .target {
+            background-color: #e8d7d7;
+
+        }
+
+        .container {
+            width: 100%;
+            background-color: #fff;
+            max-width: 60%;
+            margin: 2% auto;
+            padding: 1%;
+            border-radius: 2%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 2%;
+        }
+        input[type="data-text"] {
+            padding: 2%;
+        }
+        /* button[type="data-text"] { */
+            /* padding: 1px; */
+        /* } */
+
+        button {
+            padding: 15px 10px;
+            /* max-width: 10%;
+            min-width: 10%;
+            max-height: 10%;
+            min-height: 10%; */
+            /* background-color: #007BFF; */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 0;
+        }
+
+        .delete {
+            color: red;
+            cursor: pointer;
+            /* padding: 5px; */
+            font-size: 1500%;
+        }
+    </style>
+</head>
+
+<body style="background-color:rgb(131, 134, 136);">
+
+    <div>
+    <form action="http://localhost:{{ .Port }}/home">
+        <button style="background-color: rgb(224, 96, 36); " type="submit">Главная страница</button>
+    </form>
+    </div>
+
+    <div>
+        <h1 style="color: rgb(52, 69, 69);">С помощью этой формы Вы можете сделать предварительный заказ.</h1>
+    </div>
+
+
+    <div style="background-color: rgb(221, 208, 190);"  class="container">
+        <div>
+            <div>
+                <img style="padding: 1%;" src="{{ .Path_logo_company}}" srcset="{{ .Path_logo_company}} 2x"
+                    alt="{{ .Company_name}}" width="100px" height="50px" />
+                <h1 style="color: rgb(78, 106, 106);"">Форма заказа #1234</h1>
+            </div>
+        </div>
+        <input type="text" id="nameInput" placeholder="Контактное лицо">
+        <br>
+        <br>
+        <input type="text" id="phoneInput" placeholder="Номер телефона">
+        <br>
+        <br>
+        <input type="text" id="emailInput" placeholder="Электронная почта">
+        <br>
+        <br>
+
+        <hr>
+        
+        <br>
+        <div>
+            <input type="data-text" class="target" id="taskInput" placeholder="Наименование товара">
+            <input type="data-text" style="max-width: 10%;min-width: 10%;" class="target" id="countInput" placeholder="Количество">
+            <button   style="background-color: rgba(23, 167, 28, 0.759); max-width: 4%;min-width: 4%;"  id="addTask">+</button>
+        </div>
+        <br>
+
+        <ul id="taskList"></ul>
+
+        <button style="background-color:  rgb(224, 96, 36);" id="saveTask">ОТПРАВИТЬ</button>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const taskInput = document.getElementById("taskInput");
+            const addTaskButton = document.getElementById("addTask");
+            const taskList = document.getElementById("taskList");
+
+            addTaskButton.addEventListener("click", function () {
+                const taskText = taskInput.value.trim();
+                const countText = countInput.value.trim();
+
+                // if (taskText !== "") {
+                    const listItem = document.createElement("li");
+                    listItem.innerHTML = `
+                        <input type="text" value="${taskText}"">
+                        <input style="max-width: 10%;min-width: 10%;" type="text" value="${countText}"">
+                        <span class="delete">X</span>
+                    `;
+
+                    listItem.querySelector(".delete").addEventListener("click", function () {
+                        taskList.removeChild(listItem);
+                    });
+
+                    taskList.appendChild(listItem);
+                    taskInput.value = "";
+                // }
+            });
+
+            taskInput.addEventListener("keyup", function (event) {
+                if (event.key === "Enter") {
+                    addTaskButton.click();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

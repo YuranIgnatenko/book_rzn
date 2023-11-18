@@ -111,20 +111,33 @@
                         <div class="slogan">Интернет-магазин книг</div>
                     </div>
                     <div class="search_form">
+
+                        <!-- FART ORDER  -->
+                        <form action="http://localhost:{{ .Port }}/fast_order">
+                            <button style="width: 100%;" type="submit">Быстрая заявка-заказ*</button>
+                        </form>
+
+                        <br>
+
+
                         <form method="GET" action="http://localhost:{{ .Port }}/search">
                             <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
                                 autocomplete="off" autofocus value="" />
                             <button type="submit">Поиск</button>
                             <div id="autocomplete"></div>
-                        </form>
+                        </form>    
                     </div>
+
                     <div class="header-middle-right">
                         <div class="search_open bars" title="Поиск по товарам">
                             <i data-feather="search"></i>
                             <span>Поиск</span>
                         </div>
+
+
+
                         <div class="orders bars" title="Мои заказы">
-                            <a href="http://localhost:{{ .Port }}/login">
+                            <a href="http://localhost:{{ .Port }}/orders">
                                 <i data-feather="archive"></i>
                                 <span>Мои заказы</span>
                             </a>
