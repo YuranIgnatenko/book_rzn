@@ -38,11 +38,13 @@
             width: 70%;
             padding: 2%;
         }
+
         input[type="data-text"] {
             padding: 2%;
         }
+
         /* button[type="data-text"] { */
-            /* padding: 1px; */
+        /* padding: 1px; */
         /* } */
 
         button {
@@ -81,9 +83,9 @@
 <body style="background-color:rgb(131, 134, 136);">
 
     <div>
-    <form action="http://localhost:{{ .Port }}/home">
-        <button style="background-color: rgb(224, 96, 36); " type="submit">Главная страница</button>
-    </form>
+        <form action="http://localhost:{{ .Port }}/home">
+            <button style="background-color: rgb(224, 96, 36); " type="submit">Главная страница</button>
+        </form>
     </div>
 
     <div>
@@ -91,7 +93,7 @@
     </div>
 
 
-    <div style="background-color: rgb(221, 208, 190);"  class="container">
+    <div style="background-color: rgb(221, 208, 190);" class="container">
         <div>
             <div>
                 <img style="padding: 1%;" src="{{ .Path_logo_company}}" srcset="{{ .Path_logo_company}} 2x"
@@ -99,66 +101,110 @@
                 <h1 style="color: rgb(78, 106, 106);"">Форма заказа #1234</h1>
             </div>
         </div>
-        <input type="text" id="nameInput" placeholder="Контактное лицо">
-        <br>
-        <br>
-        <input type="text" id="phoneInput" placeholder="Номер телефона">
-        <br>
-        <br>
-        <input type="text" id="emailInput" placeholder="Электронная почта">
-        <br>
-        <br>
+        <input type=" text" id="nameInput" placeholder="Контактное лицо">
+                    <br>
+                    <br>
+                    <input type="text" id="phoneInput" placeholder="Номер телефона">
+                    <br>
+                    <br>
+                    <input type="text" id="emailInput" placeholder="Электронная почта">
+                    <br>
+                    <br>
 
-        <hr>
-        
-        <br>
-        <div>
-            <input type="data-text" class="target" id="taskInput" placeholder="Наименование товара">
-            <input type="data-text" style="max-width: 10%;min-width: 10%;" class="target" id="countInput" placeholder="Количество">
-            <button   style="background-color: rgba(23, 167, 28, 0.759); max-width: 4%;min-width: 4%;"  id="addTask">+</button>
-        </div>
-        <br>
+                    <hr>
 
-        <ul id="taskList"></ul>
+                    <br>
+                    <div>
+                        <input type="data-text" class="target" id="taskInput" placeholder="Наименование товара">
+                        <input type="data-text" style="max-width: 10%;min-width: 10%;" class="target" id="countInput"
+                            placeholder="Количество">
+                        <button style="background-color: rgba(23, 167, 28, 0.759); max-width: 4%;min-width: 4%;"
+                            id="addTask">+</button>
+                    </div>
+                    <br>
 
-        <button style="background-color:  rgb(224, 96, 36);" id="saveTask">ОТПРАВИТЬ</button>
-    </div>
+                    <ul id="taskList"></ul>
+
+                    <form action="http://localhost:{{ .Port }}/fast_order_save" method="post">
+                        <button style="background-color:  rgb(224, 96, 36);" id="saveTask">ОТПРАВИТЬ</button>
+                    </form>
+            </div>
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const taskInput = document.getElementById("taskInput");
-            const addTaskButton = document.getElementById("addTask");
-            const taskList = document.getElementById("taskList");
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    let arrTarget = [];
+                    let arrTargetCount = [];
 
-            addTaskButton.addEventListener("click", function () {
-                const taskText = taskInput.value.trim();
-                const countText = countInput.value.trim();
+                    let name = document.getElementById("nameInput");
+                    let phone = document.getElementById("phoneInput");
+                    let email = document.getElementById("emailInput");
 
-                // if (taskText !== "") {
-                    const listItem = document.createElement("li");
-                    listItem.innerHTML = `
+
+                    const taskInput = document.getElementById("taskInput");
+                    const addTaskButton = document.getElementById("addTask");
+                    const taskList = document.getElementById("taskList");
+                    const saveTask = document.getElementById("saveTask");
+
+                    addTaskButton.addEventListener("click", function () {
+                        const taskText = taskInput.value.trim();
+                        const countText = countInput.value.trim();
+
+                        // if (taskText !== "") {
+                        const listItem = document.createElement("li");
+                        arrTarget.push(taskText)
+                        arrTargetCount.push(countText)
+
+                        listItem.innerHTML = `
                         <input type="text" value="${taskText}"">
                         <input style="max-width: 10%;min-width: 10%;" type="text" value="${countText}"">
                         <span class="delete">X</span>
                     `;
 
-                    listItem.querySelector(".delete").addEventListener("click", function () {
-                        taskList.removeChild(listItem);
+                        listItem.querySelector(".delete").addEventListener("click", function () {
+                            taskList.removeChild(listItem);
+                        });
+
+                        taskList.appendChild(listItem);
+                        taskInput.value = "";
+                        // }
                     });
 
-                    taskList.appendChild(listItem);
-                    taskInput.value = "";
-                // }
-            });
+                    taskInput.addEventListener("keyup", function (event) {
+                        if (event.key === "Enter") {
+                            addTaskButton.click();
+                        }
+                    });
 
-            taskInput.addEventListener("keyup", function (event) {
-                if (event.key === "Enter") {
-                    addTaskButton.click();
-                }
-            });
-        });
-    </script>
+
+                    saveTask.addEventListener("click", function (event) {
+                        if (event.key === "Enter") {
+
+
+                            let data_struct = {};
+
+                            data_struct.name = name;
+                            data_struct.phone = phone;
+                            data_struct.email = email;
+                            data_struct.arrTarget = arrTarget;
+                            data_struct.arrTargetCount = arrTargetCount;
+
+                            fetch('http://localhost:{{ .Port }}/fast_order_save', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data_struct)
+                            }).then(response => {
+                                console.log('Данные успешно отправлены на сервер Golang');
+                            }).catch(error => {
+                                console.error('Произошла ошибка при отправке данных:', error);
+                            });
+                        }
+                    });
+
+                });
+            </script>
 </body>
 
 </html>
