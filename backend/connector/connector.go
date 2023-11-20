@@ -3,6 +3,7 @@ package connector
 import (
 	"backend/config"
 	"backend/models"
+	"backend/tools"
 	"database/sql"
 	"fmt"
 	"strconv"
@@ -281,6 +282,32 @@ func (conn *Connector) CountRows(namebd string) int {
 	return c
 }
 
+func (conn *Connector) GetNewRandomNumberFastOrder() string {
+	return tools.NewRandomTokenFastOrder()
+}
+
+func (conn *Connector) GetNewNumberFastOrder() string {
+	db, err := sql.Open("mysql", conn.dsn())
+	if err != nil {
+		fmt.Printf("Error %s when opening DB\n", err)
+	}
+	conn.Db = db
+
+	// namedb := "bookrzn.Favorites"
+	rows, err := conn.Db.Query(`SELECT MAX(Id) FROM bookrzn.FastOrders;`)
+	if err != nil {
+		panic(err)
+	}
+	var value int
+	rows.Scan(&value)
+
+	value += 1
+	// обязательно иначе привысит лимит подключений и будет сбой
+	defer rows.Close()
+	return fmt.Sprintf("%d", value)
+
+}
+
 func (conn *Connector) SaveTargetFastOrders(data models.DataFastOrder) {
 	var rows *sql.Rows
 	var err error
@@ -295,9 +322,9 @@ func (conn *Connector) SaveTargetFastOrders(data models.DataFastOrder) {
 		fmt.Println(i, target, data.ArrTargetCount)
 		count := data.ArrTargetCount[i]
 		rows, err = conn.Db.Query(
-			fmt.Sprintf(`INSERT bookrzn.FastOrders (name,phone,email,target,count) 
-		VALUES ( '%s','%s','%s', '%s', '%s');`,
-				data.Name, data.Phone, data.Email, target, count)) //,
+			fmt.Sprintf(`INSERT bookrzn.FastOrders (token,name,phone,email,target,count) 
+		VALUES ( '%s','%s','%s','%s', '%s', '%s');`,
+				data.NumberFastOrder, data.Name, data.Phone, data.Email, target, count)) //,
 		if err != nil {
 			panic(err)
 		}

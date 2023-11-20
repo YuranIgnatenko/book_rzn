@@ -98,7 +98,7 @@
             <div>
                 <img style="padding: 1%;" src="{{ .Path_logo_company}}" srcset="{{ .Path_logo_company}} 2x"
                     alt="{{ .Company_name}}" width="100px" height="50px" />
-                <h1 style="color: rgb(78, 106, 106);"">Форма заказа #1234</h1>
+                <h1 style="color: rgb(78, 106, 106);">Форма заказа #{{ .NumberFastOrder }}</h1>
             </div>
         </div>
             <input type="text" id="nameInput" placeholder="Контактное лицо">
@@ -187,6 +187,7 @@
                         data_struct.Email = email.value.trim();
                         data_struct.ArrTarget = arrTarget;
                         data_struct.ArrTargetCount = arrTargetCount;
+                        data_struct.NumberFastOrder = "{{ .NumberFastOrder }}"
 
                         fetch('http://localhost:{{ .Port }}/fast_order_save', {
                             method: 'POST',

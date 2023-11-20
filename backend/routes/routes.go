@@ -29,6 +29,7 @@ func NewRout(a auth.Auth, conn connector.Connector, dt datatemp.DataTemp) *Rout 
 }
 
 func (rout *Rout) OpenHtmlFastOrder(w http.ResponseWriter, r *http.Request) {
+	rout.NumberFastOrder = rout.GetNewRandomNumberFastOrder()
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "fast_order.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
