@@ -89,3 +89,11 @@ type Targets struct {
 	Image      string
 	Comment    string
 }
+
+type DataFastOrder struct {
+	Name           string   `json:"Name"`
+	Phone          string   `json:"Phone"`
+	Email          string   `json:"Email"`
+	ArrTarget      []string `json:"ArrTarget"`
+	ArrTargetCount []string `json:"ArrTargetCount"`
+}

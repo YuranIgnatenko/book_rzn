@@ -4,6 +4,7 @@ import (
 	"backend/auth"
 	"backend/connector"
 	"backend/datatemp"
+	"backend/models"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -27,42 +28,23 @@ func NewRout(a auth.Auth, conn connector.Connector, dt datatemp.DataTemp) *Rout 
 	return &rout
 }
 
-// type DataFastOrder struct {
-// 	Name         string        `json:"name"`
-// 	Phone        string        `json:"phone"`
-// 	Email        string        `json:"email"`
-// 	Targets      []interface{} `json:"targets"`
-// 	CountTargets []interface{} `json:"countTargets"`
-// }
-type DataFastOrder interface{}
-
 func (rout *Rout) OpenHtmlFastOrder(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "fast_order.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 
 func (rout *Rout) OpenHtmlFastOrderSave(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("save fast order")
-	// if r.Method != http.MethodPost {
-	// 	http.Error(w, "Метод не поддерживается", http.StatusMethodNotAllowed)
-	// 	return
-	// }
+	var data models.DataFastOrder
 
-	var data DataFastOrder
-	// err := json.NewDecoder(r.Body).Decode(&data)
-	// json.Unmarshal([]byte(r.Body.Read()), &data)
-	err := json.NewDecoder(r.Body).Decode(&data)
-
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&data)
 	if err != nil {
-		fmt.Println(err.Error())
-		http.Error(w, "Произошла ошибка при разборе данных", http.StatusBadRequest)
-		return
+		panic(err)
 	}
 
-	fmt.Printf("Принятые данные: %#v\n", data)
-	fmt.Println("Данные успешно приняты и обработаны")
+	rout.Connector.SaveTargetFastOrders(data)
 
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "fast_order_save.html")
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 

@@ -191,8 +191,6 @@ func (conn *Connector) GetListFavorites(token string) []models.FavoritesCards {
 	return favcards
 }
 
-
-
 func (conn *Connector) GetListOrdersRow(token string) []models.OrdersRows {
 	db, err := sql.Open("mysql", conn.dsn())
 	if err != nil {
@@ -212,7 +210,7 @@ func (conn *Connector) GetListOrdersRow(token string) []models.OrdersRows {
 
 	var ordcards []models.OrdersRows
 	for rows.Next() {
-		
+
 		var target_hash string
 		rows.Scan(&target_hash)
 
@@ -233,7 +231,7 @@ func (conn *Connector) GetListOrdersRow(token string) []models.OrdersRows {
 			card := models.OrdersRows{}
 			err := rows.Scan(
 				&card.Id,
-		
+
 				&card.Price,
 				&card.Link,
 				&card.Comment,
@@ -248,7 +246,6 @@ func (conn *Connector) GetListOrdersRow(token string) []models.OrdersRows {
 	}
 	return ordcards
 }
-
 
 func (conn *Connector) CountRows(namebd string) int {
 	db, err := sql.Open("mysql", conn.dsn())
@@ -282,6 +279,32 @@ func (conn *Connector) CountRows(namebd string) int {
 
 	}
 	return c
+}
+
+func (conn *Connector) SaveTargetFastOrders(data models.DataFastOrder) {
+	var rows *sql.Rows
+	var err error
+
+	db, err := sql.Open("mysql", conn.dsn())
+	if err != nil {
+		fmt.Printf("Error %s when opening DB\n", err)
+	}
+	conn.Db = db
+
+	for i, target := range data.ArrTarget {
+		fmt.Println(i, target, data.ArrTargetCount)
+		count := data.ArrTargetCount[i]
+		rows, err = conn.Db.Query(
+			fmt.Sprintf(`INSERT bookrzn.FastOrders (name,phone,email,target,count) 
+		VALUES ( '%s','%s','%s', '%s', '%s');`,
+				data.Name, data.Phone, data.Email, target, count)) //,
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	// обязательно иначе привысит лимит подключений и будет сбой
+	defer rows.Close()
 }
 
 func (conn *Connector) SaveTargetFavorites(token, targethash string) {

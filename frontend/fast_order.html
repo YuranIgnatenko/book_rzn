@@ -101,7 +101,7 @@
                 <h1 style="color: rgb(78, 106, 106);"">Форма заказа #1234</h1>
             </div>
         </div>
-        <input type=" text" id="nameInput" placeholder="Контактное лицо">
+            <input type="text" id="nameInput" placeholder="Контактное лицо">
                     <br>
                     <br>
                     <input type="text" id="phoneInput" placeholder="Номер телефона">
@@ -115,92 +115,91 @@
 
                     <br>
                     <div>
-                        <input type="data-text" class="target" id="taskInput" placeholder="Наименование товара">
-                        <input type="data-text" style="max-width: 10%;min-width: 10%;" class="target" id="countInput"
-                            placeholder="Количество">
-                        <button style="background-color: rgba(23, 167, 28, 0.759); max-width: 4%;min-width: 4%;"
-                            id="addTask">+</button>
+                        <input type="text" style="max-width: 50%;min-width: 50%;" class="target" id="taskInput"
+                            placeholder="Наименование товара">
+                        <input type="text" style="max-width: 5%;min-width: 5%;" class="target" id="countInput"
+                            placeholder="кол-во">
+                        <button style="background-color: rgba(123, 236, 127, 0.759); max-width: 12%;min-width: 12%;"
+                            id="addTask">Добавить</button>
                     </div>
                     <br>
 
                     <ul id="taskList"></ul>
 
-                    <form action="http://localhost:{{ .Port }}/fast_order_save" method="post">
-                        <button style="background-color:  rgb(224, 96, 36);" id="saveTask">ОТПРАВИТЬ</button>
-                    </form>
-            </div>
+                    <!-- <form action="http://localhost:{{ .Port }}/fast_order_save" method="post"> -->
+                    <button style="background-color:  rgb(98, 228, 59);" id="saveTaskButton">Создать заказ</button>
+                    <!-- </form> -->
+        </div>
 
 
             <script>
+                
+                
                 document.addEventListener("DOMContentLoaded", function () {
+                    let taskText  = "";
+                    let countText = "";
                     let arrTarget = [];
                     let arrTargetCount = [];
-
                     let name = document.getElementById("nameInput");
                     let phone = document.getElementById("phoneInput");
                     let email = document.getElementById("emailInput");
-
-
-                    const taskInput = document.getElementById("taskInput");
-                    const addTaskButton = document.getElementById("addTask");
-                    const taskList = document.getElementById("taskList");
-                    const saveTask = document.getElementById("saveTask");
+                    let taskInput = document.getElementById("taskInput");
+                    let countInput = document.getElementById("countInput")
+                    let addTaskButton = document.getElementById("addTask");
+                    let taskList = document.getElementById("taskList");
+                    let saveTaskButton = document.getElementById("saveTaskButton");
+                    let data_struct = {};
 
                     addTaskButton.addEventListener("click", function () {
-                        const taskText = taskInput.value.trim();
-                        const countText = countInput.value.trim();
+                        taskText = taskInput.value.trim();
+                        countText = countInput.value.trim();
 
-                        // if (taskText !== "") {
-                        const listItem = document.createElement("li");
-                        arrTarget.push(taskText)
-                        arrTargetCount.push(countText)
+                        console.log(taskText, countInput.value.trim(),countText, countInput.value)
 
-                        listItem.innerHTML = `
-                        <input type="text" value="${taskText}"">
-                        <input style="max-width: 10%;min-width: 10%;" type="text" value="${countText}"">
-                        <span class="delete">X</span>
+                        if (taskText !== "" || countText !== "") {
+                            let listItem = document.createElement("li");
+
+                            listItem.innerHTML = `
+                        <input style="max-width: 80%;min-width: 80%;" type="text" value="${taskText}"" disabled>
+                        <input style="max-width: 5%;min-width: 5%;" type="text" value="${countText}"" disabled>
+                        <span style="max-width: 5%;min-width: 5%;"class="delete">X</span>
                     `;
 
-                        listItem.querySelector(".delete").addEventListener("click", function () {
-                            taskList.removeChild(listItem);
+                            listItem.querySelector(".delete").addEventListener("click", function () {
+                                taskList.removeChild(listItem);
+                                //TODO DELETE FROM ARRAY
+                            });
+
+                            taskList.appendChild(listItem);
+
+                            arrTarget.push(taskText);
+                            arrTargetCount.push(countInput.value.trim());
+                        }
+                    });
+
+
+                    saveTaskButton.addEventListener("click", function () {
+
+                        data_struct = {}
+
+                        data_struct.Name = name.value.trim();
+                        data_struct.Phone = phone.value.trim();
+                        data_struct.Email = email.value.trim();
+                        data_struct.ArrTarget = arrTarget;
+                        data_struct.ArrTargetCount = arrTargetCount;
+
+                        fetch('http://localhost:{{ .Port }}/fast_order_save', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json; charset=UTF-8'
+                            },
+                            body: JSON.stringify(data_struct)
+                        }).then(response => {
+                            alert("Заказ успешно создан!");
+                        }).catch(error => {
+                            alert("Ошибка!");
                         });
 
-                        taskList.appendChild(listItem);
-                        taskInput.value = "";
-                        // }
-                    });
-
-                    taskInput.addEventListener("keyup", function (event) {
-                        if (event.key === "Enter") {
-                            addTaskButton.click();
-                        }
-                    });
-
-
-                    saveTask.addEventListener("click", function (event) {
-                        if (event.key === "Enter") {
-
-
-                            let data_struct = {};
-
-                            data_struct.name = name;
-                            data_struct.phone = phone;
-                            data_struct.email = email;
-                            data_struct.arrTarget = arrTarget;
-                            data_struct.arrTargetCount = arrTargetCount;
-
-                            fetch('http://localhost:{{ .Port }}/fast_order_save', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(data_struct)
-                            }).then(response => {
-                                console.log('Данные успешно отправлены на сервер Golang');
-                            }).catch(error => {
-                                console.error('Произошла ошибка при отправке данных:', error);
-                            });
-                        }
                     });
 
                 });
