@@ -52,8 +52,7 @@ func (rout *Rout) OpenHtmlFastOrderSave(w http.ResponseWriter, r *http.Request) 
 func (rout *Rout) OpenHtmlAbout(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "about.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
@@ -61,8 +60,7 @@ func (rout *Rout) OpenHtmlAbout(w http.ResponseWriter, r *http.Request) {
 func (rout *Rout) OpenHtmlBlog(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "blog.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
@@ -70,8 +68,7 @@ func (rout *Rout) OpenHtmlBlog(w http.ResponseWriter, r *http.Request) {
 func (rout *Rout) OpenHtmlCart(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "cart.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
@@ -79,8 +76,7 @@ func (rout *Rout) OpenHtmlCart(w http.ResponseWriter, r *http.Request) {
 func (rout *Rout) OpenHtmlContacts(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "contacts.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
@@ -88,8 +84,7 @@ func (rout *Rout) OpenHtmlContacts(w http.ResponseWriter, r *http.Request) {
 func (rout *Rout) OpenHtmlDelivery(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "delivery.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
@@ -97,41 +92,28 @@ func (rout *Rout) OpenHtmlDelivery(w http.ResponseWriter, r *http.Request) {
 func (rout *Rout) OpenHtmlExchange(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "exchange.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 
 func (rout *Rout) OpenHtmlHome(w http.ResponseWriter, r *http.Request) {
-
-	token := rout.GetCookieToken(w, r)
-	_, err := rout.Connector.FindUserFromToken(token)
-	if err != nil {
-		rout.DataTemp.IsLogin = false
-	} else {
-		rout.DataTemp.IsLogin = true
-	}
-
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
 	tmpl.Execute(w, rout.DataTemp)
+
 }
 
 func (rout *Rout) OpenHtmlLogout(w http.ResponseWriter, r *http.Request) {
-
-	rout.DeleteCookie(w, r)
-	// rout.SetCookieUser(w,r,)
 	rout.DataTemp.IsLogin = false
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "login.html")
-	tmpl.Execute(w, rout.DataTemp)
+	rout.DataTemp.NameLogin = "Гость"
+	rout.DeleteCookie(w, r)
+	http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
 }
 
 func (rout *Rout) OpenHtmlNew(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "new.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
@@ -139,16 +121,14 @@ func (rout *Rout) OpenHtmlNew(w http.ResponseWriter, r *http.Request) {
 func (rout *Rout) OpenHtmlPayment(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "payment.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 func (rout *Rout) OpenHtmlCollectschool(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "collect-school.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
@@ -196,14 +176,11 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 
 	switch access {
 	case "admin":
-		fmt.Println("admin -- ok")
 		rout.DataTemp.IsLogin = true
 		rout.Connector.ReSaveCookieDB(login, password, token)
 		rout.Auth.SetCookieAdmin(w, r, token)
 
 		http.Redirect(w, r, "/cms", http.StatusPermanentRedirect)
-		// tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "cms.html")
-		// tmpl.Execute(w, rout.DataTemp)
 		return
 	case "user":
 		rout.DataTemp.IsLogin = true
@@ -211,15 +188,11 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 		rout.Auth.SetCookieUser(w, r, token)
 
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
-		// tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
-		// tmpl.Execute(w, rout.DataTemp)
 		return
 	default:
 
 		rout.DataTemp.IsLogin = false
 		http.Redirect(w, r, "/404", http.StatusPermanentRedirect)
-		// tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "login.html")
-		// tmpl.Execute(w, rout.DataTemp)
 		return
 	}
 }
@@ -227,8 +200,6 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 func (rout *Rout) OpenHtmlSearch(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
 
 	request := r.FormValue("search")
 
@@ -281,8 +252,7 @@ func (rout *Rout) OpenHtmlCreateUser(w http.ResponseWriter, r *http.Request) {
 func (rout *Rout) OpenHtmlSales(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "sales.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
@@ -290,34 +260,34 @@ func (rout *Rout) OpenHtmlSales(w http.ResponseWriter, r *http.Request) {
 func (rout *Rout) OpenHtmlProsv(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
 
+	if res {
+		token := rout.GetCookieToken(w, r)
+		rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+	}
 	rout.DataTemp.TargetCards = rout.TargetCards
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "prosv.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 func (rout *Rout) OpenHtmlAgat(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "agat.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 func (rout *Rout) OpenHtmlStronikum(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "stronikum.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
 func (rout *Rout) OpenHtmlNaura(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "naura.html")
 	tmpl.Execute(w, rout.DataTemp)
 }
@@ -325,8 +295,7 @@ func (rout *Rout) OpenHtmlNaura(w http.ResponseWriter, r *http.Request) {
 func (rout *Rout) OpenHtml804(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieUser(w, r)
 	rout.DataTemp.IsLogin = res
-	token := rout.GetCookieToken(w, r)
-	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "804.html")
 	tmpl.Execute(w, rout.DataTemp)
 }

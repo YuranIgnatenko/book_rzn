@@ -48,10 +48,6 @@ func (conn *Connector) AddUser(Login, Password, Type, Token, Name, Family, Phone
 		}
 		users = append(users, u)
 	}
-
-	for _, u := range users {
-		fmt.Println(u.Login, u.Password, u.Phone, u.Phone)
-	}
 }
 
 func (conn *Connector) FindUserFromToken(token string) (models.Users, error) {

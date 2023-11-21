@@ -150,45 +150,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="page-menu">
-                        <ul id="menu_list" class="level_1">
-                            <li class="li"><a href="http://localhost:{{ .Port }}/home" class=""
-                                title="О компании">Главная</a></li>
-                             <li class="li"><a href="http://localhost:{{ .Port }}/804" class="" title="О компании">Приказ
-                                    804</a></li>
-
-                            <li class="li"><a href="http://localhost:{{ .Port }}/prosv" class=""
-                                    title="О компании">Просвещение</a></li>
-                            <li class="li"><a href="http://localhost:{{ .Port }}/prosv" class=""
-                                    title="О компании">Агат</a></li>
-                            <li class="li"><a href="http://localhost:{{ .Port }}/agat" class=""
-                                    title="О компании">Строникум</a></li>
-                            <li class="li"><a href="http://localhost:{{ .Port }}/naura" class=""
-                                    title="О компании">Нау-раша</a></li>
-
-                        </ul>
-                    </div>
-
-                    <div class="mob_menu"><i data-feather="menu"></i>Навигация</div>
-                    <div class="menu_popup_mob">
-                        <div class="catalog_subtitle">Навигация по сайту</div>
-                        <ul id="menu_mob">
-                             <li class="li"><a href="http://localhost:{{ .Port }}/804" class=""
-                                    title="О компании">Приказ804</a></li>
-
-                            <li class="li"><a href="http://localhost:{{ .Port }}/prosv" class=""
-                                    title="О компании">Просвещение</a></li>
-                            <li class="li"><a href="http://localhost:{{ .Port }}/prosv" class=""
-                                    title="О компании">Агат</a></li>
-                            <li class="li"><a href="http://localhost:{{ .Port }}/agat" class=""
-                                    title="О компании">Строникум/a>
-                            </li>
-                            <li class="li"><a href="http://localhost:{{ .Port }}/naura" class=""
-                                    title="О компании">Нау-раша</a>
-                            </li>
-
-                        </ul>
-                    </div>
+                    {{ .PageMenuTemplHtml }}
                 </div>
             </div>
     </div>
@@ -317,11 +279,11 @@
 
                     <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a> 
                     <div class="social">
-                        <a target="_blank" href="https://vk.com/#" class="link_vk"></a>
-                        <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
+                        <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                        <!-- <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
                         <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
                         <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
-                        <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a>
+                        <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a> -->
                     </div>
 
                 </div> -->

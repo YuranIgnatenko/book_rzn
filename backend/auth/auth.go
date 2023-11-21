@@ -46,6 +46,13 @@ func (a *Auth) SetCookieUser(w http.ResponseWriter, r *http.Request, token strin
 
 func (a *Auth) GetCookieUser(w http.ResponseWriter, r *http.Request) bool {
 	_, err := r.Cookie("token")
+	if err != nil {
+		return false
+	}
+	token := a.GetCookieToken(w, r)
+	if token == "" {
+		return false
+	}
 
 	if err != nil {
 		switch {
@@ -64,13 +71,12 @@ func (a *Auth) GetCookieUser(w http.ResponseWriter, r *http.Request) bool {
 
 func (a *Auth) GetCookieToken(w http.ResponseWriter, r *http.Request) string {
 	token, err := r.Cookie("token")
-
 	if err != nil {
 		switch {
 		case errors.Is(err, http.ErrNoCookie):
-			return "no cookies"
+			return ""
 		default:
-			return "default: no cookies"
+			return ""
 		}
 	} else {
 		return token.Value
@@ -79,12 +85,10 @@ func (a *Auth) GetCookieToken(w http.ResponseWriter, r *http.Request) string {
 }
 
 func (a *Auth) DeleteCookie(w http.ResponseWriter, r *http.Request) {
-
 	cookie := http.Cookie{
-		Name:  "token",
-		Value: "",
-		Path:  "/",
-		// MaxAge:   3600,
+		Name:     "",
+		Value:    "",
+		Path:     "/",
 		HttpOnly: true,
 		Secure:   true,
 		SameSite: http.SameSiteLaxMode,

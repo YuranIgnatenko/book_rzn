@@ -64,7 +64,7 @@ func (conn *Connector) GetNameLoginFromToken(token string) string {
 	}
 
 	if login_name == "" {
-		return "Гость"
+		return ""
 	}
 	return login_name
 }
@@ -78,9 +78,7 @@ func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
 
 	var target_search []models.TargetCard
 
-	rows, err := conn.Db.Query(`
-	SELECT * FROM bookrzn.Orders WHERE title 
-	LIKE '%` + request + `%' OR autor LIKE '%` + request + `%' OR price LIKE '%` + request + `%';`)
+	rows, err := conn.Db.Query(`SELECT * FROM bookrzn.Orders WHERE target_hash LIKE '%` + request + `%' ;`)
 
 	if err != nil {
 		panic(err)
