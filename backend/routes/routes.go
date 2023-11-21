@@ -6,7 +6,6 @@ import (
 	"backend/datatemp"
 	"backend/models"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 	"text/template"
