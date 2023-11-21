@@ -129,7 +129,7 @@ func (conn *Connector) ReSaveCookieDB(login, password, token string) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("token [%s], old_token [%s]\n", token, old_token)
+	// fmt.Printf("token [%s], old_token [%s]\n", token, old_token)
 	defer rows.Close()
 }
 
