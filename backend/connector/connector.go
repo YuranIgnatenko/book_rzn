@@ -308,6 +308,48 @@ func (conn *Connector) GetNewNumberFastOrder() string {
 
 }
 
+func (conn *Connector) GetFastOrderList() []models.DataFastOrderOne {
+	var rows *sql.Rows
+	var err error
+
+	db, err := sql.Open("mysql", conn.dsn())
+	if err != nil {
+		fmt.Printf("Error %s when opening DB\n", err)
+	}
+	conn.Db = db
+
+	dt := make([]models.DataFastOrderOne, 0)
+
+	rows, err = conn.Db.Query(`SELECT * FROM bookrzn.FastOrders ;`)
+	if err != nil {
+		panic(err)
+	}
+
+	for rows.Next() {
+		dtfast := models.DataFastOrderOne{}
+		temp := ""
+
+		err := rows.Scan(
+			&temp,
+			&dtfast.Name,
+			&dtfast.Phone,
+			&dtfast.Email,
+			&dtfast.Target,
+			&dtfast.Count,
+			&dtfast.Token,
+		)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		dt = append(dt, dtfast)
+	}
+
+	// обязательно иначе привысит лимит подключений и будет сбой
+	defer rows.Close()
+	return dt
+}
+
 func (conn *Connector) SaveTargetFastOrders(data models.DataFastOrder) {
 	var rows *sql.Rows
 	var err error

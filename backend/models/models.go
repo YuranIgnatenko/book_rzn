@@ -98,3 +98,11 @@ type DataFastOrder struct {
 	ArrTargetCount  []string `json:"ArrTargetCount"`
 	NumberFastOrder string   `json:"NumberFastOrder"`
 }
+type DataFastOrderOne struct {
+	Name   string `json:"name"`
+	Phone  string `json:"phone"`
+	Email  string `json:"email"`
+	Target string `json:"target"`
+	Count  string `json:"count"`
+	Token  string `json:"token"`
+}

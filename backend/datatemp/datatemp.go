@@ -12,6 +12,7 @@ type DataTemp struct {
 	OrdersCards     []models.OrdersCards
 	OrdersRows      []models.OrdersRows
 	SearchTarget    []models.TargetCard
+	FastOrdersList  []models.DataFastOrderOne
 	NumberFastOrder string
 	IsLogin         bool
 	NameLogin       string

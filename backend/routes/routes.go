@@ -174,6 +174,7 @@ func (rout *Rout) OpenHtmlRegistry(w http.ResponseWriter, r *http.Request) {
 
 func (rout *Rout) OpenHtmlCms(w http.ResponseWriter, r *http.Request) {
 	res := rout.Auth.GetCookieAdmin(w, r)
+	rout.FastOrdersList = rout.GetFastOrderList()
 	if res {
 		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "cms.html")
 		tmpl.Execute(w, rout.DataTemp)
@@ -200,22 +201,25 @@ func (rout *Rout) OpenHtmlLoginCheck(w http.ResponseWriter, r *http.Request) {
 		rout.Connector.ReSaveCookieDB(login, password, token)
 		rout.Auth.SetCookieAdmin(w, r, token)
 
-		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "cms.html")
-		tmpl.Execute(w, rout.DataTemp)
+		http.Redirect(w, r, "/cms", http.StatusPermanentRedirect)
+		// tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "cms.html")
+		// tmpl.Execute(w, rout.DataTemp)
 		return
 	case "user":
 		rout.DataTemp.IsLogin = true
 		rout.Connector.ReSaveCookieDB(login, password, token)
 		rout.Auth.SetCookieUser(w, r, token)
 
-		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
-		tmpl.Execute(w, rout.DataTemp)
+		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
+		// tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
+		// tmpl.Execute(w, rout.DataTemp)
 		return
 	default:
 
 		rout.DataTemp.IsLogin = false
-		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "login.html")
-		tmpl.Execute(w, rout.DataTemp)
+		http.Redirect(w, r, "/404", http.StatusPermanentRedirect)
+		// tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "login.html")
+		// tmpl.Execute(w, rout.DataTemp)
 		return
 	}
 }
