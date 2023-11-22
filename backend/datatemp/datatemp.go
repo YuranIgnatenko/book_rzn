@@ -26,29 +26,64 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 		IsLogin:         false,
 		NameLogin:       "Гость",
 		NumberFastOrder: "",
-		PageMenuTemplHtml: `<div class="page-menu">
-		<ul id="menu_list" class="level_1">
-			<li class="li"><a href="http://localhost:8082/home" class=""
-				title="О компании">Главная</a></li>
-			 <li class="li"><a href="http://localhost:8082/804" class="" 
-				title="О компании">Приказ804</a></li>
-			<li class="li"><a href="http://localhost:8082/prosv" class=""
-					title="О компании">Просвещение</a></li>
-			<li class="li"><a href="http://localhost:8082/agat" class=""
-					title="О компании">Агат</a></li>
-		</ul>
-	</div>
-	<div class="mob_menu"><i data-feather="menu"></i>Навигация</div>
-	<div class="menu_popup_mob">
-		<div class="catalog_subtitle">Навигация по сайту</div>
-		<ul id="menu_mob">
-			 <li class="li"><a href="http://localhost:8082/804" class=""
-					title="О компании">Приказ804</a></li>
-			<li class="li"><a href="http://localhost:8082/prosv" class=""
-					title="О компании">Просвещение</a></li>
-			<li class="li"><a href="http://localhost:8082/agat" class=""
-					title="О компании">Агат</a></li>
-		</ul>
-	</div>`,
+		PageMenuTemplHtml: `
+		<style>
+                        .nav-bar-btn {
+                            float: left;
+                        }
+
+                        .btn {
+                            background-color: #fca783;
+                            border-radius: 5px;
+                            border: 0;
+                            margin: 5px;
+
+                        }
+
+                        .btn:hover {
+                            background-color: #e18057;
+                        }
+                    </style>
+                    <div class="nav-bar">
+
+                        <div class="nav-bar-btn">
+                            <form action="/home">
+                                <input class="btn" type="submit" value="Главная" />
+                            </form>
+                        </div>
+
+                        <div class="nav-bar-btn">
+                            <form action="/new">
+                                <input class="btn" type="submit" value="Новости" />
+                            </form>
+                        </div>
+
+                        <div class="nav-bar-btn">
+                            <form action="/for_school">
+                                <input class="btn" type="submit" value="Для школы" />
+                            </form>
+                        </div>
+
+                        <div class="nav-bar-btn">
+                            <form action="for_office">
+                                <input class="btn" type="submit" value="Для офиса" />
+                            </form>
+                        </div>
+
+                        <div class="nav-bar-btn">
+                            <form action="for_office">
+                                <input class="btn" type="submit" value="Для детского сада" />
+                            </form>
+                        </div>
+
+                        <div class="nav-bar-btn">
+                            <form action="for_office">
+                                <input class="btn" type="submit" value="Для офиса" />
+                            </form>
+                        </div>
+
+
+                    </div>
+		`,
 	}
 }

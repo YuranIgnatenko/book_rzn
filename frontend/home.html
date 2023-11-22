@@ -61,13 +61,8 @@
         window.promo_discount = null;
         window.promo_title = null;
         window.one_click_buy = 1;
-    </script> <!-- gsc start -->
+    </script>
 
-    <!-- gsc end -->
-
-    <!-- ywm start -->
-
-    <!-- ywm end --> <!-- Подключите тут важные скрипты и стили. -->
 </head>
 
 <body class=" michigan main_page rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
@@ -86,22 +81,24 @@
 
                     <div class="login_or_reg">
                         {{if .IsLogin}}
-                            <a href="http://localhost:{{ .Port }}/home">Пользователь:{{ .NameLogin }}</a>
-                            <br>
-                            <a href="http://localhost:{{ .Port }}/logout">Выход</a>
+                        <a href="/home">Пользователь:{{ .NameLogin }}</a>
+                        <br>
+                        <a href="/logout">Выход</a>
                         {{else}}
-                        <a href="http://localhost:{{ .Port }}/login">Вход</a> / <a
-                            href="http://localhost:{{ .Port }}/registration">Регистрация</a>
+                        <a href="/login">Вход</a> / <a href="/registration">Регистрация</a>
                         {{end}}
                     </div>
                 </div>
+
+
+
             </div>
 
             <div class="header-middle">
                 <div class="inner">
                     <div class="header-middle-left">
                         <div class="logo_wrapper">
-                            <a href="http://localhost:{{ .Port }}/home" class="logo">
+                            <a href="/home" class="logo">
                                 <img src="{{ .Path_logo_company}}" srcset="{{ .Path_logo_company}} 2x"
                                     alt="{{ .Company_name}}" width="250px" height="70px" />
                             </a>
@@ -110,20 +107,20 @@
                     </div>
                     <div class="search_form">
 
-                        <!-- FART ORDER  -->
-                        <form action="http://localhost:{{ .Port }}/fast_order">
+                        <!-- FART ORDER 
+                        <form action="/fast_order">
                             <button style="width: 100%;" type="submit">Быстрая заявка-заказ*</button>
                         </form>
 
-                        <br>
+                        <br> -->
 
 
-                        <form method="GET" action="http://localhost:{{ .Port }}/search">
+                        <form method="GET" action="/search">
                             <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
                                 autocomplete="off" autofocus value="" />
                             <button type="submit">Поиск</button>
                             <div id="autocomplete"></div>
-                        </form>    
+                        </form>
                     </div>
 
                     <div class="header-middle-right">
@@ -136,19 +133,19 @@
 
                         {{if .IsLogin}}
                         <div class="orders bars" title="Мои заказы">
-                            <a href="http://localhost:{{ .Port }}/orders">
+                            <a href="/orders">
                                 <i data-feather="archive"></i>
                                 <span>Мои заказы</span>
                             </a>
                         </div>
                         <div class="favorite bars">
-                            <a href="http://localhost:{{ .Port }}/favorites">
+                            <a href="/favorites">
                                 <i data-feather="heart"></i>
                                 <span>Избранное</span>
                             </a>
                         </div>
                         {{end}}
- 
+
 
                     </div>
                 </div>
@@ -157,22 +154,22 @@
             <div class="header-bottom">
                 <div class="inner">
                     {{ .PageMenuTemplHtml }}
+                    
                 </div>
             </div>
-    </div>
-    </header>
-    <main>
-        <div class="block main">
-            <div class="inner">
+        </header>
+        <main>
+            <div class="block main">
+                <div class="inner">
 
-                <div class="content  ">
+                    <div class="content  ">
 
 
-                    <div class="slider">
-                        <div class="swiper-container">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="bg"></div> <img srcset="{{ .Path_banner_home}} 360w,
+                        <div class="slider">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="bg"></div> <img srcset="{{ .Path_banner_home}} 360w,
                                                 {{ .Path_banner_home}} 440w,
                                                 {{ .Path_banner_home}} 520w,
                                                 {{ .Path_banner_home}} 670w,
@@ -183,16 +180,16 @@
                              (max-width: 1200px) 960px, 
                              (max-width: 1366px) calc(100vw - 60px), 
                              (min-width: 1366px) 1300px" src="{{ .Path_banner_home}}" alt="{{ .Text_banner}}"
-                                        class="slider-image" width="1300px" height="500px" loading="lazy">
-                                    <div class="item_content">
-                                        <div class="title">{{ .Text_banner}}</div>
-                                        <div class="descr">{{ .Description_banner}}</div>
-                                        <!-- <a class="slide_btn" href="http://new15942715563356.myaddshop.ru/categories/">В -->
-                                        <!-- каталог</a> -->
+                                            class="slider-image" width="1300px" height="500px" loading="lazy">
+                                        <div class="item_content">
+                                            <div class="title">{{ .Text_banner}}</div>
+                                            <div class="descr">{{ .Description_banner}}</div>
+                                            <!-- <a class="slide_btn" href="http://new15942715563356.myaddshop.ru/categories/">В -->
+                                            <!-- каталог</a> -->
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="bg"></div> <img srcset="{{ .Path_banner_home}} 360w,
+                                    <div class="swiper-slide">
+                                        <div class="bg"></div> <img srcset="{{ .Path_banner_home}} 360w,
                                                 {{ .Path_banner_home}} 440w,
                                                 {{ .Path_banner_home}} 520w,
                                                 {{ .Path_banner_home}} 670w,
@@ -203,46 +200,46 @@
                              (max-width: 1200px) 960px, 
                              (max-width: 1366px) calc(100vw - 60px), 
                              (min-width: 1366px) 1300px" src="{{ .Path_banner_home}}" class="slider-image"
-                                        width="1300px" height="500px" loading="lazy">
+                                            width="1300px" height="500px" loading="lazy">
 
+                                    </div>
                                 </div>
+                                <div class="swiper-pagination"></div>
+                                <!-- Add Arrows -->
+                                <div class="swiper-button-next swiper-button-white"></div>
+                                <div class="swiper-button-prev swiper-button-white"></div>
                             </div>
-                            <div class="swiper-pagination"></div>
-                            <!-- Add Arrows -->
-                            <div class="swiper-button-next swiper-button-white"></div>
-                            <div class="swiper-button-prev swiper-button-white"></div>
                         </div>
-                    </div>
 
 
-                    <!-- NEWS -->
+                        <!-- NEWS -->
 
-                    <div class="news_main">
-                        <div class="one_news_wrapp">
-                            <div class="one_news">
-                                <a class="news_img" href="http://localhost:{{ .Port }}/404">
-                                    <div class="n_watch">Смотреть</div>
-                                    <img src="http://new15942715563356.myaddshop.ru/img/400x250/1010/news/novosti2_15942842675524.jpg"
-                                        srcset="http://new15942715563356.myaddshop.ru/img/800x500/1010/news/novosti2_15942842675524.jpg 2x"
-                                        width="400px" height="250px" loading="lazy">
-                                </a>
-                                <div class="news_title">
-                                    <div class="n_date">Date and time</div>
-                                    <a class="n_title" href="http://localhost:{{ .Port }}/404">Title card</a>
-                                    <div class="n_descr">
-                                        Desc card
+                        <div class="news_main">
+                            <div class="one_news_wrapp">
+                                <div class="one_news">
+                                    <a class="news_img" href="/404">
+                                        <div class="n_watch">Смотреть</div>
+                                        <img src="http://new15942715563356.myaddshop.ru/img/400x250/1010/news/novosti2_15942842675524.jpg"
+                                            srcset="http://new15942715563356.myaddshop.ru/img/800x500/1010/news/novosti2_15942842675524.jpg 2x"
+                                            width="400px" height="250px" loading="lazy">
+                                    </a>
+                                    <div class="news_title">
+                                        <div class="n_date">Date and time</div>
+                                        <a class="n_title" href="/404">Title card</a>
+                                        <div class="n_descr">
+                                            Desc card
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
 
-
                 </div>
-
             </div>
-        </div>
-    </main>
+        </main>
     </div>
 
     <footer class="block">
@@ -250,7 +247,7 @@
             <div class="inner">
                 <div class="fmenu">
                     <div class="logo_wrapper">
-                        <a class="logo" href="http://localhost:{{ .Port }}/home">
+                        <a class="logo" href="/home">
                             <img src="{{.Path_logo_company}}" alt="{{ .Company_name}}" />
                         </a>
                     </div>

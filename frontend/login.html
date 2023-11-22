@@ -83,8 +83,8 @@
                         <a href="tel:{{ .Phone}}">{{ .Phone}}</a>                     </div>
 
                     <div class="login_or_reg">
-                        <a href="http://localhost:{{ .Port }}/login">Вход</a> / <a
-                            href="http://localhost:{{ .Port }}/registration">Регистрация</a>
+                        <a href="/login">Вход</a> / <a
+                            href="/registration">Регистрация</a>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                 <div class="inner">
                     <div class="header-middle-left">
                         <div class="logo_wrapper">
-                            <a href="http://localhost:{{ .Port }}/home" class="logo">
+                            <a href="/home" class="logo">
                                 <img src="{{ .Path_logo_company}}" srcset="{{ .Path_logo_company}} 2x"
                                     alt="{{ .Company_name}}" width="250px" height="70px" />
                                 </a>
@@ -101,14 +101,14 @@
                         <div class="slogan">{{ .Location_office}}</div>
                     </div>
                     <div class="search_form">
-                        <!-- FART ORDER  -->
-                        <form action="http://localhost:{{ .Port }}/fast_order">
+                        <!-- FART ORDER 
+                        <form action="/fast_order">
                             <button style="width: 100%;" type="submit">Быстрая заявка-заказ*</button>
                         </form>
 
-                        <br>
+                        <br> -->
 
-                        <form method="GET" action="http://localhost:{{ .Port }}/search">
+                        <form method="GET" action="/search">
                             <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
                                 autocomplete="off" autofocus value="" />
                             <button type="submit">Поиск</button>
@@ -122,13 +122,13 @@
                         </div>
                         {{if .IsLogin}}
                         <div class="orders bars" title="Мои заказы">
-                            <a href="http://localhost:{{ .Port }}/orders">
+                            <a href="/orders">
                                 <i data-feather="archive"></i>
                                 <span>Мои заказы</span>
                             </a>
                         </div>
                         <div class="favorite bars">
-                            <a href="http://localhost:{{ .Port }}/favorites">
+                            <a href="/favorites">
                                 <i data-feather="heart"></i>
                                 <span>Избранное</span>
                             </a>
@@ -200,7 +200,7 @@
                                 <p>Регистрация на сайте позволит быстро оформлять заказы, управлять заказами через
                                     личный кабинет, в полном объеме использовать возможности нашего сайта.
                                 </p>
-                                <a href="http://localhost:{{ .Port }}/registration">Зарегистрироваться</a>
+                                <a href="/registration">Зарегистрироваться</a>
                             </div>
                         </div>
 
@@ -215,7 +215,7 @@
             <div class="inner">
                 <div class="fmenu">
                     <div class="logo_wrapper">
-                        <a class="logo" href="http://localhost:{{ .Port }}/home">
+                        <a class="logo" href="/home">
                             <img src="{{ .Path_logo_company}}" alt="Мир книг" />
                         </a>
                     </div>
@@ -235,10 +235,10 @@
                     <div class="footer_subtitle">О магазине</div>
                     <ul>
                         <li>
-                            <a href="http://localhost:{{ .Port }}">Главная</a>
+                            <a href="">Главная</a>
                         </li>
                         <li>
-                            <a href="http://localhost:{{ .Port }}/sales">Акции</a>
+                            <a href="/sales">Акции</a>
                         </li>
                         <li>
                             <a href="{{ .Full_url_add}}/about">О компании</a>
