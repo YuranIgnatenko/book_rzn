@@ -53,12 +53,6 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                         </div>
 
                         <div class="nav-bar-btn">
-                            <form action="/new">
-                                <input class="btn" type="submit" value="Новости" />
-                            </form>
-                        </div>
-
-                        <div class="nav-bar-btn">
                             <form action="/for_school">
                                 <input class="btn" type="submit" value="Для школы" />
                             </form>
@@ -69,20 +63,6 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                                 <input class="btn" type="submit" value="Для офиса" />
                             </form>
                         </div>
-
-                        <div class="nav-bar-btn">
-                            <form action="for_office">
-                                <input class="btn" type="submit" value="Для детского сада" />
-                            </form>
-                        </div>
-
-                        <div class="nav-bar-btn">
-                            <form action="for_office">
-                                <input class="btn" type="submit" value="Для офиса" />
-                            </form>
-                        </div>
-
-
                     </div>
 		`,
 	}

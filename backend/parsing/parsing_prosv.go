@@ -11,7 +11,7 @@ func (ps *ParsingService) ScrapSourceProsv() []models.TargetCard {
 	c := colly.NewCollector()
 	dts := make([]models.TargetCard, 0)
 
-	for _, link := range ps.LinkVisit {
+	for _, link := range ps.LinkVisitProsv {
 		c.OnHTML(".item-grid", func(e *colly.HTMLElement) {
 			e.ForEach(".item-box", func(_ int, el *colly.HTMLElement) {
 				dt := models.TargetCard{

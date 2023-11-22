@@ -70,7 +70,7 @@ func NewCore() *Core {
 	a := auth.NewAuth(*c, *conn)
 	mw := middleware.NewMiddleware(*a)
 	ps := parsing.NewParsingService(*c, *conn)
-	dt := datatemp.NewDataTemp(*c, ps.TargetCards)
+	dt := datatemp.NewDataTemp(*c, ps.TargetCardsProsv)
 	rout := routes.NewRout(*a, *conn, *dt)
 
 	return &Core{

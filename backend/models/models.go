@@ -17,14 +17,6 @@ type TargetCard struct {
 	TargetHash string
 }
 
-// type ProsvCard struct {
-// 	Autor string //`csv:"autor"`
-// 	Title string //`csv:"title"`
-// 	Price string //`csv:"price"`
-// 	Link  string //`csv:"link"`
-// 	Id    string
-// }
-
 type OrdersRows struct {
 	Link         string //`csv:"link"`
 	Id           string

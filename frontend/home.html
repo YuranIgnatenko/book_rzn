@@ -153,8 +153,59 @@
 
             <div class="header-bottom">
                 <div class="inner">
-                    {{ .PageMenuTemplHtml }}
-                    
+                    <!-- {{ .PageMenuTemplHtml }} -->
+
+                    <style>
+                        .nav-bar {
+                            width: 100%;
+                        }
+
+                        .nav-bar-btn {
+                            float: left;
+                        }
+
+                        .btn {
+                            background-color: #fca783;
+                            border-radius: 5px;
+                            border: 0;
+                            margin: 5px;
+                            width: 100%;
+                        }
+
+                        .btn:hover {
+                            background-color: #e18057;
+                        }
+
+                        
+                    </style>
+                    <div class="nav-bar">
+
+                        <div class="nav-bar-btn">
+                            <form action="/home">
+                                <input class="btn" type="submit" value="Главная" />
+                            </form>
+                        </div>
+
+                        <div class="nav-bar-btn">
+                            <form action="/for_school">
+                                <input class="btn" type="submit" value="Для школы" />
+                            </form>
+                        </div>
+
+                        <div class="nav-bar-btn">
+                            <form action="/for_office">
+                                <input class="btn" type="submit" value="Для офиса" />
+                            </form>
+                        </div>
+
+                        <div class="nav-bar-btn">
+                            <form action="/information">
+                                <input class="btn" type="submit" value="Информация" />
+                            </form>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </header>
