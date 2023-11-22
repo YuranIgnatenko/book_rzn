@@ -33,7 +33,7 @@ func (ps *ParsingService) ScrapSourceAgatFreshNewTables() []models.TargetCard {
 		c.OnHTML(".cats_list_container", func(e *colly.HTMLElement) {
 			e.ForEach(".product", func(_ int, el *colly.HTMLElement) {
 				dt := models.TargetCard{
-					Autor: "NO Autor", 
+					Autor: "NO Autor",
 					Title: el.ChildText(".goods_list_name"),
 					Price: "NO price",
 					Link:  "https://agatmk.ru" + el.ChildAttr("img", "src"),
@@ -49,7 +49,6 @@ func (ps *ParsingService) ScrapSourceAgatFreshNewTables() []models.TargetCard {
 	return dts
 }
 
-
 func (ps *ParsingService) ScrapSourceAgatFreshNewBasicModules() []models.TargetCard {
 	c := colly.NewCollector()
 	dts := make([]models.TargetCard, 0)
@@ -58,9 +57,9 @@ func (ps *ParsingService) ScrapSourceAgatFreshNewBasicModules() []models.TargetC
 		c.OnHTML(".cats_list_container", func(e *colly.HTMLElement) {
 			e.ForEach(".product", func(_ int, el *colly.HTMLElement) {
 				dt := models.TargetCard{
-					Autor: "NO Autor", 
+					Autor: "NO Autor",
 					Title: el.ChildText(".goods_list_name"),
-					Price: "NO price", 
+					Price: "NO price",
 					Link:  "https://agatmk.ru" + el.ChildAttr("img", "src"),
 				}
 				dt.Title = strings.ReplaceAll(dt.Title, `"`, "")
@@ -82,9 +81,9 @@ func (ps *ParsingService) ScrapSourceAgatStudentTable() []models.TargetCard {
 		c.OnHTML(".cats_list_container", func(e *colly.HTMLElement) {
 			e.ForEach(".product", func(_ int, el *colly.HTMLElement) {
 				dt := models.TargetCard{
-					Autor: "NO Autor", 
+					Autor: "NO Autor",
 					Title: el.ChildText(".goods_list_name"),
-					Price: "NO price", 
+					Price: "NO price",
 					Link:  "https://agatmk.ru" + el.ChildAttr("img", "src"),
 				}
 				dt.Title = strings.ReplaceAll(dt.Title, `"`, "")
@@ -106,9 +105,57 @@ func (ps *ParsingService) ScrapSourceAgatStudentChair() []models.TargetCard {
 		c.OnHTML(".cats_list_container", func(e *colly.HTMLElement) {
 			e.ForEach(".product", func(_ int, el *colly.HTMLElement) {
 				dt := models.TargetCard{
-					Autor: "NO Autor", 
+					Autor: "NO Autor",
 					Title: el.ChildText(".goods_list_name"),
-					Price: "NO price", 
+					Price: "NO price",
+					Link:  "https://agatmk.ru" + el.ChildAttr("img", "src"),
+				}
+				dt.Title = strings.ReplaceAll(dt.Title, `"`, "")
+				dt.Id = dt.Title + dt.Link
+				dt.TargetHash = dt.Id
+				dts = append(dts, dt)
+			})
+		})
+		c.Visit(link)
+	}
+	return dts
+}
+
+func (ps *ParsingService) ScrapSourceAgatOfficeOptimaTable() []models.TargetCard {
+	c := colly.NewCollector()
+	dts := make([]models.TargetCard, 0)
+
+	for _, link := range ps.LinkVisitAgatOfficeOptimaTable {
+		c.OnHTML(".cats_list_container", func(e *colly.HTMLElement) {
+			e.ForEach(".product", func(_ int, el *colly.HTMLElement) {
+				dt := models.TargetCard{
+					Autor: "NO Autor",
+					Title: el.ChildText(".goods_list_name"),
+					Price: "NO price",
+					Link:  "https://agatmk.ru" + el.ChildAttr("img", "src"),
+				}
+				dt.Title = strings.ReplaceAll(dt.Title, `"`, "")
+				dt.Id = dt.Title + dt.Link
+				dt.TargetHash = dt.Id
+				dts = append(dts, dt)
+			})
+		})
+		c.Visit(link)
+	}
+	return dts
+}
+
+func (ps *ParsingService) ScrapSourceAgatOfficeOptimaModules() []models.TargetCard {
+	c := colly.NewCollector()
+	dts := make([]models.TargetCard, 0)
+
+	for _, link := range ps.LinkVisitAgatOfficeOptimaModules {
+		c.OnHTML(".cats_list_container", func(e *colly.HTMLElement) {
+			e.ForEach(".product", func(_ int, el *colly.HTMLElement) {
+				dt := models.TargetCard{
+					Autor: "NO Autor",
+					Title: el.ChildText(".goods_list_name"),
+					Price: "NO price",
 					Link:  "https://agatmk.ru" + el.ChildAttr("img", "src"),
 				}
 				dt.Title = strings.ReplaceAll(dt.Title, `"`, "")
