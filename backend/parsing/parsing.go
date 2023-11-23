@@ -20,8 +20,13 @@ type ParsingService struct {
 	LinkVisitAgatOfficeOptimaTable    []string
 	LinkVisitAgatOfficeOptimaModules  []string
 
-	TargetCardsProsv []models.TargetCard
-	TargetCardsAgat  []models.TargetCard
+	TargetCardsProsv                    []models.TargetCard
+	TargetCardsAgatFreshNewTable        []models.TargetCard
+	TargetCardsAgatFreshNewBasicModules []models.TargetCard
+	TargetCardsAgatStudentTable         []models.TargetCard
+	TargetCardsAgatStudentChair         []models.TargetCard
+	TargetCardsAgatOfficeOptimaTable    []models.TargetCard
+	TargetCardsAgatOfficeOptimaModules  []models.TargetCard
 
 	config.Configuration
 	connector.Connector
@@ -59,16 +64,26 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 	data := []models.TargetCard{}
 
 	ps.TargetCardsProsv = make([]models.TargetCard, 0)
-	ps.TargetCardsAgat = make([]models.TargetCard, 0)
+	ps.TargetCardsAgatFreshNewTable = make([]models.TargetCard, 0)
+	ps.TargetCardsAgatFreshNewBasicModules = make([]models.TargetCard, 0)
+	ps.TargetCardsAgatStudentTable = make([]models.TargetCard, 0)
+	ps.TargetCardsAgatStudentChair = make([]models.TargetCard, 0)
+	ps.TargetCardsAgatOfficeOptimaTable = make([]models.TargetCard, 0)
+	ps.TargetCardsAgatOfficeOptimaModules = make([]models.TargetCard, 0)
 
 	if len(data) <= 1 {
-		// ps.TargetCardsProsv = ps.ScrapSourceProsv()
 		ps.TargetCardsProsv = []models.TargetCard{}
-		ps.TargetCardsAgat = ps.ScrapSourceAgatOfficeOptimaModules()
 
-		for _, el := range ps.TargetCardsAgat {
-			fmt.Printf("%#+v\n\n", el)
-		}
+		ps.TargetCardsAgatFreshNewTable = ps.ScrapSourceAgatFreshNewTables()
+		ps.TargetCardsAgatFreshNewBasicModules = ps.ScrapSourceAgatFreshNewBasicModules()
+		ps.TargetCardsAgatStudentTable = ps.ScrapSourceAgatStudentTable()
+		ps.TargetCardsAgatStudentChair = ps.ScrapSourceAgatStudentChair()
+		ps.TargetCardsAgatOfficeOptimaTable = ps.ScrapSourceAgatOfficeOptimaTable()
+		ps.TargetCardsAgatOfficeOptimaModules = ps.ScrapSourceAgatOfficeOptimaModules()
+
+		// for _, el := range ps.TargetCardsAgat {
+		// 	fmt.Printf("%#+v\n\n", el)
+		// }
 
 		for _, card := range ps.TargetCardsProsv {
 			target_hash := TargetHash(card.Autor, card.Title, card.Price, card.Link)

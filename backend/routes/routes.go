@@ -339,3 +339,8 @@ func (rout *Rout) OpenHtmlProfile(w http.ResponseWriter, r *http.Request) {
 	default:
 	}
 }
+
+func (rout *Rout) OpenHtmlForSchool(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "for_school.html")
+	tmpl.Execute(w, rout.DataTemp)
+}
