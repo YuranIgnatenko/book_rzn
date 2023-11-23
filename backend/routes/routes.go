@@ -2,10 +2,13 @@ package routes
 
 import (
 	"backend/auth"
+	"backend/config"
 	"backend/connector"
 	"backend/datatemp"
 	"backend/models"
+	"backend/parsing"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strings"
 	"text/template"
@@ -14,15 +17,20 @@ import (
 type Rout struct {
 	auth.Auth
 	connector.Connector
+	config.Configuration
 	datatemp.DataTemp
+	parsing.ParsingService
 }
 
-func NewRout(a auth.Auth, conn connector.Connector, dt datatemp.DataTemp) *Rout {
+func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt datatemp.DataTemp) *Rout {
 	rout := Rout{
-		Auth:      a,
-		Connector: conn,
-		DataTemp:  dt,
+		Auth:           a,
+		Configuration:  c,
+		Connector:      conn,
+		DataTemp:       dt,
+		ParsingService: *parsing.NewParsingService(c, conn),
 	}
+	rout.DataTemp.TargetCards = rout.ListTargetCardCache
 
 	return &rout
 }
@@ -340,7 +348,14 @@ func (rout *Rout) OpenHtmlProfile(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (rout *Rout) OpenHtmlTargetCards(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "targetcards.html")
+	tmpl.Execute(w, rout.DataTemp)
+}
+
 func (rout *Rout) OpenHtmlForSchool(w http.ResponseWriter, r *http.Request) {
+	rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetCards, "prosv-book")
+	fmt.Println(len(rout.DataTemp.TargetCards))
 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "for_school.html")
 	tmpl.Execute(w, rout.DataTemp)
 }

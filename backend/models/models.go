@@ -1,10 +1,7 @@
 package models
 
-type TargetCarder interface{}
-
-type ParsingServicer interface {
-	ScrapSource() []TargetCarder
-	WriteToCsv(data []*TargetCarder)
+type ServiceScraper interface {
+	ScrapSource() []TargetCard
 }
 
 type TargetCard struct {
@@ -15,6 +12,8 @@ type TargetCard struct {
 	Id         string
 	Comment    string
 	TargetHash string
+	Source     string
+	Tag        string
 }
 
 type OrdersRows struct {

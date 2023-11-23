@@ -2,7 +2,6 @@ package connector
 
 import (
 	"backend/models"
-	"database/sql"
 	"fmt"
 )
 
@@ -13,13 +12,34 @@ func NewConnectorTargets() *ConnectorTargets {
 	return &ConnectorTargets{}
 }
 
+func (conn *Connector) SaveParsingService(tc models.TargetCard) {
+
+	// db, err := sql.Open("mysql", conn.dsn())
+	// if err != nil {
+	// 	fmt.Printf("Error %s when opening DB\n", err)
+	// }
+	// conn.Db = db
+
+	rows, err := conn.Db.Query(
+		fmt.Sprintf(`INSERT bookrzn.Targets (target_hash,autor,title,price,image,comment) 
+		VALUES ( '%v','%v','%v', '%v','%v','%v');`,
+			tc.Id, tc.Autor, tc.Title, tc.Price, tc.Link, "comment desk")) //,
+	if err != nil {
+		panic(err)
+	}
+	//
+	// обязательно иначе привысит лимит подключений и будет сбой
+	defer rows.Close()
+
+}
+
 func (conn *Connector) SaveTargetTargets(targethash, autor, title, price, image string) {
 
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-	}
-	conn.Db = db
+	// db, err := sql.Open("mysql", conn.dsn())
+	// if err != nil {
+	// 	fmt.Printf("Error %s when opening DB\n", err)
+	// }
+	// conn.Db = db
 
 	rows, err := conn.Db.Query(
 		fmt.Sprintf(`INSERT bookrzn.Targets (target_hash,autor,title,price,image,comment) 
@@ -35,12 +55,6 @@ func (conn *Connector) SaveTargetTargets(targethash, autor, title, price, image 
 }
 
 func (conn *Connector) GetListTargets() []models.TargetCard {
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-
-	}
-	conn.Db = db
 
 	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Targets;`)) //,
 	if err != nil {

@@ -3,21 +3,22 @@ package datatemp
 import (
 	"backend/config"
 	"backend/models"
+	"fmt"
 )
 
 type DataTemp struct {
 	config.Configuration
-	TargetCardsForSchool []models.TargetCard
-	TargetCards          []models.TargetCard
-	FavoritesCards       []models.FavoritesCards
-	OrdersCards          []models.OrdersCards
-	OrdersRows           []models.OrdersRows
-	SearchTarget         []models.TargetCard
-	FastOrdersList       []models.DataFastOrderOne
-	NumberFastOrder      string
-	IsLogin              bool
-	NameLogin            string
-	PageMenuTemplHtml    string
+	TargetAll         []models.TargetCard
+	TargetCards       []models.TargetCard
+	FavoritesCards    []models.FavoritesCards
+	OrdersCards       []models.OrdersCards
+	OrdersRows        []models.OrdersRows
+	SearchTarget      []models.TargetCard
+	FastOrdersList    []models.DataFastOrderOne
+	NumberFastOrder   string
+	IsLogin           bool
+	NameLogin         string
+	PageMenuTemplHtml string
 }
 
 func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
@@ -67,4 +68,16 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                     </div>
 		`,
 	}
+}
+
+func (dt *DataTemp) FilterCards(data []models.TargetCard, mode string) []models.TargetCard {
+	segm := make([]models.TargetCard, 0)
+
+	for _, tc := range dt.TargetCards {
+		fmt.Println(tc.Tag)
+		if mode == tc.Tag {
+			segm = append(segm, tc)
+		}
+	}
+	return segm
 }
