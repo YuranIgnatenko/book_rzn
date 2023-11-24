@@ -53,7 +53,8 @@
         #tab_1:checked~#txt_1,
         #tab_2:checked~#txt_2,
         #tab_3:checked~#txt_3,
-        #tab_4:checked~#txt_4 {
+        #tab_4:checked~#txt_4,
+        #tab_4:checked~#txt_5 {
             display: block;
         } 
     </style>
@@ -112,7 +113,7 @@
         <button class="tablinks" onclick="openTab(event, 'status')" height="100%">Статус</button>
         <button class="tablinks" onclick="openTab(event, 'editor')" height="100%">Редактор</button>
         <button class="tablinks" onclick="openTab(event, 'sender')" height="100%">Рассылка</button>
-        <button class="tablinks" onclick="openTab(event, 'history')" height="100%">История</button>
+        <!-- <button class="tablinks" onclick="openTab(event, 'history')" height="100%">История</button> -->
         <!-- <button class="tablinks" onclick="openTab(event, 'map')" height="100%">Карта</button> -->
         <button class="tablinks" onclick="openTab(event, 'order')" height="100%">Заявки на заказы</button>
         <button class="tablinks" onclick="openTab(event, 'config')" height="100%">Конфигурации</button>
@@ -224,6 +225,9 @@
             <input type="radio" name="inset" value="" id="tab_4">
             <label for="tab_4">PDF и файлы</label>
 
+            <input type="radio" name="inset" value="" id="tab_5">
+            <label for="tab_5">Сервис Парсинга</label>
+
             <div id="txt_1">
                 <p>Установленный логотип</p>
                 <img src="{{ .Path_logo_company}}" alt="Лого">
@@ -252,9 +256,42 @@
                     </label>
                 </form>
             </div>
+
+            <div id="txt_3">
+                <img src="{{ .Path_banner_home}}" width="100" height="70" alt="Лого">
+            </div>
+
             <div id="txt_4">
                 <img src="{{ .Path_banner_home}}" width="100" height="70" alt="Лого">
             </div>
+
+
+            <div id="txt_5">
+                <p>Управление сервисом парсинга</p>
+                <!-- <img src="{{ .Path_banner_home}}" alt="banner"> -->
+
+                <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Перезагрузить и собрать все</button>
+                </form>
+
+                <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Перезагрузить и собрать КНИГИ</button>
+                </form>
+
+                <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Перезагрузить и собрать МЕБЕЛЬ</button>
+                </form>
+
+                <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Удалить собранное</button>
+                </form>
+
+                <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Остановить</button>
+                </form>
+
+            </div>
+
         </div>
 
 

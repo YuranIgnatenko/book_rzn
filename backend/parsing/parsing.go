@@ -21,15 +21,15 @@ type ParsingService struct {
 
 func NewParsingService(c config.Configuration, conn connector.Connector) *ParsingService {
 	lss := []models.ServiceScraper{
-		NewServiceProsv([]string{"http://shop.prosv.ru/katalog", "https://shop.prosv.ru/katalog?pagenumber=2"}, "prosv-book"),
-		NewServiceAgat([]string{"https://agatmk.ru/moduli-sistemyi-xraneniya-fresh#menustart"}, "school-boxing"),
-		NewServiceAgat([]string{"https://agatmk.ru/stolyi-rabochie-fresh#menustart"}, "school-fresh-table"),
-		NewServiceAgat([]string{"https://agatmk.ru/sistema-xraneniya#menustart"}, "school-fresh-boxing"),
-		NewServiceAgat([]string{"https://agatmk.ru/uchenicheskie-stolyi#menustart"}, "school-table"),
-		NewServiceAgat([]string{"https://agatmk.ru/uchenicheskie-stulya#menustart"}, "school-chair"),
-		NewServiceAgat([]string{"https://agatmk.ru/stolyi-rabochie-optima#menustart"}, "office-optima-table"),
-		NewServiceAgat([]string{"https://agatmk.ru/uchenicheskie-stulya#menustart"}, "office-optima-chair"),
-		NewServiceAgat([]string{"https://agatmk.ru/tumbyi-pod-dosku#menustart"}, "school-box-from-table"),
+		NewServiceProsv([]string{"http://shop.prosv.ru/katalog", "https://shop.prosv.ru/katalog?pagenumber=2"}, "book_prosv"),
+		NewServiceAgat([]string{"https://agatmk.ru/moduli-sistemyi-xraneniya-fresh#menustart"}, "new_basic"),
+		NewServiceAgat([]string{"https://agatmk.ru/stolyi-rabochie-fresh#menustart"}, "new_table"),
+		NewServiceAgat([]string{"https://agatmk.ru/sistema-xraneniya#menustart"}, "new_boxing"),
+		NewServiceAgat([]string{"https://agatmk.ru/uchenicheskie-stolyi#menustart"}, "sh_table"),
+		NewServiceAgat([]string{"https://agatmk.ru/uchenicheskie-stulya#menustart"}, "sh_chair"),
+		NewServiceAgat([]string{"https://agatmk.ru/stolyi-rabochie-optima#menustart"}, "office_table"),
+		NewServiceAgat([]string{"https://agatmk.ru/sistema-xraneniya-optima#menustart"}, "office_boxing"),
+		NewServiceAgat([]string{"https://agatmk.ru/tumbyi-pod-dosku#menustart"}, "sh_minitable"),
 	}
 
 	ps := ParsingService{

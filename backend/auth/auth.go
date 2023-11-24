@@ -44,12 +44,12 @@ func (a *Auth) SetCookieUser(w http.ResponseWriter, r *http.Request, token strin
 
 }
 
-func (a *Auth) GetCookieUser(w http.ResponseWriter, r *http.Request) bool {
+func (a *Auth) GetCookieClient(w http.ResponseWriter, r *http.Request) bool {
 	_, err := r.Cookie("token")
 	if err != nil {
 		return false
 	}
-	token := a.GetCookieToken(w, r)
+	token := a.GetCookieTokenValue(w, r)
 	if token == "" {
 		return false
 	}
@@ -57,7 +57,7 @@ func (a *Auth) GetCookieUser(w http.ResponseWriter, r *http.Request) bool {
 	if err != nil {
 		switch {
 		case errors.Is(err, http.ErrNoCookie):
-			http.Redirect(w, r, a.Ip+a.Split_ip_port+a.Port+"/404", http.StatusSeeOther)
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
 		default:
 			log.Println(err)
 			http.Error(w, "server error", http.StatusInternalServerError)
@@ -69,7 +69,7 @@ func (a *Auth) GetCookieUser(w http.ResponseWriter, r *http.Request) bool {
 
 }
 
-func (a *Auth) GetCookieToken(w http.ResponseWriter, r *http.Request) string {
+func (a *Auth) GetCookieTokenValue(w http.ResponseWriter, r *http.Request) string {
 	token, err := r.Cookie("token")
 	if err != nil {
 		switch {

@@ -27,13 +27,12 @@ func (m *Middleware) CookieAdmin(next http.Handler) http.HandlerFunc {
 	})
 }
 
-func (m *Middleware) CookieUser(next http.Handler) http.HandlerFunc {
+func (m *Middleware) CookieConfirm(next http.Handler) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		isFindCookie := m.GetCookieUser(w, r)
+		isFindCookie := m.GetCookieClient(w, r)
 		if isFindCookie == true {
 			next.ServeHTTP(w, r)
 		}
-
 	})
 }
 

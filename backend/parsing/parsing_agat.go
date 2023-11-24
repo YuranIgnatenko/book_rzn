@@ -48,7 +48,7 @@ func (sa *ServiceAgat) ScrapSource() []models.TargetCard {
 		c.OnHTML(".cats_list_container", func(e *colly.HTMLElement) {
 			e.ForEach(".product", func(_ int, el *colly.HTMLElement) {
 				dt := models.TargetCard{
-					Autor:  "NO Autor",
+					Autor:  "-",
 					Title:  el.ChildText(".goods_list_name"),
 					Price:  "NO price",
 					Link:   "https://agatmk.ru" + el.ChildAttr("img", "src"),

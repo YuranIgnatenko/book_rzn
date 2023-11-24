@@ -13,17 +13,14 @@ func NewConnectorTargets() *ConnectorTargets {
 }
 
 func (conn *Connector) SaveParsingService(tc models.TargetCard) {
-
-	// db, err := sql.Open("mysql", conn.dsn())
-	// if err != nil {
-	// 	fmt.Printf("Error %s when opening DB\n", err)
-	// }
-	// conn.Db = db
+	// fmt.Println(`(autor,title,price,image,comment,url_source,target_type)`)
+	// fmt.Println(tc.Autor, tc.Title, tc.Price, tc.Link, "comment desk", tc.Source, tc.Tag)
+	// fmt.Println()
 
 	rows, err := conn.Db.Query(
-		fmt.Sprintf(`INSERT bookrzn.Targets (target_hash,autor,title,price,image,comment) 
-		VALUES ( '%v','%v','%v', '%v','%v','%v');`,
-			tc.Id, tc.Autor, tc.Title, tc.Price, tc.Link, "comment desk")) //,
+		fmt.Sprintf(`INSERT bookrzn.Targets (target_hash,autor,title,price,image,comment,url_source,target_type) 
+		VALUES ( '%v','%v','%v', '%v','%v','%v','%v', '%v');`,
+			tc.Id, tc.Autor, tc.Title, tc.Price, tc.Link, "comment desk", tc.Source, tc.Tag)) //,
 	if err != nil {
 		panic(err)
 	}
@@ -33,26 +30,6 @@ func (conn *Connector) SaveParsingService(tc models.TargetCard) {
 
 }
 
-func (conn *Connector) SaveTargetTargets(targethash, autor, title, price, image string) {
-
-	// db, err := sql.Open("mysql", conn.dsn())
-	// if err != nil {
-	// 	fmt.Printf("Error %s when opening DB\n", err)
-	// }
-	// conn.Db = db
-
-	rows, err := conn.Db.Query(
-		fmt.Sprintf(`INSERT bookrzn.Targets (target_hash,autor,title,price,image,comment) 
-		VALUES ( '%v','%v','%v', '%v','%v','%v');`,
-			targethash, autor, title, price, image, "comment desk")) //,
-	if err != nil {
-		panic(err)
-	}
-	//
-	// обязательно иначе привысит лимит подключений и будет сбой
-	defer rows.Close()
-
-}
 
 func (conn *Connector) GetListTargets() []models.TargetCard {
 
@@ -75,6 +52,8 @@ func (conn *Connector) GetListTargets() []models.TargetCard {
 			&card.Price,
 			&card.Link,
 			&card.Comment,
+			&card.Source,
+			&card.Tag,
 		)
 
 		if err != nil {

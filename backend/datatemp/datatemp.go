@@ -24,48 +24,137 @@ type DataTemp struct {
 func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 	return &DataTemp{
 		Configuration:   c,
-		TargetCards:     ps,
+		TargetAll:       ps,
 		IsLogin:         false,
 		NameLogin:       "Гость",
 		NumberFastOrder: "",
 		PageMenuTemplHtml: `
-		<style>
-                        .nav-bar-btn {
-                            float: left;
-                        }
+        <style>
+        * {
+            box-sizing: border-box;
+        }
 
-                        .btn {
-                            background-color: #fca783;
-                            border-radius: 5px;
-                            border: 0;
-                            margin: 5px;
+        body {
+            margin: 0;
+            background: #f2f2f2;
+        }
 
-                        }
+        header {
+            background: white;
+            text-align: center;
+        }
 
-                        .btn:hover {
-                            background-color: #e18057;
-                        }
-                    </style>
-                    <div class="nav-bar">
+        header a {
+            text-decoration: none;
+            outline: none;
+            display: block;
+            transition: .3s ease-in-out;
+        }
 
-                        <div class="nav-bar-btn">
-                            <form action="/home">
-                                <input class="btn" type="submit" value="Главная" />
-                            </form>
-                        </div>
+        nav {
+            display: table;
+            margin: 0 auto;
+        }
 
-                        <div class="nav-bar-btn">
-                            <form action="/for_school">
-                                <input class="btn" type="submit" value="Для школы" />
-                            </form>
-                        </div>
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
 
-                        <div class="nav-bar-btn">
-                            <form action="for_office">
-                                <input class="btn" type="submit" value="Для офиса" />
-                            </form>
-                        </div>
-                    </div>
+        .topmenu:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .topmenu {
+            width: 100%;
+        }
+
+        .topmenu>li {
+            width: 15%;
+            float: left;
+            position: relative;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .topmenu>li>a {
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: bold;
+            color: #404040;
+            padding: 15px 30px;
+        }
+
+        .topmenu li a:hover {
+            color: #e66464;
+        }
+
+        .submenu-link:after {
+            content: "\f107";
+            font-family: "FontAwesome";
+            color: inherit;
+            margin-left: 10px;
+        }
+
+        .submenu {
+            background: #273037;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            z-index: 5;
+            width: 180px;
+            opacity: 0;
+            transform: scaleY(0);
+            transform-origin: 0 0;
+            transition: .2s ease-in-out;
+        }
+
+        .submenu a {
+            color: white;
+            text-align: left;
+            padding: 12px 15px;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .submenu li:last-child a {
+            border-bottom: none;
+        }
+
+        .topmenu>li:hover .submenu {
+            opacity: 1;
+            transform: scaleY(1);
+        }
+    </style>
+
+		            <nav>
+                        <ul class="topmenu">
+                            <li><a href="/home">Главная</a></li>
+                            <li><a href="" class="submenu-link">Новинки</a>
+                                <ul class="submenu">
+                                    <li><a href="/new_basic">Базовые модули</a></li>
+                                    <li><a href="/new_table">Рабочие столы</a></li>
+                                    <li><a href="/new_boxing">Системы хранения</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="" class="submenu-link">Школы</a>
+                                <ul class="submenu">
+                                    <li><a href="/sh_table">Рабочие столы</a></li>
+                                    <li><a href="/sh_chair">Рабочие стулья</a></li>
+                                    <li><a href="/sh_minitable">Тумба под доску</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="" class="submenu-link">Офисы</a>
+                                <ul class="submenu">
+                                    <li><a href="/office_table">Рабочие столы</a></li>
+                                    <li><a href="/office_boxing">Системы хранения</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/book_prosv">Книги</a></li>
+                        </ul>
+                    </nav>
 		`,
 	}
 }
@@ -73,11 +162,12 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 func (dt *DataTemp) FilterCards(data []models.TargetCard, mode string) []models.TargetCard {
 	segm := make([]models.TargetCard, 0)
 
-	for _, tc := range dt.TargetCards {
-		fmt.Println(tc.Tag)
+	for _, tc := range data {
+		// fmt.Println(tc.Tag, "?==?", mode)
 		if mode == tc.Tag {
 			segm = append(segm, tc)
 		}
 	}
+	fmt.Println(len(segm), "segm len")
 	return segm
 }
