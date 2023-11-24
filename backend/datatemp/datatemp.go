@@ -3,7 +3,7 @@ package datatemp
 import (
 	"backend/config"
 	"backend/models"
-	"fmt"
+	"strings"
 )
 
 type DataTemp struct {
@@ -168,6 +168,21 @@ func (dt *DataTemp) FilterCards(data []models.TargetCard, mode string) []models.
 			segm = append(segm, tc)
 		}
 	}
-	fmt.Println(len(segm), "segm len")
+	return segm
+}
+
+func (dt *DataTemp) FilterSearch(data []models.TargetCard, sub string) []models.TargetCard {
+	segm := make([]models.TargetCard, 0)
+
+	cvt := func(sub1, sub2 string) (string, string) {
+		return strings.ToLower(sub1), strings.ToLower(sub2)
+	}
+
+	for _, tc := range data {
+		if strings.Contains(cvt(tc.Autor, sub)) || strings.Contains(cvt(tc.Price, sub)) ||
+			strings.Contains(cvt(tc.Title, sub)) || strings.Contains(cvt(tc.Source, sub)) {
+			segm = append(segm, tc)
+		}
+	}
 	return segm
 }

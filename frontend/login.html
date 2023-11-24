@@ -83,8 +83,8 @@
                         <a href="tel:{{ .Phone}}">{{ .Phone}}</a>                     </div>
 
                     <div class="login_or_reg">
-                        <a href="/login">Вход</a> / <a
-                            href="/registration">Регистрация</a>
+                        <a href="/login">Вход</a> 
+                        <a href="/registration">Регистрация</a>
                     </div>
                 </div>
             </div>
@@ -101,12 +101,13 @@
                         <div class="slogan">{{ .Location_office}}</div>
                     </div>
                     <div class="search_form">
-                        <!-- FART ORDER 
-                        <form action="/fast_order">
-                            <button style="width: 100%;" type="submit">Быстрая заявка-заказ*</button>
+                                                <!-- FART ORDER  -->
+
+                        <form action="/fast_mail">
+                            <button style="width: 100%;" type="submit">Написать письмо*</button>
                         </form>
 
-                        <br> -->
+                        <br>
 
                         <form method="GET" action="/search">
                             <input type="text" name="search" id="search" required="required" placeholder="Найти товар"

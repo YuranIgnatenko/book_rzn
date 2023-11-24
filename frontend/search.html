@@ -44,6 +44,10 @@
             --mainContrastSchemeColor-lighten10: #ffa87f;
             --mainContrastSchemeColor-lighten20: #ffb289;
         }
+
+        /* .more{
+            background-color: #333;
+        } */
     </style>
 
     <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/base/style.css?ver=1691644398" rel="stylesheet"
@@ -84,12 +88,12 @@
 
                     <div class="login_or_reg">
                         {{if .IsLogin}}
-                            <a href="/home">Пользователь:{{ .NameLogin }}</a>
-                            <br>
-                            <a href="/logout">Выход</a>
+                        <a href="/home">Пользователь:{{ .NameLogin }}</a>
+                        <br>
+                        <a href="/logout">Выход</a>
                         {{else}}
-                        <a href="/login">Вход</a> / <a
-                            href="/registration">Регистрация</a>
+                        <a href="/login">Вход</a>
+                        <a href="/registration">Регистрация</a>
                         {{end}}
                     </div>
                 </div>
@@ -107,12 +111,13 @@
                         <div class="slogan">{{ .Location_office}}</div>
                     </div>
                     <div class="search_form">
-                        <!-- FART ORDER 
-                        <form action="/fast_order">
-                            <button style="width: 100%;" type="submit">Быстрая заявка-заказ*</button>
+                        <!-- FART ORDER  -->
+
+                        <form action="/fast_mail">
+                            <button style="width: 100%;" type="submit">Написать письмо*</button>
                         </form>
 
-                        <br> -->
+                        <br>
 
                         <form method="GET" action="/search">
                             <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
@@ -140,21 +145,14 @@
                             </a>
                         </div>
                         {{end}}
- 
-                        <!-- <div class="basket bars" title="Корзина товаров">
-                            <a href="/favorites">
-                                <i data-feather="shopping-bag"></i>
-                                <span>Корзина</span>
-                            </a>
-                        </div> -->
- 
+
+
                     </div>
                 </div>
             </div>
 
             <div class="header-bottom">
                 <div class="inner">
-                     
                     {{ .PageMenuTemplHtml }}
                 </div>
             </div>
@@ -168,16 +166,16 @@
                     <div class="items_wrapper">
                          
 
-                        <h2 class="shop-title">Поиск</h2>
+                        <h2 class="shop-title">Поиск по запросу</h2>
 
                         <div class="items">
 
-                            {{ range .SearchTarget }}
+                            {{ range .TargetCards }}
                             <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
 
                                 <div class="image">
                                     <div class="bg_dark"></div>
-                                    <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="0" width="250px"
+                                    <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="0" height="300px" width="250px"
                                         height="250px" loading="lazy" />
                                     <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="1" style="display: none;"
                                         width="250px" height="250px" />
@@ -194,7 +192,8 @@
                                     </div>
                                     <div>
                                         <a class="more"
-                                        href="/add_favorites/{{ .Autor }}{{ .Title }}{{ .Price }}{{ .Link }}">В корзину</a>
+                                            href="/add_favorites/{{ .Autor }}{{ .Title }}{{ .Price }}{{ .Link }}">В
+                                            корзину</a>
                                     </div>
                                 </div>
                             </div>
@@ -222,6 +221,14 @@
                     </div>
                     <div class="copyright">&copy;
                         {{ .Copyright}}</div>
+                    <!-- <a class="policy" href="http://new15942715563356.myaddshop.ru/politika-konfidencialnosti/">Политика
+                        конфиденциальности</a>
+                    <a class="user_agreement_link"
+                        href="http://new15942715563356.myaddshop.ru/soglasie-na-obrabotku-personalnyh-dannyh/">Согласие
+                        на обработку персональных данных</a>
+                    <div class="footer_site_info">
+                        <p>Используя данный сайт, вы автоматически принимаете условия пользовательского соглашения и
+                            соглашаетесь с политикой конфиденциальности.</p> -->
                 </div>
             </div>
 
@@ -229,16 +236,16 @@
             <div class="social">
                 <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
                 <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
-                <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
+                <!-- <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
                 <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
-                <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a>
+                <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a> -->
             </div>
 
         </div>
         </div>
         </div>
     </footer>
-    <script src="../../code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="../../code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
     <script>$(function () { feather.replace(); });</script>
     <script src="http://new15942715563356.myaddshop.ru/js/swiper-min.js" type="text/javascript" type="module"></script>
@@ -248,7 +255,7 @@
         href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" />
     <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" />
     <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" />
-
+ -->
 
 </body>
 

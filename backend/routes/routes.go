@@ -424,9 +424,40 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		tmpl.Execute(w, rout.DataTemp)
+
 	case "sh_minitable":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_minitable")
 		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "sh_minitable.html")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		tmpl.Execute(w, rout.DataTemp)
+
+	case "search":
+		sub := r.FormValue("search")
+		rout.DataTemp.TargetCards = rout.FilterSearch(rout.DataTemp.TargetAll, sub)
+		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "search.html")
+		tmpl.Execute(w, rout.DataTemp)
+
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_minitable")
+		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "sh_minitable.html")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		tmpl.Execute(w, rout.DataTemp)
+
+	case "fast_mail":
+		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "fast_mail.html")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		tmpl.Execute(w, rout.DataTemp)
+
+	case "fast_mail_receive":
+		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -442,20 +473,36 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		}
 		tmpl.Execute(w, rout.DataTemp)
 
+	case "login":
+		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "login.html")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		tmpl.Execute(w, rout.DataTemp)
+
+	case "registration":
+		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "registration.html")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		tmpl.Execute(w, rout.DataTemp)
+
 	default:
 		fmt.Println("error : DEFAULT CASE::[", url, "]")
 		// http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
 	}
 }
 
-func (rout *Rout) OpenHtmlTargetCards(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "targetcards.html")
-	tmpl.Execute(w, rout.DataTemp)
-}
+// func (rout *Rout) OpenHtmlTargetCards(w http.ResponseWriter, r *http.Request) {
+// 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "targetcards.html")
+// 	tmpl.Execute(w, rout.DataTemp)
+// }
 
-func (rout *Rout) OpenHtmlForSchool(w http.ResponseWriter, r *http.Request) {
-	rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetCards, "prosv-book")
-	fmt.Println(len(rout.DataTemp.TargetCards))
-	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "for_school.html")
-	tmpl.Execute(w, rout.DataTemp)
-}
+// func (rout *Rout) OpenHtmlForSchool(w http.ResponseWriter, r *http.Request) {
+// 	rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetCards, "prosv-book")
+// 	fmt.Println(len(rout.DataTemp.TargetCards))
+// 	tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "for_school.html")
+// 	tmpl.Execute(w, rout.DataTemp)
+// }
