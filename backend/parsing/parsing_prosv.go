@@ -24,6 +24,7 @@ func NewServiceProsv(links []string, tagname string) *ServiceProsv {
 
 func (ps *ServiceProsv) ScrapSource() []models.TargetCard {
 	c := colly.NewCollector()
+	// colly.UserAgent("xy")
 	dts := make([]models.TargetCard, 0)
 
 	for _, link := range ps.LinksVisit {

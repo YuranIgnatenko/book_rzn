@@ -329,9 +329,8 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	// 	data = strings.ReplaceAll(data, ":/", "://")
 	// 	data = strings.ReplaceAll(data, `"`, "")
 	// 	target_hash := strings.ReplaceAll(data, "/add_favorites/", "")
-	// rout.SaveTargetFavorites(token.Value, string(target_hash))
-
-	// 	http.Redirect(w, r, "/prosv", http.StatusPermanentRedirect)
+	// 	rout.SaveTargetFavorites(tokenValue, string(target_hash))
+	// 	http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
 
 	// case "delete_favorites":
 	// 	data := r.URL.Path
@@ -345,154 +344,122 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	// case "add_orders":
 	// case "delete_orders":
 
+	case "orders":
+		// rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "book_prosv")
+		rout.SetHTML(w, "orders.html")
+
+	case "favorites":
+		// rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "book_prosv")
+		rout.SetHTML(w, "favorites.html")
+
 	case "home":
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "home.html")
 
 	case "book_prosv":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "book_prosv")
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "book_prosv.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "book_prosv.html")
 
 	case "sh_table":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_table")
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "sh_table.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "sh_table.html")
 
 	case "sh_chair":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_chair")
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "sh_chair.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "sh_chair.html")
 
 	case "office_table":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "office_table")
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "office_table.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "office_table.html")
 
 	case "office_boxing":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "office_boxing")
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "office_boxing.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "office_boxing.html")
 
 	case "new_basic":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_basic")
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "new_basic.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "new_basic.html")
 
 	case "new_table":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_table")
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "new_table.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "new_table.html")
 
 	case "new_boxing":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_boxing")
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "new_boxing.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "new_boxing.html")
 
 	case "sh_minitable":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_minitable")
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "sh_minitable.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "sh_minitable.html")
 
 	case "search":
 		sub := r.FormValue("search")
 		rout.DataTemp.TargetCards = rout.FilterSearch(rout.DataTemp.TargetAll, sub)
-		tmpl, _ := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "search.html")
-		tmpl.Execute(w, rout.DataTemp)
-
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_minitable")
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "sh_minitable.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "search.html")
 
 	case "fast_mail":
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "fast_mail.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "fast_mail.html")
 
 	case "fast_mail_receive":
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "home.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "home.html")
 
 	case "cms":
-		rout.DataTemp.TargetCards = rout.DataTemp.TargetAll
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "cms.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "cms.html")
 
 	case "login":
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "login.html")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		tmpl.Execute(w, rout.DataTemp)
+		rout.SetHTML(w, "login.html")
 
 	case "registration":
-		tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + "registration.html")
-		if err != nil {
-			fmt.Println(err)
+		rout.SetHTML(w, "registration.html")
+
+	case "validation_login":
+		login := r.FormValue("login")
+		password := r.FormValue("password")
+
+		token, access := rout.VerifyLogin(login, password)
+		res := rout.Auth.GetCookieClient(w, r)
+		rout.DataTemp.IsLogin = res
+		rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
+		switch access {
+		case "admin":
+			rout.DataTemp.IsLogin = true
+			rout.Connector.ReSaveCookieDB(login, password, token)
+			rout.Auth.SetCookieAdmin(w, r, token)
+
+			http.Redirect(w, r, "/cms", http.StatusPermanentRedirect)
+			return
+		case "user":
+			rout.DataTemp.IsLogin = true
+			rout.Connector.ReSaveCookieDB(login, password, token)
+			rout.Auth.SetCookieUser(w, r, token)
+
+			http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
+			return
+		default:
+
+			rout.DataTemp.IsLogin = false
+			http.Redirect(w, r, "/404", http.StatusPermanentRedirect)
 			return
 		}
-		tmpl.Execute(w, rout.DataTemp)
+
+	case "404":
+		rout.SetHTML(w, "404.html")
+
+	case "logout":
+		rout.SetHTML(w, "logout.html")
 
 	default:
 		fmt.Println("error : DEFAULT CASE::[", url, "]")
 		// http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
 	}
+}
+
+func (rout *Rout) SetHTML(w http.ResponseWriter, filename string) {
+	tmpl, err := template.ParseFiles(rout.DataTemp.Path_prefix + rout.DataTemp.Path_frontend + filename)
+	if err != nil {
+		panic(err)
+	}
+	tmpl.Execute(w, rout.DataTemp)
 }
 
 // func (rout *Rout) OpenHtmlTargetCards(w http.ResponseWriter, r *http.Request) {

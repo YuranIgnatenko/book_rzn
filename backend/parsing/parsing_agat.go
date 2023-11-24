@@ -47,10 +47,19 @@ func (sa *ServiceAgat) ScrapSource() []models.TargetCard {
 	for _, link := range sa.LinksVisit {
 		c.OnHTML(".cats_list_container", func(e *colly.HTMLElement) {
 			e.ForEach(".product", func(_ int, el *colly.HTMLElement) {
+				price := strings.Split(el.Text, "Цена")[1]
+				price = strings.Split(price, ":")[1]
+				price = strings.Split(price, ".")[0]
+				price = strings.TrimSpace(price)
+
+				if strings.Contains(price, "0 руб") || strings.Contains(price, "по запросу") {
+					return
+				}
+
 				dt := models.TargetCard{
 					Autor:  "-",
 					Title:  el.ChildText(".goods_list_name"),
-					Price:  "NO price",
+					Price:  price,
 					Link:   "https://agatmk.ru" + el.ChildAttr("img", "src"),
 					Source: sa.SourceType,
 					Tag:    sa.TagName,
