@@ -50,7 +50,7 @@ func (a *Auth) GetCookieClient(w http.ResponseWriter, r *http.Request) bool {
 		return false
 	}
 	token := a.GetCookieTokenValue(w, r)
-	if token == "" {
+	if token == "" || token == "0" {
 		return false
 	}
 
@@ -86,7 +86,7 @@ func (a *Auth) GetCookieTokenValue(w http.ResponseWriter, r *http.Request) strin
 
 func (a *Auth) DeleteCookie(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
-		Name:     "Token",
+		Name:     "token",
 		Value:    "0",
 		Path:     "/",
 		HttpOnly: true,

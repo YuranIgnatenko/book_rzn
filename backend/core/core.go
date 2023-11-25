@@ -28,7 +28,7 @@ func (c *Core) SetHandlers() {
 	// http.HandleFunc("/fast_order", c.OpenHtmlFastOrder)
 	// http.HandleFunc("/fast_order_save", c.OpenHtmlFastOrderSave)
 	// http.HandleFunc("/home", c.OpenHtmlHome)
-	// http.HandleFunc("/logout", c.CookieUser(http.HandlerFunc(c.OpenHtmlLogout)))
+	// http.HandleFunc("/out", c.CookieUser(http.HandlerFunc(c.OpenHtmlout)))
 	// http.HandleFunc("/login", c.OpenHtmlLogin)
 	// http.HandleFunc("/registration", c.OpenHtmlRegistry)
 	// http.HandleFunc("/cms", c.CookieAdmin(http.HandlerFunc(c.OpenHtmlCms)))

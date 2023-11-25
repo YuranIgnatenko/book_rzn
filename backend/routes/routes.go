@@ -108,7 +108,7 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 
 // }
 
-// func (rout *Rout) OpenHtmlLogout(w http.ResponseWriter, r *http.Request) {
+// func (rout *Rout) OpenHtmlout(w http.ResponseWriter, r *http.Request) {
 // 	rout.DataTemp.IsLogin = false
 // 	rout.DataTemp.NameLogin = "Гость"
 // 	rout.DeleteCookie(w, r)
@@ -318,7 +318,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		url = url[1:]
 	}
 
-	fmt.Println(url, len(url))
+	// fmt.Println(url, len(url))
 
 	switch url[0] {
 
@@ -418,6 +418,9 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.SetHTML(w, "cms.html")
 
 	case "login":
+		rout.DataTemp.IsLogin = false
+		rout.DataTemp.NameLogin = ""
+		rout.DeleteCookie(w, r)
 		rout.SetHTML(w, "login.html")
 
 	case "registration":
@@ -457,13 +460,15 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "404":
 		rout.SetHTML(w, "404.html")
 
-	case "logout":
+	case "out":
+
 		// rout.DeleteCookie(w, r)
-		fmt.Println("logoutttеееееееееееtttttttt")
+		fmt.Println("outttеееееееееееtttttttt")
 		rout.DataTemp.IsLogin = false
+		rout.DataTemp.NameLogin = ""
 		rout.DeleteCookie(w, r)
-		// http.Redirect(w, r, "/login", http.StatusPermanentRedirect)
-		// rout.SetHTML(w, "logout.html")
+		http.Redirect(w, r, "/login", http.StatusPermanentRedirect)
+		// rout.SetHTML(w, "login.html")
 
 	default:
 		fmt.Println("error : DEFAULT CASE::[", url, "]")
