@@ -183,26 +183,26 @@
                     <table border="1" width="100%" style="background-color: cadetblue;">
                         <caption>Список заказов</caption>
                         <tr style="background-color: #ffb289;">
-                          <th>Номер заказа</th>
+                          <th>Наименование</th>
                           <th>Дата создания</th>                          
                           <th>Примечание</th>
-                          <th>Количество именований</th>
+                          <th>Количество</th>
                           <!-- <th>Количество всех позиций</th> -->
                           <th>Стоимость</th>
                           <th>Перейти</th>
                         </tr>
                         </font>
 
-                        {{ range .OrdersRows }}
+                        {{ range .TargetCards }}
                         <font-size=”10″ face=”Calibri” >
                         <tr>
-                          <td>{{  .Id}} </td>
+                          <td>{{ .Title}} </td>
                           <td>12.09.2023</td>
-                          <td>{{ .Comment }}</td>
-                          <td>{{ .CountTargets }}</td>
-                          <!-- <td>200</td> -->
-                          <td>{{ .Price }}</td>
-                          <td style="background-color: chartreuse;"><a href="/edit_orders/{{.Link}}">редакт.</a></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td style="background-color: chartreuse;"><a href="/edit_orders/{{.TargetHash}}">редакт.</a></td>
                         </tr>
                         {{ end }}
                         

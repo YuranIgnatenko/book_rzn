@@ -4,10 +4,12 @@ package parsing
 
 import (
 	"backend/models"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gocolly/colly/v2"
 )
@@ -64,9 +66,12 @@ func (sa *ServiceAgat) ScrapSource() []models.TargetCard {
 					Source: sa.SourceType,
 					Tag:    sa.TagName,
 				}
+
 				dt.Title = strings.ReplaceAll(dt.Title, `"`, "")
-				dt.Id = dt.Title + dt.Link
-				dt.TargetHash = dt.Id
+				dt.Id = dt.Autor + dt.Title + dt.Price + "https://agatmk.ru" + el.ChildAttr("img", "src")
+
+				dt.TargetHash = fmt.Sprintf("%v", time.Now().UnixNano())
+
 				dts = append(dts, dt)
 			})
 		})

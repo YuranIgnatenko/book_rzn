@@ -133,13 +133,34 @@ func (conn *Connector) ReSaveCookieDB(login, password, token string) {
 	defer rows.Close()
 }
 
-func (conn *Connector) GetListFavorites(token string) []models.FavoritesCards {
-	db, err := sql.Open("mysql", conn.dsn())
+func (conn *Connector) GetListOrders(token string) []models.TargetCard {
+	list := make([]string, 0)
+	temp := ""
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT target_hash FROM bookrzn.Orders WHERE token='%s';`, token)) //,
 	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-
+		panic(err)
 	}
-	conn.Db = db
+	defer rows.Close()
+
+	for rows.Next() {
+		rows.Scan(&temp)
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		list = append(list, temp)
+	}
+
+	tc_all := make([]models.TargetCard, 0)
+	for _, hash := range list {
+		tc_all = append(tc_all, conn.GetTarget(hash))
+	}
+
+	return tc_all
+}
+
+func (conn *Connector) GetListFavorites(token string) []models.TargetCard {
 
 	list_targets_hash := []string{}
 
@@ -150,7 +171,7 @@ func (conn *Connector) GetListFavorites(token string) []models.FavoritesCards {
 
 	defer rows.Close()
 
-	var favcards []models.FavoritesCards
+	var favcards []models.TargetCard
 	for rows.Next() {
 		var target_hash string
 		rows.Scan(&target_hash)
@@ -169,7 +190,7 @@ func (conn *Connector) GetListFavorites(token string) []models.FavoritesCards {
 		}
 
 		for rows.Next() {
-			card := models.FavoritesCards{}
+			card := models.TargetCard{}
 			err := rows.Scan(
 				&card.Id,
 				&card.TargetHash,
@@ -178,6 +199,8 @@ func (conn *Connector) GetListFavorites(token string) []models.FavoritesCards {
 				&card.Price,
 				&card.Link,
 				&card.Comment,
+				&card.Tag,
+				&card.Source,
 			)
 
 			if err != nil {
@@ -187,6 +210,8 @@ func (conn *Connector) GetListFavorites(token string) []models.FavoritesCards {
 			favcards = append(favcards, card)
 		}
 	}
+	fmt.Println(len(favcards), "favcard")
+
 	return favcards
 }
 
@@ -348,39 +373,23 @@ func (conn *Connector) GetFastOrderList() []models.DataFastOrderOne {
 	return dt
 }
 
-func (conn *Connector) SaveTargetFastOrders(data models.DataFastOrder) {
+func (conn *Connector) SaveTargetOrders(token, target_hash, count string) {
 	var rows *sql.Rows
 	var err error
 
-	db, err := sql.Open("mysql", conn.dsn())
+	rows, err = conn.Db.Query(
+		fmt.Sprintf(`INSERT bookrzn.Orders (token, target_hash, count) 
+		VALUES ( '%s','%s','%s');`,
+			token, target_hash, count))
 	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
+		panic(err)
 	}
-	conn.Db = db
-
-	for i, target := range data.ArrTarget {
-		fmt.Println(i, target, data.ArrTargetCount)
-		count := data.ArrTargetCount[i]
-		rows, err = conn.Db.Query(
-			fmt.Sprintf(`INSERT bookrzn.FastOrders (token,name,phone,email,target,count) 
-		VALUES ( '%s','%s','%s','%s', '%s', '%s');`,
-				data.NumberFastOrder, data.Name, data.Phone, data.Email, target, count)) //,
-		if err != nil {
-			panic(err)
-		}
-	}
-
 	// обязательно иначе привысит лимит подключений и будет сбой
 	defer rows.Close()
 }
 
 func (conn *Connector) SaveTargetFavorites(token, targethash string) {
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-	}
-	conn.Db = db
-
+	fmt.Println("save fav cards:", token, targethash)
 	// namedb := "bookrzn.Favorites"
 	rows, err := conn.Db.Query(
 		fmt.Sprintf(`INSERT bookrzn.Favorites (token,target_hash,count) 
@@ -396,11 +405,6 @@ func (conn *Connector) SaveTargetFavorites(token, targethash string) {
 }
 
 func (conn *Connector) DeleteTargetFavorites(token, targethash string) error {
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-	}
-	conn.Db = db
 
 	rows, err := conn.Db.Query(
 		fmt.Sprintf(`DELETE FROM bookrzn.Favorites

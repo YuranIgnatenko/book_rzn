@@ -2,7 +2,9 @@ package parsing
 
 import (
 	"backend/models"
+	"fmt"
 	"strings"
+	"time"
 
 	"github.com/gocolly/colly/v2"
 )
@@ -31,17 +33,17 @@ func (ps *ServiceProsv) ScrapSource() []models.TargetCard {
 		c.OnHTML(".item-grid", func(e *colly.HTMLElement) {
 			e.ForEach(".item-box", func(_ int, el *colly.HTMLElement) {
 				dt := models.TargetCard{
-					Autor: el.ChildText(".autor"),
-					Title: el.ChildText(".product-title"),
-					Price: el.ChildText(".prices"),
-					Link:  el.ChildAttr("img", "src"),
+					Autor:  el.ChildText(".autor"),
+					Title:  el.ChildText(".product-title"),
+					Price:  el.ChildText(".prices"),
+					Link:   el.ChildAttr("img", "src"),
 					Source: ps.SourceType,
-					Tag: ps.TagName,
+					Tag:    ps.TagName,
 				}
 				dt.Title = strings.ReplaceAll(dt.Title, `"`, "")
 
 				dt.Id = dt.Autor + dt.Title + dt.Price + el.ChildAttr("img", "src")
-				dt.TargetHash = dt.Id
+				dt.TargetHash = fmt.Sprintf("%v",time.Now().UnixNano())
 
 				dts = append(dts, dt)
 			})

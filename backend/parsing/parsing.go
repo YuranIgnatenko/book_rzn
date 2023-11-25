@@ -19,6 +19,8 @@ type ParsingService struct {
 	connector.Connector
 }
 
+// time.Now().UnixNano()
+
 func NewParsingService(c config.Configuration, conn connector.Connector) *ParsingService {
 	lss := []models.ServiceScraper{
 		NewServiceProsv([]string{"http://shop.prosv.ru/katalog", "https://shop.prosv.ru/katalog?pagenumber=2"}, "book_prosv"),

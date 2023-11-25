@@ -54,7 +54,8 @@
         #tab_2:checked~#txt_2,
         #tab_3:checked~#txt_3,
         #tab_4:checked~#txt_4,
-        #tab_4:checked~#txt_5 {
+        #tab_5:checked~#txt_5, 
+        #tab_6:checked~#txt_6 {
             display: block;
         } 
     </style>
@@ -228,6 +229,9 @@
             <input type="radio" name="inset" value="" id="tab_5">
             <label for="tab_5">Сервис Парсинга</label>
 
+            <input type="radio" name="inset" value="" id="tab_6">
+            <label for="tab_6">Управление аккаунтами</label>
+
             <div id="txt_1">
                 <p>Установленный логотип</p>
                 <img src="{{ .Path_logo_company}}" alt="Лого">
@@ -271,7 +275,7 @@
                 <!-- <img src="{{ .Path_banner_home}}" alt="banner"> -->
 
                 <form method="post" action="/cms_parsing_restart">                   
-                    <button type="submit" value="">Перезагрузить и собрать все</button>
+                    <button type="submit" value="">Перезагрузить и собрать ВСЕ</button>
                 </form>
 
                 <form method="post" action="/cms_parsing_restart">                   
@@ -287,10 +291,46 @@
                 </form>
 
                 <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Убрать дубликаты</button>
+                </form>
+
+                <form method="post" action="/cms_parsing_restart">                   
                     <button type="submit" value="">Остановить</button>
                 </form>
 
             </div>
+
+
+            <div id="txt_6">
+                <p>Управление Аккаунтами</p>
+                <!-- <img src="{{ .Path_banner_home}}" alt="banner"> -->
+
+                <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Перезагрузить и собрать ВСЕ</button>
+                </form>
+
+                <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Перезагрузить и собрать КНИГИ</button>
+                </form>
+
+                <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Перезагрузить и собрать МЕБЕЛЬ</button>
+                </form>
+
+                <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Удалить собранное</button>
+                </form>
+
+                <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Убрать дубликаты</button>
+                </form>
+
+                <form method="post" action="/cms_parsing_restart">                   
+                    <button type="submit" value="">Остановить</button>
+                </form>
+
+            </div>
+
 
         </div>
 

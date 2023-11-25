@@ -190,10 +190,14 @@
                                     <div class="item_price_big">
                                         <span class="new">{{ .Price }}</span>
                                     </div>
+                                   
                                     <div>
                                         <a class="more"
-                                            href="/add_favorites/{{ .Autor }}{{ .Title }}{{ .Price }}{{ .Link }}">В
-                                            корзину</a>
+                                            href="/add_orders/{{ .TargetHash }}">В корзину</a>
+                                    </div>
+                                    <div>
+                                        <a class="more"
+                                        href="/add_orders/{{ .TargetHash }}">Заказать</a>
                                     </div>
                                 </div>
                             </div>

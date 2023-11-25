@@ -324,32 +324,44 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	// case "for_school":
 
-	// case "add_favorites":
-	// 	data := r.URL.Path
-	// 	data = strings.ReplaceAll(data, ":/", "://")
-	// 	data = strings.ReplaceAll(data, `"`, "")
-	// 	target_hash := strings.ReplaceAll(data, "/add_favorites/", "")
-	// 	rout.SaveTargetFavorites(tokenValue, string(target_hash))
-	// 	http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
+	case "add_favorites":
+		data := r.URL.Path
+		data = strings.ReplaceAll(data, ":/", "://")
+		data = strings.ReplaceAll(data, `"`, "")
+		target_hash := strings.ReplaceAll(data, "/add_favorites/", "")
+		rout.SaveTargetFavorites(tokenValue, string(target_hash))
+		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
+		fmt.Println("add favorites")
 
-	// case "delete_favorites":
-	// 	data := r.URL.Path
-	// 	data = strings.ReplaceAll(data, ":/", "://")
-	// 	data = strings.ReplaceAll(data, `"`, "")
-	// 	target_hash := strings.ReplaceAll(data, "/delete_favorites/", "")
-	// 	rout.DeleteTargetFavorites(token.Value, string(target_hash))
+	case "delete_favorites":
+		data := r.URL.Path
+		data = strings.ReplaceAll(data, ":/", "://")
+		data = strings.ReplaceAll(data, `"`, "")
+		target_hash := strings.ReplaceAll(data, "/delete_favorites/", "")
+		rout.DeleteTargetFavorites(tokenValue, string(target_hash))
 
-	// 	http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
+		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
-	// case "add_orders":
-	// case "delete_orders":
+	case "add_orders":
+		data := r.URL.Path
+		data = strings.ReplaceAll(data, ":/", "://")
+		data = strings.ReplaceAll(data, `"`, "")
+		target_hash := strings.ReplaceAll(data, "/add_orders/", "")
+
+		count := "1"
+		rout.SaveTargetOrders(tokenValue, string(target_hash), count)
+		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
+
+		// case "delete_orders":
 
 	case "orders":
-		// rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "book_prosv")
+		rout.DataTemp.TargetCards = rout.GetListOrders(tokenValue)
 		rout.SetHTML(w, "orders.html")
 
 	case "favorites":
-		// rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "book_prosv")
+		fmt.Println(tokenValue)
+		rout.DataTemp.TargetCards = rout.GetListFavorites(tokenValue)
+		fmt.Println("len data /favorites", len(rout.DataTemp.TargetCards))
 		rout.SetHTML(w, "favorites.html")
 
 	case "home":
@@ -379,9 +391,9 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_basic")
 		rout.SetHTML(w, "new_basic.html")
 
-	case "new_table":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_table")
-		rout.SetHTML(w, "new_table.html")
+	// case "new_table":
+	// 	rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_table")
+	// 	rout.SetHTML(w, "new_table.html")
 
 	case "new_boxing":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_boxing")

@@ -135,7 +135,6 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                             <li><a href="" class="submenu-link">Новинки</a>
                                 <ul class="submenu">
                                     <li><a href="/new_basic">Базовые модули</a></li>
-                                    <li><a href="/new_table">Рабочие столы</a></li>
                                     <li><a href="/new_boxing">Системы хранения</a></li>
                                 </ul>
                             </li>

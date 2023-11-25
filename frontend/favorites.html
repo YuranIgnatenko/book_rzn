@@ -166,7 +166,7 @@
 
                         <div class="items">
 
-                            {{ range .FavoritesCards }}
+                            {{ range .TargetCards }}
                             <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
 
                                 <div class="image">
@@ -188,7 +188,11 @@
                                     </div>
                                     <div>
                                         <a class="more"
-                                        href="/delete_favorites/{{ .Autor }}{{ .Title }}{{ .Price }}{{ .Link }}">Убрать</a>
+                                        href="/delete_favorites/{{ .TargetHash }}">Убрать</a>
+                                    </div>
+                                    <div>
+                                        <a class="more"
+                                        href="/add_orders/{{ .TargetHash }}">Заказать</a>
                                     </div>
                                 </div>
                             </div>

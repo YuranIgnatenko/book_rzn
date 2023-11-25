@@ -20,7 +20,7 @@ func (conn *Connector) SaveParsingService(tc models.TargetCard) {
 	rows, err := conn.Db.Query(
 		fmt.Sprintf(`INSERT bookrzn.Targets (target_hash,autor,title,price,image,comment,url_source,target_type) 
 		VALUES ( '%v','%v','%v', '%v','%v','%v','%v', '%v');`,
-			tc.Id, tc.Autor, tc.Title, tc.Price, tc.Link, "comment desk", tc.Source, tc.Tag)) //,
+			tc.TargetHash, tc.Autor, tc.Title, tc.Price, tc.Link, "comment desk", tc.Source, tc.Tag)) //,
 	if err != nil {
 		panic(err)
 	}
@@ -29,7 +29,6 @@ func (conn *Connector) SaveParsingService(tc models.TargetCard) {
 	defer rows.Close()
 
 }
-
 
 func (conn *Connector) GetListTargets() []models.TargetCard {
 
@@ -64,4 +63,39 @@ func (conn *Connector) GetListTargets() []models.TargetCard {
 	}
 
 	return targetsCard
+}
+
+func (conn *Connector) GetTarget(target_hash string) models.TargetCard {
+
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Targets WHERE target_hash = '%s';`, target_hash)) //,
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	card := models.TargetCard{}
+
+	for rows.Next() {
+		card := models.TargetCard{}
+		err := rows.Scan(
+			&card.Id,
+			&card.TargetHash,
+			&card.Autor,
+			&card.Title,
+			&card.Price,
+			&card.Link,
+			&card.Comment,
+			&card.Source,
+			&card.Tag,
+		)
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		return card
+	}
+	return card
+
 }
