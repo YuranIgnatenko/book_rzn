@@ -458,7 +458,12 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.SetHTML(w, "404.html")
 
 	case "logout":
-		rout.SetHTML(w, "logout.html")
+		// rout.DeleteCookie(w, r)
+		fmt.Println("logoutttеееееееееееtttttttt")
+		rout.DataTemp.IsLogin = false
+		rout.DeleteCookie(w, r)
+		// http.Redirect(w, r, "/login", http.StatusPermanentRedirect)
+		// rout.SetHTML(w, "logout.html")
 
 	default:
 		fmt.Println("error : DEFAULT CASE::[", url, "]")
