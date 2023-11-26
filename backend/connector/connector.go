@@ -129,8 +129,50 @@ func (conn *Connector) ReSaveCookieDB(login, password, token string) {
 	if err != nil {
 		panic(err)
 	}
-	// fmt.Printf("token [%s], old_token [%s]\n", token, old_token)
 	defer rows.Close()
+}
+
+func (conn *Connector) GetListOrdersCMS() []models.OrderCMS {
+	list_tokens := make([]string, 0)
+	temp := ""
+	var flag_write bool
+
+	data := make([]models.OrderCMS, 0)
+
+	rows, err := conn.Db.Query(`SELECT * FROM bookrzn.OrdersCms;`)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		dt := models.OrderCMS{}
+		rows.Scan(
+			&dt.Name, 
+			&dt.Date,
+			&dt.Phone,
+			&dt.Email,
+			&dt.CountAll,
+			&dt.PriceAll,
+		)
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+
+		flag_write = true
+
+		for _, token_temp := range list_tokens{
+			if token_temp == temp{
+				flag_write = false
+				break
+			}
+		}
+		if flag_write {
+			list_tokens = append(list_tokens, temp)
+		}
+	}
 }
 
 func (conn *Connector) GetListOrders(token string) []models.TargetCard {

@@ -4,6 +4,15 @@ type ServiceScraper interface {
 	ScrapSource() []TargetCard
 }
 
+type OrderCMS struct {
+	Name     string
+	Date     string
+	Phone    string
+	Email    string
+	CountAll string
+	PriceAll string
+}
+
 type TargetCard struct {
 	Autor      string //`csv:"autor"`
 	Title      string //`csv:"title"`

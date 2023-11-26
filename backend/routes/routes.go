@@ -350,6 +350,10 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 		count := "1"
 		rout.SaveTargetOrders(tokenValue, string(target_hash), count)
+
+		// TODO добавить сохранение в таблицу заказов для админки /
+		// rout.SaveOrdersCms(tokenValue, string(target_hash), count)
+
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
 
 		// case "delete_orders":
@@ -415,7 +419,15 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.SetHTML(w, "home.html")
 
 	case "cms":
-		rout.SetHTML(w, "cms.html")
+		if isFindCookie {
+			if rout.GetCookieAdmin(w, r) {
+				rout.DataTemp.OrdersCMS = rout.GetListOrdersCMS()
+				fmt.Println(len(rout.DataTemp.TargetCards))
+				rout.SetHTML(w, "cms.html")
+				return
+			}
+		}
+		rout.SetHTML(w, "404.html")
 
 	case "login":
 		rout.DataTemp.IsLogin = false
@@ -461,18 +473,13 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.SetHTML(w, "404.html")
 
 	case "out":
-
-		// rout.DeleteCookie(w, r)
-		fmt.Println("outttеееееееееееtttttttt")
 		rout.DataTemp.IsLogin = false
 		rout.DataTemp.NameLogin = ""
 		rout.DeleteCookie(w, r)
 		http.Redirect(w, r, "/login", http.StatusPermanentRedirect)
-		// rout.SetHTML(w, "login.html")
 
 	default:
 		fmt.Println("error : DEFAULT CASE::[", url, "]")
-		// http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
 	}
 }
 

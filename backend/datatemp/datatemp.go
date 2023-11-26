@@ -10,6 +10,7 @@ type DataTemp struct {
 	config.Configuration
 	TargetAll         []models.TargetCard
 	TargetCards       []models.TargetCard
+	OrdersCMS         []models.OrderCMS
 	FavoritesCards    []models.FavoritesCards
 	OrdersCards       []models.OrdersCards
 	OrdersRows        []models.OrdersRows

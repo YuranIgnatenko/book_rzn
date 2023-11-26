@@ -42,7 +42,6 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 
 	tc_all := conn.GetListTargets()
 	fmt.Println(len(tc_all))
-	// tc_all := []models.TargetCard{}
 
 	if len(tc_all) <= 1 {
 		tc_all = RangeScrapServices(lss)
