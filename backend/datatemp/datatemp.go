@@ -10,7 +10,7 @@ type DataTemp struct {
 	config.Configuration
 	TargetAll         []models.TargetCard
 	TargetCards       []models.TargetCard
-	OrdersCMS         []models.OrderCMS
+	OrdersCMS         []models.OrdersCMS
 	FavoritesCards    []models.FavoritesCards
 	OrdersCards       []models.OrdersCards
 	OrdersRows        []models.OrdersRows
@@ -26,6 +26,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 	return &DataTemp{
 		Configuration:   c,
 		TargetAll:       ps,
+		OrdersCMS:       make([]models.OrdersCMS, 0),
 		IsLogin:         false,
 		NameLogin:       "Гость",
 		NumberFastOrder: "",
@@ -163,7 +164,6 @@ func (dt *DataTemp) FilterCards(data []models.TargetCard, mode string) []models.
 	segm := make([]models.TargetCard, 0)
 
 	for _, tc := range data {
-		// fmt.Println(tc.Tag, "?==?", mode)
 		if mode == tc.Tag {
 			segm = append(segm, tc)
 		}

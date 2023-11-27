@@ -132,52 +132,10 @@ func (conn *Connector) ReSaveCookieDB(login, password, token string) {
 	defer rows.Close()
 }
 
-func (conn *Connector) GetListOrdersCMS() []models.OrderCMS {
-	list_tokens := make([]string, 0)
-	temp := ""
-	var flag_write bool
-
-	data := make([]models.OrderCMS, 0)
-
-	rows, err := conn.Db.Query(`SELECT * FROM bookrzn.OrdersCms;`)
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		dt := models.OrderCMS{}
-		rows.Scan(
-			&dt.Name, 
-			&dt.Date,
-			&dt.Phone,
-			&dt.Email,
-			&dt.CountAll,
-			&dt.PriceAll,
-		)
-
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-
-		flag_write = true
-
-		for _, token_temp := range list_tokens{
-			if token_temp == temp{
-				flag_write = false
-				break
-			}
-		}
-		if flag_write {
-			list_tokens = append(list_tokens, temp)
-		}
-	}
-}
-
 func (conn *Connector) GetListOrders(token string) []models.TargetCard {
 	list := make([]string, 0)
 	temp := ""
+
 	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT target_hash FROM bookrzn.Orders WHERE token='%s';`, token)) //,
 	if err != nil {
 		panic(err)
@@ -200,6 +158,98 @@ func (conn *Connector) GetListOrders(token string) []models.TargetCard {
 	}
 
 	return tc_all
+}
+
+func (conn *Connector) GetListOrdersCMS() []models.OrdersCMS {
+	var (
+		orders_cms             = make([]models.OrdersCMS, 0)
+		mapa_token_target_hash = make(map[string][]string, 0)
+		mapa_token_user_data   = make(map[string]map[string]string, 0) // {"token1234":{"name":"abc", "phone":"+79008009080"}}
+		mapa_token_count_all   = make(map[string]string, 0)
+		mapa_token_price_all   = make(map[string]string, 0)
+		sum_count              = 0
+		sum_price              = 0
+	)
+
+	rows, err := conn.Db.Query(`SELECT token,target_hash,count FROM bookrzn.Orders;`)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		temp_token := ""
+		temp_target_hash := ""
+		temp_count := ""
+
+		err := rows.Scan(&temp_token, &temp_target_hash, &temp_count)
+		if err != nil {
+			continue
+		}
+		tc, err := strconv.Atoi(temp_count)
+		if err != nil {
+			tc = 0
+		}
+		sum_count += tc
+		mapa_token_target_hash[temp_token] = append(mapa_token_target_hash[temp_token], temp_target_hash)
+		mapa_token_count_all[temp_token] = strconv.Itoa(sum_count)
+
+	}
+
+	for hash, _ := range mapa_token_count_all {
+		rows, err = conn.Db.Query(fmt.Sprintf(`SELECT price FROM bookrzn.Targets WHERE target_hash='%s';`, hash))
+		if err != nil {
+			panic(err)
+		}
+		defer rows.Close()
+		for rows.Next() {
+			temp_price := ""
+			temp_token := ""
+			err := rows.Scan(&temp_price)
+			if err != nil {
+				continue
+			}
+			tp, err := strconv.Atoi(temp_price)
+			if err != nil {
+				return nil
+			}
+			sum_price += tp
+			mapa_token_price_all[temp_token] = strconv.Itoa(sum_price)
+
+		}
+	}
+
+	rows, err = conn.Db.Query(`SELECT token, name, phone, email  FROM bookrzn.Users;`)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		temp_token := ""
+		temp_name := ""
+		temp_phone := ""
+		temp_email := ""
+		err := rows.Scan(&temp_token, &temp_name, &temp_phone, &temp_email)
+		if err != nil {
+			continue
+		}
+
+		mapa_token_user_data[temp_token] = map[string]string{
+			"name":  temp_name,
+			"phone": temp_phone,
+			"email": temp_email}
+	}
+
+	for token_user, data := range mapa_token_user_data {
+		temp_order := models.OrdersCMS{}
+		temp_order.Name = data["name"]
+		temp_order.Phone = data["phone"]
+		temp_order.Email = data["email"]
+		temp_order.Token = token_user
+		orders_cms = append(orders_cms, temp_order)
+
+	}
+	fmt.Println(len(orders_cms), "orders_cms")
+	return orders_cms
 }
 
 func (conn *Connector) GetListFavorites(token string) []models.TargetCard {

@@ -422,7 +422,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		if isFindCookie {
 			if rout.GetCookieAdmin(w, r) {
 				rout.DataTemp.OrdersCMS = rout.GetListOrdersCMS()
-				fmt.Println(len(rout.DataTemp.TargetCards))
+				fmt.Printf("%#+v\n\n", rout.DataTemp.OrdersCMS)
 				rout.SetHTML(w, "cms.html")
 				return
 			}

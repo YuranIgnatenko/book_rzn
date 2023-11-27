@@ -4,13 +4,15 @@ type ServiceScraper interface {
 	ScrapSource() []TargetCard
 }
 
-type OrderCMS struct {
-	Name     string
-	Date     string
-	Phone    string
-	Email    string
-	CountAll string
-	PriceAll string
+type OrdersCMS struct {
+	Name             string
+	Date             string
+	Phone            string
+	Email            string
+	Token            string
+	Target_hash_list []string
+	CountAll         string
+	PriceAll         string
 }
 
 type TargetCard struct {
