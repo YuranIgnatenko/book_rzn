@@ -7,6 +7,7 @@ import (
 	"database/sql"
 	"fmt"
 	"strconv"
+	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -160,15 +161,36 @@ func (conn *Connector) GetListOrders(token string) []models.TargetCard {
 	return tc_all
 }
 
-func (conn *Connector) GetListOrdersCMS() []models.OrdersCMS {
+func (conn *Connector) GetTargetHashStringList(token string) []string {
+	list := make([]string, 0)
+	temp := ""
+
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT target_hash FROM bookrzn.Orders WHERE token='%s';`, token)) //,
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		rows.Scan(&temp)
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		list = append(list, temp)
+	}
+
+	return list
+}
+
+func (conn *Connector) GetListOrdersCMS() []models.TargetCard {
 	var (
-		orders_cms             = make([]models.OrdersCMS, 0)
+		orders_cms             = make([]models.TargetCard, 0)
 		mapa_token_target_hash = make(map[string][]string, 0)
 		mapa_token_user_data   = make(map[string]map[string]string, 0) // {"token1234":{"name":"abc", "phone":"+79008009080"}}
 		mapa_token_count_all   = make(map[string]string, 0)
 		mapa_token_price_all   = make(map[string]string, 0)
-		sum_count              = 0
-		sum_price              = 0
 	)
 
 	rows, err := conn.Db.Query(`SELECT token,target_hash,count FROM bookrzn.Orders;`)
@@ -185,38 +207,38 @@ func (conn *Connector) GetListOrdersCMS() []models.OrdersCMS {
 		if err != nil {
 			continue
 		}
-		tc, err := strconv.Atoi(temp_count)
+		tc, err := strconv.Atoi(strings.TrimSpace(temp_count))
 		if err != nil {
-			tc = 0
+			tc = 1
 		}
-		sum_count += tc
+
 		mapa_token_target_hash[temp_token] = append(mapa_token_target_hash[temp_token], temp_target_hash)
-		mapa_token_count_all[temp_token] = strconv.Itoa(sum_count)
+		fmt.Printf("[[[[ %v ]]]]\n\n", strings.TrimSpace(mapa_token_count_all[temp_token]))
+
+		var old_count int
+
+		if strings.TrimSpace(mapa_token_count_all[temp_token]) == "" {
+			err = nil
+			old_count = 0
+		} else {
+			oc, err := strconv.Atoi(strings.TrimSpace(mapa_token_count_all[temp_token]))
+			if err != nil {
+				panic(err)
+			}
+			old_count = oc
+		}
+		mapa_token_count_all[temp_token] = strconv.Itoa(old_count + tc)
 
 	}
 
-	for hash, _ := range mapa_token_count_all {
-		rows, err = conn.Db.Query(fmt.Sprintf(`SELECT price FROM bookrzn.Targets WHERE target_hash='%s';`, hash))
-		if err != nil {
-			panic(err)
-		}
-		defer rows.Close()
-		for rows.Next() {
-			temp_price := ""
-			temp_token := ""
-			err := rows.Scan(&temp_price)
-			if err != nil {
-				continue
+	for k, v := range mapa_token_user_data{
+		for _, card := range conn.GetListTargets() {
+			if val, ok := mapa{
+	
 			}
-			tp, err := strconv.Atoi(temp_price)
-			if err != nil {
-				return nil
-			}
-			sum_price += tp
-			mapa_token_price_all[temp_token] = strconv.Itoa(sum_price)
-
 		}
 	}
+
 
 	rows, err = conn.Db.Query(`SELECT token, name, phone, email  FROM bookrzn.Users;`)
 	if err != nil {
@@ -239,12 +261,17 @@ func (conn *Connector) GetListOrdersCMS() []models.OrdersCMS {
 			"email": temp_email}
 	}
 
+	fmt.Println(mapa_token_count_all, mapa_token_price_all)
 	for token_user, data := range mapa_token_user_data {
-		temp_order := models.OrdersCMS{}
-		temp_order.Name = data["name"]
-		temp_order.Phone = data["phone"]
-		temp_order.Email = data["email"]
-		temp_order.Token = token_user
+		temp_order := models.TargetCard{}
+		temp_order.CMSName = data["name"]
+		temp_order.CMSPhone = data["phone"]
+		temp_order.CMSEmail = data["email"]
+		temp_order.CMSToken = token_user
+		temp_order.CMSTargetsHash = conn.GetTargetHashStringList(token_user)
+		temp_order.CMSCountAll = mapa_token_count_all[token_user]
+		temp_order.CMSPriceAll = mapa_token_price_all[token_user]
+
 		orders_cms = append(orders_cms, temp_order)
 
 	}

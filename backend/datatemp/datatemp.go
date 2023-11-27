@@ -10,7 +10,7 @@ type DataTemp struct {
 	config.Configuration
 	TargetAll         []models.TargetCard
 	TargetCards       []models.TargetCard
-	OrdersCMS         []models.OrdersCMS
+	// OrdersCardsCms    []models.OrdersCardsCms
 	FavoritesCards    []models.FavoritesCards
 	OrdersCards       []models.OrdersCards
 	OrdersRows        []models.OrdersRows
@@ -26,7 +26,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 	return &DataTemp{
 		Configuration:   c,
 		TargetAll:       ps,
-		OrdersCMS:       make([]models.OrdersCMS, 0),
+		// OrdersCardsCms:  make([]models.OrdersCardsCms, 0),
 		IsLogin:         false,
 		NameLogin:       "Гость",
 		NumberFastOrder: "",

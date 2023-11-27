@@ -29,6 +29,7 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 		ParsingService: *parsing.NewParsingService(c, conn),
 	}
 	rout.DataTemp.TargetCards = rout.ListTargetCardCache
+	// rout.DataTemp.OrdersCardsCms = rout.GetListOrdersCMS()
 
 	return &rout
 }
@@ -421,13 +422,18 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "cms":
 		if isFindCookie {
 			if rout.GetCookieAdmin(w, r) {
-				rout.DataTemp.OrdersCMS = rout.GetListOrdersCMS()
-				fmt.Printf("%#+v\n\n", rout.DataTemp.OrdersCMS)
+				rout.DataTemp.TargetCards = rout.GetListOrdersCMS()
+				fmt.Printf("%#+v\n\n", rout.TargetCards)
 				rout.SetHTML(w, "cms.html")
 				return
 			}
 		}
 		rout.SetHTML(w, "404.html")
+
+	case "cms_view_order":
+		token_user := strings.Split(r.URL.Path, "/")[1]
+		fmt.Println(token_user)
+		// write html table orders list
 
 	case "login":
 		rout.DataTemp.IsLogin = false
@@ -437,6 +443,19 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	case "registration":
 		rout.SetHTML(w, "registration.html")
+
+	case "create_user":
+		login := r.FormValue("login")
+		password := r.FormValue("password")
+		name := r.FormValue("name")
+		family := r.FormValue("family")
+		phone := r.FormValue("phone")
+		email := r.FormValue("email")
+
+		token := rout.CreateUser(login, password, name, family, phone, email)
+		rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(token)
+
+		rout.SetHTML(w, "login.html")
 
 	case "validation_login":
 		login := r.FormValue("login")

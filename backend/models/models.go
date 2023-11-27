@@ -4,16 +4,16 @@ type ServiceScraper interface {
 	ScrapSource() []TargetCard
 }
 
-type OrdersCMS struct {
-	Name             string
-	Date             string
-	Phone            string
-	Email            string
-	Token            string
-	Target_hash_list []string
-	CountAll         string
-	PriceAll         string
-}
+// type OrdersCardsCms struct {
+// 	Name     string
+// 	Date     string
+// 	Phone    string
+// 	Email    string
+// 	Token    string
+// 	Targets  []TargetCard
+// 	CountAll string
+// 	PriceAll string
+// }
 
 type TargetCard struct {
 	Autor      string //`csv:"autor"`
@@ -25,6 +25,15 @@ type TargetCard struct {
 	TargetHash string
 	Source     string
 	Tag        string
+	// for cms orders list
+	CMSName        string
+	CMSDate        string
+	CMSPhone       string
+	CMSEmail       string
+	CMSToken       string
+	CMSTargetsHash []string
+	CMSCountAll    string
+	CMSPriceAll    string
 }
 
 type OrdersRows struct {

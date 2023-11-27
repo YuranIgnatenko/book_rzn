@@ -252,7 +252,6 @@
 
 
     <div id="tab_orders" class="tabcontent">
-
         <table>
             <tr>
                 <td><label>Почта для приёма заказов</label></td>
@@ -268,7 +267,7 @@
             <table border="1" width="100%" style="background-color: cadetblue;">
                 <tr style="background-color: #ffb289;">
                     <th>Контактное лицо</th>
-                    <th>Дата создания</th>
+                    <th>Токен</th>
                     <th>Телефон</th>
                     <th>Почта</th>
                     <th>Количество всех позиций</th>
@@ -277,19 +276,19 @@
                 </tr>
                 </font>
 
-                {{ range .OrdersCMS }}
+                {{range .TargetCards}}
                 <font-size=”10″ face=”Calibri”>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td style="background-color: chartreuse;"><a href="/cms_view_order/{{.TargetHash}}">редакт.</a>
+                        <td>{{.CMSName}}</td>
+                        <td>{{.CMSToken}}</td>
+                        <td>{{.CMSPhone}}</td>
+                        <td>{{.CMSEmail}}</td>
+                        <td>{{.CMSCountAll}}</td>
+                        <td>{{.CMSPriceAll}}</td>
+                        <td style="background-color: rgb(0, 0, 0);"><a href="/cms_view_order/{{.CMSToken}}">go to.</a>
                         </td>
                     </tr>
-                    {{ end }}
+                {{end}}
 
             </table>
             </font>
