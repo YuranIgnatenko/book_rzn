@@ -186,13 +186,18 @@
                                     <div class="item_price_big">
                                         <span class="new">{{ .Price }}</span>
                                     </div>
+
+                                    <div>
+                                        <label>Количество</label>
+                                        <input placeholder="{{.Count}}" type="number" id="tentacles" name="tentacles" min="1" max="999999" value="{{.Count}}" />
+                                    </div>
+
                                     <div>
                                         <a class="more"
                                         href="/delete_favorites/{{ .TargetHash }}">Убрать</a>
                                     </div>
                                     <div>
-                                        <a class="more"
-                                        href="/add_orders/{{ .TargetHash }}">Заказать</a>
+                                        <a class="more" onclick="this.href='/add_orders/{{.TargetHash}}/'+document.getElementById('tentacles').value;" >Заказать</a>
                                     </div>
                                 </div>
                             </div>

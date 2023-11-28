@@ -187,7 +187,6 @@
                           <th>Дата создания</th>                          
                           <th>Примечание</th>
                           <th>Количество</th>
-                          <!-- <th>Количество всех позиций</th> -->
                           <th>Стоимость</th>
                           <th>Перейти</th>
                         </tr>
@@ -196,11 +195,11 @@
                         {{ range .TargetCards }}
                         <font-size=”10″ face=”Calibri” >
                         <tr>
-                          <td>{{ .Title}} </td>
+                          <td>{{ .Autor}} {{.Title}}</td>
                           <td>12.09.2023</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
+                          <td>{{.Comment}}</td>
+                          <td>{{.Count}}</td>
+                          <td>{{.Price}}</td>
                           <td></td>
                           <td style="background-color: chartreuse;"><a href="/edit_orders/{{.TargetHash}}">редакт.</a></td>
                         </tr>

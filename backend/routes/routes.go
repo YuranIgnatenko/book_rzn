@@ -329,8 +329,10 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		data := r.URL.Path
 		data = strings.ReplaceAll(data, ":/", "://")
 		data = strings.ReplaceAll(data, `"`, "")
-		target_hash := strings.ReplaceAll(data, "/add_favorites/", "")
-		rout.SaveTargetFavorites(tokenValue, string(target_hash))
+		temp := strings.ReplaceAll(data, "/add_favorites/", "") //res:  1701168638010694862/13
+		target_hash := strings.Split(temp, "/")[0]
+		target_count := strings.Split(temp, "/")[1]
+		rout.SaveTargetFavorites(tokenValue, string(target_hash), target_count)
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
 		fmt.Println("add favorites")
 
@@ -347,9 +349,10 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		data := r.URL.Path
 		data = strings.ReplaceAll(data, ":/", "://")
 		data = strings.ReplaceAll(data, `"`, "")
-		target_hash := strings.ReplaceAll(data, "/add_orders/", "")
-		count := "1"
-		rout.SaveTargetOrders(tokenValue, string(target_hash), count)
+		temp := strings.ReplaceAll(data, "/add_orders/", "")
+		target_hash := strings.Split(temp, "/")[0]
+		target_count := strings.Split(temp, "/")[1]
+		rout.SaveTargetOrders(tokenValue, string(target_hash), target_count)
 
 		// TODO добавить сохранение в таблицу заказов для админки /
 		// rout.SaveOrdersCms(tokenValue, string(target_hash), count)
@@ -359,6 +362,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		// case "delete_orders":
 
 	case "orders":
+		fmt.Println("URL ------->>", r.URL.Path)
 		rout.DataTemp.TargetCards = rout.GetListOrders(tokenValue)
 		rout.SetHTML(w, "orders.html")
 

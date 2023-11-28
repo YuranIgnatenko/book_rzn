@@ -134,31 +134,39 @@ func (conn *Connector) ReSaveCookieDB(login, password, token string) {
 }
 
 func (conn *Connector) GetListOrders(token string) []models.TargetCard {
-	list := make([]string, 0)
-	temp := ""
+	mapa_target_hash_count := make(map[string]string, 0)
+	list_target_hash := make([]string, 0)
+	temp_target_cards_all := make([]models.TargetCard, 0)
+	main_target_cards_all := make([]models.TargetCard, 0)
+	temp_token, temp_target_hash, temp_count := "", "", ""
 
-	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT target_hash FROM bookrzn.Orders WHERE token='%s';`, token)) //,
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT token,target_hash,count FROM bookrzn.Orders WHERE token='%s';`, token)) //,
 	if err != nil {
 		panic(err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		rows.Scan(&temp)
+		rows.Scan(&temp_token, &temp_target_hash, &temp_count)
 
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
-		list = append(list, temp)
+		list_target_hash = append(list_target_hash, temp_target_hash)
+		mapa_target_hash_count[temp_target_hash] = temp_count
 	}
 
-	tc_all := make([]models.TargetCard, 0)
-	for _, hash := range list {
-		tc_all = append(tc_all, conn.GetTarget(hash))
+	for _, hash := range list_target_hash {
+		temp_target_cards_all = append(temp_target_cards_all, conn.GetTarget(hash))
 	}
 
-	return tc_all
+	for _, card := range temp_target_cards_all {
+		card.Count = mapa_target_hash_count[card.TargetHash]
+		main_target_cards_all = append(main_target_cards_all, card)
+	}
+
+	return main_target_cards_all
 }
 
 func (conn *Connector) GetTargetHashStringList(token string) []string {
@@ -552,13 +560,13 @@ func (conn *Connector) SaveTargetOrders(token, target_hash, count string) {
 	defer rows.Close()
 }
 
-func (conn *Connector) SaveTargetFavorites(token, targethash string) {
-	fmt.Println("save fav cards:", token, targethash)
+func (conn *Connector) SaveTargetFavorites(token, targethash, count string) {
+	fmt.Println("save fav cards:", token, targethash, count)
 	// namedb := "bookrzn.Favorites"
 	rows, err := conn.Db.Query(
 		fmt.Sprintf(`INSERT bookrzn.Favorites (token,target_hash,count) 
 		VALUES ( '%s','%s','%s');`,
-			token, targethash, "1")) //,
+			token, targethash, count)) //,
 	if err != nil {
 		panic(err)
 	}

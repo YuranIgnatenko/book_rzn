@@ -153,7 +153,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                                     <li><a href="/office_boxing">Системы хранения</a></li>
                                 </ul>
                             </li>
-                            <li><a href="" class="submenu-link">Books</a>
+                            <li><a href="" class="submenu-link">Книги</a>
                                 <ul class="submenu">
                                     <li><a href="/prosv_new">Новинки</a></li>
                                     <li><a href="/prosv_sh_middle">Для среднего специального образования</a></li>
@@ -166,7 +166,6 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                                     <li><a href="/prosv_digit_books">Электронные книги</a></li>
                                 </ul>
                             </li>
-                            <li><a href="/book_prosv">Книги</a></li>
                         </ul>
                     </nav>
 		`,

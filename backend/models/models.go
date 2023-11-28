@@ -25,6 +25,7 @@ type TargetCard struct {
 	TargetHash string
 	Source     string
 	Tag        string
+	Count      string
 	// for cms orders list
 	CMSName        string
 	CMSDate        string
