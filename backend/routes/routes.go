@@ -348,7 +348,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		data = strings.ReplaceAll(data, ":/", "://")
 		data = strings.ReplaceAll(data, `"`, "")
 		target_hash := strings.ReplaceAll(data, "/add_orders/", "")
-
 		count := "1"
 		rout.SaveTargetOrders(tokenValue, string(target_hash), count)
 
@@ -372,29 +371,61 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "home":
 		rout.SetHTML(w, "home.html")
 
-	case "book_prosv":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "book_prosv")
+	case "prosv_new":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_new")
+		rout.SetHTML(w, "book_prosv.html")
+
+	case "prosv_sh_middle":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_sh_middle")
+		rout.SetHTML(w, "book_prosv.html")
+
+	case "prosv_do_sh":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_do_sh")
+		rout.SetHTML(w, "book_prosv.html")
+
+	case "prosv_1_4":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_1_4")
+		rout.SetHTML(w, "book_prosv.html")
+
+	case "prosv_5_9":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_5_9")
+		rout.SetHTML(w, "book_prosv.html")
+
+	case "prosv_10_11":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_10_11")
+		rout.SetHTML(w, "book_prosv.html")
+
+	case "prosv_ovz":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_ovz")
+		rout.SetHTML(w, "book_prosv.html")
+
+	case "prosv_digit_books":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_digit_books")
+		rout.SetHTML(w, "book_prosv.html")
+
+	case "prosv_artistic":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_artistic")
 		rout.SetHTML(w, "book_prosv.html")
 
 	case "sh_table":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_table")
-		rout.SetHTML(w, "sh_table.html")
+		rout.SetHTML(w, "mebel.html")
 
 	case "sh_chair":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_chair")
-		rout.SetHTML(w, "sh_chair.html")
+		rout.SetHTML(w, "mebel.html")
 
 	case "office_table":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "office_table")
-		rout.SetHTML(w, "office_table.html")
+		rout.SetHTML(w, "mebel.html")
 
 	case "office_boxing":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "office_boxing")
-		rout.SetHTML(w, "office_boxing.html")
+		rout.SetHTML(w, "mebel.html")
 
 	case "new_basic":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_basic")
-		rout.SetHTML(w, "new_basic.html")
+		rout.SetHTML(w, "mebel.html")
 
 	// case "new_table":
 	// 	rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_table")

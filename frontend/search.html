@@ -140,7 +140,7 @@
                         <div class="favorite bars">
                             <a href="/favorites">
                                 <i data-feather="heart"></i>
-                                <span>Избранное</span>
+                                <span>Корзина</span>
                             </a>
                         </div>
                         {{end}}
@@ -189,6 +189,12 @@
                                     <div class="item_price_big">
                                         <span class="new">{{ .Price }}</span>
                                     </div>
+
+                                    <div>
+                                        <label>Количество</label>
+                                        <input placeholder="1" type="number" id="tentacles" name="tentacles" min="10" max="100" />
+                                    </div>
+
                                     <div>
                                         <a class="more"
                                             href="/add_favorites/{{ .TargetHash }}">В

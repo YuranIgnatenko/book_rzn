@@ -8,8 +8,8 @@ import (
 
 type DataTemp struct {
 	config.Configuration
-	TargetAll         []models.TargetCard
-	TargetCards       []models.TargetCard
+	TargetAll   []models.TargetCard
+	TargetCards []models.TargetCard
 	// OrdersCardsCms    []models.OrdersCardsCms
 	FavoritesCards    []models.FavoritesCards
 	OrdersCards       []models.OrdersCards
@@ -24,8 +24,8 @@ type DataTemp struct {
 
 func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 	return &DataTemp{
-		Configuration:   c,
-		TargetAll:       ps,
+		Configuration: c,
+		TargetAll:     ps,
 		// OrdersCardsCms:  make([]models.OrdersCardsCms, 0),
 		IsLogin:         false,
 		NameLogin:       "Гость",
@@ -151,6 +151,19 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                                 <ul class="submenu">
                                     <li><a href="/office_table">Рабочие столы</a></li>
                                     <li><a href="/office_boxing">Системы хранения</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="" class="submenu-link">Books</a>
+                                <ul class="submenu">
+                                    <li><a href="/prosv_new">Новинки</a></li>
+                                    <li><a href="/prosv_sh_middle">Для среднего специального образования</a></li>
+                                    <li><a href="/prosv_do_sh">Для дошкольников</a></li>
+                                    <li><a href="/prosv_1_4">Для 1-4 классов</a></li>
+                                    <li><a href="/prosv_5_9">Для 5-9 классов</a></li>
+                                    <li><a href="/prosv_10_11">Для 10-11 классов</a></li>
+                                    <li><a href="/prosv_ovz">Для детей с ОВЗ</a></li>
+                                    <li><a href="/prosv_artistic">Художественная литература</a></li>
+                                    <li><a href="/prosv_digit_books">Электронные книги</a></li>
                                 </ul>
                             </li>
                             <li><a href="/book_prosv">Книги</a></li>
