@@ -163,6 +163,16 @@ func (conn *Connector) GetListOrders(token string) []models.TargetCard {
 
 	for _, card := range temp_target_cards_all {
 		card.Count = mapa_target_hash_count[card.TargetHash]
+		card.Price = strings.ReplaceAll(card.Price, ",", ".")
+		fc, err := strconv.ParseFloat(card.Count, 64)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fp, err := strconv.ParseFloat(card.Price, 64)
+		if err != nil {
+			fmt.Println(err)
+		}
+		card.Summa = float64(fc * fp)
 		main_target_cards_all = append(main_target_cards_all, card)
 	}
 
@@ -335,8 +345,9 @@ func (conn *Connector) GetListOrdersCMS() []models.TargetCard {
 func (conn *Connector) GetListFavorites(token string) []models.TargetCard {
 
 	list_targets_hash := []string{}
+	list_targets_count := []string{}
 
-	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT target_hash FROM bookrzn.Favorites WHERE token='%s';`, token)) //,
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT target_hash,count FROM bookrzn.Favorites WHERE token='%s';`, token)) //,
 	if err != nil {
 		panic(err)
 	}
@@ -344,18 +355,23 @@ func (conn *Connector) GetListFavorites(token string) []models.TargetCard {
 	defer rows.Close()
 
 	var favcards []models.TargetCard
+
 	for rows.Next() {
 		var target_hash string
-		rows.Scan(&target_hash)
+		var target_count string
+
+		rows.Scan(&target_hash, &target_count)
 
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
 		list_targets_hash = append(list_targets_hash, target_hash)
+		list_targets_count = append(list_targets_count, target_count)
+
 	}
 
-	for _, hash := range list_targets_hash {
+	for ind, hash := range list_targets_hash {
 		rows, err = conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Targets WHERE target_hash='%s';`, hash))
 		if err != nil {
 			panic(err)
@@ -374,11 +390,13 @@ func (conn *Connector) GetListFavorites(token string) []models.TargetCard {
 				&card.Tag,
 				&card.Source,
 			)
+			card.Count = list_targets_count[ind]
 
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
+			fmt.Printf("%+v\n\n", card)
 			favcards = append(favcards, card)
 		}
 	}

@@ -26,6 +26,7 @@ type TargetCard struct {
 	Source     string
 	Tag        string
 	Count      string
+	Summa      float64
 	// for cms orders list
 	CMSName        string
 	CMSDate        string

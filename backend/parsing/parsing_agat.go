@@ -56,12 +56,18 @@ func (sa *ServiceAgat) ScrapSource() []models.TargetCard {
 
 				if strings.Contains(price, "0 руб") || strings.Contains(price, "по запросу") {
 					return
+					// e.DOM.Next() ?? 
 				}
+
+				temp_price := strings.ReplaceAll(price, "\u00a0", "")
+				temp_price = strings.ReplaceAll(temp_price, " ", "")
+				temp_price = strings.ReplaceAll(temp_price, "руб", "")
+				temp_price = strings.TrimSpace(temp_price)
 
 				dt := models.TargetCard{
 					Autor:  "-",
 					Title:  el.ChildText(".goods_list_name"),
-					Price:  price,
+					Price:  temp_price,
 					Link:   "https://agatmk.ru" + el.ChildAttr("img", "src"),
 					Source: sa.SourceType,
 					Tag:    sa.TagName,

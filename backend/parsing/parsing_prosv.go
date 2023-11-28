@@ -32,10 +32,11 @@ func (ps *ServiceProsv) ScrapSource() []models.TargetCard {
 	for _, link := range ps.LinksVisit {
 		c.OnHTML(".item-grid", func(e *colly.HTMLElement) {
 			e.ForEach(".item-box", func(_ int, el *colly.HTMLElement) {
+				temp_price := strings.TrimSpace(strings.ReplaceAll(el.ChildText(".prices"), "₽", ""))
 				dt := models.TargetCard{
 					Autor:  el.ChildText(".autor"),
 					Title:  el.ChildText(".product-title"),
-					Price:  el.ChildText(".prices"),
+					Price:  temp_price,
 					Link:   el.ChildAttr("img", "src"),
 					Source: ps.SourceType,
 					Tag:    ps.TagName,
@@ -43,7 +44,7 @@ func (ps *ServiceProsv) ScrapSource() []models.TargetCard {
 				dt.Title = strings.ReplaceAll(dt.Title, `"`, "")
 
 				dt.Id = dt.Autor + dt.Title + dt.Price + el.ChildAttr("img", "src")
-				dt.TargetHash = fmt.Sprintf("%v",time.Now().UnixNano())
+				dt.TargetHash = fmt.Sprintf("%v", time.Now().UnixNano())
 
 				dts = append(dts, dt)
 			})

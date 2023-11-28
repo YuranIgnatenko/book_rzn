@@ -319,8 +319,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		url = url[1:]
 	}
 
-	// fmt.Println(url, len(url))
-
 	switch url[0] {
 
 	// case "for_school":
@@ -334,7 +332,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		target_count := strings.Split(temp, "/")[1]
 		rout.SaveTargetFavorites(tokenValue, string(target_hash), target_count)
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
-		fmt.Println("add favorites")
 
 	case "delete_favorites":
 		data := r.URL.Path
@@ -362,14 +359,11 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		// case "delete_orders":
 
 	case "orders":
-		fmt.Println("URL ------->>", r.URL.Path)
 		rout.DataTemp.TargetCards = rout.GetListOrders(tokenValue)
 		rout.SetHTML(w, "orders.html")
 
 	case "favorites":
-		fmt.Println(tokenValue)
 		rout.DataTemp.TargetCards = rout.GetListFavorites(tokenValue)
-		fmt.Println("len data /favorites", len(rout.DataTemp.TargetCards))
 		rout.SetHTML(w, "favorites.html")
 
 	case "home":
@@ -431,9 +425,9 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_basic")
 		rout.SetHTML(w, "mebel.html")
 
-	// case "new_table":
-	// 	rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_table")
-	// 	rout.SetHTML(w, "new_table.html")
+	case "new_table":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_table")
+		rout.SetHTML(w, "new_table.html")
 
 	case "new_boxing":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_boxing")
@@ -458,17 +452,16 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		if isFindCookie {
 			if rout.GetCookieAdmin(w, r) {
 				rout.DataTemp.TargetCards = rout.GetListOrdersCMS()
-				fmt.Printf("%#+v\n\n", rout.TargetCards)
 				rout.SetHTML(w, "cms.html")
 				return
 			}
 		}
 		rout.SetHTML(w, "404.html")
 
-	case "cms_view_order":
-		token_user := strings.Split(r.URL.Path, "/")[1]
-		fmt.Println(token_user)
-		// write html table orders list
+	// case "cms_view_order":
+	// 	token_user := strings.Split(r.URL.Path, "/")[1]
+	// 	fmt.Println(token_user)
+	// write html table orders list
 
 	case "login":
 		rout.DataTemp.IsLogin = false

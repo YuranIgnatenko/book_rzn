@@ -192,19 +192,14 @@
 
                                     <div>
                                         <label>Количество</label>
-                                        <input placeholder="1" type="number" id="tentacles" name="tentacles" min="1" max="999999" />
+                                        <input placeholder="1" type="number" id="{{.TargetHash}}" name="tentacles" min="1" max="999999" />
                                     </div>
                                    
                                     <div>
-                                        <a class="more" onclick="this.href='/add_favorites/{{.TargetHash}}/'+document.getElementById('tentacles').value;" >В корзину</a>
-                                            <!-- href="/add_favorites/{{ .TargetHash }}/">В корзину</a> -->
+                                        <a class="more" onclick="this.href='/add_favorites/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value;" >В корзину</a>
                                     </div>
                                     <div>
-
-                                        <a class="more" onclick="this.href='/add_orders/{{.TargetHash}}/'+document.getElementById('tentacles').value;" >Заказать</a>
-
-                                        <!-- <a class="more"
-                                        href="/add_orders/{{ .TargetHash }}">Заказать</a> -->
+                                        <a class="more" onclick="this.href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value;" >Заказать</a>
                                     </div>
                                 </div>
                             </div>
