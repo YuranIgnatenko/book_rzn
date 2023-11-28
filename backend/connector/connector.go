@@ -186,13 +186,15 @@ func (conn *Connector) GetTargetHashStringList(token string) []string {
 
 func (conn *Connector) GetListOrdersCMS() []models.TargetCard {
 	var (
-		orders_cms             = make([]models.TargetCard, 0)
-		mapa_token_target_hash = make(map[string][]string, 0)
+		orders_cms             = make([]models.TargetCard, 0)          // card orders list for cms
+		mapa_token_target_hash = make(map[string][]string, 0)          // {"token_user":{target_hash1, target_hash2, target_hash3 ....}}
 		mapa_token_user_data   = make(map[string]map[string]string, 0) // {"token1234":{"name":"abc", "phone":"+79008009080"}}
-		mapa_token_count_all   = make(map[string]string, 0)
-		mapa_token_price_all   = make(map[string]string, 0)
+		mapa_token_count_all   = make(map[string]string, 0)            // {"token_user":count_all}
+		mapa_token_price_all   = make(map[string]string, 0)            // {"token_user":price_all}
 	)
 
+	// -------------------------------------------
+	// mapa_token_count_all   (COUNT ALL)
 	rows, err := conn.Db.Query(`SELECT token,target_hash,count FROM bookrzn.Orders;`)
 	if err != nil {
 		panic(err)
@@ -212,8 +214,10 @@ func (conn *Connector) GetListOrdersCMS() []models.TargetCard {
 			tc = 1
 		}
 
+		//----------------------------------------------
+		//mapa_token_target_hash TOKEN -- > TARGET hash
+
 		mapa_token_target_hash[temp_token] = append(mapa_token_target_hash[temp_token], temp_target_hash)
-		fmt.Printf("[[[[ %v ]]]]\n\n", strings.TrimSpace(mapa_token_count_all[temp_token]))
 
 		var old_count int
 
@@ -231,14 +235,8 @@ func (conn *Connector) GetListOrdersCMS() []models.TargetCard {
 
 	}
 
-	for k, v := range mapa_token_user_data{
-		for _, card := range conn.GetListTargets() {
-			if val, ok := mapa{
-	
-			}
-		}
-	}
-
+	// ---------------------------------------------------------------------------------------
+	//
 
 	rows, err = conn.Db.Query(`SELECT token, name, phone, email  FROM bookrzn.Users;`)
 	if err != nil {
@@ -261,8 +259,57 @@ func (conn *Connector) GetListOrdersCMS() []models.TargetCard {
 			"email": temp_email}
 	}
 
-	fmt.Println(mapa_token_count_all, mapa_token_price_all)
+	rows, err = conn.Db.Query(`SELECT target_hash,price FROM bookrzn.Targets;`) // target_hash --> price one
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	data_target_prices := make(map[string]float64, 0) //have hash-->price
+
+	for rows.Next() {
+
+		temp_target_hash := ""
+		temp_price := ""
+
+		err := rows.Scan(&temp_target_hash, &temp_price)
+		if err != nil {
+			continue
+		}
+
+		temp_price = strings.ReplaceAll(temp_price, "руб", "")
+		temp_price = strings.ReplaceAll(temp_price, "₽", "")
+		temp_price = strings.ReplaceAll(temp_price, " ", "")
+		temp_price = strings.TrimSpace(temp_price)
+
+		t := ""
+		for _, sym := range temp_price {
+			if string(sym) == "\u00a0" {
+				continue
+			}
+			t += string(sym)
+		}
+
+		tp, err := strconv.ParseFloat(t, 64)
+		if err != nil {
+			tp = float64(0.0)
+		}
+
+		data_target_prices[temp_target_hash] = tp
+	}
+
+	summa_prices := float64(0.0)
+
+	for token_user, _ := range mapa_token_user_data {
+		for _, t_hash := range mapa_token_target_hash[token_user] {
+			summa_prices += data_target_prices[t_hash]
+		}
+		mapa_token_price_all[token_user] = fmt.Sprintf("%v", summa_prices)
+		summa_prices = 0.0
+	}
+
 	for token_user, data := range mapa_token_user_data {
+		// mapa_token_target_hash[token_user]
 		temp_order := models.TargetCard{}
 		temp_order.CMSName = data["name"]
 		temp_order.CMSPhone = data["phone"]
@@ -273,9 +320,7 @@ func (conn *Connector) GetListOrdersCMS() []models.TargetCard {
 		temp_order.CMSPriceAll = mapa_token_price_all[token_user]
 
 		orders_cms = append(orders_cms, temp_order)
-
 	}
-	fmt.Println(len(orders_cms), "orders_cms")
 	return orders_cms
 }
 
@@ -440,7 +485,7 @@ func (conn *Connector) GetNewNumberFastOrder() string {
 	if err != nil {
 		panic(err)
 	}
-	var value int
+	var value float64
 	rows.Scan(&value)
 
 	value += 1
