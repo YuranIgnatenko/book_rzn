@@ -331,6 +331,9 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		temp := strings.ReplaceAll(data, "/add_favorites/", "") //res:  1701168638010694862/13
 		target_hash := strings.Split(temp, "/")[0]
 		target_count := strings.Split(temp, "/")[1]
+		if strings.TrimSpace(target_count) == "" || target_count == "0" {
+			target_count = "1"
+		}
 		rout.SaveTargetInFavorites(tokenValue, string(target_hash), target_count)
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
 
@@ -344,6 +347,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
 	case "add_orders":
+		fmt.Println("add orders")
 		data := r.URL.Path
 		data = strings.ReplaceAll(data, ":/", "://")
 		data = strings.ReplaceAll(data, `"`, "")
@@ -354,14 +358,23 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 			target_count = "1"
 		}
 		rout.SaveTargetInOrders(tokenValue, string(target_hash), target_count)
-		sender.Send_mail("Заказ с сайта", fmt.Sprintf("%v - %v\n", target_hash, target_count))
 
-		// TODO добавить сохранение в таблицу заказов для админки /
-		// rout.SaveOrdersCms(tokenValue, string(target_hash), count)
+		fmt.Println("Loaded sender")
+
+		user := rout.DataUserFromToken(tokenValue)
+		target := rout.TargetCardFromTargetHash(target_hash)
+
+		data_msg := fmt.Sprintf(
+			"Создан заказ! \nКонтактное лицо :[( %v ) %v %v]\n\n Связь:[ %v %v ]\n\n Позиция:[ %v %v ] \nКоличество:[ %v ] \nЦена(за 1 экз.):[ %v ].",
+			user.Login, user.Name, user.Family,
+			user.Email, user.Phone, target.Autor, target.Title, target_count, target.Price)
+
+		sender.Send_mail("Уведомление о заказе",
+			fmt.Sprintf("%v\n", data_msg))
+
+		fmt.Println("Email sended !")
 
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
-
-		// case "delete_orders":
 
 	case "orders":
 		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)
@@ -451,6 +464,8 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.SetHTML(w, "fast_mail.html")
 
 	case "fast_mail_receive":
+		rout.SendFormMailValue(w, r)
+		fmt.Println("Email sended !")
 		rout.SetHTML(w, "home.html")
 
 	case "cms":

@@ -3,6 +3,7 @@ package auth
 import (
 	"backend/config"
 	"backend/connector"
+	"backend/sender"
 	"errors"
 	"fmt"
 	"log"
@@ -81,6 +82,15 @@ func (a *Auth) GetCookieTokenValue(w http.ResponseWriter, r *http.Request) strin
 	} else {
 		return token.Value
 	}
+
+}
+
+func (a *Auth) SendFormMailValue(w http.ResponseWriter, r *http.Request) {
+	name := r.FormValue("Name")
+	email := r.FormValue("Email")
+	phone := r.FormValue("Phone")
+	message := r.FormValue("Message")
+	sender.Send_mail("New message from bookrzn", fmt.Sprintf("%v\n%v\n%v\n%v\n", name, email, phone, message))
 
 }
 

@@ -36,13 +36,6 @@ func NewConnector(c config.Configuration) *Connector {
 }
 
 func (conn *Connector) GetNameLoginFromToken(token string) string {
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-
-	}
-	conn.Db = db
-
 	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT login FROM bookrzn.Users WHERE token = '%s' ;`, token)) //,
 	if err != nil {
 		panic(err)
@@ -66,6 +59,38 @@ func (conn *Connector) GetNameLoginFromToken(token string) string {
 		return ""
 	}
 	return login_name
+}
+
+func (conn *Connector) DataUserFromToken(token string) models.Users {
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Users WHERE token = '%s' ;`, token))
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	var user models.Users
+
+	for rows.Next() {
+		err := rows.Scan(
+			&user.Id,
+			&user.Login,
+			&user.Password,
+			&user.Type,
+			&user.Token,
+			&user.Name,
+			&user.Family,
+			&user.Phone,
+			&user.Email,
+		)
+
+		if err != nil {
+			continue
+		}
+
+	}
+
+	return user
 }
 
 func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
@@ -166,7 +191,8 @@ func (conn *Connector) TargetCardsFromListOrders(token string) []models.TargetCa
 		if err != nil {
 			panic(err)
 		}
-		fp, err := strconv.ParseFloat(card.Price, 64)
+		temp_fp := strings.ReplaceAll(card.Price, "\u00a0", "")
+		fp, err := strconv.ParseFloat(temp_fp, 64)
 		if err != nil {
 			panic(err)
 		}
