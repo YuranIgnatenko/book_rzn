@@ -6,6 +6,7 @@ import (
 	"backend/connector"
 	"backend/datatemp"
 	"backend/parsing"
+	"backend/sender"
 	"fmt"
 	"net/http"
 	"strings"
@@ -353,6 +354,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 			target_count = "1"
 		}
 		rout.SaveTargetInOrders(tokenValue, string(target_hash), target_count)
+		sender.Send_mail("Заказ с сайта", fmt.Sprintf("%v - %v\n", target_hash, target_count))
 
 		// TODO добавить сохранение в таблицу заказов для админки /
 		// rout.SaveOrdersCms(tokenValue, string(target_hash), count)
