@@ -51,14 +51,8 @@ func (conn *Connector) AddUser(Login, Password, Type, Token, Name, Family, Phone
 }
 
 func (conn *Connector) FindUserFromToken(token string) (models.Users, error) {
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-
-	}
-	conn.Db = db
-	defer db.Close()
-	rows, err := conn.Db.Query(`select * from bookrzn.Users where Token = '` + token + `';`) //,
+	fmt.Println(token, "token for func")
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Users WHERE token = '%s';`, token))
 	if err != nil {
 		panic(err)
 	}
@@ -80,7 +74,6 @@ func (conn *Connector) FindUserFromToken(token string) (models.Users, error) {
 			&u.Phone,
 			&u.Email)
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 		users = append(users, u)
@@ -93,14 +86,6 @@ func (conn *Connector) FindUserFromToken(token string) (models.Users, error) {
 }
 
 func (conn *Connector) FindUserFromLoginPassword(Login, Password string) (models.Users, error) {
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-		return models.Users{}, err
-
-	}
-	conn.Db = db
-	defer db.Close()
 	rows, err := conn.Db.Query(fmt.Sprintf(`select * from bookrzn.Users where Login = '%s' AND Password = '%s';`, Login, Password)) //,
 	if err != nil {
 		return models.Users{}, err

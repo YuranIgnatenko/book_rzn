@@ -119,14 +119,14 @@
 
     <div class="tab">
         <button class="tablinks" onclick="openTab(event, 'tab_tosite')" height="100%">Просмотр сайта</button>
-        <button class="tablinks" onclick="openTab(event, 'tab_metrics')" height="100%">Метрики сайта</button>
+        <!-- <button class="tablinks" onclick="openTab(event, 'tab_metrics')" height="100%">Метрики сайта</button> -->
         <button class="tablinks" onclick="openTab(event, 'tab_sender_email')" height="100%">Рассылка почты</button>
         <button class="tablinks" onclick="openTab(event, 'tab_manager_banner')" height="100%">Управление
             баннерами</button>
         <button class="tablinks" onclick="openTab(event, 'tab_parser')" height="100%">Парсер сервис</button>
         <button class="tablinks" onclick="openTab(event, 'tab_data_base')" height="100%">База данных</button>
         <button class="tablinks" onclick="openTab(event, 'tab_orders')" height="100%">Заявки на заказы</button>
-        
+        <button class="tablinks" onclick="openTab(event, 'tab_visit_site')" height="100%">Перейти на сайт</button>        
 
     </div>
 
@@ -137,9 +137,9 @@
     <!-- =================================================== -->
 
 
-    <div id="tab_metrics" class="tabcontent">
+    <!-- <div id="tab_metrics" class="tabcontent">
         <iframe class="full_size" src="http://be1.ru/stat/book-rzn.ru"></iframe>
-    </div>
+    </div> -->
 
     <!-- =================================================== -->
 
@@ -248,6 +248,11 @@
         <iframe class="full_size" src="http://localhost:8082/home"></iframe>
     </div>
 
+
+    <div id="tab_visit_site" class="tabcontent">
+        <a href="/home"></a>
+    </div>
+
     <!-- =================================================== -->
 
 
@@ -279,12 +284,12 @@
                 {{range .TargetCards}}
                 <font-size=”10″ face=”Calibri”>
                     <tr>
-                        <td>{{.CMSName}}</td>
-                        <td>{{.CMSToken}}</td>
-                        <td>{{.CMSPhone}}</td>
-                        <td>{{.CMSEmail}}</td>
-                        <td>{{.CMSCountAll}}</td>
-                        <td>{{.CMSPriceAll}}</td>
+                        <td>"123456"</td>
+                        <td>"123456"</td>
+                        <td>"123456"</td>
+                        <td>"123456"</td>
+                        <td>"123456"</td>
+                        <td>"123456"</td>
                         <td style="background-color: rgb(0, 0, 0);"><a href="/cms_view_order/{{.CMSToken}}">go to.</a>
                         </td>
                     </tr>

@@ -16,26 +16,25 @@ type ServiceScraper interface {
 // }
 
 type TargetCard struct {
-	Autor      string //`csv:"autor"`
-	Title      string //`csv:"title"`
-	Price      string //`csv:"price"`
-	Link       string //`csv:"link"`
-	Id         string
-	Comment    string
-	TargetHash string
-	Source     string
-	Tag        string
-	Count      string
-	Summa      float64
-	// for cms orders list
-	CMSName        string
-	CMSDate        string
-	CMSPhone       string
-	CMSEmail       string
-	CMSToken       string
-	CMSTargetsHash []string
-	CMSCountAll    string
-	CMSPriceAll    string
+	Autor                string //      `csv:"autor"`
+	Title                string //      `csv:"title"`
+	Price                string //      `csv:"price"`
+	Link                 string //      `csv:"link"`
+	Id                   string
+	Comment              string
+	TargetHash           string
+	Source               string
+	Tag                  string
+	Count                string
+	Summa                float64
+	CMSNameOrders        string
+	CMSDateOrders        string
+	CMSPhoneOrders       string
+	CMSEmailOrders       string
+	CMSTokenOrders       string
+	CMSTargetsHashOrders []string
+	CMSCountAllOrders    string
+	CMSPriceAllOrders    string
 }
 
 type OrdersRows struct {

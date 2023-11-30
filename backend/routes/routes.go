@@ -330,7 +330,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		temp := strings.ReplaceAll(data, "/add_favorites/", "") //res:  1701168638010694862/13
 		target_hash := strings.Split(temp, "/")[0]
 		target_count := strings.Split(temp, "/")[1]
-		rout.SaveTargetFavorites(tokenValue, string(target_hash), target_count)
+		rout.SaveTargetInFavorites(tokenValue, string(target_hash), target_count)
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
 
 	case "delete_favorites":
@@ -338,7 +338,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		data = strings.ReplaceAll(data, ":/", "://")
 		data = strings.ReplaceAll(data, `"`, "")
 		target_hash := strings.ReplaceAll(data, "/delete_favorites/", "")
-		rout.DeleteTargetFavorites(tokenValue, string(target_hash))
+		rout.DeleteTargetFromFavorites(tokenValue, string(target_hash))
 
 		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
@@ -349,7 +349,10 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		temp := strings.ReplaceAll(data, "/add_orders/", "")
 		target_hash := strings.Split(temp, "/")[0]
 		target_count := strings.Split(temp, "/")[1]
-		rout.SaveTargetOrders(tokenValue, string(target_hash), target_count)
+		if strings.TrimSpace(target_count) == "" || target_count == "0" {
+			target_count = "1"
+		}
+		rout.SaveTargetInOrders(tokenValue, string(target_hash), target_count)
 
 		// TODO добавить сохранение в таблицу заказов для админки /
 		// rout.SaveOrdersCms(tokenValue, string(target_hash), count)
@@ -359,11 +362,11 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		// case "delete_orders":
 
 	case "orders":
-		rout.DataTemp.TargetCards = rout.GetListOrders(tokenValue)
+		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)
 		rout.SetHTML(w, "orders.html")
 
 	case "favorites":
-		rout.DataTemp.TargetCards = rout.GetListFavorites(tokenValue)
+		rout.DataTemp.TargetCards = rout.TargetCardsFromListFavorites(tokenValue)
 		rout.SetHTML(w, "favorites.html")
 
 	case "home":
@@ -451,7 +454,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "cms":
 		if isFindCookie {
 			if rout.GetCookieAdmin(w, r) {
-				rout.DataTemp.TargetCards = rout.GetListOrdersCMS()
+				rout.DataTemp.TargetCards = rout.TargetCardsFromListOrdersCMS()
 				rout.SetHTML(w, "cms.html")
 				return
 			}
