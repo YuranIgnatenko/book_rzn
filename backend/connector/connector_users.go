@@ -51,7 +51,6 @@ func (conn *Connector) AddUser(Login, Password, Type, Token, Name, Family, Phone
 }
 
 func (conn *Connector) FindUserFromToken(token string) (models.Users, error) {
-	fmt.Println(token, "token for func")
 	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Users WHERE token = '%s';`, token))
 	if err != nil {
 		panic(err)

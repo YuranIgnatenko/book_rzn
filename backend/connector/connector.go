@@ -208,30 +208,30 @@ func (conn *Connector) TargetCardsFromListOrdersCMS() []models.TargetCard {
 
 		for _, card := range temp_target_cards_all {
 			user, err := conn.FindUserFromToken(token)
-			fmt.Println("user;;", user.Name, user)
 			if err != nil {
 				panic(err)
 			}
 
 			card.CMSNameOrders = token
-			// card.CMSPhoneOrders = user.Phone
-			// card.CMSEmailOrders = user.Email
+			card.CMSPhoneOrders = user.Phone
+			card.CMSEmailOrders = user.Email
+			// card.CMSPriceAllOrders = user.
 
 			card.Count = mapa_target_hash_count[card.TargetHash]
 			card.Price = strings.ReplaceAll(card.Price, ",", ".")
-			fc, err := strconv.ParseFloat(card.Count, 64)
-			if err != nil {
-				panic(err)
-			}
-			fp, err := strconv.ParseFloat(card.Price, 64)
-			if err != nil {
-				panic(err)
-			}
-			card.Summa = float64(fc * fp)
+			// card.Title =
+			// fc, err := strconv.ParseFloat(card.Count, 64)
+			// if err != nil {
+			// 	panic(err)
+			// }
+			// fp, err := strconv.ParseFloat(card.Price, 64)
+			// if err != nil {
+			// 	panic(err)
+			// }
+			// card.Price // float64(fc * fp)
 			main_target_cards_all = append(main_target_cards_all, card)
 		}
 	}
-	fmt.Println(main_target_cards_all)
 	return main_target_cards_all
 }
 
