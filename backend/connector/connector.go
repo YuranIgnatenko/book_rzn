@@ -131,30 +131,25 @@ func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
 	return target_search
 }
 
-func (conn *Connector) ReSaveCookieDB(login, password, token string) {
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-	}
-	conn.Db = db
+// func (conn *Connector) ReSaveCookieDB(login, password, token string) {
 
-	old_token := conn.GetTokenUser(login, password)
-	new_token := token
+// 	old_token := conn.GetTokenUser(login, password)
+// 	new_token := token
 
-	rows, err := conn.Db.Query(fmt.Sprintf(`UPDATE bookrzn.Users SET token = REPLACE(token, '%s', '%s');`, old_token, new_token))
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
+// 	rows, err := conn.Db.Query(fmt.Sprintf(`UPDATE bookrzn.Users SET token = REPLACE(token, '%s', '%s');`, old_token, new_token))
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer rows.Close()
 
-	rows, err = conn.Db.Query(
-		fmt.Sprintf(`UPDATE bookrzn.Favorites SET token = REPLACE(token, '%s', '%s');`,
-			old_token, token))
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
-}
+// 	rows, err = conn.Db.Query(
+// 		fmt.Sprintf(`UPDATE bookrzn.Favorites SET token = REPLACE(token, '%s', '%s');`,
+// 			old_token, token))
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer rows.Close()
+// }
 
 func (conn *Connector) TargetCardsFromListOrders(token string) []models.TargetCard {
 	mapa_target_hash_count := make(map[string]string, 0)

@@ -133,7 +133,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 
 		            <nav>
                         <ul class="topmenu">
-                            <li><a href="/home">Главная</a></li>
+                            
                             <li><a href="" class="submenu-link">Новинки</a>
                                 <ul class="submenu">
                                     <li><a href="/new_basic">Базовые модули</a></li>
@@ -155,15 +155,15 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                             </li>
                             <li><a href="" class="submenu-link">Книги</a>
                                 <ul class="submenu">
-                                    <li><a href="/prosv_new">Новинки</a></li>
-                                    <li><a href="/prosv_sh_middle">Для среднего специального образования</a></li>
-                                    <li><a href="/prosv_do_sh">Для дошкольников</a></li>
-                                    <li><a href="/prosv_1_4">Для 1-4 классов</a></li>
-                                    <li><a href="/prosv_5_9">Для 5-9 классов</a></li>
-                                    <li><a href="/prosv_10_11">Для 10-11 классов</a></li>
-                                    <li><a href="/prosv_ovz">Для детей с ОВЗ</a></li>
-                                    <li><a href="/prosv_artistic">Художественная литература</a></li>
-                                    <li><a href="/prosv_digit_books">Электронные книги</a></li>
+                                    <li><a href="/book_new">Новинки</a></li>
+                                    <li><a href="/book_sh_middle">Для среднего специального образования</a></li>
+                                    <li><a href="/book_do_sh">Для дошкольников</a></li>
+                                    <li><a href="/book_1_4">Для 1-4 классов</a></li>
+                                    <li><a href="/book_5_9">Для 5-9 классов</a></li>
+                                    <li><a href="/book_10_11">Для 10-11 классов</a></li>
+                                    <li><a href="/book_ovz">Для детей с ОВЗ</a></li>
+                                    <li><a href="/book_artistic">Художественная литература</a></li>
+                                    <li><a href="/book_digit_books">Электронные книги</a></li>
                                 </ul>
                             </li>
                         </ul>

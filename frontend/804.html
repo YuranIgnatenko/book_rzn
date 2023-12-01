@@ -172,10 +172,10 @@
                                     <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="1" style="display: none;"
                                         width="250px" height="250px" />
 
-                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/"></a>
+                                    <a href="/view_targetcard/{{.TargetHash}}"></a>
                                 </div>
                                 <div class="item_content " data-discount="0.00">
-                                    <a href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/"
+                                    <a href="/view_targetcard/{{.TargetHash}}"
                                         class="descr">{{ .Title }}</a>
                                     <div class="short_descr">{{ .Autor }}</div>
 
@@ -183,8 +183,11 @@
                                         <span class="new">{{ .Price }}</span>
                                     </div>
                                     <br>
-                                    <a class="more"
-                                        href="http://new15942715563356.myaddshop.ru/items/shkaf-blanka-2/">Купить</a>
+                                    <!-- <a class="more"
+                                        href="/add_orders/{{.TargetHash}}">Купить</a> -->
+                                    <div>
+                                        <a class="more" onclick="this.href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value;" >Заказать</a>
+                                    </div>
                                 </div>
                             </div>
                             {{ end }}
