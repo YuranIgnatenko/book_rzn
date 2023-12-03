@@ -4,9 +4,17 @@ import (
 	"backend/models"
 	"backend/tools"
 	"fmt"
+	"strings"
+	"time"
 )
 
 // Naming functions
+
+func DateNow() string {
+	t := time.Now()
+	ts := strings.ReplaceAll(strings.Split(fmt.Sprintf("%v", t), " ")[0], "-", ".")
+	return ts
+}
 
 // get 'models.TargetCard' from 'target_hash' bd 'bookrzn.Targets'
 func (conn *Connector) TargetCardFromTargetHash(target_hash string) models.TargetCard {
@@ -47,17 +55,18 @@ func (conn *Connector) MapaTokenUserToOrders(token_user string) map[string][]str
 	var (
 		data                                     = make(map[string][]string, 0)
 		temp_token, temp_target_hash, temp_count string
+		temp_id_order                            int
 	)
 
 	rows, err := conn.Db.Query(
-		fmt.Sprintf(`SELECT token,target_hash,count FROM bookrzn.Orders WHERE token='%s';`, token_user)) //,
+		fmt.Sprintf(`SELECT token,target_hash,count,id_order FROM bookrzn.Orders WHERE token='%s';`, token_user)) //,
 	if err != nil {
 		panic(err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		rows.Scan(&temp_token, &temp_target_hash, &temp_count)
+		rows.Scan(&temp_token, &temp_target_hash, &temp_count, &temp_id_order)
 
 		if err != nil {
 			fmt.Println(err)

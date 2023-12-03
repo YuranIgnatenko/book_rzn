@@ -151,21 +151,41 @@ func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
 // 	defer rows.Close()
 // }
 
+func (conn *Connector) ListOrdersFromTargetCards(tc []models.TargetCard) models.ListOrdersTargetCard {
+	res := models.ListOrdersTargetCard{}
+	lo := make(map[string][]models.TargetCard, 0)
+	pf := make(map[string]float64, 0)
+	for _, card := range tc {
+		lo[card.IdOrder] = append(lo[card.IdOrder], card)
+	}
+
+	for id_order, list_cards := range lo {
+		for _, card := range list_cards {
+			pf[id_order] += card.Summa
+		}
+	}
+	res.PriceFinish = pf
+	res.Orders = lo
+	return res
+}
+
 func (conn *Connector) TargetCardsFromListOrders(token string) []models.TargetCard {
 	mapa_target_hash_count := make(map[string]string, 0)
+	mapa_target_hash_date := make(map[string]string, 0)
+	mapa_target_hash_id_order := make(map[string]string, 0)
 	list_target_hash := make([]string, 0)
 	temp_target_cards_all := make([]models.TargetCard, 0)
 	main_target_cards_all := make([]models.TargetCard, 0)
-	temp_token, temp_target_hash, temp_count := "", "", ""
+	temp_token, temp_target_hash, temp_count, temp_date, temp_id_order := "", "", "", "", ""
 
-	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT token,target_hash,count FROM bookrzn.Orders WHERE token='%s';`, token)) //,
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT token,target_hash,count,date,id_order FROM bookrzn.Orders WHERE token='%s';`, token)) //,
 	if err != nil {
 		panic(err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		rows.Scan(&temp_token, &temp_target_hash, &temp_count)
+		rows.Scan(&temp_token, &temp_target_hash, &temp_count, &temp_date, &temp_id_order)
 
 		if err != nil {
 			fmt.Println(err)
@@ -173,6 +193,8 @@ func (conn *Connector) TargetCardsFromListOrders(token string) []models.TargetCa
 		}
 		list_target_hash = append(list_target_hash, temp_target_hash)
 		mapa_target_hash_count[temp_target_hash] = temp_count
+		mapa_target_hash_date[temp_target_hash] = temp_date
+		mapa_target_hash_id_order[temp_target_hash] = temp_id_order
 	}
 
 	for _, hash := range list_target_hash {
@@ -181,6 +203,8 @@ func (conn *Connector) TargetCardsFromListOrders(token string) []models.TargetCa
 
 	for _, card := range temp_target_cards_all {
 		card.Count = mapa_target_hash_count[card.TargetHash]
+		card.Date = mapa_target_hash_date[card.TargetHash]
+		card.IdOrder = mapa_target_hash_id_order[card.TargetHash]
 		card.Price = strings.ReplaceAll(card.Price, ",", ".")
 		fc, err := strconv.ParseFloat(card.Count, 64)
 		if err != nil {
@@ -191,7 +215,7 @@ func (conn *Connector) TargetCardsFromListOrders(token string) []models.TargetCa
 		if err != nil {
 			panic(err)
 		}
-		card.Summa = float64(fc * fp)
+		card.Summa = float64(fc*fp) + 0.0
 		main_target_cards_all = append(main_target_cards_all, card)
 	}
 
@@ -319,14 +343,14 @@ func (conn *Connector) TargetCardsFromListFavorites(token string) []models.Targe
 	return favcards
 }
 
-func (conn *Connector) SaveTargetInOrders(token, target_hash, count string) {
+func (conn *Connector) SaveTargetInOrders(token, target_hash, count string, id_order string) {
 	var rows *sql.Rows
 	var err error
 
 	rows, err = conn.Db.Query(
-		fmt.Sprintf(`INSERT bookrzn.Orders (token, target_hash, count) 
-		VALUES ( '%s','%s','%s');`,
-			token, target_hash, count))
+		fmt.Sprintf(`INSERT bookrzn.Orders (token, target_hash, count, date, id_order) 
+		VALUES ( '%s','%s','%s', '%s', '%s');`,
+			token, target_hash, count, DateNow(), id_order))
 	if err != nil {
 		panic(err)
 	}

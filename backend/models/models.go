@@ -15,6 +15,11 @@ type ServiceScraper interface {
 // 	PriceAll string
 // }
 
+type ListOrdersTargetCard struct {
+	Orders      map[string][]TargetCard // {"1":[]TargetCard{...}, "2":[]TargetCard{...}} --> key=id_order from bookrzn.Orders
+	PriceFinish map[string]float64
+}
+
 type TargetCard struct {
 	Autor                string //      `csv:"autor"`
 	Title                string //      `csv:"title"`
@@ -27,6 +32,9 @@ type TargetCard struct {
 	Tag                  string
 	Count                string
 	Summa                float64
+	Date                 string
+	IdOrder              string
+	Edition_order_token  string
 	CMSNameOrders        string
 	CMSDateOrders        string
 	CMSPhoneOrders       string

@@ -8,25 +8,24 @@ import (
 
 type DataTemp struct {
 	config.Configuration
-	TargetAll   []models.TargetCard
-	TargetCards []models.TargetCard
-	// OrdersCardsCms    []models.OrdersCardsCms
-	FavoritesCards    []models.FavoritesCards
-	OrdersCards       []models.OrdersCards
-	OrdersRows        []models.OrdersRows
-	SearchTarget      []models.TargetCard
-	FastOrdersList    []models.DataFastOrderOne
-	NumberFastOrder   string
-	IsLogin           bool
-	NameLogin         string
-	PageMenuTemplHtml string
+	TargetAll            []models.TargetCard
+	TargetCards          []models.TargetCard
+	ListOrdersTargetCard models.ListOrdersTargetCard
+	FavoritesCards       []models.FavoritesCards
+	OrdersCards          []models.OrdersCards
+	OrdersRows           []models.OrdersRows
+	SearchTarget         []models.TargetCard
+	FastOrdersList       []models.DataFastOrderOne
+	NumberFastOrder      string
+	IsLogin              bool
+	NameLogin            string
+	PageMenuTemplHtml    string
 }
 
 func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 	return &DataTemp{
-		Configuration: c,
-		TargetAll:     ps,
-		// OrdersCardsCms:  make([]models.OrdersCardsCms, 0),
+		Configuration:   c,
+		TargetAll:       ps,
 		IsLogin:         false,
 		NameLogin:       "Гость",
 		NumberFastOrder: "",

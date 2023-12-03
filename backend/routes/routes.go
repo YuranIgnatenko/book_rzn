@@ -79,10 +79,12 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		temp := strings.ReplaceAll(data, "/add_orders/", "")
 		target_hash := strings.Split(temp, "/")[0]
 		target_count := strings.Split(temp, "/")[1]
+		target_id_order := strings.Split(temp, "/")[2]
+
 		if strings.TrimSpace(target_count) == "" || target_count == "0" {
 			target_count = "1"
 		}
-		rout.SaveTargetInOrders(tokenValue, string(target_hash), target_count)
+		rout.SaveTargetInOrders(tokenValue, string(target_hash), target_count, target_id_order)
 
 		fmt.Println("Loaded sender")
 
@@ -97,12 +99,17 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		sender.Send_mail("Уведомление о заказе",
 			fmt.Sprintf("%v\n", data_msg))
 
-		fmt.Println("Email sended !")
+		// fmt.Println("Email sended !")
 
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
 
+	case "edit_orders":
+		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)
+		rout.SetHTML(w, "edit_orders.html")
+
 	case "orders":
 		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
 		rout.SetHTML(w, "orders.html")
 
 	case "favorites":
@@ -170,15 +177,15 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	case "new_table":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_table")
-		rout.SetHTML(w, "new_table.html")
+		rout.SetHTML(w, "mebel.html")
 
 	case "new_boxing":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_boxing")
-		rout.SetHTML(w, "new_boxing.html")
+		rout.SetHTML(w, "mebel.html")
 
 	case "sh_minitable":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_minitable")
-		rout.SetHTML(w, "sh_minitable.html")
+		rout.SetHTML(w, "mebel.html")
 
 	case "search":
 		sub := r.FormValue("search")

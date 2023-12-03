@@ -7,7 +7,8 @@
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta name="keywords" content="" />
     <meta name="description" content="" />
-    <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport">
+    <!-- <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport"> -->
+    <meta name="viewport" content="width=1200px">
     <title>{{ .Text_banner}}</title>
 
     <link rel="icon" type="image/png"
@@ -164,9 +165,6 @@
                 <div class="content  ">
                     <div class="items_wrapper">
                          
-
-                        <h2 class="shop-title">Каталог товаров</h2>
-
                         <div class="items">
 
                             {{ range .TargetCards }}
@@ -187,20 +185,23 @@
                                     <div class="short_descr">{{ .Autor }}</div>
 
                                     <div class="item_price_big">
-                                        <span class="new">{{ .Price }}</span>
+                                        <span class="new">{{ .Price }}₽</span>
                                     </div>
                                     
                                     <div>
                                         <label>Количество</label>
                                         <input placeholder="1" type="number" id="{{.TargetHash}}" name="tentacles" min="1" max="999999" />
                                     </div>
+                                    
+                                    <div>
+                                        <label>Номер заказа</label>
+                                        <input placeholder="1" type="number" id="{{.TargetHash}}" name="tentacles" min="1" max="999999" />
+                                    </div>
                                    
                                     <div>
                                         <a class="more" onclick="this.href='/add_favorites/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value;" >В корзину</a>
                                     </div>
-                                    <div>
-                                        <a class="more" onclick="this.href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value;" >Заказать</a>
-                                    </div>
+                                     
                                 </div>
                             </div>
                             {{ end }}

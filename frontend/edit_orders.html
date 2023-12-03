@@ -47,12 +47,6 @@
         }
     </style>
 
-    <style>
-        .btnf {
-            display: inline-block;
-        }
-    </style>
-
     <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/base/style.css?ver=1691644398" rel="stylesheet"
         type="text/css">
     <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/templates/michigan.css?ver=1691644398"
@@ -180,71 +174,85 @@
                         <span><a href="/home">Главная</a> / </span>
                         <span>Заказы</span>
                     </div>
+
                     <h1 class="shop-title">Заказы</h1>
-                    <div class="promo-descr"></div>
+
+                    <div class="promo-descr"  ></div>
+
                     <div id="basket_list"></div>
 
 
-                    {{ range $key, $value := .ListOrdersTargetCard.Orders }}
-                    <ul>
-                        <p> Номер заказа №[{{ $key }}]</p>
-                        <li>
-                            <font-size=”15″ face=”Times New Roman”>
-                                <table border="1" width="100%" style="background-color: cadetblue;">
-                                    <!-- <caption>Заказ №[{{ $key }}]</caption> -->
-                                    <tr style="background-color: #ffb289;">
-                                        <th>Изображение</th>
-                                        <th>Наименование</th>
-                                        <th>Количество</th>
-                                        <th>Цена</th>
-                                        <th>Сумма</th>
-                                        <th>Дата</th>
-                                    </tr>
-                                    </font>
 
 
-                                    <font-size=”10″ face=”Calibri”>
-                                        {{ range $value }}
-                                        <tr>
-                                            <td><img src="{{ .Link }}" height=50 width=50</td>
-                                            <td>{{ .Autor }}{{ .Title }}</td>
-                                            <td>{{ .Count }}</td>
-                                            <td>{{ .Price }}</td>
-                                            <td>{{ .Summa }}</td>
-                                            <td>{{ .Date }}</td>
-                                        </tr>
-                                        {{ end }}
-                                        </font>
+                    <font-size=”15″ face=”Times New Roman”>
+                        <table border="1" width="100%" style="background-color: cadetblue;">
+                            <caption>Список заказов</caption>
+                            <tr style="background-color: #ffb289;">
+                                <th>Наименование</th>
+                                <th>Дата создания</th>
+                                <!-- <th>Примечание</th> -->
+                                <th>Количество</th>
+                                <th>Цена</th>
+                                <th>Сумма</th>
+                            </tr>
+                            </font>
 
-                                </table>
-                                <hr style="border: #333; border-width: 2;">
-                        </li>
-                        <div>
-                            <p> </p>
+                            {{ range .TargetCards }}
+                            <font-size=”10″ face=”Calibri”>
+                                <tr>
+                                    <td>{{.Autor}} {{.Title}}</td>
+                                    <td>{{.Date}}</td>
+                                    <!-- <td>{{.Comment}}</td> -->
+                                    <td>{{.Count}}</td>
+                                    <td>{{.Price}}</td>
+                                    <td>{{.Summa}}</td>
+                                    <td style="background-color: chartreuse;"><a
+                                            href="/edit_orders/{{.TargetHash}}">редакт.</a></td>
+                                </tr>
+                                {{ end }}
+
+                        </table>
+                        </font>
+
+
+                        {{ range .TargetCards }}
+                        <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
+
+                            <div class="image">
+                                <div class="bg_dark"></div>
+                                <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="0" width="250px" height="250px"
+                                    loading="lazy" />
+                                <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="1" style="display: none;"
+                                    width="250px" height="250px" />
+
+                                <a href=" "></a>
+                            </div>
+                            <div class="item_content " data-discount="0.00">
+                                <a href=" " class="descr">{{ .Title }}</a>
+                                <div class="short_descr">{{ .Autor }}</div>
+
+                                <div class="item_price_big">
+                                    <span class="new">{{ .Price }}</span>
+                                </div>
+
+                                <div>
+                                    <label>Количество</label>
+                                    <input placeholder="1" type="number" id="{{.TargetHash}}" name="tentacles" min="1"
+                                        max="999999" />
+                                </div>
+
+                                <div>
+                                    <a class="more"
+                                        onclick="this.href='/add_favorites/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value;">В
+                                        корзину</a>
+                                </div>
+                                <div>
+                                    <a class="more"
+                                        onclick="this.href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value;">Заказать</a>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <form class="btnf" action="/test" method="post">
-                                <input type="submit" value="Редактировать содержимое">
-                            </form>
-                            <form class="btnf" action="/test" method="post">
-                                <input type="submit" value="Удалить таблицу">
-                            </form>
-                            <form class="btnf" action="/test" method="post">
-                                <input type="submit" value="Выгрузить в избранное">
-                            </form>
-                            <form class="btnf" action="/test" method="post">
-                                <input type="submit" value="Оформить">
-                            </form>
-                        </div>
-                        <hr>
-                        <br>
-                    </ul>
-
-                    {{ end }}
-
-
-
-
+                        {{ end }}
 
 
                 </div>
@@ -274,77 +282,6 @@
                             соглашаетесь с политикой конфиденциальности.</p> -->
                 </div>
             </div>
-            <!-- <div class="fmenu">
-                    <div class="footer_subtitle">О магазине</div>
-                    <ul>
-                        <li>
-                            <a href="/">Главная</a>
-                        </li>
-                        <li>
-                            <a href="/sales">Акции</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/o-kompanii/">О компании</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/dostavka-i-oplata/">Доставка и оплата</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/kontakty/">Контакты</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/news/" class="" title="Новости">Новости</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/articles/" class="" title="Статьи">Статьи</a>
-                        </li>
-
-                    </ul>
-
-                </div> -->
-            <!-- <div class="fmenu catalog">
-                    <div class="footer_subtitle">Каталог</div>
-                    <ul>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/shkafy-i-mebelnye-stenki/"
-                                class="" title="Шкафы и мебельные стенки">Шкафы и мебельные стенки</a>
-
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/stellazhi-i-polki/" class=""
-                                title="Стеллажи и полки">Стеллажи и полки</a>
-
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/komody-i-garderoby/" class=""
-                                title="Комоды и гардеробы">Комоды и гардеробы</a>
-
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/stoly-i-stulya/" class=""
-                                title="Столы и стулья">Столы и стулья</a>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="fmenu contact_us">
-                    <div class="footer_subtitle">Свяжитесь с нами</div>
-                    <div class="address">{{ .location_office}}</div>
-                    <div>
-                        <span class="mail_span">E-mail:</span>
-                        <a href="mailto:{{ .Email}}">{{ .Email}}</a>
-                    </div>
-
-                    <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a> 
-                    <div class="social">
-                        <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                        <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
-                        <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
-                        <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
-                        <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a> -->
-        </div>
-
-        </div>
         </div>
         </div>
     </footer>
