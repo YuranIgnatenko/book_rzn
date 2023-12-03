@@ -9,7 +9,7 @@
     <meta name="description" content="" />
     <!-- <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport"> -->
     <meta name="viewport" content="width=1200px">
-    <title>{{ .Text_banner}}</title>
+    <title>{{ .Location_office }}</title>
 
     <link rel="icon" type="image/png"
         href="http://new15942715563356.myaddshop.ru/img/64x64/1010/favicon/favikonka_15942854458688.png" />
@@ -45,10 +45,12 @@
             --mainContrastSchemeColor-lighten10: #ffa87f;
             --mainContrastSchemeColor-lighten20: #ffb289;
         }
+    </style>
 
-        /* .more{
-            background-color: #333;
-        } */
+    <style>
+        .btnf {
+            display: inline-block;
+        }
     </style>
 
     <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/base/style.css?ver=1691644398" rel="stylesheet"
@@ -67,10 +69,13 @@
         window.promo_discount = null;
         window.promo_title = null;
         window.one_click_buy = 1;
-    </script>
+    </script> <!-- gsc start -->
 
+    <!-- gsc end -->
 
+    <!-- ywm start -->
 
+    <!-- ywm end --> <!-- Подключите тут важные скрипты и стили. -->
 </head>
 
 <body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
@@ -89,7 +94,8 @@
 
                     <div class="login_or_reg">
                         {{if .IsLogin}}
-                        <a>Пользователь:{{ .NameLogin }}</a>
+                        <a href="/home">Пользователь:{{ .NameLogin }}</a>
+                        <br>
                         <a href="/out">Выход</a>
                         {{else}}
                         <a href="/login">Вход</a>
@@ -111,7 +117,7 @@
                         <div class="slogan">{{ .Location_office}}</div>
                     </div>
                     <div class="search_form">
-                                                <!-- FART ORDER  -->
+                        <!-- FART ORDER  -->
 
                         <form action="/fast_mail">
                             <button style="width: 100%;" type="submit">Написать письмо*</button>
@@ -150,15 +156,22 @@
                                 <span>История</span>
                             </a>
                         </div>
+                        
                         {{end}}
 
-
+                        <!-- <div class="basket bars" title="Корзина товаров">
+                            <a href="/home">
+                                <i data-feather="shopping-bag"></i>
+                                <span>Корзина</span>
+                            </a>
+                        </div> -->
                     </div>
                 </div>
             </div>
 
             <div class="header-bottom">
                 <div class="inner">
+
                     {{ .PageMenuTemplHtml }}
                 </div>
             </div>
@@ -168,56 +181,71 @@
         <div class="block main">
             <div class="inner">
 
-                <div class="content  ">
-                    <div class="items_wrapper">
-                         
-                        <div class="items">
+                <div class="content  nositebar  ">
 
-                            {{ range .TargetCards }}
-                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
-
-                                <div class="image">
-                                    <div class="bg_dark"></div>
-                                    <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="0" width="250px"
-                                        height="250px" loading="lazy" />
-                                    <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="1" style="display: none;"
-                                        width="250px" height="250px" />
-
-                                    <a href=" "></a>
-                                </div>
-                                <div class="item_content " data-discount="0.00">
-                                    <a href=" "
-                                        class="descr">{{ .Title }}</a>
-                                    <div class="short_descr">{{ .Autor }}</div>
-
-                                    <div class="item_price_big">
-                                        <span class="new">{{ .Price }}₽</span>
-                                    </div>
-                                    
-                                    <div>
-                                        <label>Количество</label>
-                                        <input placeholder="1" type="number" id="{{.TargetHash}}" name="tentacles" min="1" max="999999" />
-                                    </div>
-                                    
-                                    <div>
-                                        <label>Номер заказа</label>
-                                        <input placeholder="1" type="number" id="{{.TargetHash}}" name="tentacles" min="1" max="999999" />
-                                    </div>
-                                   
-                                    <div>
-                                        <a class="more" onclick="this.href='/add_favorites/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value;" >В корзину</a>
-                                    </div>
-                                     
-                                </div>
-                            </div>
-                            {{ end }}
-
-
-                        </div>
+                    <div class="breadcrumb">
+                        <span><a href="/home">Главная</a> / </span>
+                        <span>История</span>
                     </div>
+                    <h1 class="shop-title">История</h1>
+                    <div class="promo-descr"></div>
+                    <div id="basket_list"></div>
 
 
-                    
+                    {{ range $key, $value := .ListOrdersTargetCard.Orders }}
+                    <ul>
+                        <p> Номер заказа №[{{ $key }}]</p>
+                        <li>
+                            <font-size=”15″ face=”Times New Roman”>
+                                <table border="1" width="100%" style="background-color: rgb(122, 243, 148);">
+                                    <!-- <caption>Заказ №[{{ $key }}]</caption> -->
+                                    <tr style="background-color: #e6d9d3;">
+                                        <th>Изображение</th>
+                                        <th>Наименование</th>
+                                        <th>Количество</th>
+                                        <th>Цена</th>
+                                        <th>Сумма</th>
+                                        <th>Дата</th>
+                                    </tr>
+                                    </font>
+
+
+                                    <font-size=”10″ face=”Calibri”>
+                                        {{ range $value }}
+                                        <tr>
+                                            <td><img src="{{ .Link }}" height=40 width=40 </td>
+                                            <td>{{ .Autor }}{{ .Title }}</td>
+                                            <td>{{ .Count }}</td>
+                                            <td>{{ .Price }}</td>
+                                            <td>{{ .Summa }}</td>
+                                            <td>{{ .Date }}</td>
+                                        </tr>
+                                        {{ end }}
+                                        </font>
+
+                                </table>
+                                <hr style="border: #333; border-width: 5;">
+                        </li>
+                        <div>
+                            <p> </p>
+                        </div>
+                        <div>
+                            </form>
+                            <form class="btnf" action="/move_fav_table_orders" method="post">
+                                <input type="submit" value="Выгрузить в избранное">
+                            </form>
+                            <form class="btnf" action="/move_order_table_orders" method="post">
+                                <input type="submit" value="Выгрузить в заказы">
+                            </form>
+                            <form class="btnf" action="/confirm_table_orders/{{$key}}" method="post">
+                                <input type="submit" value="Оформить повторно">
+                            </form>
+                        </div>
+                        <hr>
+                        <br>
+                    </ul>
+                    {{ end }}
+
                 </div>
 
             </div>
@@ -245,21 +273,81 @@
                             соглашаетесь с политикой конфиденциальности.</p> -->
                 </div>
             </div>
+            <!-- <div class="fmenu">
+                    <div class="footer_subtitle">О магазине</div>
+                    <ul>
+                        <li>
+                            <a href="/">Главная</a>
+                        </li>
+                        <li>
+                            <a href="/sales">Акции</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/o-kompanii/">О компании</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/dostavka-i-oplata/">Доставка и оплата</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/kontakty/">Контакты</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/news/" class="" title="Новости">Новости</a>
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/articles/" class="" title="Статьи">Статьи</a>
+                        </li>
 
+                    </ul>
 
-            <div class="social">
-                <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
-                <!-- <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
-                <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
-                <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a> -->
-            </div>
+                </div> -->
+            <!-- <div class="fmenu catalog">
+                    <div class="footer_subtitle">Каталог</div>
+                    <ul>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/shkafy-i-mebelnye-stenki/"
+                                class="" title="Шкафы и мебельные стенки">Шкафы и мебельные стенки</a>
+
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/stellazhi-i-polki/" class=""
+                                title="Стеллажи и полки">Стеллажи и полки</a>
+
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/komody-i-garderoby/" class=""
+                                title="Комоды и гардеробы">Комоды и гардеробы</a>
+
+                        </li>
+                        <li>
+                            <a href="http://new15942715563356.myaddshop.ru/categories/stoly-i-stulya/" class=""
+                                title="Столы и стулья">Столы и стулья</a>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="fmenu contact_us">
+                    <div class="footer_subtitle">Свяжитесь с нами</div>
+                    <div class="address">{{ .location_office}}</div>
+                    <div>
+                        <span class="mail_span">E-mail:</span>
+                        <a href="mailto:{{ .Email}}">{{ .Email}}</a>
+                    </div>
+
+                    <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a> 
+                    <div class="social">
+                        <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                        <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
+                        <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
+                        <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
+                        <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a> -->
+        </div>
 
         </div>
         </div>
         </div>
     </footer>
-    <!-- <script src="../../code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
     <script>$(function () { feather.replace(); });</script>
     <script src="http://new15942715563356.myaddshop.ru/js/swiper-min.js" type="text/javascript" type="module"></script>
@@ -269,8 +357,7 @@
         href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" />
     <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" />
     <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" />
- -->
-
+    <!-- 11 ms -->
 </body>
 
 </html>

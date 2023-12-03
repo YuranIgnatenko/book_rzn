@@ -132,16 +132,22 @@
                             <span>Поиск</span>
                         </div>
                         {{if .IsLogin}}
-                        <div class="orders bars" title="Мои заказы">
+                        <div class="orders bars" title="Заказы">
                             <a href="/orders">
                                 <i data-feather="archive"></i>
-                                <span>Мои заказы</span>
+                                <span>Заказы</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/favorites">
                                 <i data-feather="heart"></i>
                                 <span>Корзина</span>
+                            </a>
+                        </div>
+                        <div class="favorite bars">
+                            <a href="/orders_history">
+                                <i data-feather="heart"></i>
+                                <span>История</span>
                             </a>
                         </div>
                         {{end}}

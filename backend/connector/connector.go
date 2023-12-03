@@ -131,6 +131,24 @@ func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
 	return target_search
 }
 
+//TODO изменить перезапись в таблице статуса и выотправка сообщения
+func (conn *Connector) ConfirmTableOrders(tokenUser, id_order string) {
+
+	rows, err := conn.Db.Query(`UPDATE bookrzn.Orders SET status = REPLACE(status, 'off', 'on');`)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	// rows, err = conn.Db.Query(
+	// 	fmt.Sprintf(`UPDATE bookrzn.Favorites SET token = REPLACE(token, '%s', '%s');`,
+	// 		old_token, token))
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer rows.Close()
+}
+
 // func (conn *Connector) ReSaveCookieDB(login, password, token string) {
 
 // 	old_token := conn.GetTokenUser(login, password)

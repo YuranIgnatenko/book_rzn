@@ -16,8 +16,9 @@ type ServiceScraper interface {
 // }
 
 type ListOrdersTargetCard struct {
-	Orders      map[string][]TargetCard // {"1":[]TargetCard{...}, "2":[]TargetCard{...}} --> key=id_order from bookrzn.Orders
-	PriceFinish map[string]float64
+	Orders              map[string][]TargetCard // {"1":[]TargetCard{...}, "2":[]TargetCard{...}} --> key=id_order from bookrzn.Orders
+	OrdersStatusConfirm map[string]bool
+	PriceFinish         map[string]float64
 }
 
 type TargetCard struct {

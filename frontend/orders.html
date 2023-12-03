@@ -138,16 +138,22 @@
                             <span>Поиск</span>
                         </div>
                         {{if .IsLogin}}
-                        <div class="orders bars" title="Мои заказы">
+                        <div class="orders bars" title="Заказы">
                             <a href="/orders">
                                 <i data-feather="archive"></i>
-                                <span>Мои заказы</span>
+                                <span>Заказы</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/favorites">
                                 <i data-feather="heart"></i>
                                 <span>Корзина</span>
+                            </a>
+                        </div>
+                        <div class="favorite bars">
+                            <a href="/orders_history">
+                                <i data-feather="heart"></i>
+                                <span>История</span>
                             </a>
                         </div>
                         {{end}}
@@ -190,9 +196,9 @@
                         <p> Номер заказа №[{{ $key }}]</p>
                         <li>
                             <font-size=”15″ face=”Times New Roman”>
-                                <table border="1" width="100%" style="background-color: cadetblue;">
+                                <table border="1" width="100%" style="background-color: rgb(174, 211, 212);">
                                     <!-- <caption>Заказ №[{{ $key }}]</caption> -->
-                                    <tr style="background-color: #ffb289;">
+                                    <tr style="background-color: #ecbda4;">
                                         <th>Изображение</th>
                                         <th>Наименование</th>
                                         <th>Количество</th>
@@ -206,7 +212,7 @@
                                     <font-size=”10″ face=”Calibri”>
                                         {{ range $value }}
                                         <tr>
-                                            <td><img src="{{ .Link }}" height=50 width=50</td>
+                                            <td><img src="{{ .Link }}" height=40 width=40 </td>
                                             <td>{{ .Autor }}{{ .Title }}</td>
                                             <td>{{ .Count }}</td>
                                             <td>{{ .Price }}</td>
@@ -217,35 +223,29 @@
                                         </font>
 
                                 </table>
-                                <hr style="border: #333; border-width: 2;">
+                                <hr style="border: #333; border-width: 3;">
                         </li>
                         <div>
                             <p> </p>
                         </div>
                         <div>
-                            <form class="btnf" action="/test" method="post">
+                            <form class="btnf" action="/edit_table_orders/{{$key}}" method="post">
                                 <input type="submit" value="Редактировать содержимое">
                             </form>
-                            <form class="btnf" action="/test" method="post">
+                            <form class="btnf" action="/delete_table_orders/{{$key}}" method="post">
                                 <input type="submit" value="Удалить таблицу">
                             </form>
-                            <form class="btnf" action="/test" method="post">
+                            <form class="btnf" action="/move_fav_table_orders/{{$key}}" method="post">
                                 <input type="submit" value="Выгрузить в избранное">
                             </form>
-                            <form class="btnf" action="/test" method="post">
+                            <form class="btnf" action="/confirm_table_orders/{{$key}}" method="post">
                                 <input type="submit" value="Оформить">
                             </form>
                         </div>
                         <hr>
                         <br>
                     </ul>
-
                     {{ end }}
-
-
-
-
-
 
                 </div>
 

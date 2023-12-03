@@ -129,16 +129,22 @@
                             <span>Поиск</span>
                         </div>
                         {{if .IsLogin}}
-                        <div class="orders bars" title="Мои заказы">
+                        <div class="orders bars" title="Заказы">
                             <a href="/orders">
                                 <i data-feather="archive"></i>
-                                <span>Мои заказы</span>
+                                <span>Заказы</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/favorites">
                                 <i data-feather="heart"></i>
                                 <span>Корзина</span>
+                            </a>
+                        </div>
+                        <div class="favorite bars">
+                            <a href="/orders_history">
+                                <i data-feather="heart"></i>
+                                <span>История</span>
                             </a>
                         </div>
                         {{end}}
@@ -187,12 +193,12 @@
                                     
                                     <div>
                                         <label>Количество</label>
-                                        <input placeholder="1" type="number" id="{{.TargetHash}}" name="tentacles" min="1" max="999999" />
+                                        <input placeholder="1" type="number" value="1" id="{{.TargetHash}}" name="tentacles" min="1" max="999999" />
                                     </div>
                                     
                                     <div>
                                         <label>Номер заказа</label>
-                                        <input placeholder="1" type="number" id="{{.TargetHash}}" name="tentacles" min="1" max="999999" />
+                                        <input placeholder="1" type="number" value="1" id="{{.Link}}" name="tentacles" min="1" max="999999" />
                                     </div>
                                    
                                     <div>
@@ -200,7 +206,7 @@
                                         href="/delete_favorites/{{ .TargetHash }}">Убрать</a>
                                     </div>
                                     <div>
-                                        <a class="more" onclick="this.href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value;" >В заказ</a>
+                                        <a class="more" onclick="this.href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value+'/'+document.getElementById('{{.Link}}').value;" >В заказ</a>
                                     </div>
                                     
                                 </div>

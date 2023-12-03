@@ -6,7 +6,6 @@ import (
 	"backend/connector"
 	"backend/datatemp"
 	"backend/parsing"
-	"backend/sender"
 	"fmt"
 	"net/http"
 	"strings"
@@ -60,7 +59,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 			target_count = "1"
 		}
 		rout.SaveTargetInFavorites(tokenValue, string(target_hash), target_count)
-		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
+		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
 	case "delete_favorites":
 		data := r.URL.Path
@@ -77,6 +76,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		data = strings.ReplaceAll(data, ":/", "://")
 		data = strings.ReplaceAll(data, `"`, "")
 		temp := strings.ReplaceAll(data, "/add_orders/", "")
+		// fmt.Println(strings.Split(temp, "/"), "++++++++++++")
 		target_hash := strings.Split(temp, "/")[0]
 		target_count := strings.Split(temp, "/")[1]
 		target_id_order := strings.Split(temp, "/")[2]
@@ -86,22 +86,40 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		}
 		rout.SaveTargetInOrders(tokenValue, string(target_hash), target_count, target_id_order)
 
-		fmt.Println("Loaded sender")
+		// // fmt.Println("Loaded sender")
+		// user := rout.DataUserFromToken(tokenValue)
+		// target := rout.TargetCardFromTargetHash(target_hash)
+		// data_msg := fmt.Sprintf(
+		// 	"Создан заказ! \nКонтактное лицо :[( %v ) %v %v]\n\n Связь:[ %v %v ]\n\n Позиция:[ %v %v ] \nКоличество:[ %v ] \nЦена(за 1 экз.):[ %v ].",
+		// 	user.Login, user.Name, user.Family,
+		// 	user.Email, user.Phone, target.Autor, target.Title, target_count, target.Price)
+		// sender.Send_mail("Уведомление о заказе",
+		// 	fmt.Sprintf("%v\n", data_msg))
+		// // fmt.Println("Email sended !")
 
-		user := rout.DataUserFromToken(tokenValue)
-		target := rout.TargetCardFromTargetHash(target_hash)
+		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
-		data_msg := fmt.Sprintf(
-			"Создан заказ! \nКонтактное лицо :[( %v ) %v %v]\n\n Связь:[ %v %v ]\n\n Позиция:[ %v %v ] \nКоличество:[ %v ] \nЦена(за 1 экз.):[ %v ].",
-			user.Login, user.Name, user.Family,
-			user.Email, user.Phone, target.Autor, target.Title, target_count, target.Price)
+	case "edit_table_orders":
+	case "delete_table_orders":
+	case "move_fav_table_orders":
+	case "confirm_table_orders":
+		data := r.URL.Path
+		data = strings.ReplaceAll(data, ":/", "://")
+		data = strings.ReplaceAll(data, `"`, "")
+		temp := strings.ReplaceAll(data, "/add_orders/", "")
+		// fmt.Println(strings.Split(temp, "/"), "++++++++++++")
+		target_hash := strings.Split(temp, "/")[0]
+		target_count := strings.Split(temp, "/")[1]
+		target_id_order := strings.Split(temp, "/")[2]
 
-		sender.Send_mail("Уведомление о заказе",
-			fmt.Sprintf("%v\n", data_msg))
+		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		rout.SetHTML(w, "orders_history.html")
 
-		// fmt.Println("Email sended !")
-
-		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
+	case "orders_history":
+		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		rout.SetHTML(w, "orders_history.html")
 
 	case "edit_orders":
 		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)
