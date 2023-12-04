@@ -8,13 +8,6 @@ import (
 )
 
 func (conn *Connector) AddUser(Login, Password, Type, Token, Name, Family, Phone, Email string) {
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-
-	}
-	conn.Db = db
-	defer db.Close()
 	namedb := "bookrzn.Users"
 	rows, err := conn.Db.Query(
 		fmt.Sprintf(`INSERT INTO %s (login,password,type,token,name,family,phone,email) 
@@ -43,7 +36,6 @@ func (conn *Connector) AddUser(Login, Password, Type, Token, Name, Family, Phone
 			&u.Email)
 
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 		users = append(users, u)
@@ -107,7 +99,6 @@ func (conn *Connector) FindUserFromLoginPassword(Login, Password string) (models
 			&u.Phone,
 			&u.Email)
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 	}
@@ -135,7 +126,6 @@ func (conn *Connector) GetTokenUser(Login, Password string) string {
 		err := rows.Scan(
 			&token)
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 
@@ -165,7 +155,6 @@ func (conn *Connector) GetAccessUser(Login, Password string) string {
 		err := rows.Scan(
 			&access)
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 

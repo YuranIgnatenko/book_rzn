@@ -49,7 +49,6 @@ func (conn *Connector) GetListTargets() []models.TargetCard {
 		)
 
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 		targetsCard = append(targetsCard, card)

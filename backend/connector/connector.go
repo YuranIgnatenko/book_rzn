@@ -49,7 +49,6 @@ func (conn *Connector) GetNameLoginFromToken(token string) string {
 		err := rows.Scan(&login_name)
 
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 
@@ -123,7 +122,6 @@ func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
 		)
 
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 		target_search = append(target_search, ts)
@@ -131,22 +129,34 @@ func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
 	return target_search
 }
 
-//TODO изменить перезапись в таблице статуса и выотправка сообщения
-func (conn *Connector) ConfirmTableOrders(tokenUser, id_order string) {
+func (conn *Connector) SaveTargetInOrdersHistory(token, target_hash, count string, id_order string) {
+	var rows *sql.Rows
+	var err error
 
-	rows, err := conn.Db.Query(`UPDATE bookrzn.Orders SET status = REPLACE(status, 'off', 'on');`)
+	rows, err = conn.Db.Query(
+		fmt.Sprintf(`INSERT bookrzn.OrdersHistory (token, target_hash, count, date, id_order, status_order) 
+		VALUES ( '%s','%s','%s', '%s', '%s', '%s');`,
+			token, target_hash, count, DateNow(), id_order, "on"))
 	if err != nil {
 		panic(err)
 	}
 	defer rows.Close()
+}
 
-	// rows, err = conn.Db.Query(
-	// 	fmt.Sprintf(`UPDATE bookrzn.Favorites SET token = REPLACE(token, '%s', '%s');`,
-	// 		old_token, token))
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// defer rows.Close()
+func (conn *Connector) DeleteTableOrders(tokenUser, idOrder string) {
+	rows, err := conn.Db.Query(fmt.Sprintf(`DELETE FROM bookrzn.Orders WHERE token="%s" AND id_order="%s";`, tokenUser, idOrder))
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+}
+
+func (conn *Connector) DeleteTableOrdersHistory(tokenUser, idOrder string) {
+	rows, err := conn.Db.Query(fmt.Sprintf(`DELETE FROM bookrzn.OrdersHistory WHERE token="%s" AND id_order="%s";`, tokenUser, idOrder))
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
 }
 
 // func (conn *Connector) ReSaveCookieDB(login, password, token string) {
@@ -206,7 +216,62 @@ func (conn *Connector) TargetCardsFromListOrders(token string) []models.TargetCa
 		rows.Scan(&temp_token, &temp_target_hash, &temp_count, &temp_date, &temp_id_order)
 
 		if err != nil {
-			fmt.Println(err)
+			continue
+		}
+		list_target_hash = append(list_target_hash, temp_target_hash)
+		mapa_target_hash_count[temp_target_hash] = temp_count
+		mapa_target_hash_date[temp_target_hash] = temp_date
+		mapa_target_hash_id_order[temp_target_hash] = temp_id_order
+	}
+
+	for _, hash := range list_target_hash {
+		temp_target_cards_all = append(temp_target_cards_all, conn.TargetCardFromTargetHash(hash))
+	}
+
+	for _, card := range temp_target_cards_all {
+		card.Count = mapa_target_hash_count[card.TargetHash]
+		card.Date = mapa_target_hash_date[card.TargetHash]
+		card.IdOrder = mapa_target_hash_id_order[card.TargetHash]
+		card.Price = strings.ReplaceAll(card.Price, ",", ".")
+		fc, err := strconv.ParseFloat(card.Count, 64)
+		if err != nil {
+			panic(err)
+		}
+		temp_fp := strings.ReplaceAll(card.Price, "\u00a0", "")
+		fp, err := strconv.ParseFloat(temp_fp, 64)
+		if err != nil {
+			panic(err)
+		}
+		card.Summa = float64(fc*fp) + 0.0
+		main_target_cards_all = append(main_target_cards_all, card)
+	}
+
+	return main_target_cards_all
+}
+
+func (conn *Connector) TargetCardsFromListOrdersHistory(token string) []models.TargetCard {
+	var (
+		mapa_target_hash_count    = make(map[string]string, 0)
+		mapa_target_hash_date     = make(map[string]string, 0)
+		mapa_target_hash_id_order = make(map[string]string, 0)
+		list_target_hash          = make([]string, 0)
+		temp_target_cards_all     = make([]models.TargetCard, 0)
+		main_target_cards_all     = make([]models.TargetCard, 0)
+	)
+	temp_token, temp_target_hash, temp_count, temp_date, temp_id_order := "", "", "", "", ""
+
+	rows, err := conn.Db.Query(fmt.Sprintf(
+		`SELECT token,target_hash,count,date,id_order,status_order FROM bookrzn.OrdersHistory WHERE token='%s';`,
+		token)) //,
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		rows.Scan(&temp_token, &temp_target_hash, &temp_count, &temp_date, &temp_id_order)
+
+		if err != nil {
 			continue
 		}
 		list_target_hash = append(list_target_hash, temp_target_hash)
@@ -258,7 +323,6 @@ func (conn *Connector) TargetCardsFromListOrdersCMS() []models.TargetCard {
 			rows.Scan(&temp_token, &temp_target_hash, &temp_count)
 
 			if err != nil {
-				fmt.Println(err)
 				continue
 			}
 			list_target_hash = append(list_target_hash, temp_target_hash)
@@ -319,7 +383,6 @@ func (conn *Connector) TargetCardsFromListFavorites(token string) []models.Targe
 		rows.Scan(&target_hash, &target_count)
 
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 		list_targets_hash = append(list_targets_hash, target_hash)
@@ -349,15 +412,11 @@ func (conn *Connector) TargetCardsFromListFavorites(token string) []models.Targe
 			card.Count = list_targets_count[ind]
 
 			if err != nil {
-				fmt.Println(err)
 				continue
 			}
-			fmt.Printf("%+v\n\n", card)
 			favcards = append(favcards, card)
 		}
 	}
-	fmt.Println(len(favcards), "favcard")
-
 	return favcards
 }
 
@@ -377,8 +436,6 @@ func (conn *Connector) SaveTargetInOrders(token, target_hash, count string, id_o
 }
 
 func (conn *Connector) SaveTargetInFavorites(token, targethash, count string) {
-	fmt.Println("save fav cards:", token, targethash, count)
-	// namedb := "bookrzn.Favorites"
 	rows, err := conn.Db.Query(
 		fmt.Sprintf(`INSERT bookrzn.Favorites (token,target_hash,count) 
 		VALUES ( '%s','%s','%s');`,
@@ -426,7 +483,6 @@ func (conn *Connector) AccessLogin(login, password string) string {
 		err := rows.Scan(
 			&access)
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 	}

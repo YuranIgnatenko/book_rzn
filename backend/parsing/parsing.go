@@ -112,21 +112,21 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 	}
 
 	tc_all := conn.GetListTargets()
-	fmt.Println(len(tc_all))
 
 	if len(tc_all) <= 1 {
+		fmt.Println("Launched scrapper - started")
 		tc_all = RangeScrapServices(lss)
 
 		for _, tc_temp := range tc_all {
 			conn.SaveParsingService(tc_temp)
 		}
 		ps.ListTargetCardCache = tc_all
-
+		fmt.Println("Launched scrapper -- finished")
 	} else {
+		fmt.Println("Launched scrapper -- no (getting from BD)")
 		ps.ListTargetCardCache = tc_all
 	}
 
-	fmt.Println(len(tc_all), len(ps.ListTargetCardCache))
 	return &ps
 }
 

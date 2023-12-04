@@ -8,7 +8,6 @@ import (
 	"backend/parsing"
 	"fmt"
 	"net/http"
-	"strings"
 	"text/template"
 )
 
@@ -41,85 +40,61 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	tokenValue := rout.GetCookieTokenValue(w, r)
 	rout.DataTemp.NameLogin = rout.Connector.GetNameLoginFromToken(tokenValue)
 
-	url := strings.Split(r.URL.Path, "/")
-	if url[0] == "" {
-		url = url[1:]
-	}
+	path_url := NewPathUrlArgs(r.URL.Path)
 
-	switch url[0] {
+	fmt.Println("url:::::::", path_url.ArgRow, path_url.ArgCase)
+
+	switch path_url.ArgCase {
 
 	case "add_favorites":
-		data := r.URL.Path
-		data = strings.ReplaceAll(data, ":/", "://")
-		data = strings.ReplaceAll(data, `"`, "")
-		temp := strings.ReplaceAll(data, "/add_favorites/", "") //res:  1701168638010694862/13
-		target_hash := strings.Split(temp, "/")[0]
-		target_count := strings.Split(temp, "/")[1]
-		if strings.TrimSpace(target_count) == "" || target_count == "0" {
-			target_count = "1"
-		}
+		target_hash := path_url.Arg1
+		target_count := path_url.Arg2
 		rout.SaveTargetInFavorites(tokenValue, string(target_hash), target_count)
 		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
 	case "delete_favorites":
-		data := r.URL.Path
-		data = strings.ReplaceAll(data, ":/", "://")
-		data = strings.ReplaceAll(data, `"`, "")
-		target_hash := strings.ReplaceAll(data, "/delete_favorites/", "")
+		target_hash := path_url.Arg1
 		rout.DeleteTargetFromFavorites(tokenValue, string(target_hash))
-
 		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
 	case "add_orders":
-		fmt.Println("add orders")
-		data := r.URL.Path
-		data = strings.ReplaceAll(data, ":/", "://")
-		data = strings.ReplaceAll(data, `"`, "")
-		temp := strings.ReplaceAll(data, "/add_orders/", "")
-		// fmt.Println(strings.Split(temp, "/"), "++++++++++++")
-		target_hash := strings.Split(temp, "/")[0]
-		target_count := strings.Split(temp, "/")[1]
-		target_id_order := strings.Split(temp, "/")[2]
-
-		if strings.TrimSpace(target_count) == "" || target_count == "0" {
-			target_count = "1"
-		}
+		target_hash := path_url.Arg1
+		target_count := path_url.Arg2
+		target_id_order := path_url.Arg3
 		rout.SaveTargetInOrders(tokenValue, string(target_hash), target_count, target_id_order)
-
-		// // fmt.Println("Loaded sender")
-		// user := rout.DataUserFromToken(tokenValue)
-		// target := rout.TargetCardFromTargetHash(target_hash)
-		// data_msg := fmt.Sprintf(
-		// 	"Создан заказ! \nКонтактное лицо :[( %v ) %v %v]\n\n Связь:[ %v %v ]\n\n Позиция:[ %v %v ] \nКоличество:[ %v ] \nЦена(за 1 экз.):[ %v ].",
-		// 	user.Login, user.Name, user.Family,
-		// 	user.Email, user.Phone, target.Autor, target.Title, target_count, target.Price)
-		// sender.Send_mail("Уведомление о заказе",
-		// 	fmt.Sprintf("%v\n", data_msg))
-		// // fmt.Println("Email sended !")
-
-		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
+		http.Redirect(w, r, "/orders", http.StatusPermanentRedirect)
 
 	case "edit_table_orders":
-	case "delete_table_orders":
-	case "move_fav_table_orders":
-	case "confirm_table_orders":
-		data := r.URL.Path
-		data = strings.ReplaceAll(data, ":/", "://")
-		data = strings.ReplaceAll(data, `"`, "")
-		temp := strings.ReplaceAll(data, "/add_orders/", "")
-		// fmt.Println(strings.Split(temp, "/"), "++++++++++++")
-		target_hash := strings.Split(temp, "/")[0]
-		target_count := strings.Split(temp, "/")[1]
-		target_id_order := strings.Split(temp, "/")[2]
 
-		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)
-		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+	case "delete_table_orders":
+		target_id_order := path_url.Arg1
+		rout.DeleteTableOrders(rout.GetCookieTokenValue(w, r), target_id_order)
+		http.Redirect(w, r, "/orders", http.StatusPermanentRedirect)
+
+	case "move_fav_table_orders":
+
+	case "confirm_table_orders":
+		target_hash := path_url.Arg1
+		target_count := path_url.Arg2
+		target_id_order := path_url.Arg3
+		rout.SaveTargetInOrdersHistory(tokenValue, string(target_hash), target_count, target_id_order)
 		rout.SetHTML(w, "orders_history.html")
 
 	case "orders_history":
-		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)
+		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrdersHistory(tokenValue)
 		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
 		rout.SetHTML(w, "orders_history.html")
+
+	case "delete_table_orders_history":
+		target_id_order := path_url.Arg1
+		rout.DeleteTableOrdersHistory(rout.GetCookieTokenValue(w, r), target_id_order)
+		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrdersHistory(tokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		http.Redirect(w, r, "/orders_history", http.StatusPermanentRedirect)
+
+	case "edit_table_orders_history":
+	case "move_fav_table_orders_history":
+	case "confirm_table_orders_history":
 
 	case "edit_orders":
 		rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)
@@ -296,8 +271,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.DeleteCookie(w, r)
 		http.Redirect(w, r, "/login", http.StatusPermanentRedirect)
 
-	default:
-		fmt.Println("error : DEFAULT CASE::[", url, "]")
 	}
 }
 

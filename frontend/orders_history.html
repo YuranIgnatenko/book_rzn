@@ -138,16 +138,16 @@
                             <span>Поиск</span>
                         </div>
                         {{if .IsLogin}}
-                        <div class="orders bars" title="Заказы">
+                        <div class="orders bars" title="Редактор">
                             <a href="/orders">
                                 <i data-feather="archive"></i>
-                                <span>Заказы</span>
+                                <span>Редактор</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/favorites">
                                 <i data-feather="heart"></i>
-                                <span>Корзина</span>
+                                <span>Избранное</span>
                             </a>
                         </div>
                         <div class="favorite bars">
@@ -159,10 +159,10 @@
                         
                         {{end}}
 
-                        <!-- <div class="basket bars" title="Корзина товаров">
+                        <!-- <div class="basket bars" title="Избранное товаров">
                             <a href="/home">
                                 <i data-feather="shopping-bag"></i>
-                                <span>Корзина</span>
+                                <span>Избранное</span>
                             </a>
                         </div> -->
                     </div>
@@ -231,13 +231,16 @@
                         </div>
                         <div>
                             </form>
-                            <form class="btnf" action="/move_fav_table_orders" method="post">
+                            <form class="btnf" action="/move_fav_table_orders_history/{{$key}}" method="post">
                                 <input type="submit" value="Выгрузить в избранное">
                             </form>
-                            <form class="btnf" action="/move_order_table_orders" method="post">
+                            <form class="btnf" action="/move_order_table_orders_history/{{$key}}" method="post">
                                 <input type="submit" value="Выгрузить в заказы">
                             </form>
-                            <form class="btnf" action="/confirm_table_orders/{{$key}}" method="post">
+                            <form class="btnf" action="/delete_table_orders_history/{{$key}}" method="post">
+                                <input type="submit" value="Отменить заказ">
+                            </form>
+                            <form class="btnf" action="/confirm_table_orders_history/{{$key}}" method="post">
                                 <input type="submit" value="Оформить повторно">
                             </form>
                         </div>

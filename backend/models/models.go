@@ -22,18 +22,18 @@ type ListOrdersTargetCard struct {
 }
 
 type TargetCard struct {
-	Autor                string //      `csv:"autor"`
-	Title                string //      `csv:"title"`
-	Price                string //      `csv:"price"`
-	Link                 string //      `csv:"link"`
+	Autor                string
+	Title                string
+	Price                string
+	Link                 string
 	Id                   string
 	Comment              string
 	TargetHash           string
-	Source               string
+	Source               string // site.com
 	Tag                  string
 	Count                string
-	Summa                float64
-	Date                 string
+	Summa                float64 //f.ff - 0.00
+	Date                 string  // YYYY.mm.dd
 	IdOrder              string
 	Edition_order_token  string
 	CMSNameOrders        string
@@ -47,10 +47,10 @@ type TargetCard struct {
 }
 
 type OrdersRows struct {
-	Link         string //`csv:"link"`
+	Link         string
 	Id           string
 	Comment      string
-	Price        string //`csv:"price"`
+	Price        string
 	CountTargets string
 }
 

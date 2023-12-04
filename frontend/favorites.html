@@ -129,16 +129,16 @@
                             <span>Поиск</span>
                         </div>
                         {{if .IsLogin}}
-                        <div class="orders bars" title="Заказы">
+                        <div class="orders bars" title="Редактор">
                             <a href="/orders">
                                 <i data-feather="archive"></i>
-                                <span>Заказы</span>
+                                <span>Редактор</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/favorites">
                                 <i data-feather="heart"></i>
-                                <span>Корзина</span>
+                                <span>Избранное</span>
                             </a>
                         </div>
                         <div class="favorite bars">
@@ -198,7 +198,7 @@
                                     
                                     <div>
                                         <label>Номер заказа</label>
-                                        <input placeholder="1" type="number" value="1" id="{{.Link}}" name="tentacles" min="1" max="999999" />
+                                        <input placeholder="1" type="number" value="1" id="{{.Link}}" name="tentacles_n" min="1" max="9999999999999" />
                                     </div>
                                    
                                     <div>
@@ -206,7 +206,7 @@
                                         href="/delete_favorites/{{ .TargetHash }}">Убрать</a>
                                     </div>
                                     <div>
-                                        <a class="more" onclick="this.href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value+'/'+document.getElementById('{{.Link}}').value;" >В заказ</a>
+                                        <a class="more" onclick="href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value+'/'+document.getElementById('{{.Link}}').value;" >В заказ</a>
                                     </div>
                                     
                                 </div>

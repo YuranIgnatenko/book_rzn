@@ -42,7 +42,6 @@ func (conn *Connector) TargetCardFromTargetHash(target_hash string) models.Targe
 		)
 
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 		return card
@@ -69,7 +68,6 @@ func (conn *Connector) MapaTokenUserToOrders(token_user string) map[string][]str
 		rows.Scan(&temp_token, &temp_target_hash, &temp_count, &temp_id_order)
 
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 		data[token_user] = append(data[token_user], temp_target_hash)
@@ -92,7 +90,6 @@ func (conn *Connector) GetTargetHashStringList(token string) []string {
 		rows.Scan(&temp)
 
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 		list = append(list, temp)
@@ -129,7 +126,6 @@ func (conn *Connector) ListTokenUsersFromOrders() []string {
 		}
 
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 		data_list_users_tokens = append(data_list_users_tokens, temp_token)
