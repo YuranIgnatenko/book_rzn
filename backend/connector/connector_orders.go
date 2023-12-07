@@ -62,7 +62,7 @@ func (t_orders *TableOrders) SearchTargetList(request string) []models.TargetCar
 		)
 
 		if err != nil {
-			continue
+			panic(err)
 		}
 		target_search = append(target_search, ts)
 	}
@@ -92,7 +92,7 @@ func (t_orders *TableOrders) DataFromOrders(token string) map[string][][]string 
 			&id_order,
 		)
 		if err != nil {
-			continue
+			panic(err)
 		}
 		temp_str := []string{target_hash, count, date, id_order}
 		data_map[token] = append(data_map[token], temp_str)
@@ -128,7 +128,7 @@ func (t_orders *TableOrders) TargetCardsFromListOrders(token string) []models.Ta
 		rows.Scan(&temp_token, &temp_target_hash, &temp_count, &temp_date, &temp_id_order)
 
 		if err != nil {
-			continue
+			panic(err)
 		}
 		list_target_hash = append(list_target_hash, temp_target_hash)
 		mapa_target_hash_count[temp_target_hash] = temp_count

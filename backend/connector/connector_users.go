@@ -39,7 +39,7 @@ func (t_users *TableUsers) DataUserFromToken(token string) models.Users {
 		)
 
 		if err != nil {
-			continue
+			panic(err)
 		}
 
 	}
@@ -61,7 +61,7 @@ func (t_users *TableUsers) GetNameLoginFromToken(token string) string {
 		err := rows.Scan(&login_name)
 
 		if err != nil {
-			continue
+			panic(err)
 		}
 
 	}
@@ -100,7 +100,7 @@ func (t_users *TableUsers) AddUser(Login, Password, Type, Token, Name, Family, P
 			&u.Email)
 
 		if err != nil {
-			continue
+			panic(err)
 		}
 		users = append(users, u)
 	}
@@ -129,7 +129,7 @@ func (t_users *TableUsers) FindUserFromToken(token string) (models.Users, error)
 			&u.Phone,
 			&u.Email)
 		if err != nil {
-			continue
+			panic(err)
 		}
 		users = append(users, u)
 	}
@@ -163,7 +163,7 @@ func (t_users *TableUsers) FindUserFromLoginPassword(Login, Password string) (mo
 			&u.Phone,
 			&u.Email)
 		if err != nil {
-			continue
+			panic(err)
 		}
 	}
 
@@ -184,7 +184,7 @@ func (t_users *TableUsers) GetTokenUser(Login, Password string) string {
 		err := rows.Scan(
 			&token)
 		if err != nil {
-			continue
+			panic(err)
 		}
 
 	}
@@ -206,7 +206,7 @@ func (t_users *TableUsers) GetAccessUser(Login, Password string) string {
 		err := rows.Scan(
 			&access)
 		if err != nil {
-			continue
+			panic(err)
 		}
 
 	}

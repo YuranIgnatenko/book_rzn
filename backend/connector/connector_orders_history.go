@@ -17,7 +17,7 @@ func NewTableOrdersHistory() *TableOrders {
 }
 
 // сделать вставку строки в OrdersHistory
-func (t_orders_history *TableOrdersHistory) SaveTargetInOrdersHistory(token, target_hash, count string, id_order string) {
+func (t_orders_history *TableOrdersHistory) SaveTargetInOrdersHistory(token, target_hash, count, id_order string) {
 	var rows *sql.Rows
 	var err error
 
@@ -122,7 +122,7 @@ func (t_orders_history *TableOrdersHistory) TargetCardFromTargetHash(target_hash
 		)
 
 		if err != nil {
-			continue
+			panic(err)
 		}
 		return card
 	}

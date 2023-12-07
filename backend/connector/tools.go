@@ -49,9 +49,8 @@ func TargetCardFromTargetHash(db *sql.DB, target_hash string) models.TargetCard 
 		)
 
 		if err != nil {
-			continue
+			panic(err)
 		}
-		return card
 	}
 	return card
 }

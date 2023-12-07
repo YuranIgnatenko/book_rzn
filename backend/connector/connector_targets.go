@@ -40,7 +40,7 @@ func (t_targets *TableTargets) GetTargetsCardsFromHash(target_hash string) model
 		)
 
 		if err != nil {
-			continue
+			panic(err)
 		}
 		return card
 	}
@@ -80,7 +80,7 @@ func (t_targets *TableTargets) GetListTargets() []models.TargetCard {
 			&card.Tag,
 		)
 		if err != nil {
-			continue
+			panic(err)
 		}
 		targetsCard = append(targetsCard, card)
 	}
@@ -105,7 +105,6 @@ func (t_targets *TableTargets) GetListTargetsFromToken(token string) []models.Ta
 		)
 		if err != nil {
 			panic(err)
-			// continue
 		}
 		fmt.Printf("%v\n\n", card)
 		fmt.Println("card", len(targetsCard))
@@ -130,7 +129,6 @@ func (t_targets *TableTargets) GetListTargetsFromToken(token string) []models.Ta
 			)
 			if err != nil {
 				panic(err)
-				// continue
 			}
 			card.TargetHash = t_card.TargetHash
 			card.Count = t_card.Count
@@ -164,7 +162,6 @@ func (t_targets *TableTargets) GetListTargetsFromTokenHistory(token string) []mo
 		)
 		if err != nil {
 			panic(err)
-			// continue
 		}
 		fmt.Printf("%v\n\n", card)
 		fmt.Println("card", len(targetsCard))
@@ -189,7 +186,6 @@ func (t_targets *TableTargets) GetListTargetsFromTokenHistory(token string) []mo
 			)
 			if err != nil {
 				panic(err)
-				// continue
 			}
 			card.TargetHash = t_card.TargetHash
 			card.Count = t_card.Count

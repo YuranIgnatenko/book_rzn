@@ -83,8 +83,8 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 		rout.DataTemp.TargetCards = rout.TableOrdersHistory.TargetCardsFromListOrdersHistory(tokenValue)
 		for _, t_hash := range rout.DataTemp.TargetCards {
-			fmt.Println(t_hash, "<<<<<<<<<<<<<<<<")
-			rout.TableOrdersHistory.SaveTargetInOrdersHistory(tokenValue, string(t_hash.TargetHash), target_count, target_id_order)
+			fmt.Println("tokenValue, t_hash.TargetHash, target_count, target_id_order", tokenValue, t_hash.TargetHash, target_count, target_id_order)
+			rout.TableOrdersHistory.SaveTargetInOrdersHistory(tokenValue, t_hash.TargetHash, target_count, target_id_order)
 		}
 		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
 		rout.SetHTML(w, "orders_history.html")

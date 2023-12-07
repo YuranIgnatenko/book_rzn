@@ -88,7 +88,7 @@ func (conn *Connector) TargetCardsFromOrders(target_hash string) models.TargetCa
 		)
 
 		if err != nil {
-			continue
+			panic(err)
 		}
 		return card
 	}
@@ -193,7 +193,7 @@ func (conn *Connector) TargetCardsFromListFavorites(token string) []models.Targe
 		rows.Scan(&target_hash, &target_count)
 
 		if err != nil {
-			continue
+			panic(err)
 		}
 		list_targets_hash = append(list_targets_hash, target_hash)
 		list_targets_count = append(list_targets_count, target_count)
@@ -222,7 +222,7 @@ func (conn *Connector) TargetCardsFromListFavorites(token string) []models.Targe
 			card.Count = list_targets_count[ind]
 
 			if err != nil {
-				continue
+				panic(err)
 			}
 			favcards = append(favcards, card)
 		}
@@ -293,7 +293,7 @@ func (conn *Connector) AccessLogin(login, password string) string {
 		err := rows.Scan(
 			&access)
 		if err != nil {
-			continue
+			panic(err)
 		}
 	}
 
