@@ -16,6 +16,28 @@ func NewTableOrders() *TableOrders {
 	return &TableOrders{}
 }
 
+// получить "count" из Orders-table from target_hash, id_order
+func (t_orders *TableOrders) GetCountFromIdOrderHash(id_order string) string {
+	rows, err := t_orders.DB.Query(fmt.Sprintf(`SELECT count FROM bookrzn.Orders WHERE id_order = '%s';`, id_order))
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+
+		var temp_count string
+
+		rows.Scan(
+			&temp_count,
+		)
+		if err != nil {
+			panic(err)
+		}
+		return temp_count
+	}
+	return "error count"
+}
+
 func (t_orders *TableOrders) SearchTargetList(request string) []models.TargetCard {
 	var target_search []models.TargetCard
 

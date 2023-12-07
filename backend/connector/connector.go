@@ -95,21 +95,23 @@ func (conn *Connector) TargetCardsFromOrders(target_hash string) models.TargetCa
 	return card
 }
 
+// получить массив заказов из карточек товаров
 func (conn *Connector) ListOrdersFromTargetCards(tc []models.TargetCard) models.ListOrdersTargetCard {
+	fmt.Println("len::::", len(tc))
 	res := models.ListOrdersTargetCard{}
-	lo := make(map[string][]models.TargetCard, 0)
-	pf := make(map[string]float64, 0)
+	mapa_list_orders := make(map[string][]models.TargetCard, 0)
+	mapa_prices := make(map[string]float64, 0)
 	for _, card := range tc {
-		lo[card.IdOrder] = append(lo[card.IdOrder], card)
+		mapa_list_orders[card.IdOrder] = append(mapa_list_orders[card.IdOrder], card)
 	}
 
-	for id_order, list_cards := range lo {
+	for id_order, list_cards := range mapa_list_orders {
 		for _, card := range list_cards {
-			pf[id_order] += card.Summa
+			mapa_prices[id_order] += card.Summa
 		}
 	}
-	res.PriceFinish = pf
-	res.Orders = lo
+	res.PriceFinish = mapa_prices
+	res.Orders = mapa_list_orders
 	return res
 }
 

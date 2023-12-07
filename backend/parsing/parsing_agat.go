@@ -56,8 +56,9 @@ func (sa *ServiceAgat) ScrapSource() []models.TargetCard {
 
 				if strings.Contains(price, "0 руб") || strings.Contains(price, "по запросу") {
 					return
-					// e.DOM.Next() ?? 
+					// e.DOM.Next() ??
 				}
+				fmt.Println("price parse agat::", price)
 
 				temp_price := strings.ReplaceAll(price, "\u00a0", "")
 				temp_price = strings.ReplaceAll(temp_price, " ", "")

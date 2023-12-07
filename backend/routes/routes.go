@@ -49,6 +49,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "add_favorites":
 		target_hash := path_url.Arg1
 		target_count := path_url.Arg2
+		fmt.Println("arg1, arg2 ADD:target_hash, target_count:", target_hash, target_count)
 		rout.SaveTargetInFavorites(tokenValue, string(target_hash), target_count)
 		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
@@ -75,22 +76,24 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "move_fav_table_orders":
 
 	// сахранить\перенос в историю заказов таблицы
-	// case "confirm_table_orders":
-	// 	target_hash := path_url.Arg1
-	// 	target_count := path_url.Arg2
-	// 	target_id_order := path_url.Arg3
-	// 	// target_count:=rout.Connector.
+	case "confirm_table_orders":
+		target_id_order := path_url.Arg1
+		target_count := rout.TableOrders.GetCountFromIdOrderHash(target_id_order)
+		fmt.Println(target_count)
 
-	// 	fmt.Println("tokenValue, string(target_hash), target_count, target_id_order", tokenValue, string(target_hash), target_count, target_id_order)
-	// 	rout.DataFromOrders(tokenValue)
-	// 	rout.SaveTargetInOrdersHistory(tokenValue, string(target_hash), target_count, target_id_order)
-	// 	rout.SetHTML(w, "orders_history.html")
+		rout.DataTemp.TargetCards = rout.TableOrdersHistory.TargetCardsFromListOrdersHistory(tokenValue)
+		for _, t_hash := range rout.DataTemp.TargetCards {
+			fmt.Println(t_hash, "<<<<<<<<<<<<<<<<")
+			rout.TableOrdersHistory.SaveTargetInOrdersHistory(tokenValue, string(t_hash.TargetHash), target_count, target_id_order)
+		}
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		rout.SetHTML(w, "orders_history.html")
 
 	//страница ИСТОРИЯ активных и прошлых заказов
-	// case "orders_history":
-	// 	rout.DataTemp.TargetCards = rout.TargetCardsFromListOrdersHistory(tokenValue)
-	// 	rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
-	// 	rout.SetHTML(w, "orders_history.html")
+	case "orders_history":
+		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromTokenHistory(tokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		rout.SetHTML(w, "orders_history.html")
 
 	// удаление таблицы из страницы ИСТОРИЯ
 	// case "delete_table_orders_history":
@@ -110,9 +113,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	// страницы черновых заказов- составление
 	case "orders":
-		fmt.Println(tokenValue)
-		rout.DataTemp.TargetCards = rout.GetListTargetsFromToken(tokenValue)
-		fmt.Println(len(rout.DataTemp.TargetCards))
+		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(tokenValue)
 		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
 		rout.SetHTML(w, "orders.html")
 

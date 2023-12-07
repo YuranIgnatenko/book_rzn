@@ -138,10 +138,10 @@
                             <span>Поиск</span>
                         </div>
                         {{if .IsLogin}}
-                        <div class="orders bars" title="История">
+                        <div class="orders bars" title="Редактор">
                             <a href="/orders">
                                 <i data-feather="archive"></i>
-                                <span>История</span>
+                                <span>Редактор</span>
                             </a>
                         </div>
                         <div class="favorite bars">
@@ -156,6 +156,7 @@
                                 <span>История</span>
                             </a>
                         </div>
+                        
                         {{end}}
 
                         <!-- <div class="basket bars" title="Избранное товаров">
@@ -196,9 +197,9 @@
                         <p> Номер заказа №[{{ $key }}]</p>
                         <li>
                             <font-size=”15″ face=”Times New Roman”>
-                                <table border="1" width="100%" style="background-color: rgb(174, 211, 212);">
+                                <table border="1" width="100%" style="background-color: rgb(122, 243, 148);">
                                     <!-- <caption>Заказ №[{{ $key }}]</caption> -->
-                                    <tr style="background-color: #ecbda4;">
+                                    <tr style="background-color: #e6d9d3;">
                                         <th>Изображение</th>
                                         <th>Наименование</th>
                                         <th>Количество</th>
@@ -223,23 +224,24 @@
                                         </font>
 
                                 </table>
-                                <hr style="border: #333; border-width: 3;">
+                                <hr style="border: #333; border-width: 5;">
                         </li>
                         <div>
                             <p> </p>
                         </div>
                         <div>
-                            <form class="btnf" action="/edit_table_orders/{{$key}}" method="post">
-                                <input type="submit" value="Редактировать содержимое">
                             </form>
-                            <form class="btnf" action="/delete_table_orders/{{$key}}" method="post">
-                                <input type="submit" value="Удалить таблицу">
-                            </form>
-                            <form class="btnf" action="/move_fav_table_orders/{{$key}}" method="post">
+                            <form class="btnf" action="/move_fav_table_orders_history/{{$key}}" method="post">
                                 <input type="submit" value="Выгрузить в избранное">
                             </form>
-                            <form class="btnf" action="/confirm_table_orders/{{$key}}" method="post">
-                                <input type="submit" value="Оформить">
+                            <form class="btnf" action="/move_order_table_orders_history/{{$key}}" method="post">
+                                <input type="submit" value="Выгрузить в заказы">
+                            </form>
+                            <form class="btnf" action="/delete_table_orders_history/{{$key}}" method="post">
+                                <input type="submit" value="Отменить заказ">
+                            </form>
+                            <form class="btnf" action="/confirm_table_orders_history/{{$key}}/{{}}" method="post">
+                                <input type="submit" value="Оформить повторно">
                             </form>
                         </div>
                         <hr>
