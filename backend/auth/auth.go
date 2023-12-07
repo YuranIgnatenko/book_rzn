@@ -145,16 +145,16 @@ func (a *Auth) CreateUser(login, password, name, family, phone, email string) st
 	// if err != nil {
 
 	// }
-	a.AddUser(login, password, "user", a.NewToken(), name, family, phone, email)
+	a.TableUsers.AddUser(login, password, "user", a.NewToken(), name, family, phone, email)
 	return a.NewToken()
 }
 
 func (a *Auth) VerifyLogin(login, password string) (string, string) {
-	_, err := a.FindUserFromLoginPassword(login, password)
+	_, err := a.TableUsers.FindUserFromLoginPassword(login, password)
 	if err != nil {
 		panic(err)
 	}
-	access := a.GetAccessUser(login, password)
+	access := a.TableUsers.GetAccessUser(login, password)
 	return a.NewToken(), access
 }
 

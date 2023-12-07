@@ -7,12 +7,76 @@ import (
 	"fmt"
 )
 
-func (conn *Connector) AddUser(Login, Password, Type, Token, Name, Family, Phone, Email string) {
-	namedb := "bookrzn.Users"
-	rows, err := conn.Db.Query(
-		fmt.Sprintf(`INSERT INTO %s (login,password,type,token,name,family,phone,email) 
+type TableUsers struct {
+	DB *sql.DB
+}
+
+func NewTableUsers() *TableOrders {
+	return &TableOrders{}
+}
+
+func (t_users *TableUsers) DataUserFromToken(token string) models.Users {
+	rows, err := t_users.DB.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Users WHERE token = '%s' ;`, token))
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	var user models.Users
+
+	for rows.Next() {
+		err := rows.Scan(
+			&user.Id,
+			&user.Login,
+			&user.Password,
+			&user.Type,
+			&user.Token,
+			&user.Name,
+			&user.Family,
+			&user.Phone,
+			&user.Email,
+		)
+
+		if err != nil {
+			continue
+		}
+
+	}
+
+	return user
+}
+
+func (t_users *TableUsers) GetNameLoginFromToken(token string) string {
+	rows, err := t_users.DB.Query(fmt.Sprintf(`SELECT login FROM bookrzn.Users WHERE token = '%s' ;`, token)) //,
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	var login_name string
+
+	for rows.Next() {
+		err := rows.Scan(&login_name)
+
+		if err != nil {
+			continue
+		}
+
+	}
+
+	if login_name == "" {
+		return ""
+	}
+	return login_name
+}
+
+func (t_users *TableUsers) AddUser(Login, Password, Type, Token, Name, Family, Phone, Email string) {
+	rows, err := t_users.DB.Query(
+		fmt.Sprintf(`INSERT INTO bookrzn.Users (login,password,type,token,name,family,phone,email) 
 		VALUES ('%s','%s', '%s','%s','%s','%s',' %s', '%s');`,
-			namedb, Login, Password, Type, Token, Name, Family, Phone, Email)) //,
+			Login, Password, Type, Token, Name, Family, Phone, Email))
 
 	if err != nil {
 		panic(err)
@@ -42,8 +106,8 @@ func (conn *Connector) AddUser(Login, Password, Type, Token, Name, Family, Phone
 	}
 }
 
-func (conn *Connector) FindUserFromToken(token string) (models.Users, error) {
-	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Users WHERE token = '%s';`, token))
+func (t_users *TableUsers) FindUserFromToken(token string) (models.Users, error) {
+	rows, err := t_users.DB.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Users WHERE token = '%s';`, token))
 	if err != nil {
 		panic(err)
 	}
@@ -76,8 +140,8 @@ func (conn *Connector) FindUserFromToken(token string) (models.Users, error) {
 	}
 }
 
-func (conn *Connector) FindUserFromLoginPassword(Login, Password string) (models.Users, error) {
-	rows, err := conn.Db.Query(fmt.Sprintf(`select * from bookrzn.Users where Login = '%s' AND Password = '%s';`, Login, Password)) //,
+func (t_users *TableUsers) FindUserFromLoginPassword(Login, Password string) (models.Users, error) {
+	rows, err := t_users.DB.Query(fmt.Sprintf(`select * from bookrzn.Users where Login = '%s' AND Password = '%s';`, Login, Password)) //,
 	if err != nil {
 		return models.Users{}, err
 	}
@@ -106,14 +170,8 @@ func (conn *Connector) FindUserFromLoginPassword(Login, Password string) (models
 	return users, err
 }
 
-func (conn *Connector) GetTokenUser(Login, Password string) string {
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-
-	}
-	conn.Db = db
-	rows, err := conn.Db.Query(fmt.Sprintf(`select token from bookrzn.Users where Login='%s' AND Password = '%s';`, Login, Password)) //,
+func (t_users *TableUsers) GetTokenUser(Login, Password string) string {
+	rows, err := t_users.DB.Query(fmt.Sprintf(`SELECT token FROM bookrzn.Users WHERE Login='%s' AND Password = '%s';`, Login, Password)) //,
 	if err != nil {
 		panic(err)
 	}
@@ -134,15 +192,8 @@ func (conn *Connector) GetTokenUser(Login, Password string) string {
 	return token
 }
 
-func (conn *Connector) GetAccessUser(Login, Password string) string {
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-
-	}
-	conn.Db = db
-	defer db.Close()
-	rows, err := conn.Db.Query(fmt.Sprintf(`select type from bookrzn.Users where login='%s' AND password = '%s';`, Login, Password)) //,
+func (t_users *TableUsers) GetAccessUser(Login, Password string) string {
+	rows, err := t_users.DB.Query(fmt.Sprintf(`SELECT type FROM bookrzn.Users WHERE login='%s' AND password = '%s';`, Login, Password)) //,
 	if err != nil {
 		panic(err)
 	}

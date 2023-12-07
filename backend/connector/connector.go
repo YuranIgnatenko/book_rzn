@@ -5,15 +5,18 @@ import (
 	"backend/models"
 	"database/sql"
 	"fmt"
-	"strconv"
-	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
 type Connector struct {
 	config.Configuration
-	Db *sql.DB
+	Db                 *sql.DB
+	TableOrders        TableOrders
+	TableFavorites     TableFavorites
+	TableOrdersHistory TableOrdersHistory
+	TableTargets       TableTargets
+	TableUsers         TableUsers
 }
 
 func (conn *Connector) dsn() string {
@@ -31,125 +34,21 @@ func NewConnector(c config.Configuration) *Connector {
 
 	}
 	conn.Db = db
-	//
+	conn.TableOrders.DB = db
+	conn.TableOrdersHistory.DB = db
+	conn.TableTargets.DB = db
+	conn.TableFavorites.DB = db
+	conn.TableUsers.DB = db
+
 	return &conn
 }
 
-func (conn *Connector) GetNameLoginFromToken(token string) string {
-	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT login FROM bookrzn.Users WHERE token = '%s' ;`, token)) //,
-	if err != nil {
-		panic(err)
-	}
-
-	defer rows.Close()
-
-	var login_name string
-
-	for rows.Next() {
-		err := rows.Scan(&login_name)
-
-		if err != nil {
-			continue
-		}
-
-	}
-
-	if login_name == "" {
-		return ""
-	}
-	return login_name
-}
-
-func (conn *Connector) DataUserFromToken(token string) models.Users {
-	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Users WHERE token = '%s' ;`, token))
-	if err != nil {
-		panic(err)
-	}
-
-	defer rows.Close()
-
-	var user models.Users
-
-	for rows.Next() {
-		err := rows.Scan(
-			&user.Id,
-			&user.Login,
-			&user.Password,
-			&user.Type,
-			&user.Token,
-			&user.Name,
-			&user.Family,
-			&user.Phone,
-			&user.Email,
-		)
-
-		if err != nil {
-			continue
-		}
-
-	}
-
-	return user
-}
-
-func (conn *Connector) SearchTargetList(request string) []models.TargetCard {
-	db, err := sql.Open("mysql", conn.dsn())
-	if err != nil {
-		fmt.Printf("Error %s when opening DB\n", err)
-	}
-	conn.Db = db
-
-	var target_search []models.TargetCard
-
-	rows, err := conn.Db.Query(`SELECT * FROM bookrzn.Orders WHERE target_hash LIKE '%` + request + `%' ;`)
-
-	if err != nil {
-		panic(err)
-	}
-
-	defer rows.Close()
-
-	for rows.Next() {
-		var ts models.TargetCard
-		rows.Scan(
-			&ts.TargetHash,
-			&ts.Autor,
-			&ts.Price,
-			&ts.Title,
-			&ts.Price,
-			&ts.Link,
-			&ts.Comment,
-		)
-
-		if err != nil {
-			continue
-		}
-		target_search = append(target_search, ts)
-	}
-	return target_search
-}
-
-func (conn *Connector) SaveTargetInOrdersHistory(token, target_hash, count string, id_order string) {
-	var rows *sql.Rows
-	var err error
-
-	rows, err = conn.Db.Query(
-		fmt.Sprintf(`INSERT bookrzn.OrdersHistory (token, target_hash, count, date, id_order, status_order) 
-		VALUES ( '%s','%s','%s', '%s', '%s', '%s');`,
-			token, target_hash, count, DateNow(), id_order, "on"))
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
-}
-
-func (conn *Connector) DeleteTableOrders(tokenUser, idOrder string) {
-	rows, err := conn.Db.Query(fmt.Sprintf(`DELETE FROM bookrzn.Orders WHERE token="%s" AND id_order="%s";`, tokenUser, idOrder))
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
-}
+// ==============================================================================
+// ==============================================================================
+// ==============================================================================
+// ==============================================================================
+// ==============================================================================
+// ==============================================================================
 
 func (conn *Connector) DeleteTableOrdersHistory(tokenUser, idOrder string) {
 	rows, err := conn.Db.Query(fmt.Sprintf(`DELETE FROM bookrzn.OrdersHistory WHERE token="%s" AND id_order="%s";`, tokenUser, idOrder))
@@ -159,25 +58,42 @@ func (conn *Connector) DeleteTableOrdersHistory(tokenUser, idOrder string) {
 	defer rows.Close()
 }
 
-// func (conn *Connector) ReSaveCookieDB(login, password, token string) {
+func (conn *Connector) TargetCardsFromToken() {
 
-// 	old_token := conn.GetTokenUser(login, password)
-// 	new_token := token
+}
 
-// 	rows, err := conn.Db.Query(fmt.Sprintf(`UPDATE bookrzn.Users SET token = REPLACE(token, '%s', '%s');`, old_token, new_token))
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	defer rows.Close()
+// FROM bookrzn.Targets TO models.TargetCard (need targetHash)
+func (conn *Connector) TargetCardsFromOrders(target_hash string) models.TargetCard {
+	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Targets WHERE target_hash = '%s';`, target_hash)) //,
+	if err != nil {
+		panic(err)
+	}
 
-// 	rows, err = conn.Db.Query(
-// 		fmt.Sprintf(`UPDATE bookrzn.Favorites SET token = REPLACE(token, '%s', '%s');`,
-// 			old_token, token))
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	defer rows.Close()
-// }
+	defer rows.Close()
+
+	card := models.TargetCard{}
+
+	for rows.Next() {
+		card := models.TargetCard{}
+		err := rows.Scan(
+			&card.Id,
+			&card.TargetHash,
+			&card.Autor,
+			&card.Title,
+			&card.Price,
+			&card.Link,
+			&card.Comment,
+			&card.Source,
+			&card.Tag,
+		)
+
+		if err != nil {
+			continue
+		}
+		return card
+	}
+	return card
+}
 
 func (conn *Connector) ListOrdersFromTargetCards(tc []models.TargetCard) models.ListOrdersTargetCard {
 	res := models.ListOrdersTargetCard{}
@@ -197,170 +113,62 @@ func (conn *Connector) ListOrdersFromTargetCards(tc []models.TargetCard) models.
 	return res
 }
 
-func (conn *Connector) TargetCardsFromListOrders(token string) []models.TargetCard {
-	mapa_target_hash_count := make(map[string]string, 0)
-	mapa_target_hash_date := make(map[string]string, 0)
-	mapa_target_hash_id_order := make(map[string]string, 0)
-	list_target_hash := make([]string, 0)
-	temp_target_cards_all := make([]models.TargetCard, 0)
-	main_target_cards_all := make([]models.TargetCard, 0)
-	temp_token, temp_target_hash, temp_count, temp_date, temp_id_order := "", "", "", "", ""
+// func (conn *Connector) TargetCardsFromListOrdersCMS() []models.TargetCard {
+// 	main_target_cards_all := make([]models.TargetCard, 0)
+// 	for _, token := range conn.GetListFromColumnTable("token", "Orders") {
+// 		mapa_target_hash_count := make(map[string]string, 0)
+// 		list_target_hash := make([]string, 0)
+// 		temp_target_cards_all := make([]models.TargetCard, 0)
+// 		temp_token, temp_target_hash, temp_count := "", "", ""
 
-	rows, err := conn.Db.Query(fmt.Sprintf(`SELECT token,target_hash,count,date,id_order FROM bookrzn.Orders WHERE token='%s';`, token)) //,
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
+// 		rows, err := conn.Db.Query(fmt.Sprintf(`SELECT token,target_hash,count FROM bookrzn.Orders WHERE token='%s';`, token)) //,
+// 		if err != nil {
+// 			panic(err)
+// 		}
+// 		defer rows.Close()
 
-	for rows.Next() {
-		rows.Scan(&temp_token, &temp_target_hash, &temp_count, &temp_date, &temp_id_order)
+// 		for rows.Next() {
+// 			rows.Scan(&temp_token, &temp_target_hash, &temp_count)
 
-		if err != nil {
-			continue
-		}
-		list_target_hash = append(list_target_hash, temp_target_hash)
-		mapa_target_hash_count[temp_target_hash] = temp_count
-		mapa_target_hash_date[temp_target_hash] = temp_date
-		mapa_target_hash_id_order[temp_target_hash] = temp_id_order
-	}
+// 			if err != nil {
+// 				continue
+// 			}
+// 			list_target_hash = append(list_target_hash, temp_target_hash)
+// 			mapa_target_hash_count[temp_target_hash] = temp_count
+// 		}
 
-	for _, hash := range list_target_hash {
-		temp_target_cards_all = append(temp_target_cards_all, conn.TargetCardFromTargetHash(hash))
-	}
+// 		for _, hash := range list_target_hash {
+// 			temp_target_cards_all = append(temp_target_cards_all, conn.TargetCardFromTargetHash(hash))
+// 		}
 
-	for _, card := range temp_target_cards_all {
-		card.Count = mapa_target_hash_count[card.TargetHash]
-		card.Date = mapa_target_hash_date[card.TargetHash]
-		card.IdOrder = mapa_target_hash_id_order[card.TargetHash]
-		card.Price = strings.ReplaceAll(card.Price, ",", ".")
-		fc, err := strconv.ParseFloat(card.Count, 64)
-		if err != nil {
-			panic(err)
-		}
-		temp_fp := strings.ReplaceAll(card.Price, "\u00a0", "")
-		fp, err := strconv.ParseFloat(temp_fp, 64)
-		if err != nil {
-			panic(err)
-		}
-		card.Summa = float64(fc*fp) + 0.0
-		main_target_cards_all = append(main_target_cards_all, card)
-	}
+// 		for _, card := range temp_target_cards_all {
+// 			user, err := conn.TableUsers.FindUserFromToken(token)
+// 			if err != nil {
+// 				panic(err)
+// 			}
 
-	return main_target_cards_all
-}
+// 			card.CMSNameOrders = token
+// 			card.CMSPhoneOrders = user.Phone
+// 			card.CMSEmailOrders = user.Email
+// 			// card.CMSPriceAllOrders = user.
 
-func (conn *Connector) TargetCardsFromListOrdersHistory(token string) []models.TargetCard {
-	var (
-		mapa_target_hash_count    = make(map[string]string, 0)
-		mapa_target_hash_date     = make(map[string]string, 0)
-		mapa_target_hash_id_order = make(map[string]string, 0)
-		list_target_hash          = make([]string, 0)
-		temp_target_cards_all     = make([]models.TargetCard, 0)
-		main_target_cards_all     = make([]models.TargetCard, 0)
-	)
-	temp_token, temp_target_hash, temp_count, temp_date, temp_id_order := "", "", "", "", ""
-
-	rows, err := conn.Db.Query(fmt.Sprintf(
-		`SELECT token,target_hash,count,date,id_order,status_order FROM bookrzn.OrdersHistory WHERE token='%s';`,
-		token)) //,
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		rows.Scan(&temp_token, &temp_target_hash, &temp_count, &temp_date, &temp_id_order)
-
-		if err != nil {
-			continue
-		}
-		list_target_hash = append(list_target_hash, temp_target_hash)
-		mapa_target_hash_count[temp_target_hash] = temp_count
-		mapa_target_hash_date[temp_target_hash] = temp_date
-		mapa_target_hash_id_order[temp_target_hash] = temp_id_order
-	}
-
-	for _, hash := range list_target_hash {
-		temp_target_cards_all = append(temp_target_cards_all, conn.TargetCardFromTargetHash(hash))
-	}
-
-	for _, card := range temp_target_cards_all {
-		card.Count = mapa_target_hash_count[card.TargetHash]
-		card.Date = mapa_target_hash_date[card.TargetHash]
-		card.IdOrder = mapa_target_hash_id_order[card.TargetHash]
-		card.Price = strings.ReplaceAll(card.Price, ",", ".")
-		fc, err := strconv.ParseFloat(card.Count, 64)
-		if err != nil {
-			panic(err)
-		}
-		temp_fp := strings.ReplaceAll(card.Price, "\u00a0", "")
-		fp, err := strconv.ParseFloat(temp_fp, 64)
-		if err != nil {
-			panic(err)
-		}
-		card.Summa = float64(fc*fp) + 0.0
-		main_target_cards_all = append(main_target_cards_all, card)
-	}
-
-	return main_target_cards_all
-}
-
-func (conn *Connector) TargetCardsFromListOrdersCMS() []models.TargetCard {
-	main_target_cards_all := make([]models.TargetCard, 0)
-	for _, token := range conn.ListTokenUsersFromOrders() {
-		mapa_target_hash_count := make(map[string]string, 0)
-		list_target_hash := make([]string, 0)
-		temp_target_cards_all := make([]models.TargetCard, 0)
-		temp_token, temp_target_hash, temp_count := "", "", ""
-
-		rows, err := conn.Db.Query(fmt.Sprintf(`SELECT token,target_hash,count FROM bookrzn.Orders WHERE token='%s';`, token)) //,
-		if err != nil {
-			panic(err)
-		}
-		defer rows.Close()
-
-		for rows.Next() {
-			rows.Scan(&temp_token, &temp_target_hash, &temp_count)
-
-			if err != nil {
-				continue
-			}
-			list_target_hash = append(list_target_hash, temp_target_hash)
-			mapa_target_hash_count[temp_target_hash] = temp_count
-		}
-
-		for _, hash := range list_target_hash {
-			temp_target_cards_all = append(temp_target_cards_all, conn.TargetCardFromTargetHash(hash))
-		}
-
-		for _, card := range temp_target_cards_all {
-			user, err := conn.FindUserFromToken(token)
-			if err != nil {
-				panic(err)
-			}
-
-			card.CMSNameOrders = token
-			card.CMSPhoneOrders = user.Phone
-			card.CMSEmailOrders = user.Email
-			// card.CMSPriceAllOrders = user.
-
-			card.Count = mapa_target_hash_count[card.TargetHash]
-			card.Price = strings.ReplaceAll(card.Price, ",", ".")
-			// card.Title =
-			// fc, err := strconv.ParseFloat(card.Count, 64)
-			// if err != nil {
-			// 	panic(err)
-			// }
-			// fp, err := strconv.ParseFloat(card.Price, 64)
-			// if err != nil {
-			// 	panic(err)
-			// }
-			// card.Price // float64(fc * fp)
-			main_target_cards_all = append(main_target_cards_all, card)
-		}
-	}
-	return main_target_cards_all
-}
+// 			card.Count = mapa_target_hash_count[card.TargetHash]
+// 			card.Price = strings.ReplaceAll(card.Price, ",", ".")
+// 			// card.Title =
+// 			// fc, err := strconv.ParseFloat(card.Count, 64)
+// 			// if err != nil {
+// 			// 	panic(err)
+// 			// }
+// 			// fp, err := strconv.ParseFloat(card.Price, 64)
+// 			// if err != nil {
+// 			// 	panic(err)
+// 			// }
+// 			// card.Price // float64(fc * fp)
+// 			main_target_cards_all = append(main_target_cards_all, card)
+// 		}
+// 	}
+// 	return main_target_cards_all
+// }
 
 func (conn *Connector) TargetCardsFromListFavorites(token string) []models.TargetCard {
 
