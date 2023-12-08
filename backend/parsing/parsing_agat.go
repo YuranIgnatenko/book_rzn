@@ -1,31 +1,17 @@
 // https://agatmk.ru/moduli-sistemyi-xraneniya-fresh#menustart
 
+// https://agatmk.ru/moduli-sistemyi-xraneniya-fresh#menustart
+
 package parsing
 
 import (
 	"backend/models"
 	"fmt"
-	"io"
-	"log"
-	"net/http"
 	"strings"
 	"time"
 
 	"github.com/gocolly/colly/v2"
 )
-
-func htmlToString(link string) string {
-	res, err := http.Get(link)
-	if err != nil {
-		log.Fatal(err)
-	}
-	content, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
-	return string(content)
-}
 
 type ServiceAgat struct {
 	LinksVisit  []string
@@ -85,3 +71,4 @@ func (sa *ServiceAgat) ScrapSource() []models.TargetCard {
 	}
 	return dts
 }
+

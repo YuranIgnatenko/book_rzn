@@ -119,6 +119,77 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "home":
 		rout.SetHTML(w, "home.html")
 
+		//TODO: ОБОБЩИТЬ В ОДИН УЗЕЛ ОБРАБОТКИ С ПЕРЕДАЧЕЙ АРГУМЕНТА
+	case "str_top":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_top")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_psiholog":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_psiholog")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_do_shk_3_4":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_do_shk_3_4")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_do_shk_4_5":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_do_shk_4_5")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_do_shk_5_6":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_do_shk_5_6")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_do_shk_6_7":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_do_shk_6_7")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_do_shk_started":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_do_shk_started")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_phisic":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_phisic")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_himiya":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_himiya")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_biologiya":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_biologiya")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_litra":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_litra")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_ru_lang":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_ru_lang")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_other_lang":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_other_lang")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_history":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_history")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_geograph":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_geograph")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_math":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_math")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_info":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_info")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_obg":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_obg")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_eco":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_eco")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_izo":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_izo")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_music":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_music")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_tehno":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_str_tehno")
+		rout.SetHTML(w, "book_prosv.html")
+	case "str_posters":
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_posters")
+		rout.SetHTML(w, "book_prosv.html")
+
 	// фильтр для товара
 	case "book_new":
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_new")
