@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -48,7 +47,6 @@ func NewPathUrlArgs(rUrlPath string) *PathUrlArgs {
 		arg3 = elems[3]
 		// default:
 	}
-	fmt.Println("argcase:", argCase, "count_elems:", count_elems)
 	return &PathUrlArgs{
 		ArgRow:  argRow,
 		ArgCase: argCase,

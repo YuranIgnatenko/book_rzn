@@ -88,7 +88,6 @@ func (t_targets *TableTargets) GetListTargets() []models.TargetCard {
 }
 
 func (t_targets *TableTargets) GetListTargetsFromToken(token string) []models.TargetCard {
-	fmt.Println("start get target from bd")
 	rows, err := t_targets.DB.Query(fmt.Sprintf(`SELECT target_hash,count,date,id_order FROM bookrzn.Orders WHERE token = "%s";`, token))
 	if err != nil {
 		panic(err)
@@ -106,8 +105,6 @@ func (t_targets *TableTargets) GetListTargetsFromToken(token string) []models.Ta
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("%v\n\n", card)
-		fmt.Println("card", len(targetsCard))
 		targetsCard = append(targetsCard, card)
 	}
 
@@ -134,15 +131,12 @@ func (t_targets *TableTargets) GetListTargetsFromToken(token string) []models.Ta
 			card.Count = t_card.Count
 			card.Date = t_card.Date
 			card.IdOrder = t_card.IdOrder
-			fmt.Printf("%v\n\n", card)
-			fmt.Println("card", len(targetsCard))
 			resTargetsCard = append(resTargetsCard, card)
 		}
 
 	}
 	return resTargetsCard
 }
-
 
 func (t_targets *TableTargets) GetListTargetsFromTokenHistory(token string) []models.TargetCard {
 	fmt.Println("start get target from bd")
@@ -163,8 +157,6 @@ func (t_targets *TableTargets) GetListTargetsFromTokenHistory(token string) []mo
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("%v\n\n", card)
-		fmt.Println("card", len(targetsCard))
 		targetsCard = append(targetsCard, card)
 	}
 
@@ -192,7 +184,6 @@ func (t_targets *TableTargets) GetListTargetsFromTokenHistory(token string) []mo
 			card.Date = t_card.Date
 			card.IdOrder = t_card.IdOrder
 			fmt.Printf("%v\n\n", card)
-			fmt.Println("card", len(targetsCard))
 			resTargetsCard = append(resTargetsCard, card)
 		}
 

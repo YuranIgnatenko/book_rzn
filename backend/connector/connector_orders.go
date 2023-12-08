@@ -23,9 +23,9 @@ func (t_orders *TableOrders) GetCountFromIdOrderHash(id_order string) string {
 		panic(err)
 	}
 	defer rows.Close()
-	for rows.Next() {
+	var temp_count string
 
-		var temp_count string
+	for rows.Next() {
 
 		rows.Scan(
 			&temp_count,
@@ -33,9 +33,8 @@ func (t_orders *TableOrders) GetCountFromIdOrderHash(id_order string) string {
 		if err != nil {
 			panic(err)
 		}
-		return temp_count
 	}
-	return "error count"
+	return temp_count
 }
 
 func (t_orders *TableOrders) SearchTargetList(request string) []models.TargetCard {

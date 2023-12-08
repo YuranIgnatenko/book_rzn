@@ -7,7 +7,6 @@ import (
 
 // used mail Yandex.ru account
 func Send_mail(Subj, text string) {
-	// fmt.Println("START EMAIL BLOCK CODE - SENDER")
 	user := "yuran.ignatenko@yandex.ru"
 	password := "Quizzaciously1"
 

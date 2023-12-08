@@ -97,7 +97,6 @@ func (conn *Connector) TargetCardsFromOrders(target_hash string) models.TargetCa
 
 // получить массив заказов из карточек товаров
 func (conn *Connector) ListOrdersFromTargetCards(tc []models.TargetCard) models.ListOrdersTargetCard {
-	fmt.Println("len::::", len(tc))
 	res := models.ListOrdersTargetCard{}
 	mapa_list_orders := make(map[string][]models.TargetCard, 0)
 	mapa_prices := make(map[string]float64, 0)

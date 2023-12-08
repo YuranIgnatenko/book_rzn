@@ -6,6 +6,7 @@ import (
 	"backend/connector"
 	"backend/datatemp"
 	"backend/parsing"
+	"backend/sender"
 	"fmt"
 	"net/http"
 	"text/template"
@@ -49,7 +50,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "add_favorites":
 		target_hash := path_url.Arg1
 		target_count := path_url.Arg2
-		fmt.Println("arg1, arg2 ADD:target_hash, target_count:", target_hash, target_count)
 		rout.SaveTargetInFavorites(tokenValue, string(target_hash), target_count)
 		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
@@ -78,15 +78,9 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	// сахранить\перенос в историю заказов таблицы
 	case "confirm_table_orders":
 		target_id_order := path_url.Arg1
-		target_count := rout.TableOrders.GetCountFromIdOrderHash(target_id_order)
-		fmt.Println(target_count)
-
-		rout.DataTemp.TargetCards = rout.TableOrdersHistory.TargetCardsFromListOrdersHistory(tokenValue)
-		for _, t_hash := range rout.DataTemp.TargetCards {
-			fmt.Println("tokenValue, t_hash.TargetHash, target_count, target_id_order", tokenValue, t_hash.TargetHash, target_count, target_id_order)
-			rout.TableOrdersHistory.SaveTargetInOrdersHistory(tokenValue, t_hash.TargetHash, target_count, target_id_order)
-		}
-		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		rout.TableOrdersHistory.SaveTargetInOrdersHistory(tokenValue, target_id_order)
+		sender.Send_mail("ЗАКАЗ", "Выполнен заказ на сайте")
+		fmt.Println("Email sended !")
 		rout.SetHTML(w, "orders_history.html")
 
 	//страница ИСТОРИЯ активных и прошлых заказов
@@ -105,7 +99,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	case "edit_table_orders_history":
 	case "move_fav_table_orders_history":
-	case "confirm_table_orders_history":
 
 	// case "edit_orders":
 	// 	rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)

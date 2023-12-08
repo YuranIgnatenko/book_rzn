@@ -58,7 +58,6 @@ func (sa *ServiceAgat) ScrapSource() []models.TargetCard {
 					return
 					// e.DOM.Next() ??
 				}
-				fmt.Println("price parse agat::", price)
 
 				temp_price := strings.ReplaceAll(price, "\u00a0", "")
 				temp_price = strings.ReplaceAll(temp_price, " ", "")

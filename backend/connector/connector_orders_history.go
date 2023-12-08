@@ -17,18 +17,39 @@ func NewTableOrdersHistory() *TableOrders {
 }
 
 // сделать вставку строки в OrdersHistory
-func (t_orders_history *TableOrdersHistory) SaveTargetInOrdersHistory(token, target_hash, count, id_order string) {
+func (t_orders_history *TableOrdersHistory) SaveTargetInOrdersHistory(token, id_order string) {
 	var rows *sql.Rows
 	var err error
 
+	var list_target_hash = []string{}
+	var list_target_hash_count = map[string]string{}
+
 	rows, err = t_orders_history.DB.Query(
-		fmt.Sprintf(`INSERT INTO bookrzn.OrdersHistory (token, target_hash, count, date, id_order, status_order) 
-		VALUES ( '%s','%s','%s','%s','%s','%s');`,
-			token, target_hash, count, DateNow(), id_order, "on"))
+		fmt.Sprintf(`SELECT target_hash,count FROM bookrzn.OrdersHistory WHERE token='%s' AND id_order='%s';`,
+			token, id_order))
 	if err != nil {
 		panic(err)
 	}
 	defer rows.Close()
+	for rows.Next() {
+		var t_hash, t_count string
+		fmt.Scan(&t_hash, &t_count)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	for _, target_hash := range list_target_hash {
+		rows, err = t_orders_history.DB.Query(
+			fmt.Sprintf(`INSERT INTO bookrzn.OrdersHistory token, target_hash, count, date, id_order, status_order
+		VALUES ( '%s','%s','%s','%s','%s','%s');`,
+				token, target_hash, list_target_hash_count[target_hash], DateNow(), id_order, "on"))
+		if err != nil {
+			panic(err)
+		}
+		defer rows.Close()
+
+	}
 }
 
 // получить массив карточек товара по токену юзера
@@ -73,21 +94,14 @@ func (t_orders_history *TableOrdersHistory) TargetCardsFromListOrdersHistory(tok
 		card.IdOrder = mapa_target_hash_id_order[card.TargetHash]
 		card.Price = strings.ReplaceAll(card.Price, ",", ".")
 
-		fmt.Println()
-		fmt.Println("card.Count,card.Date,card.IdOrder,card.Price", card.Count, card.Date, card.IdOrder, card.Price)
-		fmt.Println()
-
 		fc, err := strconv.ParseFloat(card.Count, 64)
 		if err != nil {
 			fc = 0.1
-			fmt.Println("card.Count=", card.Count)
-			// panic(err)
 		}
 		temp_fp := strings.ReplaceAll(card.Price, "\u00a0", "")
 		fp, err := strconv.ParseFloat(temp_fp, 64)
 		if err != nil {
 			// panic(err)
-			fmt.Println("temp_fp=", temp_fp)
 			fp = 0.2
 		}
 		card.Summa = float64(fc * fp)
@@ -124,7 +138,6 @@ func (t_orders_history *TableOrdersHistory) TargetCardFromTargetHash(target_hash
 		if err != nil {
 			panic(err)
 		}
-		return card
 	}
 	return card
 }
