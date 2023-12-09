@@ -2,7 +2,7 @@
 <html lang="ru-ru">
 
 <head>
- 
+
 
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta name="keywords" content="" />
@@ -21,7 +21,8 @@
     <link href="http://new15942715563356.myaddshop.ru/css/normalize.css" rel="stylesheet" type="text/css">
 
     <link href="http://new15942715563356.myaddshop.ru/css/framework7-icons.css" rel="stylesheet">
-    <link href="http://new15942715563356.myaddshop.ru/css/swiper.css" rel="stylesheet" type="text/css">     <style>
+    <link href="http://new15942715563356.myaddshop.ru/css/swiper.css" rel="stylesheet" type="text/css">
+    <style>
         :root {
             --mainSchemeColor: #804C3E;
             --mainContrastSchemeColor: #FF9E75;
@@ -62,16 +63,17 @@
         window.promo_discount = null;
         window.promo_title = null;
         window.one_click_buy = 1;
-    </script>     <!-- gsc start -->
+    </script> <!-- gsc start -->
 
     <!-- gsc end -->
 
     <!-- ywm start -->
 
-    <!-- ywm end -->     <!-- Подключите тут важные скрипты и стили. -->
+    <!-- ywm end --> <!-- Подключите тут важные скрипты и стили. -->
 </head>
 
-<body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">     <div class="wrapper">
+<body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
+    <div class="wrapper">
 
         <header>
             <div class="header-top">
@@ -81,15 +83,16 @@
                     </div>
 
                     <div class="phone">
-                        <a href="tel:{{ .Phone}}">{{ .Phone}}</a>                     </div>
+                        <a href="tel:{{ .Phone}}">{{ .Phone}}</a>
+                    </div>
 
                     <div class="login_or_reg">
                         {{if .IsLogin}}
-                            <a href="/home">Пользователь:{{ .NameLogin }}</a>
-                            <br>
-                            <a href="/out">Выход</a>
+                        <a href="/home">Пользователь:{{ .NameLogin }}</a>
+                        <br>
+                        <a href="/out">Выход</a>
                         {{else}}
-                        <a href="/login">Вход</a> 
+                        <a href="/login">Вход</a>
                         <a href="/registration">Регистрация</a>
                         {{end}}
                     </div>
@@ -108,7 +111,7 @@
                         <div class="slogan">{{ .Location_office}}</div>
                     </div>
                     <div class="search_form">
-                                                <!-- FART ORDER  -->
+                        <!-- FART ORDER  -->
 
                         <form action="/fast_mail">
                             <button style="width: 100%;" type="submit">Написать письмо*</button>
@@ -148,20 +151,21 @@
                             </a>
                         </div>
                         {{end}}
- 
- 
+
+
                     </div>
                 </div>
             </div>
 
             <div class="header-bottom">
                 <div class="inner">
-                     
+
                     {{ .PageMenuTemplHtml }}
                 </div>
             </div>
     </div>
-    </header>      <main>
+    </header>
+    <main>
         <div class="block main">
             <div class="inner">
 
@@ -195,7 +199,9 @@
             </div>
         </div>
     </main>
-    </div> 
+
+    </div>
+
     <footer class="block">
         <div class="top">
             <div class="inner">
@@ -215,82 +221,10 @@
                     <div class="footer_site_info">
                         <p>Используя данный сайт, вы автоматически принимаете условия пользовательского соглашения и
                             соглашаетесь с политикой конфиденциальности.</p> -->
-                    </div>
                 </div>
-                <!-- <div class="fmenu">
-                    <div class="footer_subtitle">О магазине</div>
-                    <ul>
-                        <li>
-                            <a href="/">Главная</a>
-                        </li>
-                        <li>
-                            <a href="/sales">Акции</a>
-                        </li>
-                        <li>
-                            <a href="{{ .Full_url_add}}/about">О компании</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/dostavka-i-oplata/">Доставка и оплата</a>
-                        </li>
-                        <li>
-                            <a href="/home">Контакты</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/news/" class="" title="Новости">Новости</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/articles/" class="" title="Статьи">Статьи</a>
-                        </li>
-
-                    </ul>
-
-                </div>
-                <div class="fmenu catalog">
-                    <div class="footer_subtitle">Каталог</div>
-                    <ul>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/shkafy-i-mebelnye-stenki/"
-                                class="" title="Шкафы и мебельные стенки">Шкафы и мебельные стенки</a>
-
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/stellazhi-i-polki/" class=""
-                                title="Стеллажи и полки">Стеллажи и полки</a>
-
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/komody-i-garderoby/" class=""
-                                title="Комоды и гардеробы">Комоды и гардеробы</a>
-
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/stoly-i-stulya/" class=""
-                                title="Столы и стулья">Столы и стулья</a>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="fmenu contact_us">
-                    <div class="footer_subtitle">Свяжитесь с нами</div>
-                    <div class="address">{{ .location_office}}</div>
-                    <div>
-                        <span class="mail_span">E-mail:</span>
-                        <a href="mailto:{{ .Email}}">{{ .Email}}</a>
-                    </div>
-
-                    <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a> 
-                    <div class="social">
-                        <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                        <!-- <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
-                        <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
-                        <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
-                        <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a> -->
-                    </div>
-
-                </div> -->
             </div>
         </div>
-    </footer> 
+    </footer>
     <script src="../../code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
     <script>$(function () { feather.replace(); });</script>
@@ -300,8 +234,8 @@
     <link rel="stylesheet"
         href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" />
     <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" />
-    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" /> 
-      <!-- 14 ms -->
+    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" />
+    <!-- 14 ms -->
 </body>
 
 </html>
