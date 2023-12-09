@@ -129,7 +129,8 @@ func (a *Auth) GetCookieAdmin(w http.ResponseWriter, r *http.Request) bool {
 	if err != nil {
 		switch {
 		case errors.Is(err, http.ErrNoCookie):
-			http.Redirect(w, r, a.Ip+a.Split_ip_port+a.Port+"/404", http.StatusSeeOther)
+			// http.Redirect(w, r, "/404", http.StatusSeeOther)
+			fmt.Println("ERRRRR:", err)
 
 		default:
 			log.Println(err)

@@ -21,13 +21,13 @@ type Rout struct {
 	AccertPath map[string]int
 }
 
-func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt datatemp.DataTemp) *Rout {
+func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt datatemp.DataTemp, ps parsing.ParsingService) *Rout {
 	rout := Rout{
 		Auth:           a,
 		Configuration:  c,
 		Connector:      conn,
 		DataTemp:       dt,
-		ParsingService: *parsing.NewParsingService(c, conn),
+		ParsingService: ps,
 		AccertPath: map[string]int{
 			//книги
 			"new_basic":     1,
@@ -211,7 +211,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 		}
-		rout.SetHTML(w, "404.html")
+		// rout.SetHTML(w, "404.html")
 
 	// case "cms_view_order":
 	// 	token_user := strings.Split(r.URL.Path, "/")[1]
@@ -272,14 +272,14 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 			return
 		default:
 			rout.DataTemp.IsLogin = false
-
-			http.Redirect(w, r, "/404", http.StatusPermanentRedirect)
+			fmt.Println("def =================")
+			// http.Redirect(w, r, "/404", http.StatusPermanentRedirect)
 			return
 		}
 
 	// страница заглушка при ошибке
-	case "404":
-		rout.SetHTML(w, "404.html")
+	// case "404":
+	// 	rout.SetHTML(w, "404.html")
 
 	// выход с аккаунта и перенаправление на страницу входа
 	case "out":

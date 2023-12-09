@@ -57,7 +57,7 @@ func NewCore() *Core {
 	mw := middleware.NewMiddleware(*a)
 	ps := parsing.NewParsingService(*c, *conn)
 	dt := datatemp.NewDataTemp(*c, ps.ListTargetCardCache)
-	rout := routes.NewRout(*a, *c, *conn, *dt)
+	rout := routes.NewRout(*a, *c, *conn, *dt, *ps)
 
 	return &Core{
 		Configuration:  c,
