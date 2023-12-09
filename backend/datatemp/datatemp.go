@@ -3,6 +3,7 @@ package datatemp
 import (
 	"backend/config"
 	"backend/models"
+	"fmt"
 	"strings"
 )
 
@@ -124,26 +125,26 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 				            <nav>
 		                        <ul class="topmenu">
 		                            
-		                            <li><a href="" class="submenu-link">Мебельные новинки</a>
+		                            <li><a href="/new_basic" class="submenu-link">Мебельные новинки</a>
 		                                <ul class="submenu">
 		                                    <li><a href="/new_basic">Базовые модули</a></li>
 		                                    <li><a href="/new_boxing">Системы хранения</a></li>
 		                                </ul>
 		                            </li>
-		                            <li><a href="" class="submenu-link">Мебель для школ</a>
+		                            <li><a href="/sh_table" class="submenu-link">Мебель для школ</a>
 		                                <ul class="submenu">
 		                                    <li><a href="/sh_table">Рабочие столы</a></li>
 		                                    <li><a href="/sh_chair">Рабочие стулья</a></li>
 		                                    <li><a href="/sh_minitable">Тумба под доску</a></li>
 		                                </ul>
 		                            </li>
-		                            <li><a href="" class="submenu-link">Мебель в офис</a>
+		                            <li><a href="/office_table" class="submenu-link">Мебель в офис</a>
 		                                <ul class="submenu">
 		                                    <li><a href="/office_table">Рабочие столы</a></li>
 		                                    <li><a href="/office_boxing">Системы хранения</a></li>
 		                                </ul>
 		                            </li>
-		                            <li><a href="" class="submenu-link">Оборудование Предметное</a>
+		                            <li><a href="/str_top" class="submenu-link">Оборудование Предметное</a>
                                         <ul class="submenu">
                                             <li><a href="/str_top">Новинки</a></li>
                                             <li><a href="/str_psiholog">Психология</a></li>
@@ -165,7 +166,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                                             <li><a href="/str_posters">Плакаты для ПРОФОБРАЗОВАНИЯ</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="" class="submenu-link">Оборудование Дошкольное</a>
+                                    <li><a href="/str_do_sh_3_4" class="submenu-link">Оборудование Дошкольное</a>
 		                                <ul class="submenu">
                                             <li><a href="/str_do_sh_3_4">Дошкольники 3-4 лет</a></li>
                                             <li><a href="/str_do_sh_4_5">Дошкольники 4-5 лет</a></li>
@@ -174,7 +175,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                                             <li><a href="/str_sh_started">Начальная школа</a></li>
 		                                </ul>
                                     </li>
-                                    <li><a href="" class="submenu-link">Книги и Учебники</a>
+                                    <li><a href="book_new" class="submenu-link">Книги и Учебники</a>
                                         <ul class="submenu">
                                             <li><a href="/book_new">Новинки</a></li>
                                             <li><a href="/book_sh_middle">Для среднего специального образования</a></li>
@@ -186,7 +187,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                                             <li><a href="/book_artistic">Художественная литература</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="" class="submenu-link">Электронная библиотека</a>
+                                    <li><a href="book_digit_books" class="submenu-link">Электронная библиотека</a>
                                         <ul class="submenu">
                                             <li><a href="/book_digit_books">Электронные книги</a></li>
                                         </ul>
@@ -196,13 +197,18 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 }
 
 func (dt *DataTemp) FilterCards(data []models.TargetCard, mode string) []models.TargetCard {
-	segm := make([]models.TargetCard, 0)
+	fmt.Println("run FILTER CARDS: mode --->", mode)
 
+	segm := make([]models.TargetCard, 0)
 	for _, tc := range data {
+
 		if mode == tc.Tag {
 			segm = append(segm, tc)
+		} else {
+
 		}
 	}
+	fmt.Println("finish FILTER CARDS: len segm --->", len(segm))
 	return segm
 }
 
