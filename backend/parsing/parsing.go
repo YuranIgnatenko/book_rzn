@@ -24,11 +24,7 @@ type ParsingService struct {
 }
 
 func NewParsingService(c config.Configuration, conn connector.Connector) *ParsingService {
-	// res, err := getHTMLContent("https://stronikum.ru/5940_Kabinet_psihologa")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// fmt.Println("HTML\n", res)
+
 	lss := []models.ServiceScraper{
 		NewServiceProsv([]string{
 			"https://shop.prosv.ru/homepage-categorynewproducts-185",
@@ -36,7 +32,7 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 			"https://shop.prosv.ru/homepage-categorynewproducts-185?pagenumber=3",
 			"https://shop.prosv.ru/homepage-categorynewproducts-185?pagenumber=4",
 			"https://shop.prosv.ru/homepage-categorynewproducts-185?pagenumber=5",
-			"https://shop.prosv.ru/homepage-categorynewproducts-185?pagenumber=6"}, "prosv_new"),
+			"https://shop.prosv.ru/homepage-categorynewproducts-185?pagenumber=6"}, "book_new"),
 
 		NewServiceProsv([]string{
 			"https://shop.prosv.ru/srednee-specialnoe-obrazovanie4415",
@@ -44,7 +40,7 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 			"https://shop.prosv.ru/srednee-specialnoe-obrazovanie4415?pagenumber=3",
 			"https://shop.prosv.ru/srednee-specialnoe-obrazovanie4415?pagenumber=4",
 			"https://shop.prosv.ru/srednee-specialnoe-obrazovanie4415?pagenumber=5",
-			"https://shop.prosv.ru/srednee-specialnoe-obrazovanie4415?pagenumber=6"}, "prosv_sh_middle"),
+			"https://shop.prosv.ru/srednee-specialnoe-obrazovanie4415?pagenumber=6"}, "book_sh_middle"),
 
 		NewServiceProsv([]string{
 			"https://shop.prosv.ru/doshkolnoe-obrazovanie105",
@@ -52,7 +48,7 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 			"https://shop.prosv.ru/doshkolnoe-obrazovanie105?pagenumber=3",
 			"https://shop.prosv.ru/doshkolnoe-obrazovanie105?pagenumber=4",
 			"https://shop.prosv.ru/doshkolnoe-obrazovanie105?pagenumber=5",
-			"https://shop.prosv.ru/doshkolnoe-obrazovanie105?pagenumber=6"}, "prosv_do_sh"),
+			"https://shop.prosv.ru/doshkolnoe-obrazovanie105?pagenumber=6"}, "book_do_sh"),
 
 		NewServiceProsv([]string{
 			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101",
@@ -60,7 +56,7 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101?pagenumber=3",
 			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101?pagenumber=4",
 			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101?pagenumber=5",
-			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101?pagenumber=6"}, "prosv_1_4"),
+			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101?pagenumber=6"}, "book_1_4"),
 
 		NewServiceProsv([]string{
 			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101",
@@ -68,7 +64,7 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101?pagenumaber=3",
 			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101?pagenumaber=4",
 			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101?pagenumaber=5",
-			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101?pagenumaber=6"}, "prosv_5_9"),
+			"https://shop.prosv.ru/nachalnoe-obrazovanie-1-4-klassy101?pagenumaber=6"}, "book_5_9"),
 
 		NewServiceProsv([]string{
 			"https://shop.prosv.ru/srednee-obrazovanie-10-11-klassy91?pagenumber=2",
@@ -76,7 +72,7 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 			"https://shop.prosv.ru/srednee-obrazovanie-10-11-klassy91?pagenumber=4",
 			"https://shop.prosv.ru/srednee-obrazovanie-10-11-klassy91?pagenumber=5",
 			"https://shop.prosv.ru/srednee-obrazovanie-10-11-klassy91?pagenumber=6",
-			"https://shop.prosv.ru/srednee-obrazovanie-10-11-klassy91"}, "prosv_10_11"),
+			"https://shop.prosv.ru/srednee-obrazovanie-10-11-klassy91"}, "book_10_11"),
 
 		NewServiceProsv([]string{
 			"https://shop.prosv.ru/obuchenie-detej-s-ovz102?pagenumber=2",
@@ -84,7 +80,7 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 			"https://shop.prosv.ru/obuchenie-detej-s-ovz102?pagenumber=4",
 			"https://shop.prosv.ru/obuchenie-detej-s-ovz102?pagenumber=5",
 			"https://shop.prosv.ru/obuchenie-detej-s-ovz102?pagenumber=6",
-			"https://shop.prosv.ru/obuchenie-detej-s-ovz102"}, "prosv_ovz"),
+			"https://shop.prosv.ru/obuchenie-detej-s-ovz102"}, "book_ovz"),
 
 		NewServiceProsv([]string{
 			"https://shop.prosv.ru/xudozhestvennaya-literatura103?pagenumber=2",
@@ -92,7 +88,7 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 			"https://shop.prosv.ru/xudozhestvennaya-literatura103?pagenumber=4",
 			"https://shop.prosv.ru/xudozhestvennaya-literatura103?pagenumber=5",
 			"https://shop.prosv.ru/xudozhestvennaya-literatura103?pagenumber=6",
-			"https://shop.prosv.ru/xudozhestvennaya-literatura103"}, "prosv_artistic"),
+			"https://shop.prosv.ru/xudozhestvennaya-literatura103"}, "book_artistic"),
 
 		NewServiceProsv([]string{
 			"https://shop.prosv.ru/elektronnye-knigi182?pagenumber=2",
@@ -100,7 +96,7 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 			"https://shop.prosv.ru/elektronnye-knigi182?pagenumber=4",
 			"https://shop.prosv.ru/elektronnye-knigi182?pagenumber=5",
 			"https://shop.prosv.ru/elektronnye-knigi182?pagenumber=6",
-			"https://shop.prosv.ru/elektronnye-knigi182"}, "prosv_digit_books"),
+			"https://shop.prosv.ru/elektronnye-knigi182"}, "book_digit_books"),
 
 		NewServiceAgat([]string{"https://agatmk.ru/moduli-sistemyi-xraneniya-fresh "}, "new_basic"),
 		NewServiceAgat([]string{"https://agatmk.ru/stolyi-rabochie-fresh "}, "new_table"),
@@ -113,11 +109,11 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 
 		NewServiceStronikum([]string{"https://stronikum.ru"}, "str_top"),
 		NewServiceStronikum([]string{"https://stronikum.ru/5940_Kabinet_psihologa"}, "str_psiholog"),
-		NewServiceStronikum([]string{"https://stronikum.ru/4409_Vtoraya_mladshaya_gruppa_3_4"}, "str_do_shk_3_4"),
-		NewServiceStronikum([]string{"https://stronikum.ru/4442_Srednyaya_gruppa_4_5"}, "str_do_shk_4_5"),
-		NewServiceStronikum([]string{"https://stronikum.ru/4472_Starshaya_gruppa_5_6"}, "str_do_shk_5_6"),
-		NewServiceStronikum([]string{"https://stronikum.ru/4504_Podgotovitelnaya_gruppa_6_7"}, "str_do_shk_6_7"),
-		NewServiceStronikum([]string{"https://stronikum.ru/4273_Nachalnaya_shkola"}, "str_shk_started"),
+		NewServiceStronikum([]string{"https://stronikum.ru/4409_Vtoraya_mladshaya_gruppa_3_4"}, "str_do_sh_3_4"),
+		NewServiceStronikum([]string{"https://stronikum.ru/4442_Srednyaya_gruppa_4_5"}, "str_do_sh_4_5"),
+		NewServiceStronikum([]string{"https://stronikum.ru/4472_Starshaya_gruppa_5_6"}, "str_do_sh_5_6"),
+		NewServiceStronikum([]string{"https://stronikum.ru/4504_Podgotovitelnaya_gruppa_6_7"}, "str_do_sh_6_7"),
+		NewServiceStronikum([]string{"https://stronikum.ru/4273_Nachalnaya_shkola"}, "str_sh_started"),
 		NewServiceStronikum([]string{"https://stronikum.ru/1061_Fizika"}, "str_phisic"),
 		NewServiceStronikum([]string{"https://stronikum.ru/1383_Himiya"}, "str_himiya"),
 		NewServiceStronikum([]string{"https://stronikum.ru/1627_Biologiya"}, "str_biologiya"),
@@ -165,7 +161,8 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 func RangeScrapServices(data []models.ServiceScraper) []models.TargetCard {
 	tc := make([]models.TargetCard, 0)
 
-	for _, service := range data {
+	for n, service := range data {
+		fmt.Println("Parse service start --> link n:", n)
 		tc = append(tc, service.ScrapSource()...)
 	}
 	return tc

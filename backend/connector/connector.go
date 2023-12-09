@@ -5,6 +5,9 @@ import (
 	"backend/models"
 	"database/sql"
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -24,6 +27,7 @@ func (conn *Connector) dsn() string {
 }
 
 func NewConnector(c config.Configuration) *Connector {
+
 	conn := Connector{
 		Configuration: c,
 	}
@@ -39,6 +43,16 @@ func NewConnector(c config.Configuration) *Connector {
 	conn.TableTargets.DB = db
 	conn.TableFavorites.DB = db
 	conn.TableUsers.DB = db
+
+	chan_exit := make(chan os.Signal, 2)
+	signal.Notify(chan_exit, os.Interrupt, syscall.SIGTERM)
+
+	go func() {
+		<-chan_exit
+		fmt.Println("exit -- ok")
+		conn.Db.Close()
+		os.Exit(1)
+	}()
 
 	return &conn
 }
@@ -205,6 +219,7 @@ func (conn *Connector) TargetCardsFromListFavorites(token string) []models.Targe
 			panic(err)
 		}
 
+		defer rows.Close()
 		for rows.Next() {
 			card := models.TargetCard{}
 			err := rows.Scan(

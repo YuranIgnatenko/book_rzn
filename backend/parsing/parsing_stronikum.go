@@ -73,7 +73,6 @@ func (ss *ServiceStronikum) parseTitlesPrices() (map[int]string, map[int]string,
 
 				if flagRun {
 					text := strings.TrimSpace(el.Text)
-					fmt.Println("id_temp(key for mapa):", mapa_id_to_title[id_temp_title-1], mapa_id_to_price[id_temp_price-1])
 
 					if flagSwitchTitlePrice == 1 {
 						mapa_id_to_title[id_temp_title] = text
@@ -114,7 +113,6 @@ func (ss *ServiceStronikum) parseImages(data_links, data_title map[int]string) m
 				code := strings.Split(strings.Split(url, "/")[1], "_")[0]
 				s := "https://stronikum.ru/photo/" + code + ".jpg"
 				mapa_id_to_image[index] = s
-				fmt.Println("parse:", s, data_title[index])
 				index += 1
 			}
 		})

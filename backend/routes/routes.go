@@ -18,6 +18,7 @@ type Rout struct {
 	config.Configuration
 	datatemp.DataTemp
 	parsing.ParsingService
+	AccertPath map[string]int
 }
 
 func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt datatemp.DataTemp) *Rout {
@@ -27,11 +28,65 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 		Connector:      conn,
 		DataTemp:       dt,
 		ParsingService: *parsing.NewParsingService(c, conn),
+		AccertPath: map[string]int{
+
+			//книги
+			"new_basic":     1,
+			"new_table":     1,
+			"new_boxing":    1,
+			"sh_table":      1,
+			"sh_chair":      1,
+			"office_table":  1,
+			"office_boxing": 1,
+			"sh_minitable":  1,
+
+			// 	оборудование
+			"str_top":        1,
+			"str_psiholog":   1,
+			"str_do_sh_3_4":  1,
+			"str_do_sh_4_5":  1,
+			"str_do_sh_5_6":  1,
+			"str_do_sh_6_7":  1,
+			"str_sh_started": 1,
+			"str_phisic":     1,
+			"str_himiya":     1,
+			"str_biologiya":  1,
+			"str_litra":      1,
+			"str_ru_lang":    1,
+			"str_other_lang": 1,
+			"str_history":    1,
+			"str_geograph":   1,
+			"str_math":       1,
+			"str_info":       1,
+			"str_obg":        1,
+			"str_eco":        1,
+			"str_izo":        1,
+			"str_music":      1,
+			"str_tehno":      1,
+			"str_posters":    1,
+
+			// мебель
+			"book_new":         1,
+			"book_sh_middle":   1,
+			"book_do_sh":       1,
+			"book_1_4":         1,
+			"book_5_9":         1,
+			"book_10_11":       1,
+			"book_ovz":         1,
+			"book_actistic":    1,
+			"book_digit_books": 1,
+		},
 	}
 	rout.DataTemp.TargetCards = rout.ListTargetCardCache
 	// rout.DataTemp.OrdersCardsCms = rout.GetListOrdersCMS()
 
 	return &rout
+}
+
+// прверяем наличия пути в карте разрешенных в качестве товаров
+func (rout *Rout) RangePathsTargetPage(w http.ResponseWriter, path string) bool {
+	fmt.Println("rout.AccertPath[path] == 1", rout.AccertPath[path] == 1, rout.AccertPath[path], path)
+	return rout.AccertPath[path] == 1
 }
 
 func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
@@ -118,162 +173,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	// страница Домашняя
 	case "home":
 		rout.SetHTML(w, "home.html")
-
-		//TODO: ОБОБЩИТЬ В ОДИН УЗЕЛ ОБРАБОТКИ С ПЕРЕДАЧЕЙ АРГУМЕНТА
-	case "str_top":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_top")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_psiholog":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_psiholog")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_do_shk_3_4":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_do_shk_3_4")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_do_shk_4_5":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_do_shk_4_5")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_do_shk_5_6":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_do_shk_5_6")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_do_shk_6_7":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_do_shk_6_7")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_do_shk_started":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_do_shk_started")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_phisic":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_phisic")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_himiya":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_himiya")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_biologiya":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_biologiya")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_litra":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_litra")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_ru_lang":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_ru_lang")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_other_lang":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_other_lang")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_history":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_history")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_geograph":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_geograph")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_math":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_math")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_info":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_info")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_obg":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_obg")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_eco":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_eco")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_izo":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_izo")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_music":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_music")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_tehno":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_str_tehno")
-		rout.SetHTML(w, "book_prosv.html")
-	case "str_posters":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "str_posters")
-		rout.SetHTML(w, "book_prosv.html")
-
-	// фильтр для товара
-	case "book_new":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_new")
-		rout.SetHTML(w, "book_prosv.html")
-
-	// фильтр для товара
-	case "book_sh_middle":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_sh_middle")
-		rout.SetHTML(w, "book_prosv.html")
-
-	// фильтр для товара
-	case "book_do_sh":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_do_sh")
-		rout.SetHTML(w, "book_prosv.html")
-
-	// фильтр для товара
-	case "book_1_4":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_1_4")
-		rout.SetHTML(w, "book_prosv.html")
-
-	// фильтр для товара
-	case "book_5_9":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_5_9")
-		rout.SetHTML(w, "book_prosv.html")
-
-	// фильтр для товара
-	case "book_10_11":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_10_11")
-		rout.SetHTML(w, "book_prosv.html")
-
-	// фильтр для товара
-	case "book_ovz":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_ovz")
-		rout.SetHTML(w, "book_prosv.html")
-
-	// фильтр для товара
-	case "book_digit_books":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_digit_books")
-		rout.SetHTML(w, "book_prosv.html")
-
-	// фильтр для товара
-	case "book_artistic":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "prosv_artistic")
-		rout.SetHTML(w, "book_prosv.html")
-
-	// фильтр для товара
-	case "sh_table":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_table")
-		rout.SetHTML(w, "mebel.html")
-
-	// фильтр для товара
-	case "sh_chair":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_chair")
-		rout.SetHTML(w, "mebel.html")
-
-	// фильтр для товара
-	case "office_table":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "office_table")
-		rout.SetHTML(w, "mebel.html")
-
-	// фильтр для товара
-	case "office_boxing":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "office_boxing")
-		rout.SetHTML(w, "mebel.html")
-
-	// фильтр для товара
-	case "new_basic":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_basic")
-		rout.SetHTML(w, "mebel.html")
-
-	// фильтр для товара
-	case "new_table":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_table")
-		rout.SetHTML(w, "mebel.html")
-
-	// фильтр для товара
-	case "new_boxing":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "new_boxing")
-		rout.SetHTML(w, "mebel.html")
-
-	// фильтр для товара
-	case "sh_minitable":
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, "sh_minitable")
-		rout.SetHTML(w, "mebel.html")
 
 	// страница с поиском товара
 	case "search":
@@ -376,8 +275,20 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.DataTemp.NameLogin = ""
 		rout.DeleteCookie(w, r)
 		http.Redirect(w, r, "/login", http.StatusPermanentRedirect)
+	default:
+		fmt.Println(path_url.ArgCase)
+		fmt.Println("open RANGE TARGET DEFAULT-CASE")
 
+		if rout.RangePathsTargetPage(w, path_url.ArgCase) {
+
+			rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
+			rout.SetHTML(w, "targets.html")
+		}
+		// } else {
+		// 	http.Redirect(w, r, "/404", http.StatusPermanentRedirect)
+		// }
 	}
+
 }
 
 // установка html страницы по названию файла

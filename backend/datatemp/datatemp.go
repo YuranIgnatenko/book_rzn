@@ -171,7 +171,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
                                             <li><a href="/str_do_sh_4_5">Дошкольники 4-5 лет</a></li>
                                             <li><a href="/str_do_sh_5_6">Дошкольники 5-6 лет</a></li>
                                             <li><a href="/str_do_sh_6_7">Дошкольники 6-7 лет</a></li>
-                                            <li><a href="/str_shk_started">Начальная школа</a></li>
+                                            <li><a href="/str_sh_started">Начальная школа</a></li>
 		                                </ul>
                                     </li>
                                     <li><a href="" class="submenu-link">Книги и Учебники</a>
