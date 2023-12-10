@@ -172,83 +172,47 @@
                 <div class="inner">
 
                     <div class="content  ">
+                        <img src="{{ .Path_banner_home}}"  class="slider-image" width="1300px" loading="lazy">
+                    </div>
+                    <div class="item_content">
+                        <div class="title">{{ .Text_banner}}</div>
+                        <div class="descr">{{ .Description_banner}}</div>
 
-
-                        <div class="slider">
-                            <div class="swiper-container">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <div class="bg"></div> <img srcset="{{ .Path_banner_home}} 360w,
-                                                static/logo_vk_group.png 440w,
-                                                {{ .Path_banner_home}} 520w,
-                                                {{ .Path_banner_home}} 670w,
-                                                {{ .Path_banner_home}} 800w,
-                                                {{ .Path_banner_home}} 1000w,
-                                                {{ .Path_banner_home}} 1200w,
-                                                {{ .Path_banner_home}} 1366w" sizes="(max-width: 1000px) calc(100vw - 60px), 
-                             (max-width: 1200px) 960px, 
-                             (max-width: 1366px) calc(100vw - 60px), 
-                             (min-width: 1366px) 1300px" src="{{ .Path_banner_home}}" alt="{{ .Text_banner}}"
-                                            class="slider-image" width="1300px" height="500px" loading="lazy">
-                                        <div class="item_content">
-                                            <div class="title">{{ .Text_banner}}</div>
-                                            <div class="descr">{{ .Description_banner}}</div>
-                                            <!-- <a class="slide_btn" href="http://new15942715563356.myaddshop.ru/categories/">В -->
-                                            <!-- каталог</a> -->
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="bg"></div> <img srcset="{{ .Path_banner_home}} 360w,
-                                                {{ .Path_banner_home}} 440w,
-                                                {{ .Path_banner_home}} 520w,
-                                                {{ .Path_banner_home}} 670w,
-                                                {{ .Path_banner_home}} 800w,
-                                                {{ .Path_banner_home}} 1000w,
-                                                {{ .Path_banner_home}} 1200w,
-                                                {{ .Path_banner_home}} 1366w" sizes="(max-width: 1000px) calc(100vw - 60px), 
-                             (max-width: 1200px) 960px, 
-                             (max-width: 1366px) calc(100vw - 60px), 
-                             (min-width: 1366px) 1300px" src="{{ .Path_banner_home}}" class="slider-image"
-                                            width="1300px" height="500px" loading="lazy">
-
-                                    </div>
-                                </div>
-                                <div class="swiper-pagination"></div>
-                                <!-- Add Arrows -->
-                                <div class="swiper-button-next swiper-button-white"></div>
-                                <div class="swiper-button-prev swiper-button-white"></div>
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="items">
-
-                            {{ range .MenuMap }}
-                            <div class="item">
-
-                                <div class="image">
-                                    <div class="bg_dark"></div>
-                                    <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="0" width="250px"
-                                        height="250px" loading="lazy" />
-                                    <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="1" style="display: none;"
-                                        width="250px" height="250px" />
-
-                                    <a href="/card_view/{{ .PathTo }}"></a>
-                                </div>
-                                <div>
-                                    <center>
-                                        <h4>{{.Title}}</h4>
-                                    </center>
-                                </div>
-                            </div>
-                            {{ end }}
-                        </div>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
+    </div>
+
+    <hr>
+
+
+
+    <div class="items">
+
+        {{ range .MenuMap }}
+        <div class="item">
+
+            <div class="image">
+                <div class="bg_dark"></div>
+                <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="0" width="250px" height="250px" loading="lazy" />
+                <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="1" style="display: none;" width="250px"
+                    height="250px" />
+
+                <a href="{{ .PathTo }}"></a>
+            </div>
+            <div>
+                <center>
+                    <h4>{{.Title}}</h4>
+                </center>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+    </div>
+    </div>
+    </div>
+    </main>
     </div>
 
     <footer class="block">
@@ -260,13 +224,13 @@
                             <img src="{{.Path_logo_company}}" alt="{{ .Company_name}}" />
                         </a>
                     </div>
-                        <div class="social">
-                            <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                            <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                            <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                            <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                            <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                        </div>
+                    <div class="social">
+                        <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                        <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                        <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                        <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                        <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                    </div>
                     <div class="copyright">&copy;
                         {{ .Copyright}}
                     </div>

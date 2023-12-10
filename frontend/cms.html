@@ -121,8 +121,7 @@
         <button class="tablinks" onclick="openTab(event, 'tab_tosite')" height="100%">Просмотр сайта</button>
         <button class="tablinks" onclick="openTab(event, 'tab_metrics')" height="100%">Метрики сайта</button>
         <button class="tablinks" onclick="openTab(event, 'tab_sender_email')" height="100%">Рассылка почты</button>
-        <button class="tablinks" onclick="openTab(event, 'tab_manager_banner')" height="100%">Управление
-            баннерами</button>
+        <button class="tablinks" onclick="openTab(event, 'tab_manager_banner')" height="100%">Управление изображениями</button>
         <button class="tablinks" onclick="openTab(event, 'tab_parser')" height="100%">Парсер сервис</button>
         <button class="tablinks" onclick="openTab(event, 'tab_data_base')" height="100%">База данных</button>
         <button class="tablinks" onclick="openTab(event, 'tab_orders')" height="100%">Заявки на заказы</button>
@@ -145,16 +144,16 @@
 
 
     <div id="tab_manager_banner" class="tabcontent">
-        <form enctype="multipart/form-data" method="post">
-            <p><input type="file" name="f">
-            <input type="submit" value="Установить Логотип"></p>
+        <form enctype="multipart/form-data" method="post" action="load_banner">
+            <p><input type="file" name="file">
+            <input type="submit" value="Установить Баннер"></p>
         </form> 
 
         <hr>
         
-        <form enctype="multipart/form-data" method="post">
-            <p><input type="file" name="f">
-            <input type="submit" value="Установить Баннер"></p>
+        <form enctype="multipart/form-data" method="post" action="load_logo">
+            <p><input type="file" name="file">
+            <input type="submit" value="Установить Логотип"></p>
         </form> 
 
 

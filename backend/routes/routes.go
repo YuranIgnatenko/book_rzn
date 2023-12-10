@@ -9,7 +9,10 @@ import (
 	"backend/parsing"
 	"backend/sender"
 	"fmt"
+	"io"
+	"log"
 	"net/http"
+	"os"
 	"text/template"
 )
 
@@ -83,6 +86,14 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 	return &rout
 }
 
+func (rout *Rout) DownloadFile(w http.ResponseWriter, r *http.Request) {
+	filePath := "static/804.pdf"                                                  // Путь к файлу, который вы хотите отправить для скачивания
+	w.Header().Set("Content-Disposition", "attachment; filename=static/804.pdff") // Устанавливаем заголовок Content-Disposition для указания имени файла
+	w.Header().Set("Content-Type", "application/pdf")                             // Устанавливаем заголовок Content-Type для указания типа файла
+	http.ServeFile(w, r, filePath)
+	http.Redirect(w, r, "/home", http.StatusPermanentRedirect) // Отправляем файл клиенту
+}
+
 // прверяем наличия пути в карте разрешенных в качестве товаров
 func (rout *Rout) RangePathsTargetPage(w http.ResponseWriter, path string) bool {
 	return rout.AccertPath[path] == 1
@@ -106,6 +117,51 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch path_url.ArgCase {
+
+	case "home_news":
+
+	case "home_804":
+		rout.DownloadFile(w, r)
+		rout.SetHTML(w, "home_804.html")
+	case "home_vk":
+		http.Redirect(w, r, "https://vk.com/magazin_rzn", http.StatusPermanentRedirect) // Отправляем файл клиенту
+
+	case "home_address":
+	case "home_docs":
+
+	case "load_logo":
+		r.ParseMultipartForm(10 << 20) // Парсим форму с максимальным размером 10MB
+
+		file, _, err := r.FormFile("file")
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer file.Close()
+
+		f, err := os.OpenFile("static/logo_new.jpg", os.O_WRONLY|os.O_CREATE, 0666)
+		if err != nil {
+			panic(err)
+		}
+		defer f.Close()
+
+		io.Copy(f, file)
+
+	case "load_banner":
+		r.ParseMultipartForm(10 << 20) // Парсим форму с максимальным размером 10MB
+
+		file, _, err := r.FormFile("file")
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer file.Close()
+
+		f, err := os.OpenFile("static/banner.jpg", os.O_WRONLY|os.O_CREATE, 0666)
+		if err != nil {
+			panic(err)
+		}
+		defer f.Close()
+
+		io.Copy(f, file)
 
 	// добавление в избранное
 	case "card_view":

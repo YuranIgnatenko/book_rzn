@@ -42,28 +42,28 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 			models.MenuCard{
 				Title:  "Новинки",
 				Link:   "static/logo_news.jpg",
-				PathTo: "path_to",
+				PathTo: "home_news",
 			},
 			models.MenuCard{
 				Title:  "Приказ 804",
 				Link:   "static/logo_docs.png",
-				PathTo: "path_to",
+				PathTo: "home_804",
 			},
 			models.MenuCard{
 				Title:  "Посмотреть нас в VK",
 				Link:   "static/logo_vk_group.png",
-				PathTo: "path_to",
+				PathTo: "home_vk",
 			},
 			models.MenuCard{
 				Title:  "Контакты и Адреса",
 				Link:   "static/logo_address.png",
-				PathTo: "path_to",
+				PathTo: "home_address",
 			},
 
 			models.MenuCard{
 				Title:  "Документы и информация",
 				Link:   "static/logo_info.png",
-				PathTo: "path_to",
+				PathTo: "home_docs",
 			},
 		},
 		PageMenuTemplHtml: `
