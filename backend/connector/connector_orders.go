@@ -108,6 +108,14 @@ func (t_orders *TableOrders) DeleteTableOrders(tokenUser, idOrder string) {
 	defer rows.Close()
 }
 
+func (t_orders *TableOrders) DeleteRecordOrders(tokenUser, target_hash string) {
+	rows, err := t_orders.DB.Query(fmt.Sprintf(`DELETE FROM bookrzn.Orders WHERE token="%s" AND target_hash="%s";`, tokenUser, target_hash))
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+}
+
 func (t_orders *TableOrders) TargetCardsFromListOrders(token string) []models.TargetCard {
 	mapa_target_hash_count := make(map[string]string, 0)
 	mapa_target_hash_date := make(map[string]string, 0)

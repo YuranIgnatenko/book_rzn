@@ -7,13 +7,13 @@
         table,
         th,
         td {
-            border: 4px solid white;
+            border: 4px solid rgb(82, 77, 100);
             border-collapse: collapse;
         }
 
         th,
         td {
-            background-color: #96D4D4;
+            background-color: #e2c0dd;
         }
 
         .tabs {
@@ -30,8 +30,8 @@
         .tabs>div {
             display: none;
             padding: 12px;
-            border: 1px solid #bd7676;
-            background: #FFFFFF;
+            border: 1px solid #4e92e0;
+            background: #d25f5f;
         }
 
         .tabs>label {
@@ -121,11 +121,14 @@
         <button class="tablinks" onclick="openTab(event, 'tab_tosite')" height="100%">Просмотр сайта</button>
         <button class="tablinks" onclick="openTab(event, 'tab_metrics')" height="100%">Метрики сайта</button>
         <button class="tablinks" onclick="openTab(event, 'tab_sender_email')" height="100%">Рассылка почты</button>
-        <button class="tablinks" onclick="openTab(event, 'tab_manager_banner')" height="100%">Управление изображениями</button>
+        <button class="tablinks" onclick="openTab(event, 'tab_manager_banner')" height="100%">Управление
+            изображениями</button>
+        <button class="tablinks" onclick="openTab(event, 'tab_manager_const')" height="100%">Управление
+            переменными</button>
         <button class="tablinks" onclick="openTab(event, 'tab_parser')" height="100%">Парсер сервис</button>
         <button class="tablinks" onclick="openTab(event, 'tab_data_base')" height="100%">База данных</button>
         <button class="tablinks" onclick="openTab(event, 'tab_orders')" height="100%">Заявки на заказы</button>
-        <button class="tablinks" onclick="openTab(event, 'tab_visit_site')" height="100%">Перейти на сайт</button>        
+        <button class="tablinks" onclick="openTab(event, 'tab_visit_site')" height="100%">Перейти на сайт</button>
 
     </div>
 
@@ -142,22 +145,76 @@
 
     <!-- =================================================== -->
 
+    <div id="tab_manager_const" class="tabcontent">
+        <!-- <h4>Установленый логотип</h4>
+        <img src="{{.Path_logo_company}}" width="20%"> -->
+
+        <form action="/confirm_consts">
+            <table>
+                <tr>
+                    <th>Параметр</th>
+                    <th>Значение</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span>Номер телефона</span>
+                    </td>
+                    <td>
+                        <input type="text" name="inp_phone" id="">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span>Годы работы</span>
+                    </td>
+                    <td>
+                        <input type="text" name="inp_years" id="">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span>Email адрес</span>
+                    </td>
+                    <td>
+                        <input type="text" name="inp_email" id="">
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+
+            <button style="width: 25%;" type="submit">Сохранить и Применить</button>
+        </form>
+
+    </div>
+
+
+
 
     <div id="tab_manager_banner" class="tabcontent">
+        <h4>Установленый логотип</h4>
+        <img src="{{.Path_logo_company}}" width="20%">
         <form enctype="multipart/form-data" method="post" action="load_banner">
             <p><input type="file" name="file">
-            <input type="submit" value="Установить Баннер"></p>
-        </form> 
+                <input type="submit" value="Установить Баннер">
+            </p>
+        </form>
 
         <hr>
-        
+        <h4>Установленый баннер</h4>
+        <img src="{{.Path_banner_home}}" width="20%">
+
         <form enctype="multipart/form-data" method="post" action="load_logo">
             <p><input type="file" name="file">
-            <input type="submit" value="Установить Логотип"></p>
-        </form> 
+                <input type="submit" value="Установить Логотип">
+            </p>
+        </form>
 
 
-        
+
     </div>
 
     <!-- =================================================== -->
@@ -297,10 +354,11 @@
                         <td>{{.Title}}</td>
                         <td>{{.Count}}</td>
                         <td>{{.Price}}</td>
-                        <td style="background-color: rgb(0, 0, 0);"><a href="/cms_view_order/{{.CMSTokenOrders}}">go to.</a>
+                        <td style="background-color: rgb(0, 0, 0);"><a href="/cms_view_order/{{.CMSTokenOrders}}">go
+                                to.</a>
                         </td>
                     </tr>
-                {{end}}
+                    {{end}}
 
             </table>
             </font>

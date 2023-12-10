@@ -71,7 +71,7 @@
         window.one_click_buy = 1;
     </script> <!-- gsc start -->
 
- 
+
 </head>
 
 <body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
@@ -201,6 +201,8 @@
                                         <th>Цена</th>
                                         <th>Сумма</th>
                                         <th>Дата</th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                     </font>
 
@@ -214,6 +216,13 @@
                                             <td>{{ .Price }}</td>
                                             <td>{{ .Summa }}</td>
                                             <td>{{ .Date }}</td>
+                                            <td></td>
+                                            <td>
+                                                <form class="btnf" action="/delete_record_orders/{{.TargetHash}}"
+                                                    method="post">
+                                                    <input type="submit" value="Удалить">
+                                                </form>
+                                            </td>
                                         </tr>
                                         {{ end }}
                                         </font>
@@ -260,10 +269,10 @@
                     </div>
                     <div class="copyright">&copy;
                         {{ .Copyright}}</div>
-                     
+
                 </div>
             </div>
-             
+
         </div>
 
         </div>

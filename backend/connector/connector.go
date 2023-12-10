@@ -267,8 +267,6 @@ func (conn *Connector) SaveTargetInFavorites(token, targethash, count string) {
 	if err != nil {
 		panic(err)
 	}
-	//
-	// обязательно иначе привысит лимит подключений и будет сбой
 	defer rows.Close()
 }
 

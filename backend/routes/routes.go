@@ -119,15 +119,17 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	switch path_url.ArgCase {
 
 	case "home_news":
+	case "home_address":
+	case "home_docs":
+	case "move_fav_table_orders_history":
+	case "cancel_orders_history":
+	case "move_fav_table_orders":
 
 	case "home_804":
 		rout.DownloadFile(w, r)
 		rout.SetHTML(w, "home_804.html")
 	case "home_vk":
 		http.Redirect(w, r, "https://vk.com/magazin_rzn", http.StatusPermanentRedirect) // Отправляем файл клиенту
-
-	case "home_address":
-	case "home_docs":
 
 	case "load_logo":
 		r.ParseMultipartForm(10 << 20) // Парсим форму с максимальным размером 10MB
@@ -188,15 +190,13 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		target_count := path_url.Arg2
 		target_id_order := path_url.Arg3
 		rout.SaveTargetInOrders(tokenValue, string(target_hash), target_count, target_id_order)
-		http.Redirect(w, r, "/orders", http.StatusPermanentRedirect)
+		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
 	// удаление таблицы из черновых заказов
 	case "delete_table_orders":
 		target_id_order := path_url.Arg1
 		rout.TableOrders.DeleteTableOrders(rout.GetCookieTokenValue(w, r), target_id_order)
 		http.Redirect(w, r, "/orders", http.StatusPermanentRedirect)
-
-	case "move_fav_table_orders":
 
 	// сахранить\перенос в историю заказов таблицы
 	case "confirm_table_orders":
@@ -219,13 +219,18 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	// 	rout.DataTemp.TargetCards = rout.TargetCardsFromListOrdersHistory(tokenValue)
 	// 	rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
 	// 	http.Redirect(w, r, "/orders_history", http.StatusPermanentRedirect)
+	case "edit_table_orders":
+		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(tokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		rout.SetHTML(w, "orders_editor.html")
 
-	case "edit_table_orders_history":
-	case "move_fav_table_orders_history":
-
-	// case "edit_orders":
-	// 	rout.DataTemp.TargetCards = rout.TargetCardsFromListOrders(tokenValue)
-	// 	rout.SetHTML(w, "edit_orders.html")
+	case "delete_record_orders":
+		target_hash := path_url.Arg1
+		rout.TableOrders.DeleteRecordOrders(rout.GetCookieTokenValue(w, r), target_hash)
+		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(tokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		http.Redirect(w, r, "/orders", http.StatusPermanentRedirect)
+		// rout.SetHTML(w, "orders.html")
 
 	// страницы черновых заказов- составление
 	case "orders":
