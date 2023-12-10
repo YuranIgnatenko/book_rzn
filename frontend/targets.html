@@ -51,6 +51,28 @@
         } */
     </style>
 
+    <style>
+        label {
+            display: inline-block;
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .item {
+            position: relative;
+
+        }
+
+        .bottom_location {
+            position: absolute;
+            bottom: 0px;
+        }
+
+        .down_elem {
+            display: inline-block;
+        }
+    </style>
+
     <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/base/style.css?ver=1691644398" rel="stylesheet"
         type="text/css">
     <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/templates/michigan.css?ver=1691644398"
@@ -111,7 +133,7 @@
                         <div class="slogan">{{ .Location_office}}</div>
                     </div>
                     <div class="search_form">
-                                                <!-- FART ORDER  -->
+                        <!-- FART ORDER  -->
 
                         <form action="/fast_mail">
                             <button style="width: 100%;" type="submit">Написать письмо*</button>
@@ -170,7 +192,7 @@
 
                 <div class="content  ">
                     <div class="items_wrapper">
-                         
+
                         <div class="items">
 
                             {{ range .TargetCards }}
@@ -183,21 +205,24 @@
                                     <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="1" style="display: none;"
                                         width="250px" height="250px" />
 
-                                    <a href=" "></a>
+                                    <a href="/card_view/{{ .TargetHash }}"></a>
                                 </div>
                                 <div class="item_content " data-discount="0.00">
-                                    <a href=" "
-                                        class="descr">{{ .Title }}</a>
+                                    <a href="/card_view/{{ .TargetHash }}" class="descr">{{ .Title }}</a>
                                     <div class="short_descr">{{ .Autor }}</div>
 
-                                    <div class="item_price_big">
-                                        <span class="new">{{ .Price }}₽</span>
+                                    <div class="bottom_location" style="padding:10px">
+                                        <div class="item_price_big down_elem">
+                                            <span class="new">{{ .Price }}₽</span>
+                                        </div>
+
+                                        <div class="down_elem">
+                                            <a class="more" style="padding:10px"
+                                                onclick="this.href='/add_favorites/{{.TargetHash}}/1'">В
+                                                корзину</a>
+                                        </div>
                                     </div>
-                                   
-                                    <div>
-                                        <a class="more" onclick="this.href='/add_favorites/{{.TargetHash}}/1'" >В корзину</a>
-                                    </div>
-                                     
+
                                 </div>
                             </div>
                             {{ end }}
@@ -207,7 +232,7 @@
                     </div>
 
 
-                    
+
                 </div>
 
             </div>
@@ -225,14 +250,7 @@
                     </div>
                     <div class="copyright">&copy;
                         {{ .Copyright}}</div>
-                    <!-- <a class="policy" href="http://new15942715563356.myaddshop.ru/politika-konfidencialnosti/">Политика
-                        конфиденциальности</a>
-                    <a class="user_agreement_link"
-                        href="http://new15942715563356.myaddshop.ru/soglasie-na-obrabotku-personalnyh-dannyh/">Согласие
-                        на обработку персональных данных</a>
-                    <div class="footer_site_info">
-                        <p>Используя данный сайт, вы автоматически принимаете условия пользовательского соглашения и
-                            соглашаетесь с политикой конфиденциальности.</p> -->
+                     
                 </div>
             </div>
 
@@ -240,26 +258,13 @@
             <div class="social">
                 <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
                 <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
-                <!-- <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
-                <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
-                <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a> -->
             </div>
 
         </div>
         </div>
         </div>
     </footer>
-    <!-- <script src="../../code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
-    <script>$(function () { feather.replace(); });</script>
-    <script src="http://new15942715563356.myaddshop.ru/js/swiper-min.js" type="text/javascript" type="module"></script>
-    <script src="http://new15942715563356.myaddshop.ru/js/script-min.js" type="text/javascript"></script>
 
-    <link rel="stylesheet"
-        href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" />
-    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" />
-    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" />
- -->
 
 </body>
 

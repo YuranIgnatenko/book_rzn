@@ -10,6 +10,7 @@ type DataTemp struct {
 	config.Configuration
 	TargetAll            []models.TargetCard
 	TargetCards          []models.TargetCard
+	MenuCards            []models.MenuCard
 	ListOrdersTargetCard models.ListOrdersTargetCard
 	FavoritesCards       []models.FavoritesCards
 	OrdersCards          []models.OrdersCards
@@ -20,6 +21,7 @@ type DataTemp struct {
 	IsLogin              bool
 	NameLogin            string
 	PageMenuTemplHtml    string
+	MenuMap              []models.MenuCard
 }
 
 func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
@@ -36,6 +38,34 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 		NumberFastOrder:      "",
 		IsLogin:              false,
 		NameLogin:            "Гость",
+		MenuMap: []models.MenuCard{
+			models.MenuCard{
+				Title:  "Новинки",
+				Link:   "static/logo_news.jpg",
+				PathTo: "path_to",
+			},
+			models.MenuCard{
+				Title:  "Приказ 804",
+				Link:   "static/logo_docs.png",
+				PathTo: "path_to",
+			},
+			models.MenuCard{
+				Title:  "Посмотреть нас в VK",
+				Link:   "static/logo_vk_group.png",
+				PathTo: "path_to",
+			},
+			models.MenuCard{
+				Title:  "Контакты и Адреса",
+				Link:   "static/logo_address.png",
+				PathTo: "path_to",
+			},
+
+			models.MenuCard{
+				Title:  "Документы и информация",
+				Link:   "static/logo_info.png",
+				PathTo: "path_to",
+			},
+		},
 		PageMenuTemplHtml: `
 		        <style>
 		        * {
@@ -86,7 +116,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 		            padding: 15px 30px;
 		        }
 		        .topmenu li a:hover {
-		            color: #e66464;
+		            color:  rgb(194, 104, 104);
 		        }
 		        .submenu-link:after {
 		            content: "\f107";
@@ -123,7 +153,10 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 		    </style>
 				<nav>
 					<ul class="topmenu">
-						
+					
+						<li><a href="/home" class="submenu-link">Главная страница</a>
+						</li>
+
 						<li><a href="/new_basic" class="submenu-link">Мебельные новинки</a>
 							<ul class="submenu">
 								<li><a href="/new_basic">Базовые модули</a></li>
@@ -166,6 +199,16 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 							</ul>
 						</li>
 
+						<li><a href="/str_do_sh_3_4" class="submenu-link">Оборудование Дошкольное</a>
+							<ul class="submenu">
+								<li><a href="/str_do_sh_3_4">Дошкольники 3-4 лет</a></li>
+								<li><a href="/str_do_sh_4_5">Дошкольники 4-5 лет</a></li>
+								<li><a href="/str_do_sh_5_6">Дошкольники 5-6 лет</a></li>
+								<li><a href="/str_do_sh_6_7">Дошкольники 6-7 лет</a></li>
+								<li><a href="/str_sh_started">Начальная школа</a></li>
+							</ul>
+						</li>
+
 						<li><a href="/str_psiholog" class="submenu-link">Оборудование Предметное</a>
 							<ul class="submenu">
 								<li><a href="/str_psiholog">Психология</a></li>
@@ -184,18 +227,10 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 								<li><a href="/str_izo">Изобразительное искусство</a></li>
 								<li><a href="/str_music">Музыка</a></li>
 								<li><a href="/str_tehno">Технология</a></li>
-								<li><a href="/str_posters">Плакаты для ПРОФОБРАЗОВАНИЯ</a></li>
 							</ul>
 						</li>
 
-						<li><a href="/str_do_sh_3_4" class="submenu-link">Оборудование Дошкольное</a>
-							<ul class="submenu">
-								<li><a href="/str_do_sh_3_4">Дошкольники 3-4 лет</a></li>
-								<li><a href="/str_do_sh_4_5">Дошкольники 4-5 лет</a></li>
-								<li><a href="/str_do_sh_5_6">Дошкольники 5-6 лет</a></li>
-								<li><a href="/str_do_sh_6_7">Дошкольники 6-7 лет</a></li>
-								<li><a href="/str_sh_started">Начальная школа</a></li>
-							</ul>
+						<li><a href="/str_posters" class="submenu-link">Плакаты для ПРОФ.образования</a>
 						</li>
 
 					</ul>
@@ -230,3 +265,19 @@ func (dt *DataTemp) FilterSearch(data []models.TargetCard, sub string) []models.
 	}
 	return segm
 }
+
+// func (dt *DataTemp) GetMenuFromMap(path_menu string) []models.MenuCard {
+// 	segm := make([]models.MenuCard, 0)
+
+// 	cvt := func(sub1, sub2 string) (string, string) {
+// 		return strings.ToLower(sub1), strings.ToLower(sub2)
+// 	}
+
+// 	for _, tc := range data {
+// 		if strings.Contains(cvt(tc.Autor, sub)) || strings.Contains(cvt(tc.Price, sub)) ||
+// 			strings.Contains(cvt(tc.Title, sub)) || strings.Contains(cvt(tc.Source, sub)) {
+// 			segm = append(segm, tc)
+// 		}
+// 	}
+// 	return segm
+// }

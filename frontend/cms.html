@@ -145,14 +145,20 @@
 
 
     <div id="tab_manager_banner" class="tabcontent">
+        <form enctype="multipart/form-data" method="post">
+            <p><input type="file" name="f">
+            <input type="submit" value="Установить Логотип"></p>
+        </form> 
 
-        <table>
-            <tr>
-                <td><label>Логотип</label></td>
-                <td><input type="text" id="IP" name="IP" placeholder="{{ .Ip}}" value="{{ .Ip}}"></td>
-            </tr>
-        </table>
-        <input type="submit" value="Save values">
+        <hr>
+        
+        <form enctype="multipart/form-data" method="post">
+            <p><input type="file" name="f">
+            <input type="submit" value="Установить Баннер"></p>
+        </form> 
+
+
+        
     </div>
 
     <!-- =================================================== -->

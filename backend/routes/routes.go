@@ -5,6 +5,7 @@ import (
 	"backend/config"
 	"backend/connector"
 	"backend/datatemp"
+	"backend/models"
 	"backend/parsing"
 	"backend/sender"
 	"fmt"
@@ -105,6 +106,13 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch path_url.ArgCase {
+
+	// добавление в избранное
+	case "card_view":
+		target_hash := path_url.Arg1
+		rout.DataTemp.TargetCards = []models.TargetCard{rout.TableTargets.GetTargetsCardsFromHash(target_hash)}
+		rout.SetHTML(w, "card_view.html")
+
 	// добавление в избранное
 	case "add_favorites":
 		target_hash := path_url.Arg1
@@ -176,6 +184,8 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	// страница Домашняя
 	case "home":
+		// path_menu := path_url.Arg1
+		// rout.DataTemp.MenuCards
 		rout.SetHTML(w, "home.html")
 
 	// страница с поиском товара

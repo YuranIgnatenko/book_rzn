@@ -85,11 +85,11 @@
 
                     <div class="login_or_reg">
                         {{if .IsLogin}}
-                            <a href="/home">Пользователь:{{ .NameLogin }}</a>
-                            <br>
-                            <a href="/out">Выход</a>
+                        <a href="/home">Пользователь:{{ .NameLogin }}</a>
+                        <br>
+                        <a href="/out">Выход</a>
                         {{else}}
-                        <a href="/login">Вход</a> 
+                        <a href="/login">Вход</a>
                         <a href="/registration">Регистрация</a>
                         {{end}}
                     </div>
@@ -108,7 +108,7 @@
                         <div class="slogan">{{ .Location_office}}</div>
                     </div>
                     <div class="search_form">
-                                                <!-- FART ORDER  -->
+                        <!-- FART ORDER  -->
 
                         <form action="/fast_mail">
                             <button style="width: 100%;" type="submit">Написать письмо*</button>
@@ -148,14 +148,14 @@
                             </a>
                         </div>
                         {{end}}
-  
+
                     </div>
                 </div>
             </div>
 
             <div class="header-bottom">
                 <div class="inner">
-                     
+
                     {{ .PageMenuTemplHtml }}
                 </div>
             </div>
@@ -167,7 +167,7 @@
 
                 <div class="content  ">
                     <div class="items_wrapper">
-                         
+
                         <div class="items">
 
                             {{ range .TargetCards }}
@@ -180,35 +180,37 @@
                                     <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="1" style="display: none;"
                                         width="250px" height="250px" />
 
-                                    <a href=" "></a>
+                                    <a href="/card_view/{{ .TargetHash }}"></a>
                                 </div>
                                 <div class="item_content " data-discount="0.00">
-                                    <a href=" "
-                                        class="descr">{{ .Title }}</a>
+                                    <a href="/card_view/{{ .TargetHash }}" class="descr">{{ .Title }}</a>
                                     <div class="short_descr">{{ .Autor }}</div>
 
                                     <div class="item_price_big">
                                         <span class="new">{{ .Price }}₽</span>
                                     </div>
-                                    
+
                                     <div>
                                         <label>Количество</label>
-                                        <input placeholder="1" type="number" value="1" id="{{.TargetHash}}" name="tentacles" min="1" max="999999" />
+                                        <input placeholder="1" type="number" value="1" id="{{.TargetHash}}"
+                                            name="tentacles" min="1" max="999999" />
                                     </div>
-                                    
+
                                     <div>
                                         <label>Номер заказа</label>
-                                        <input placeholder="1" type="number" value="1" id="{{.Link}}" name="tentacles_n" min="1" max="9999999999999" />
+                                        <input placeholder="1" type="number" value="1" id="{{.Link}}" name="tentacles_n"
+                                            min="1" max="9999999999999" />
                                     </div>
-                                   
+
+                                    <div>
+                                        <a class="more" href="/delete_favorites/{{ .TargetHash }}">Убрать</a>
+                                    </div>
                                     <div>
                                         <a class="more"
-                                        href="/delete_favorites/{{ .TargetHash }}">Убрать</a>
+                                            onclick="href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value+'/'+document.getElementById('{{.Link}}').value;">В
+                                            заказ</a>
                                     </div>
-                                    <div>
-                                        <a class="more" onclick="href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value+'/'+document.getElementById('{{.Link}}').value;" >В заказ</a>
-                                    </div>
-                                    
+
                                 </div>
                             </div>
                             {{ end }}

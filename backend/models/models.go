@@ -21,6 +21,12 @@ type ListOrdersTargetCard struct {
 	PriceFinish         map[string]float64
 }
 
+type MenuCard struct {
+	Title  string
+	Link   string
+	PathTo string
+}
+
 type TargetCard struct {
 	Autor                string
 	Title                string

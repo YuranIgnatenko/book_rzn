@@ -108,7 +108,7 @@
                     </div>
                     <div class="search_form">
 
-                                                <!-- ORDER  -->
+                        <!-- ORDER  -->
 
                         <form action="/fast_mail">
                             <button style="width: 100%;" type="submit">Написать письмо*</button>
@@ -179,7 +179,7 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="bg"></div> <img srcset="{{ .Path_banner_home}} 360w,
-                                                {{ .Path_banner_home}} 440w,
+                                                static/logo_vk_group.png 440w,
                                                 {{ .Path_banner_home}} 520w,
                                                 {{ .Path_banner_home}} 670w,
                                                 {{ .Path_banner_home}} 800w,
@@ -221,31 +221,31 @@
                         </div>
 
 
-                        <!-- NEWS -->
 
-                        <div class="news_main">
-                            <div class="one_news_wrapp">
-                                <div class="one_news">
-                                    <a class="news_img" href="/">
-                                        <div class="n_watch">Смотреть</div>
-                                        <img src="http://new15942715563356.myaddshop.ru/img/400x250/1010/news/novosti2_15942842675524.jpg"
-                                            srcset="http://new15942715563356.myaddshop.ru/img/800x500/1010/news/novosti2_15942842675524.jpg 2x"
-                                            width="400px" height="250px" loading="lazy">
-                                    </a>
-                                    <div class="news_title">
-                                        <div class="n_date">Date and time</div>
-                                        <a class="n_title" href="/">Title card</a>
-                                        <div class="n_descr">
-                                            Desc card
-                                        </div>
-                                    </div>
+
+                        <div class="items">
+
+                            {{ range .MenuMap }}
+                            <div class="item">
+
+                                <div class="image">
+                                    <div class="bg_dark"></div>
+                                    <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="0" width="250px"
+                                        height="250px" loading="lazy" />
+                                    <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="1" style="display: none;"
+                                        width="250px" height="250px" />
+
+                                    <a href="/card_view/{{ .PathTo }}"></a>
+                                </div>
+                                <div>
+                                    <center>
+                                        <h4>{{.Title}}</h4>
+                                    </center>
                                 </div>
                             </div>
+                            {{ end }}
                         </div>
-
-
                     </div>
-
                 </div>
             </div>
         </main>
@@ -260,65 +260,26 @@
                             <img src="{{.Path_logo_company}}" alt="{{ .Company_name}}" />
                         </a>
                     </div>
+                        <div class="social">
+                            <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                            <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                            <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                            <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                            <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
+                        </div>
                     <div class="copyright">&copy;
-                        {{ .Copyright}}</div>
-                    <!-- <a class="policy" href="http://new15942715563356.myaddshop.ru/politika-konfidencialnosti/">Политика
-                        конфиденциальности</a>
-                    <a class="user_agreement_link"
-                        href="http://new15942715563356.myaddshop.ru/soglasie-na-obrabotku-personalnyh-dannyh/">Согласие
-                        на обработку персональных данных</a>
-                    <div class="footer_site_info">
-                        <p>Используя данный сайт, вы автоматически принимаете условия пользовательского соглашения и
-                            соглашаетесь с политикой конфиденциальности.</p> -->
+                        {{ .Copyright}}
+                    </div>
                 </div>
             </div>
 
 
-            <div class="social">
-                <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                <!-- <a target="_blank" href="https://facebook.com/#" class="link_fb"></a> -->
-                <!-- <a target="_blank" href="https://ok.ru/#" class="link_ok"></a> -->
-                <!-- <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a> -->
-                <!-- <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a> -->
-            </div>
+
 
         </div>
         </div>
         </div>
     </footer>
-    <!-- <script src="../code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
-    <script>$(function () { feather.replace(); });</script>
-    <script src="http://new15942715563356.myaddshop.ru/js/swiper-min.js" type="text/javascript" type="module"></script>
-    <script src="http://new15942715563356.myaddshop.ru/js/script-min.js" type="text/javascript"></script> -->
-
-    <!-- <link rel="stylesheet" -->
-    <!-- href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" /> -->
-    <!-- <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" /> -->
-    <!-- <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" /> -->
-    <!-- <script>
-        $(function () {
-            var swiper = new Swiper('.swiper-container', {
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                autoplay: {
-                    delay: 5000,
-                },
-                resizeReInit: true,
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                noSwipingClass: 'noSwipingClass'
-            });
-
-
-        });
-
-    </script> -->
-
 </body>
 
 </html>
