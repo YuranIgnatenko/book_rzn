@@ -162,8 +162,8 @@ func RangeScrapServices(data []models.ServiceScraper) []models.TargetCard {
 	tc := make([]models.TargetCard, 0)
 
 	for n, service := range data {
-		fmt.Println("Parse service start --> link n:", n)
 		tc = append(tc, service.ScrapSource()...)
+		fmt.Println("Parse service start --> link n:", n, "all count --> ", len(tc))
 	}
 	return tc
 }

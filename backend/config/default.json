@@ -16,7 +16,7 @@
     "bd_prosv": "bd_prosv.csv",
 
     "ip": "localhost",
-    "port": "8083",
+    "port": "8082",
     "split_ip_port":":",
     
     "link_prosv":"https://shop.prosv.ru/katalog",

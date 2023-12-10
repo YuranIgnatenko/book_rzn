@@ -43,7 +43,6 @@ func (ss *ServiceStronikum) targetCardsFromMapa(mp_title, mp_price, mp_image map
 			Comment: "desc",
 			Source:  ss.SourceType,
 		}
-		fmt.Println("Tag:    ", ss.TagName)
 
 		tc.Id = "-" + mp_title[ind] + mp_price[ind] + "https://stronikum.ru" + mp_image[ind]
 		tc.TargetHash = fmt.Sprintf("%v", time.Now().UnixNano())

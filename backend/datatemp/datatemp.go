@@ -3,7 +3,6 @@ package datatemp
 import (
 	"backend/config"
 	"backend/models"
-	"fmt"
 	"strings"
 )
 
@@ -161,76 +160,58 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 								<li><a href="/book_digit_books">Электронные книги</a></li>
 							</ul>
 						</li>
+						<li><a href="/book_digit_books" class="submenu-link">Электронная библиотека</a>
+							<ul class="submenu">
+								<li><a href="/book_digit_books">Электронные книги</a></li>
+							</ul>
+						</li>
+
+						<li><a href="/str_psiholog" class="submenu-link">Оборудование Предметное</a>
+							<ul class="submenu">
+								<li><a href="/str_psiholog">Психология</a></li>
+								<li><a href="/str_phisic">Физика</a></li>
+								<li><a href="/str_himiya">Химия</a></li>
+								<li><a href="/str_biologiya">Биология</a></li>
+								<li><a href="/str_litra">Литература</a></li>
+								<li><a href="/str_ru_lang">Русский язык</a></li>
+								<li><a href="/str_other_lang">Иностранный язык</a></li>
+								<li><a href="/str_history">История</a></li>
+								<li><a href="/str_geograph">География</a></li>
+								<li><a href="/str_math">Математика</a></li>
+								<li><a href="/str_info">Информатика</a></li>
+								<li><a href="/str_obg">ОБЖ</a></li>
+								<li><a href="/str_eco">Экология</a></li>
+								<li><a href="/str_izo">Изобразительное искусство</a></li>
+								<li><a href="/str_music">Музыка</a></li>
+								<li><a href="/str_tehno">Технология</a></li>
+								<li><a href="/str_posters">Плакаты для ПРОФОБРАЗОВАНИЯ</a></li>
+							</ul>
+						</li>
+
+						<li><a href="/str_do_sh_3_4" class="submenu-link">Оборудование Дошкольное</a>
+							<ul class="submenu">
+								<li><a href="/str_do_sh_3_4">Дошкольники 3-4 лет</a></li>
+								<li><a href="/str_do_sh_4_5">Дошкольники 4-5 лет</a></li>
+								<li><a href="/str_do_sh_5_6">Дошкольники 5-6 лет</a></li>
+								<li><a href="/str_do_sh_6_7">Дошкольники 6-7 лет</a></li>
+								<li><a href="/str_sh_started">Начальная школа</a></li>
+							</ul>
+						</li>
+
 					</ul>
 				</nav>
 				`}
 }
 
-// <li><a href="/str_top" class="submenu-link">Оборудование Предметное</a>
-// 							<ul class="submenu">
-// 								<li><a href="/str_top">Новинки</a></li>
-// 								<li><a href="/str_psiholog">Психология</a></li>
-// 								<li><a href="/str_phisic">Физика</a></li>
-// 								<li><a href="/str_himiya">Химия</a></li>
-// 								<li><a href="/str_biologiya">Биология</a></li>
-// 								<li><a href="/str_litra">Литература</a></li>
-// 								<li><a href="/str_ru_lang">Русский язык</a></li>
-// 								<li><a href="/str_other_lang">Иностранный язык</a></li>
-// 								<li><a href="/str_history">История</a></li>
-// 								<li><a href="/str_geograph">География</a></li>
-// 								<li><a href="/str_math">Математика</a></li>
-// 								<li><a href="/str_info">Информатика</a></li>
-// 								<li><a href="/str_obg">ОБЖ</a></li>
-// 								<li><a href="/str_eco">Экология</a></li>
-// 								<li><a href="/str_izo">Изобразительное искусство</a></li>
-// 								<li><a href="/str_music">Музыка</a></li>
-// 								<li><a href="/str_tehno">Технология</a></li>
-// 								<li><a href="/str_posters">Плакаты для ПРОФОБРАЗОВАНИЯ</a></li>
-// 							</ul>
-// 						</li>
-
-// 						<li><a href="/str_do_sh_3_4" class="submenu-link">Оборудование Дошкольное</a>
-// 							<ul class="submenu">
-// 								<li><a href="/str_do_sh_3_4">Дошкольники 3-4 лет</a></li>
-// 								<li><a href="/str_do_sh_4_5">Дошкольники 4-5 лет</a></li>
-// 								<li><a href="/str_do_sh_5_6">Дошкольники 5-6 лет</a></li>
-// 								<li><a href="/str_do_sh_6_7">Дошкольники 6-7 лет</a></li>
-// 								<li><a href="/str_sh_started">Начальная школа</a></li>
-// 							</ul>
-// 						</li>
-
-// 						<li><a href="/book_new" class="submenu-link">Книги и Учебники</a>
-// 							<ul class="submenu">
-// 								<li><a href="/book_new">Новинки</a></li>
-// 								<li><a href="/book_sh_middle">Для среднего специального образования</a></li>
-// 								<li><a href="/book_do_sh">Для дошкольников</a></li>
-// 								<li><a href="/book_1_4">Для 1-4 классов</a></li>
-// 								<li><a href="/book_5_9">Для 5-9 классов</a></li>
-// 								<li><a href="/book_10_11">Для 10-11 классов</a></li>
-// 								<li><a href="/book_ovz">Для детей с ОВЗ</a></li>
-// 								<li><a href="/book_artistic">Художественная литература</a></li>
-// 							</ul>
-// 						</li>
-
-// 						<li><a href="/book_digit_books" class="submenu-link">Электронная библиотека</a>
-// 							<ul class="submenu">
-// 								<li><a href="/book_digit_books">Электронные книги</a></li>
-// 							</ul>
-// 						</li>
-
 func (dt *DataTemp) FilterCards(data []models.TargetCard, mode string) []models.TargetCard {
-	fmt.Println("run FILTER CARDS: mode --->", mode)
 
 	segm := make([]models.TargetCard, 0)
 	for _, tc := range data {
 
 		if mode == tc.Tag {
 			segm = append(segm, tc)
-		} else {
-
 		}
 	}
-	fmt.Println("finish FILTER CARDS: len segm --->", len(segm))
 	return segm
 }
 

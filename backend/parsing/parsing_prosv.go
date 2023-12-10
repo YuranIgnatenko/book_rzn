@@ -41,7 +41,6 @@ func (ps *ServiceProsv) ScrapSource() []models.TargetCard {
 					Source: ps.SourceType,
 					Tag:    ps.TagName,
 				}
-				fmt.Println("Tag:    ",ps.TagName,)
 				dt.Title = strings.ReplaceAll(dt.Title, `"`, "")
 
 				dt.Id = dt.Autor + dt.Title + dt.Price + el.ChildAttr("img", "src")

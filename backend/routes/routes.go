@@ -84,27 +84,19 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 
 // прверяем наличия пути в карте разрешенных в качестве товаров
 func (rout *Rout) RangePathsTargetPage(w http.ResponseWriter, path string) bool {
-	fmt.Println("rout.AccertPath[path] == 1", rout.AccertPath[path] == 1, rout.AccertPath[path], path)
 	return rout.AccertPath[path] == 1
 }
 
 func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("1 ================================", r.URL.Path)
 	isFindCookie := rout.Auth.GetCookieClient(w, r)
 	rout.DataTemp.IsLogin = isFindCookie
-	fmt.Println("2 ================================", r.URL.Path)
 
 	tokenValue := rout.GetCookieTokenValue(w, r)
 	rout.DataTemp.NameLogin = rout.TableUsers.GetNameLoginFromToken(tokenValue)
-	fmt.Println("3 ================================", r.URL.Path)
 
 	path_url := NewPathUrlArgs(r.URL.Path)
 
-	fmt.Println("url:::::::", path_url.ArgRow, path_url.ArgCase)
-	fmt.Println("4 ================================", r.URL.Path)
-
 	if rout.RangePathsTargetPage(w, path_url.ArgCase) {
-		fmt.Println("ok loop IF -----> ", path_url.ArgCase)
 
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
 
@@ -272,7 +264,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 			return
 		default:
 			rout.DataTemp.IsLogin = false
-			fmt.Println("def =================")
 			// http.Redirect(w, r, "/404", http.StatusPermanentRedirect)
 			return
 		}
