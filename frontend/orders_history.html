@@ -9,7 +9,7 @@
     <meta name="description" content="" />
     <!-- <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport"> -->
     <meta name="viewport" content="width=1200px">
-    <title>{{ .Location_office }}</title>
+    <title>История заказов</title>
 
     <link rel="icon" type="image/png"
         href="http://new15942715563356.myaddshop.ru/img/64x64/1010/favicon/favikonka_15942854458688.png" />
@@ -225,11 +225,11 @@
                             <p> </p>
                         </div>
                         <div>
-                            <form class="btnf" action="/cancel_orders_history/{{TargetHash}}" method="post">
+                            <form class="btnf" action="/cancel_orders_history/" method="post">
                                 <input type="submit" value="Отмена заказа">
                             </form>
                         
-                            <form class="btnf" action="/move_fav_table_orders/{{.TargetHash}}" method="post">
+                            <form class="btnf" action="/move_fav_table_orders/" method="post">
                                 <input type="submit" value="Выгрузить в избранное">
                             </form>
                             

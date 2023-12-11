@@ -119,8 +119,11 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	switch path_url.ArgCase {
 
 	case "home_news":
-	case "home_address":
-	case "home_docs":
+	case "home_contacts_address":
+		rout.SetHTML(w, "home_contacts_address.html")
+	case "home_docs_info":
+		rout.SetHTML(w, "home_docs_info.html")
+
 	case "move_fav_table_orders_history":
 	case "cancel_orders_history":
 	case "move_fav_table_orders":

@@ -22,6 +22,7 @@ type DataTemp struct {
 	NameLogin            string
 	PageMenuTemplHtml    string
 	MenuMap              []models.MenuCard
+	MenuFiles            []models.MenuCard
 }
 
 func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
@@ -38,6 +39,58 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 		NumberFastOrder:      "",
 		IsLogin:              false,
 		NameLogin:            "Гость",
+		MenuFiles: []models.MenuCard{
+			models.MenuCard{
+				Title:  "Приказ 804",
+				Link:   "static/logo_docs.png",
+				PathTo: "home_804",
+			},
+			models.MenuCard{
+				Title:  "Приказ 804",
+				Link:   "static/logo_docs.png",
+				PathTo: "home_804",
+			},
+			models.MenuCard{
+				Title:  "Приказ 804",
+				Link:   "static/logo_docs.png",
+				PathTo: "home_804",
+			},
+			models.MenuCard{
+				Title:  "Приказ 804",
+				Link:   "static/logo_docs.png",
+				PathTo: "home_804",
+			},
+			models.MenuCard{
+				Title:  "Приказ 804",
+				Link:   "static/logo_docs.png",
+				PathTo: "home_804",
+			},
+			models.MenuCard{
+				Title:  "Приказ 804",
+				Link:   "static/logo_docs.png",
+				PathTo: "home_804",
+			},
+			models.MenuCard{
+				Title:  "Приказ 804",
+				Link:   "static/logo_docs.png",
+				PathTo: "home_804",
+			},
+			models.MenuCard{
+				Title:  "Приказ 804",
+				Link:   "static/logo_docs.png",
+				PathTo: "home_804",
+			},
+			models.MenuCard{
+				Title:  "Приказ 804",
+				Link:   "static/logo_docs.png",
+				PathTo: "home_804",
+			},
+			models.MenuCard{
+				Title:  "Приказ 804",
+				Link:   "static/logo_docs.png",
+				PathTo: "home_804",
+			},
+		},
 		MenuMap: []models.MenuCard{
 			models.MenuCard{
 				Title:  "Новинки",
@@ -57,13 +110,13 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 			models.MenuCard{
 				Title:  "Контакты и Адреса",
 				Link:   "static/logo_address.png",
-				PathTo: "home_address",
+				PathTo: "home_contacts_address",
 			},
 
 			models.MenuCard{
 				Title:  "Документы и информация",
 				Link:   "static/logo_info.png",
-				PathTo: "home_docs",
+				PathTo: "home_docs_info",
 			},
 		},
 		PageMenuTemplHtml: `

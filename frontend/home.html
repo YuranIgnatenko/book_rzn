@@ -8,7 +8,7 @@
         content="{{ .Location_office}} - интернет-магазин, который занимается продажей и доставкой книг от известных крупнейших поставщиков." />
     <!-- <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport"> -->
     <meta name="viewport" content="width=1200px">
-    <title>{{ .Location_office}}</title>
+    <title>Главная</title>
 
     <link rel="icon" type="image/png"
         href="http://new15942715563356.myaddshop.ru/img/64x64/1010/favicon/favikonka_15942854458688.png" />
@@ -73,11 +73,11 @@
             <div class="header-top">
                 <div class="inner">
                     <div class="email-wrapper">
-                        <a href="mailto:{{ .Email}}">book-rzn@email.com</a>
+                        <a href="mailto:{{ .Email}}">{{.Email}}</a>
                     </div>
 
                     <div class="phone">
-                        <a href="tel:88009008090">8-800-900-80-90</a>
+                        <a href="tel:{{.Phone}}">{{.Phone}}</a>
                     </div>
 
                     <div class="login_or_reg">
@@ -224,13 +224,13 @@
                             <img src="{{.Path_logo_company}}" alt="{{ .Company_name}}" />
                         </a>
                     </div>
-                    <div class="social">
+                    <!-- <div class="social">
                         <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
                         <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
                         <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
                         <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
                         <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                    </div>
+                    </div> -->
                     <div class="copyright">&copy;
                         {{ .Copyright}}
                     </div>
