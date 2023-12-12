@@ -10,8 +10,8 @@ type TableTargets struct {
 	DB *sql.DB
 }
 
-func NewTableTargets() *TableOrders {
-	return &TableOrders{}
+func NewTableTargets() *TableTargets {
+	return &TableTargets{}
 }
 
 // FROM bookrzn.Targets TO ...

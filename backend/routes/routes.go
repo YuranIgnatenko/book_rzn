@@ -103,8 +103,8 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	isFindCookie := rout.Auth.GetCookieClient(w, r)
 	rout.DataTemp.IsLogin = isFindCookie
 
-	tokenValue := rout.GetCookieTokenValue(w, r)
-	rout.DataTemp.NameLogin = rout.TableUsers.GetNameLoginFromToken(tokenValue)
+	TokenValue := rout.GetCookieTokenValue(w, r)
+	rout.DataTemp.NameLogin = rout.TableUsers.GetNameLoginFromToken(TokenValue)
 
 	path_url := NewPathUrlArgs(r.URL.Path)
 
@@ -127,7 +127,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "cancel_orders_history":
 		target_id_order := path_url.Arg1
 		fmt.Println("ID ORDER:::", target_id_order)
-		rout.TableOrdersHistory.DeleteTableOrdersHistory(tokenValue, target_id_order)
+		rout.TableOrdersHistory.DeleteTableOrdersHistory(TokenValue, target_id_order)
 		sender.Send_mail("ЗАКАЗ", "Отменён заказ на сайте")
 		fmt.Println("Email sended CANCELED ORDER !")
 		rout.SetHTML(w, "orders_history.html")
@@ -183,13 +183,13 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "add_favorites":
 		target_hash := path_url.Arg1
 		target_count := path_url.Arg2
-		rout.SaveTargetInFavorites(tokenValue, string(target_hash), target_count)
+		rout.SaveTargetInFavorites(TokenValue, string(target_hash), target_count)
 		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
 	// удаление из избранного
 	case "delete_favorites":
 		target_hash := path_url.Arg1
-		rout.DeleteTargetFromFavorites(tokenValue, string(target_hash))
+		rout.DeleteTargetFromFavorites(TokenValue, string(target_hash))
 		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
 	// добавление в черновые таблицы заказов
@@ -198,7 +198,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		target_count := path_url.Arg2
 		target_id_order := path_url.Arg3
 		fmt.Println("add params: target_hash,target_count,target_id_order:", target_hash, target_count, target_id_order)
-		rout.SaveTargetInOrders(tokenValue, string(target_hash), target_count, target_id_order)
+		rout.SaveTargetInOrders(TokenValue, string(target_hash), target_count, target_id_order)
 		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
 	// удаление таблицы из черновых заказов
@@ -211,7 +211,8 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "confirm_table_orders":
 		fmt.Println("run confirm table ------------------ ROUT -- OK")
 		target_id_order := path_url.Arg1
-		rout.TableOrdersHistory.SaveTargetInOrdersHistory(rout.Db, tokenValue, target_id_order)
+
+		rout.TableOrdersHistory.SaveTargetInOrdersHistory(TokenValue, target_id_order)
 
 		sender.Send_mail("ЗАКАЗ", "Выполнен заказ на сайте")
 		fmt.Println("Email sended CONFIRM ORDER !")
@@ -220,7 +221,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	//страница ИСТОРИЯ активных и прошлых заказов
 	case "orders_history":
-		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromTokenHistory(tokenValue)
+		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromTokenHistory(TokenValue)
 		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
 		rout.SetHTML(w, "orders_history.html")
 
@@ -228,31 +229,31 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	// case "delete_table_orders_history":
 	// 	target_id_order := path_url.Arg1
 	// 	rout.DeleteTableOrdersHistory(rout.GetCookieTokenValue(w, r), target_id_order)
-	// 	rout.DataTemp.TargetCards = rout.TargetCardsFromListOrdersHistory(tokenValue)
+	// 	rout.DataTemp.TargetCards = rout.TargetCardsFromListOrdersHistory(TokenValue)
 	// 	rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
 	// 	http.Redirect(w, r, "/orders_history", http.StatusPermanentRedirect)
 	case "edit_table_orders":
-		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(tokenValue)
+		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(TokenValue)
 		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
 		rout.SetHTML(w, "orders_editor.html")
 
 	case "delete_record_orders":
 		target_hash := path_url.Arg1
 		rout.TableOrders.DeleteRecordOrders(rout.GetCookieTokenValue(w, r), target_hash)
-		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(tokenValue)
+		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(TokenValue)
 		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
 		http.Redirect(w, r, "/orders", http.StatusPermanentRedirect)
 		// rout.SetHTML(w, "orders.html")
 
 	// страницы черновых заказов- составление
 	case "orders":
-		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(tokenValue)
+		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(TokenValue)
 		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
 		rout.SetHTML(w, "orders.html")
 
 	// страница с избранными карточками товаров
 	case "favorites":
-		rout.DataTemp.TargetCards = rout.TargetCardsFromListFavorites(tokenValue)
+		rout.DataTemp.TargetCards = rout.TargetCardsFromListFavorites(TokenValue)
 		rout.SetHTML(w, "favorites.html")
 
 	// страница Домашняя

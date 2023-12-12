@@ -12,8 +12,8 @@ type TableOrdersHistory struct {
 	DB *sql.DB
 }
 
-func NewTableOrdersHistory(db *sql.DB) *TableOrders {
-	return &TableOrders{DB: db}
+func NewTableOrdersHistory(db *sql.DB) *TableOrdersHistory {
+	return &TableOrdersHistory{DB: db}
 }
 
 func (t_orders_history *TableOrdersHistory) DeleteTableOrdersHistory(tokenUser, idOrder string) {
@@ -25,22 +25,19 @@ func (t_orders_history *TableOrdersHistory) DeleteTableOrdersHistory(tokenUser, 
 }
 
 // сделать вставку строки в OrdersHistory
-func (t_orders_history *TableOrdersHistory) SaveTargetInOrdersHistory(db *sql.DB, token, id_order string) {
-	fmt.Println("start SAVE orders history________-->:", token, id_order, "token, id order")
+func (t_orders_history *TableOrdersHistory) SaveTargetInOrdersHistory(token, id_order string) {
 
-	var t_hash, t_count string
+	var t_hash, t_count *string
 	var mapa_hash_order = make(map[string]string, 0)
 
 	rows, err := t_orders_history.DB.Query(`SELECT target_hash,count FROM bookrzn.Orders WHERE token='` + token + `' AND id_order='` + id_order + `';`)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("check ", err, rows, len(mapa_hash_order), mapa_hash_order)
 	defer rows.Close()
 	for rows.Next() {
-		fmt.Scan(&t_hash, &t_count)
-		mapa_hash_order[t_hash] = t_count
-		fmt.Println("selecting ----->>>", t_hash, t_count, len(mapa_hash_order), mapa_hash_order)
+		rows.Scan(&t_hash, &t_count)
+		mapa_hash_order[*t_hash] = *t_count
 		if err != nil {
 			panic(err)
 		}
