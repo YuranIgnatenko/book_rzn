@@ -47,6 +47,12 @@
         }
     </style>
 
+    <style>
+        .btnf {
+            display: inline-block;
+        }
+    </style>
+
     <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/base/style.css?ver=1691644398" rel="stylesheet"
         type="text/css">
     <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/templates/michigan.css?ver=1691644398"
@@ -63,8 +69,7 @@
         window.promo_discount = null;
         window.promo_title = null;
         window.one_click_buy = 1;
-    </script>
-
+    </script> <!-- gsc start -->
 
 
 </head>
@@ -129,7 +134,7 @@
                             <span>Поиск</span>
                         </div>
                         {{if .IsLogin}}
-                        <div class="orders bars" title="Редактор">
+                        <div class="orders bars" title="Избранное">
                             <a href="/orders">
                                 <i data-feather="archive"></i>
                                 <span>Редактор</span>
@@ -149,6 +154,12 @@
                         </div>
                         {{end}}
 
+                        <!-- <div class="basket bars" title="Избранное товаров">
+                            <a href="/home">
+                                <i data-feather="shopping-bag"></i>
+                                <span>Избранное</span>
+                            </a>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -165,60 +176,104 @@
         <div class="block main">
             <div class="inner">
 
-                <div class="content  ">
-                    <div class="items_wrapper">
+                <div class="content  nositebar  ">
 
-                        <div class="items">
-
-                            {{ range .TargetCards }}
-                            <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
-
-                                <div class="image">
-                                    <div class="bg_dark"></div>
-                                    <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="0" width="250px"
-                                        height="250px" loading="lazy" />
-                                    <img src="{{ .Link}}" alt="{{ .Title }}" data-switch="1" style="display: none;"
-                                        width="250px" height="250px" />
-
-                                    <a href="/card_view/{{ .TargetHash }}"></a>
-                                </div>
-                                <div class="item_content " data-discount="0.00">
-                                    <a href="/card_view/{{ .TargetHash }}" class="descr">{{ .Title }}</a>
-                                    <div class="short_descr">{{ .Autor }}</div>
-
-                                    <div class="item_price_big">
-                                        <span class="new">{{ .Price }}₽</span>
-                                    </div>
-
-                                    <div>
-                                        <label>Количество</label>
-                                        <input placeholder="1" type="number" value="1" id="{{.TargetHash}}"
-                                            name="tentacles" min="1" max="999999" />
-                                    </div>
-
-                                    <div>
-                                        <label>Номер заказа</label>
-                                        <input placeholder="1" type="number" value="1" id="{{.Link}}" name="tentacles_n"
-                                            min="1" max="9999999999999" />
-                                    </div>
-
-                                    <div>
-                                        <a class="more" href="/delete_favorites/{{ .TargetHash }}">Убрать</a>
-                                    </div>
-                                    <div>
-                                        <a class="more"
-                                            onclick="href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value+'/'+document.getElementById('{{.Link}}').value;">В
-                                            заказ</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            {{ end }}
-
-
-                        </div>
+                    <div class="breadcrumb">
+                        <span><a href="/home">Главная</a> / </span>
+                        <span>Избранное</span>
                     </div>
+                    <h1 class="shop-title">Избранное</h1>
+                    <div class="promo-descr"></div>
+                    <div id="basket_list"></div>
 
+
+
+                    <ul>
+                        <li>
+                            <font-size=”15″ face=”Times New Roman”>
+                                <table border="1" width="100%" style="background-color: rgb(174, 211, 212);">
+                                    <tr style="background-color: #ecbda4;">
+                                        <th>Изображение</th>
+                                        <th>Наименование</th>
+                                        <th>Цена</th>
+                                    </tr>
+                                    </font>
+
+
+                                    <font-size=”10″ face=”Calibri”>
+                                        {{ range .TargetCards }}
+                                        <tr>
+                                            <td><img src="{{ .Link }}" height="100%" width="100%"></td>
+                                            <td>{{ .Autor }}{{ .Title }}</td>
+
+                                            <td>{{ .Price }}</td>
+                                            <td>
+                                                <center>
+                                                    <label>Номер заказа</label>
+                                                    <br>
+                                                    <input type="number" name="" placeholder="Число больше 0"
+                                                        id="{{.TargetHash}}" value="1" min="1" max="99999999999999">
+
+                                                    <br>
+                                                    <label>Количество шт./экз.</label>
+                                                    <br>
+
+                                                    <input type="number" name="" placeholder="Число больше 0"
+                                                        id="{{.Link}}" value="1" min="1" max="99999999999999">
+                                                    <br>
+                                                    <br>
+                                                    <div>
+                                                        <a class="more"
+                                                            onclick="href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value+'/'+document.getElementById('{{.Link}}').value;">В
+                                                            заказ</a>
+                                                    </div>
+
+                                                    <br>
+
+                                                    <hr size="1" color="black">
+
+                                                    <br>
+
+                                                    <div>
+                                                        <a class="more"
+                                                            onclick="href='/delete_favorites/{{ .TargetHash }}'"">Удалить</a>
+                                                        
+                                                    </div>
+
+
+                                                </center>
+
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #333;"></td>
+                                            <td style="background-color: #333;"></td>
+                                            <td style="background-color: #333;"></td>
+                                            <td style="background-color: #333;"></td>
+                                        </tr>
+
+                                        {{ end }}
+                                        </font>
+
+                                </table>
+                                <hr style="border: #333; border-width: 3;">
+                        </li>
+                        <div>
+                            <p> </p>
+                        </div>
+                        <!-- <div>
+                            <form class="btnf" action="/edit_table_orders/{{.TargetHash}}" method="post">
+                                <input type="submit" value="Редактировать содержимое">
+                            </form>
+                            <form class="btnf" action="/delete_table_orders/{{.TargetHash}}" method="post">
+                                <input type="submit" value="Удалить таблицу">
+                            </form>
+                            
+                        </div> -->
+                        <hr>
+                        <br>
+                    </ul>
 
                 </div>
 
@@ -237,17 +292,11 @@
                     </div>
                     <div class="copyright">&copy;
                         {{ .Copyright}}</div>
+
                 </div>
             </div>
 
-
-            <div class="social">
-                <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
-                <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
-                <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
-                <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a>
-            </div>
+        </div>
 
         </div>
         </div>
@@ -263,8 +312,7 @@
         href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" />
     <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" />
     <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" />
-
-
+    <!-- 11 ms -->
 </body>
 
 </html>

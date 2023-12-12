@@ -193,7 +193,6 @@
                         <li>
                             <font-size=”15″ face=”Times New Roman”>
                                 <table border="1" width="100%" style="background-color: rgb(154, 244, 138);">
-                                    <!-- <caption>Заказ №[{{ $key }}]</caption> -->
                                     <tr style="background-color: #71b878;">
                                         <th>Изображение</th>
                                         <th>Наименование</th>
@@ -225,11 +224,11 @@
                             <p> </p>
                         </div>
                         <div>
-                            <form class="btnf" action="/cancel_orders_history/" method="post">
+                            <form class="btnf" action="/cancel_orders_history/{{$key}}" method="post">
                                 <input type="submit" value="Отмена заказа">
                             </form>
                         
-                            <form class="btnf" action="/move_fav_table_orders/" method="post">
+                            <form class="btnf" action="/move_fav_table_orders/{{$key}}" method="post">
                                 <input type="submit" value="Выгрузить в избранное">
                             </form>
                             

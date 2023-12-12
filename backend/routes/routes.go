@@ -119,20 +119,25 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	switch path_url.ArgCase {
 
 	case "home_news":
+		http.Redirect(w, r, "/home", http.StatusPermanentRedirect) // Отправляем файл клиенту
 	case "home_contacts_address":
 		rout.SetHTML(w, "home_contacts_address.html")
 	case "home_docs_info":
 		rout.SetHTML(w, "home_docs_info.html")
-
-	case "move_fav_table_orders_history":
 	case "cancel_orders_history":
+		target_id_order := path_url.Arg1
+		fmt.Println("ID ORDER:::", target_id_order)
+		rout.TableOrdersHistory.DeleteTableOrdersHistory(tokenValue, target_id_order)
+		sender.Send_mail("ЗАКАЗ", "Отменён заказ на сайте")
+		fmt.Println("Email sended CANCELED ORDER !")
+		rout.SetHTML(w, "orders_history.html")
 	case "move_fav_table_orders":
 
 	case "home_804":
 		rout.DownloadFile(w, r)
 		rout.SetHTML(w, "home_804.html")
 	case "home_vk":
-		http.Redirect(w, r, "https://vk.com/magazin_rzn", http.StatusPermanentRedirect) // Отправляем файл клиенту
+		http.Redirect(w, r, "https://vk.com/magazin_rzn", http.StatusPermanentRedirect)
 
 	case "load_logo":
 		r.ParseMultipartForm(10 << 20) // Парсим форму с максимальным размером 10MB
@@ -192,6 +197,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		target_hash := path_url.Arg1
 		target_count := path_url.Arg2
 		target_id_order := path_url.Arg3
+		fmt.Println("add params: target_hash,target_count,target_id_order:", target_hash, target_count, target_id_order)
 		rout.SaveTargetInOrders(tokenValue, string(target_hash), target_count, target_id_order)
 		http.Redirect(w, r, "/favorites", http.StatusPermanentRedirect)
 
@@ -203,10 +209,13 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	// сахранить\перенос в историю заказов таблицы
 	case "confirm_table_orders":
+		fmt.Println("run confirm table ------------------ ROUT -- OK")
 		target_id_order := path_url.Arg1
-		rout.TableOrdersHistory.SaveTargetInOrdersHistory(tokenValue, target_id_order)
+		rout.TableOrdersHistory.SaveTargetInOrdersHistory(rout.Db, tokenValue, target_id_order)
+
 		sender.Send_mail("ЗАКАЗ", "Выполнен заказ на сайте")
-		fmt.Println("Email sended !")
+		fmt.Println("Email sended CONFIRM ORDER !")
+
 		rout.SetHTML(w, "orders_history.html")
 
 	//страница ИСТОРИЯ активных и прошлых заказов
@@ -354,7 +363,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", http.StatusPermanentRedirect)
 
 	default:
-		// fmt.Printf("\n\n[%v]\n\n", path_url.ArgCase)
+		fmt.Printf("\n\n[%v]\n[%+v]\n\n", path_url.ArgCase, path_url)
 		// fmt.Println("open RANGE TARGET DEFAULT-CASE")
 
 		// } else {

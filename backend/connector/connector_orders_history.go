@@ -12,38 +12,46 @@ type TableOrdersHistory struct {
 	DB *sql.DB
 }
 
-func NewTableOrdersHistory() *TableOrders {
-	return &TableOrders{}
+func NewTableOrdersHistory(db *sql.DB) *TableOrders {
+	return &TableOrders{DB: db}
 }
 
-// сделать вставку строки в OrdersHistory
-func (t_orders_history *TableOrdersHistory) SaveTargetInOrdersHistory(token, id_order string) {
-	var rows *sql.Rows
-	var err error
-
-	var list_target_hash = []string{}
-	var list_target_hash_count = map[string]string{}
-
-	rows, err = t_orders_history.DB.Query(
-		fmt.Sprintf(`SELECT target_hash,count FROM bookrzn.OrdersHistory WHERE token='%s' AND id_order='%s';`,
-			token, id_order))
+func (t_orders_history *TableOrdersHistory) DeleteTableOrdersHistory(tokenUser, idOrder string) {
+	rows, err := t_orders_history.DB.Query(fmt.Sprintf(`DELETE FROM bookrzn.OrdersHistory WHERE token="%s" AND id_order="%s";`, tokenUser, idOrder))
 	if err != nil {
 		panic(err)
 	}
 	defer rows.Close()
+}
+
+// сделать вставку строки в OrdersHistory
+func (t_orders_history *TableOrdersHistory) SaveTargetInOrdersHistory(db *sql.DB, token, id_order string) {
+	fmt.Println("start SAVE orders history________-->:", token, id_order, "token, id order")
+
+	var t_hash, t_count string
+	var mapa_hash_order = make(map[string]string, 0)
+
+	rows, err := t_orders_history.DB.Query(`SELECT target_hash,count FROM bookrzn.Orders WHERE token='` + token + `' AND id_order='` + id_order + `';`)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("check ", err, rows, len(mapa_hash_order), mapa_hash_order)
+	defer rows.Close()
 	for rows.Next() {
-		var t_hash, t_count string
 		fmt.Scan(&t_hash, &t_count)
+		mapa_hash_order[t_hash] = t_count
+		fmt.Println("selecting ----->>>", t_hash, t_count, len(mapa_hash_order), mapa_hash_order)
 		if err != nil {
 			panic(err)
 		}
 	}
 
-	for _, target_hash := range list_target_hash {
+	for target_hash, target_count := range mapa_hash_order {
+		fmt.Println("INSERTING --->>>", target_hash, target_count, id_order)
 		rows, err = t_orders_history.DB.Query(
-			fmt.Sprintf(`INSERT INTO bookrzn.OrdersHistory token, target_hash, count, date, id_order, status_order
+			fmt.Sprintf(`INSERT INTO bookrzn.OrdersHistory (token,target_hash,count,date,id_order,status_order)
 		VALUES ( '%s','%s','%s','%s','%s','%s');`,
-				token, target_hash, list_target_hash_count[target_hash], DateNow(), id_order, "on"))
+				token, target_hash, target_count, DateNow(), id_order, "on"))
 		if err != nil {
 			panic(err)
 		}
