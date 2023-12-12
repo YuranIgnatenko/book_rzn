@@ -9,7 +9,7 @@
     <meta name="description" content="" />
     <!-- <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport"> -->
     <meta name="viewport" content="width=1200px">
-    <title>Избранное</title>
+    <title>Отмененные заказы</title>
 
     <link rel="icon" type="image/png"
         href="http://new15942715563356.myaddshop.ru/img/64x64/1010/favicon/favikonka_15942854458688.png" />
@@ -71,7 +71,7 @@
         window.one_click_buy = 1;
     </script> <!-- gsc start -->
 
-
+ 
 </head>
 
 <body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
@@ -134,7 +134,7 @@
                             <span>Поиск</span>
                         </div>
                         {{if .IsLogin}}
-                        <div class="orders bars" title="Избранное">
+                        <div class="orders bars" title="История">
                             <a href="/orders">
                                 <i data-feather="archive"></i>
                                 <span>Редактор</span>
@@ -180,79 +180,48 @@
 
                     <div class="breadcrumb">
                         <span><a href="/home">Главная</a> / </span>
-                        <span>Избранное</span>
+                        <span>Отмененные заказы</span>
                     </div>
-                    <h1 class="shop-title">Избранное</h1>
+                    <h1 class="shop-title">Отмененные заказы</h1>
                     <div class="promo-descr"></div>
                     <div id="basket_list"></div>
 
+                    <div>
 
+                        <form class="btnf" action="/orders_history" method="post">
+                            <input type="submit" value="Назад">
+                        </form>
+                    </div>
 
+                    <hr>
+
+                    {{ range $key, $value := .ListOrdersTargetCard.Orders }}
                     <ul>
+                        <p> Номер заказа №[{{ $key }}]</p>
                         <li>
                             <font-size=”15″ face=”Times New Roman”>
-                                <table border="1" width="100%" style="background-color: rgb(174, 211, 212);">
-                                    <tr style="background-color: #ecbda4;">
+                                <table border="1" width="100%" style="background-color: #919d91;";">
+                                    <tr style="background-color: #7c887c;">
                                         <th>Изображение</th>
                                         <th>Наименование</th>
+                                        <th>Количество</th>
                                         <th>Цена</th>
+                                        <th>Сумма</th>
+                                        <th>Дата</th>
                                     </tr>
                                     </font>
 
 
                                     <font-size=”10″ face=”Calibri”>
-                                        {{ range .TargetCards }}
+                                        {{ range $value }}
                                         <tr>
-                                            <td><img src="{{ .Link }}" height="100%" width="100%"></td>
+                                            <td><img src="{{ .Link }}" height=40 width=40 </td>
                                             <td>{{ .Autor }}{{ .Title }}</td>
-
+                                            <td>{{ .Count }}</td>
                                             <td>{{ .Price }}</td>
-                                            <td>
-                                                <center>
-                                                    <label>Номер заказа</label>
-                                                    <br>
-                                                    <input type="number" name="" placeholder="Число больше 0"
-                                                        id="{{.TargetHash}}" value="1" min="1" max="99999999999999">
-
-                                                    <br>
-                                                    <label>Количество шт./экз.</label>
-                                                    <br>
-
-                                                    <input type="number" name="" placeholder="Число больше 0"
-                                                        id="{{.Link}}" value="1" min="1" max="99999999999999">
-                                                    <br>
-                                                    <br>
-                                                    <div>
-                                                        <a class="more"
-                                                            onclick="href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value+'/'+document.getElementById('{{.Link}}').value;">В
-                                                            заказ</a>
-                                                    </div>
-
-                                                    <br>
-
-                                                    <hr size="1" color="black">
-
-                                                    <br>
-
-                                                    <div>
-                                                        <a class="more"
-                                                            onclick="href='/delete_favorites/{{ .TargetHash }}'"">Удалить</a>
-                                                        
-                                                    </div>
-
-
-                                                </center>
-
-                                            </td>
-
+                                            <td>{{ .Summa }}</td>
+                                            <td>{{ .Date }}</td>
                                         </tr>
-                                        <tr>
-                                            <td style="background-color: #333;"></td>
-                                            <td style="background-color: #333;"></td>
-                                            <td style="background-color: #333;"></td>
-                                            <td style="background-color: #333;"></td>
-                                        </tr>
-
                                         {{ end }}
                                         </font>
 
@@ -262,10 +231,16 @@
                         <div>
                             <p> </p>
                         </div>
-
+                        <div>
+                            <form class="btnf" action="/delete_table_orders_history/{{$key}}" method="post">
+                                <input type="submit" value="Удалить">
+                            </form>
+                            
+                        </div>
                         <hr>
                         <br>
                     </ul>
+                    {{ end }}
 
                 </div>
 
@@ -284,10 +259,10 @@
                     </div>
                     <div class="copyright">&copy;
                         {{ .Copyright}}</div>
-
+                     
                 </div>
             </div>
-
+             
         </div>
 
         </div>

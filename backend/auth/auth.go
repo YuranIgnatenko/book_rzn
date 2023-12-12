@@ -129,11 +129,8 @@ func (a *Auth) GetCookieAdmin(w http.ResponseWriter, r *http.Request) bool {
 	if err != nil {
 		switch {
 		case errors.Is(err, http.ErrNoCookie):
-			// http.Redirect(w, r, "/404", http.StatusSeeOther)
-			fmt.Println("ERRRRR:", err)
-
+			http.Redirect(w, r, "/404", http.StatusSeeOther)
 		default:
-			log.Println(err)
 			http.Error(w, "server error", http.StatusInternalServerError)
 		}
 		return false
@@ -142,10 +139,6 @@ func (a *Auth) GetCookieAdmin(w http.ResponseWriter, r *http.Request) bool {
 	return true
 }
 func (a *Auth) CreateUser(login, password, name, family, phone, email string) string {
-
-	// if err != nil {
-
-	// }
 	a.TableUsers.AddUser(login, password, "user", a.NewToken(), name, family, phone, email)
 	return a.NewToken()
 }

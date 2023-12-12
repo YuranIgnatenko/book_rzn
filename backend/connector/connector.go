@@ -49,7 +49,7 @@ func NewConnector(c config.Configuration) *Connector {
 
 	go func() {
 		<-chan_exit
-		fmt.Println("exit -- ok")
+		fmt.Println("[ SERVER ] -- [ OFF ]")
 		conn.Db.Close()
 		os.Exit(1)
 	}()

@@ -16,6 +16,44 @@ func NewTableOrdersHistory(db *sql.DB) *TableOrdersHistory {
 	return &TableOrdersHistory{DB: db}
 }
 
+func (t_orders_history *TableOrdersHistory) CancelTableOrdersHistory(tokenUser, idOrder string) {
+	mapa_id_to_target_hash := make(map[int]string, 0)
+	mapa_id_to_count := make(map[int]string, 0)
+	mapa_id_to_date := make(map[int]string, 0)
+	var t_id int
+	var t_target_hash, t_count, t_date string
+	rows, err := t_orders_history.DB.Query(`SELECT id,target_hash,count,date FROM bookrzn.OrdersHistory WHERE token='` + tokenUser + `' AND id_order='` + idOrder + `';`)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&t_id, &t_target_hash, &t_count, &t_date)
+
+		mapa_id_to_target_hash[t_id] = t_target_hash
+		mapa_id_to_count[t_id] = t_count
+		mapa_id_to_date[t_id] = t_date
+
+		if err != nil {
+			panic(err)
+		}
+	}
+	for temp_id, _ := range mapa_id_to_count {
+		rows, err := t_orders_history.DB.Query(
+			fmt.Sprintf(
+				`REPLACE INTO bookrzn.OrdersHistory VALUES (%d,"%s","%s","%s","%s","%s","%s");`,
+				temp_id, tokenUser,
+				mapa_id_to_target_hash[temp_id],
+				mapa_id_to_count[temp_id],
+				mapa_id_to_date[temp_id],
+				idOrder, "off"))
+		if err != nil {
+			panic(err)
+		}
+		defer rows.Close()
+	}
+}
+
 func (t_orders_history *TableOrdersHistory) DeleteTableOrdersHistory(tokenUser, idOrder string) {
 	rows, err := t_orders_history.DB.Query(fmt.Sprintf(`DELETE FROM bookrzn.OrdersHistory WHERE token="%s" AND id_order="%s";`, tokenUser, idOrder))
 	if err != nil {
@@ -44,7 +82,6 @@ func (t_orders_history *TableOrdersHistory) SaveTargetInOrdersHistory(token, id_
 	}
 
 	for target_hash, target_count := range mapa_hash_order {
-		fmt.Println("INSERTING --->>>", target_hash, target_count, id_order)
 		rows, err = t_orders_history.DB.Query(
 			fmt.Sprintf(`INSERT INTO bookrzn.OrdersHistory (token,target_hash,count,date,id_order,status_order)
 		VALUES ( '%s','%s','%s','%s','%s','%s');`,

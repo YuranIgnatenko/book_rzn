@@ -41,6 +41,7 @@ type TargetCard struct {
 	Summa                float64 //f.ff - 0.00
 	Date                 string  // YYYY.mm.dd
 	IdOrder              string
+	Status               string
 	Edition_order_token  string
 	CMSNameOrders        string
 	CMSDateOrders        string

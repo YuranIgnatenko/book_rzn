@@ -186,6 +186,13 @@
                     <div class="promo-descr"></div>
                     <div id="basket_list"></div>
 
+                    <div>
+
+                        <form class="btnf" action="/orders_history_cancel_orders" method="post">
+                            <input type="submit" value="Отмененные заказы">
+                        </form>
+
+                    </div>
 
                     {{ range $key, $value := .ListOrdersTargetCard.Orders }}
                     <ul>

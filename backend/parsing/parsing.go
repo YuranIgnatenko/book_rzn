@@ -153,8 +153,6 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 		fmt.Println("Launched scrapper -- no (getting from BD)")
 		ps.ListTargetCardCache = tc_all
 	}
-	fmt.Println("All targets in BD :", len(ps.ListTargetCardCache))
-
 	return &ps
 }
 
