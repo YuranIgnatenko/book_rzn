@@ -7,7 +7,7 @@ import (
 )
 
 type DataTemp struct {
-	config.Configuration 
+	config.Configuration
 	TargetAll            []models.TargetCard
 	TargetCards          []models.TargetCard
 	MenuCards            []models.MenuCard

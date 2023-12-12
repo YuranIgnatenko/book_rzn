@@ -164,11 +164,18 @@
                 </div>
             </div>
 
+            <div>
+                <hr>
+            </div>
+
             <div class="header-bottom">
                 <div class="inner">
-
                     {{ .PageMenuTemplHtml }}
                 </div>
+            </div>
+
+            <div>
+                <hr>
             </div>
     </div>
     </header>
@@ -224,8 +231,9 @@
                                                     <br>
                                                     <div>
                                                         <a class="more"
-                                                            onclick="href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value+'/'+document.getElementById('{{.Link}}').value;">В
-                                                            заказ</a>
+                                                            onclick="if (confirm('Добавить '+document.getElementById('{{.Link}}').value+' шт/экз. в\nтаблицу заказа №'+document.getElementById('{{.TargetHash}}').value+' ?')) href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value+'/'+document.getElementById('{{.Link}}').value;">Добавить в заказ</a>
+                                                            <!-- onclick="href='/add_orders/{{.TargetHash}}/'+document.getElementById('{{.TargetHash}}').value+'/'+document.getElementById('{{.Link}}').value;">В
+                                                            заказ</a> -->
                                                     </div>
 
                                                     <br>
@@ -236,7 +244,7 @@
 
                                                     <div>
                                                         <a class="more"
-                                                            onclick="href='/delete_favorites/{{ .TargetHash }}'"">Удалить</a>
+                                                            onclick="if (confirm('Удалить `{{.Title}}` из\nтаблицы избранного?')) href='/delete_favorites/{{ .TargetHash }}';">Удалить</a>
                                                         
                                                     </div>
 
@@ -294,6 +302,7 @@
         </div>
         </div>
     </footer>
+
     <script src="../../code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
     <script>$(function () { feather.replace(); });</script>
