@@ -203,188 +203,179 @@
         <div>
             <div>
                 <script>
-                    const dropdown = document.querySelector('.dropdown');
-                    const checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
-                    const button = document.querySelector('.dropdown button');
 
-                    button.addEventListener('click', function () {
-                        dropdown.classList.toggle('open');
-                    });
-
-                    checkboxes.forEach(function (checkbox) {
-                        checkbox.addEventListener('change', function () {
-                            const selectedOptions = Array.from(checkboxes)
-                                .filter(function (cb) {
-                                    return cb.checked;
-                                })
-                                .map(function (cb) {
-                                    return cb.value;
-                                });
-
-                            button.textContent = selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Sel values::';
-                        });
-                    });
                 </script>
                 <style>
-                    /* .dropdown {
-                        position: relative;
-                        display: block;
-                    } */
-
-                    /* .dropdown-content {
-                        display: block;
-                        position: absolute;
-                        background-color: #cce1ee;
-                        min-width: 100%;
-                        border: 1px solid #894e4e;
-                        padding: 1px;
-                        z-index: 1;
-                    } */
-
-                    /* .dropdown-content label { */
-                    /* display: block; */
-                    /* background-color: #333; */
-                    /* text-align: left; */
-                    /* } */
-
-                    /* .dropdown:hover .dropdown-content {
-                        display: block;
-                        background-color: #bc7e6d;
-                    } */
-                    /* .panel_filters {
-                        min-width: 100%;
-                    } */
-
-                    .dropdown {
-                        border: 1px solid rgb(255, 255, 255);
-                    }
-                    .dropdown:hover {
-                        border: 1px solid rgb(122, 118, 118);
-                    }
-                    .dropdown-content{
-                        display: block;
-                    }
-
                     .panel_block {
-                        overflow: hidden;
-                        /* border: #333;
-                        border-width: 2px; */
+                        box-sizing: border-box;
                     }
 
-                    .panel_block DIV {
-                        float: left;
+                    .filter_grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+                        gap: 3rem;
                     }
 
-                    .column1 {
-                        background: #C7E3E4;
-                        width: 25%;
+                    .filter_wrapper {
+                        width: 100%;
+                        padding: min(1rem, 5vw);
                     }
 
-                    .column2 {
-                        background: #E0D2C7;
-                        width: 25%;
+                    .filter_form {
+                        padding: 0.2rem;
+                        background-color: rgba(245, 245, 245);
+                        border-radius: 0.5rem;
                     }
 
-                    .column3 {
-                        background: #ECD5DE;
-                        width: 25%;
+                    .filter_legend {
+                        font-weight: 700;
                     }
 
-                    .column4 {
-                        background: #ECD5DE;
-                        width: 25%;
+                    fieldset>*+* {
+                        margin-top: 0.5rem;
+                    }
+
+                    .filter_form>*+* {
+                        margin-top: 1.5rem;
+                    }
+
+                    .form__group {
+                        display: flex;
+                        align-items: center;
+                        margin: 0px;
+                    }
+
+
+
+
+                    .filter_input[type="checkbox"],
+                    .filter_input[type="radio"] {
+                        width: 1.5em;
+                        height: 1.5em;
+                        margin-right: 1.65rem;
+                    }
+
+                    .filter_input[type="range"],
+                    /* progress {
+                        margin-left: auto;
+                        flex: 0 1 50%;
+                    } */
+
+                    .filter_form:nth-child(2n) {
+                        color-scheme: dark;
+                        background-color: black;
+                        color: white;
+                    }
+                    .button_filter_switch{
+                        padding: 5px;
+                        width: 70%;
                     }
                 </style>
-                <div class="panel_block">
-                    <div class="panel_filters" width="100%">
-                        <div class="dropdown column1">
-                            <button>Сортировка</button>
-                            <div class="dropdown-content">
-                                <label>
-                                    <input width="100%" type="checkbox" name="option" value="автор(А-Я)"> по Автору (A-Я)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="автор(Я-А)"> по Автору (A-Я)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="название(А-Я)"> по Названию
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="название(Я-А)"> по Названию
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="цена(Рост)"> по Цене
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="цена(Убывание)"> по Цене
-                                </label>
-                            </div>
-                        </div>
 
-                        <div class="dropdown column2">
-                            <button>Автор</button>
-                            <div class="dropdown-content">
-                                <label>
-                                    <input type="checkbox" name="option" value="HTML"> HTML
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="CSS"> CSS
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="JavaScript"> JavaScript
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="ReactJs"> ReactJs
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="Angular"> Angular
-                                </label>
-                            </div>
-                        </div>
 
-                        <div class="dropdown column3">
-                            <button>Предмет</button>
-                            <div class="dropdown-content">
-                                <label>
-                                    <input type="checkbox" name="option" value="HTML"> HTML
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="CSS"> CSS
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="JavaScript"> JavaScript
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="ReactJs"> ReactJs
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="Angular"> Angular
-                                </label>
-                            </div>
-                        </div>
 
-                        <div class="dropdown column4">
-                            <button>Цена</button>
-                            <div class="dropdown-content">
-                                <label>
-                                    <input type="checkbox" name="option" value="HTML"> HTML
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="CSS"> CSS
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="JavaScript"> JavaScript
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="ReactJs"> ReactJs
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="option" value="Angular"> Angular
-                                </label>
+                <div>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                    <center>
+                        <button class="button_filter_switch" id="1">Фильтр (свернуть/развернуть)</button>
+                    </center>
+                    <div class="panel_block">
+                        <div class="filter_wrapper">
+                            <!-- <h1>Фильтр </h1> -->
+                            <div class="filter_grid">
+                                <center>
+                                    <div>
+                                        <form class="filter_form" action="/test">
+                                            <!-- <fieldset>
+                                        <legend class="filter_legend" >Сортировать</legend>
+                                        <div class="form__group">
+                                            <input type="checkbox" id="berries_1" value="strawberries" name="berries">
+                                            <label >по Автору (А-Я)</label>
+                                        </div>
+                                        <div class="form__group">
+                                            <input type="checkbox" id="berries_2" value="blueberries" name="berries">
+                                            <label >по Автору (А-Я)</label>
+                                        </div>
+                                        <div class="form__group">
+                                            <input type="checkbox" id="berries_3" value="bananas" name="berries">
+                                            <label >по Автору (А-Я)</label>
+                                        </div>
+                                    </fieldset> -->
+                                            <fieldset>
+                                                <legend class="filter_legend">Сортировать</legend>
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_1" value="sort_1"
+                                                        name="filter_sort_check">
+                                                    <h4>По Автору (А-Я)</h4>
+                                                </div>
+                                                <hr>
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_2" value="sort_2"
+                                                        name="filter_sort_check">
+                                                    <h4>По Автору (Я-А)</h4>
+                                                </div>
+                                                <hr>
+
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_3" value="sort_3"
+                                                        name="filter_sort_check">
+                                                    <h4>По Наименованию (А-Я)</h4>
+                                                </div>
+                                                <hr>
+
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_4" value="sort_4"
+                                                        name="filter_sort_check">
+                                                    <h4>По Наименованию (Я-А)</h4>
+                                                </div>
+                                                <hr>
+
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_5" value="sort_5"
+                                                        name="filter_sort_check">
+                                                    <h4>По Цене (Убывание)</h4>
+                                                </div>
+                                                <hr>
+
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_5" value="sort_5"
+                                                        name="filter_sort_check">
+                                                    <h4>По Цене (Возрастание)</h4>
+                                                </div>
+                                            </fieldset>
+
+                                            <!-- <div class="form__group">
+                                        <label for="progress">Order progress</label>
+                                        <progress id="progress" max="100" value="70">70%</progress>
+                                    </div> -->
+
+                                            <!-- <div class="form__group">
+                                                <h4>Опция </h4>
+                                                <input type="range" min="0" max="1000" value="5" id="range_a">
+                                            </div> -->
+
+                                            <button type="submit">Применить фильтр</button>
+                                        </form>
+                                        <!-- <button id="1">свернуть</button> -->
+                                    </div>
+                                </center>
                             </div>
                         </div>
                     </div>
+
+
+                    <script>
+                        $("#1").click(function () {
+                            $(".panel_block").slideToggle("fast");
+                        });
+                        $("#2").click(function () {
+                            $(".panel_block").slideToggle("fast");
+                        });
+                    </script>
                 </div>
+
+
+
             </div>
         </div>
 
@@ -416,14 +407,13 @@
                                     <a href="/card_view/{{ .TargetHash }}" class="descr">{{ .Title }}</a>
                                     <div class="short_descr">{{ .Autor }}</div>
 
-                                    <div class="bottom_location" style="padding:10px">
+                                    <div class="bottom_location">
                                         <div class="item_price_big down_elem">
                                             <span class="new">{{ .Price }}₽</span>
                                         </div>
 
                                         <div class="down_elem">
-                                            <a class="more" style="padding:10px"
-                                                onclick="this.href='/add_favorites/{{.TargetHash}}/1'">В
+                                            <a class="more" onclick="this.href='/add_favorites/{{.TargetHash}}/1'">В
                                                 корзину</a>
                                         </div>
                                     </div>

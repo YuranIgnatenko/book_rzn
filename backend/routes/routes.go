@@ -120,6 +120,9 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch path_url.ArgCase {
+	case "test":
+		fmt.Println("rout test --- ok", r.URL.Path)
+		http.Redirect(w, r, "/book_do_sh", http.StatusPermanentRedirect)
 
 	case "home_news":
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
