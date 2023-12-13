@@ -9,26 +9,23 @@
     <meta name="description" content="" />
     <!-- <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport"> -->
     <meta name="viewport" content="width=1200px">
-    <title>804</title>
-
-    <link rel="icon" type="image/png"
-        href="http://new15942715563356.myaddshop.ru/img/64x64/1010/favicon/favikonka_15942854458688.png" />
+    <title>Отмененные заказы</title>
 
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 
-    <link href="http://new15942715563356.myaddshop.ru/css/normalize.css" rel="stylesheet" type="text/css">
-
-    <link href="http://new15942715563356.myaddshop.ru/css/framework7-icons.css" rel="stylesheet">
-    <link href="http://new15942715563356.myaddshop.ru/css/swiper.css" rel="stylesheet" type="text/css">
     <style>
         :root {
+
             --mainSchemeColor: #804C3E;
-            --mainContrastSchemeColor: #FF9E75;
+
+            /* color element */
+            --mainContrastSchemeColor: #3584a4;
+            /* hover to element */
+            --mainContrastSchemeColor-darken10: #052f3f;
+
             --catalogTitleColor: #333;
 
-            --mainSchemeColorHover: #764234;
+            --mainSchemeColorHover: #1a791f;
             --mainContrastSchemeColorHover: #f5946b;
 
             --menuBorderDarken: #7b4739;
@@ -39,11 +36,32 @@
             --mainSchemeColor-lighten10: #8a5648;
             --mainSchemeColor-lighten20: #946052;
 
-            --mainContrastSchemeColor-darken10: #f5946b;
+
+
             --mainContrastSchemeColor-darken20: #eb8a61;
             --mainContrastSchemeColor-darken30: #e18057;
             --mainContrastSchemeColor-lighten10: #ffa87f;
             --mainContrastSchemeColor-lighten20: #ffb289;
+        }
+
+        div>a>span{
+            background-color: var(--mainContrastSchemeColor);
+            color: white;
+            padding: 4px;
+            border-radius: 5px;
+        }
+
+        div>a>span:hover{
+            background-color: var(--mainContrastSchemeColor-darken10);
+        }
+
+        .link_btn{
+            background-color: var(--mainContrastSchemeColor);
+            padding: 4px;
+            border-radius: 5px;
+        }
+        .link_btn:hover{
+            background-color: var(--mainContrastSchemeColor-darken10);
         }
     </style>
 
@@ -71,7 +89,7 @@
         window.one_click_buy = 1;
     </script> <!-- gsc start -->
 
- 
+
 </head>
 
 <body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
@@ -92,7 +110,7 @@
                         {{if .IsLogin}}
                         <a href="/home">Пользователь:{{ .NameLogin }}</a>
                         <br>
-                        <a href="/out">Выход</a>
+                        <a class="link_btn" href="/out">Выход</a>
                         {{else}}
                         <a href="/login">Вход</a>
                         <a href="/registration">Регистрация</a>
@@ -134,21 +152,21 @@
                             <span>Поиск</span>
                         </div>
                         {{if .IsLogin}}
-                        <div class="orders bars" title="Редактор">
+                        <div class="orders bars" title="История">
                             <a href="/orders">
-                                <i data-feather="archive"></i>
+                                 
                                 <span>Редактор</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/favorites">
-                                <i data-feather="heart"></i>
+                                 
                                 <span>Избранное</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/orders_history">
-                                <i data-feather="heart"></i>
+                                 
                                 <span>История</span>
                             </a>
                         </div>
@@ -163,6 +181,7 @@
                     </div>
                 </div>
             </div>
+
 
             <div>
                 <hr>
@@ -187,23 +206,28 @@
 
                     <div class="breadcrumb">
                         <span><a href="/home">Главная</a> / </span>
-                        <span>Приказ 804</span>
+                        <span>Отмененные заказы</span>
                     </div>
-                    <h1 class="shop-title">Приказ 804</h1>
+                    <h1 class="shop-title">Отмененные заказы</h1>
                     <div class="promo-descr"></div>
                     <div id="basket_list"></div>
 
-                    
+                    <div>
 
+                        <form class="btnf" action="/orders_history" method="post">
+                            <input type="submit" style="padding:10px; background-color:var(--mainContrastSchemeColor);" value="Назад">
+                        </form>
+                    </div>
+
+                    <hr>
 
                     {{ range $key, $value := .ListOrdersTargetCard.Orders }}
                     <ul>
                         <p> Номер заказа №[{{ $key }}]</p>
                         <li>
                             <font-size=”15″ face=”Times New Roman”>
-                                <table border="1" width="100%" style="background-color: rgb(174, 211, 212);">
-                                    <!-- <caption>Заказ №[{{ $key }}]</caption> -->
-                                    <tr style="background-color: #ecbda4;">
+                                <table border="1" width="100%" style="background-color: #919d91;" ;">
+                                    <tr style="background-color: #7c887c;">
                                         <th>Изображение</th>
                                         <th>Наименование</th>
                                         <th>Количество</th>
@@ -234,18 +258,12 @@
                             <p> </p>
                         </div>
                         <div>
-                            <form class="btnf" action="/edit_table_orders/{{$key}}" method="post">
-                                <input type="submit" value="Редактировать содержимое">
+                            <form class="btnf" action="/delete_table_orders_history/{{$key}}" method="post">
+                                <input type="submit"
+                                    style="padding:10px; background-color:var(--mainContrastSchemeColor);"
+                                    value="Удалить">
                             </form>
-                            <form class="btnf" action="/delete_table_orders/{{$key}}" method="post">
-                                <input type="submit" value="Удалить таблицу">
-                            </form>
-                            <form class="btnf" action="/move_fav_table_orders/{{$key}}" method="post">
-                                <input type="submit" value="Выгрузить в избранное">
-                            </form>
-                            <form class="btnf" action="/confirm_table_orders/{{$key}}" method="post">
-                                <input type="submit" value="Оформить">
-                            </form>
+
                         </div>
                         <hr>
                         <br>
@@ -269,26 +287,17 @@
                     </div>
                     <div class="copyright">&copy;
                         {{ .Copyright}}</div>
-                     
+
                 </div>
             </div>
-             
+
         </div>
 
         </div>
         </div>
         </div>
     </footer>
-    <script src="../../code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../../cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" type="module"></script>
-    <script>$(function () { feather.replace(); });</script>
-    <script src="http://new15942715563356.myaddshop.ru/js/swiper-min.js" type="text/javascript" type="module"></script>
-    <script src="http://new15942715563356.myaddshop.ru/js/script-min.js" type="text/javascript"></script>
 
-    <link rel="stylesheet"
-        href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-font-face.min.css" />
-    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free-v4-shims.min.css" />
-    <link rel="stylesheet" href="http://new15942715563356.myaddshop.ru/modules/fontawesome/fa-free.min.css" />
     <!-- 11 ms -->
 </body>
 

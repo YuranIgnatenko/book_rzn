@@ -45,7 +45,8 @@ func (c *Core) SetHandlers() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	fmt.Printf("Starting server : [ %v ]\n", c.Configuration.Port)
+	fmt.Printf("[ ADDR ] -- [ %v ] -- [ %v ]", c.Configuration.Port, connector.DateTimeNow())
+	fmt.Printf("\n[ SERVER ] -- [ START ] -- [ %v ]", connector.DateTimeNow())
 	log.Fatal(http.ListenAndServe(":"+c.Configuration.Port, nil))
 
 }

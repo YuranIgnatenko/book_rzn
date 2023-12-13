@@ -33,51 +33,53 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 		DataTemp:       dt,
 		ParsingService: ps,
 		AccertPath: map[string]int{
+			// нельзя хранить `0` изза логики
+			// блока if в котором возврат значения
 			//книги
-			"new_basic":     0,
-			"new_table":     0,
-			"new_boxing":    0,
-			"sh_table":      0,
-			"sh_chair":      0,
-			"office_table":  0,
-			"office_boxing": 0,
-			"sh_minitable":  0,
+			"new_basic":     1,
+			"new_table":     1,
+			"new_boxing":    1,
+			"sh_table":      1,
+			"sh_chair":      1,
+			"office_table":  1,
+			"office_boxing": 1,
+			"sh_minitable":  1,
 
 			// 	оборудование
-			"str_top":        1,
-			"str_psiholog":   1,
-			"str_do_sh_3_4":  1,
-			"str_do_sh_4_5":  1,
-			"str_do_sh_5_6":  1,
-			"str_do_sh_6_7":  1,
-			"str_sh_started": 1,
-			"str_phisic":     1,
-			"str_himiya":     1,
-			"str_biologiya":  1,
-			"str_litra":      1,
-			"str_ru_lang":    1,
-			"str_other_lang": 1,
-			"str_history":    1,
-			"str_geograph":   1,
-			"str_math":       1,
-			"str_info":       1,
-			"str_obg":        1,
-			"str_eco":        1,
-			"str_izo":        1,
-			"str_music":      1,
-			"str_tehno":      1,
-			"str_posters":    1,
+			"str_top":        2,
+			"str_psiholog":   2,
+			"str_do_sh_3_4":  2,
+			"str_do_sh_4_5":  2,
+			"str_do_sh_5_6":  2,
+			"str_do_sh_6_7":  2,
+			"str_sh_started": 2,
+			"str_phisic":     2,
+			"str_himiya":     2,
+			"str_biologiya":  2,
+			"str_litra":      2,
+			"str_ru_lang":    2,
+			"str_other_lang": 2,
+			"str_history":    2,
+			"str_geograph":   2,
+			"str_math":       2,
+			"str_info":       2,
+			"str_obg":        2,
+			"str_eco":        2,
+			"str_izo":        2,
+			"str_music":      2,
+			"str_tehno":      2,
+			"str_posters":    2,
 
 			// книги
-			"book_new":         2,
-			"book_sh_middle":   2,
-			"book_do_sh":       2,
-			"book_1_4":         2,
-			"book_5_9":         2,
-			"book_10_11":       2,
-			"book_ovz":         2,
-			"book_actistic":    2,
-			"book_digit_books": 2,
+			"book_new":         3,
+			"book_sh_middle":   3,
+			"book_do_sh":       3,
+			"book_1_4":         3,
+			"book_5_9":         3,
+			"book_10_11":       3,
+			"book_ovz":         3,
+			"book_actistic":    3,
+			"book_digit_books": 3,
 		},
 	}
 	rout.DataTemp.TargetCards = rout.ListTargetCardCache
@@ -87,9 +89,9 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 }
 
 func (rout *Rout) DownloadFile(w http.ResponseWriter, r *http.Request) {
-	filePath := "static/804.pdf"                                                  // Путь к файлу, который вы хотите отправить для скачивания
-	w.Header().Set("Content-Disposition", "attachment; filename=static/804.pdff") // Устанавливаем заголовок Content-Disposition для указания имени файла
-	w.Header().Set("Content-Type", "application/pdf")                             // Устанавливаем заголовок Content-Type для указания типа файла
+	filePath := "static/804.pdf"
+	w.Header().Set("Content-Disposition", "attachment; filename=static/804.pdf")
+	w.Header().Set("Content-Type", "application/pdf")
 	http.ServeFile(w, r, filePath)
 	http.Redirect(w, r, "/home", http.StatusPermanentRedirect) // Отправляем файл клиенту
 }
@@ -107,13 +109,13 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	rout.DataTemp.NameLogin = rout.TableUsers.GetNameLoginFromToken(TokenValue)
 
 	path_url := NewPathUrlArgs(r.URL.Path)
+	fmt.Printf("\n%+#v\n\n", path_url)
 
-	if rout.RangePathsTargetPage(w, path_url.ArgCase) == 0 || rout.RangePathsTargetPage(w, path_url.ArgCase) == 1 {
+	if rout.RangePathsTargetPage(w, path_url.ArgCase) == 1 || rout.RangePathsTargetPage(w, path_url.ArgCase) == 2 {
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
 		rout.SetHTML(w, "targets.html")
 		return
-	}
-	if rout.RangePathsTargetPage(w, path_url.ArgCase) == 2 {
+	} else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 3 {
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
 		rout.SetHTML(w, "books.html")
 		return
@@ -357,8 +359,8 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		}
 
 	// страница заглушка при ошибке
-	// case "404":
-	// 	rout.SetHTML(w, "404.html")
+	case "404":
+		rout.SetHTML(w, "404.html")
 
 	// выход с аккаунта и перенаправление на страницу входа
 	case "out":
@@ -368,6 +370,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", http.StatusPermanentRedirect)
 
 	default:
+		fmt.Printf("\n[ ERR PATH ] -- [ ERR PATH ] -- [ %v ]", r.URL.Path)
 		http.Redirect(w, r, "/404", http.StatusPermanentRedirect)
 
 	}

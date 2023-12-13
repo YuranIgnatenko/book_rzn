@@ -10,24 +10,21 @@
     <meta name="viewport" content="width=1200px">
     <title>Главная</title>
 
-    <link rel="icon" type="image/png"
-        href="http://new15942715563356.myaddshop.ru/img/64x64/1010/favicon/favikonka_15942854458688.png" />
-
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-
-    <link href="http://new15942715563356.myaddshop.ru/css/normalize.css" rel="stylesheet" type="text/css">
-
-    <link href="http://new15942715563356.myaddshop.ru/css/framework7-icons.css" rel="stylesheet">
-    <link href="http://new15942715563356.myaddshop.ru/css/swiper.css" rel="stylesheet" type="text/css">
+     
+     
     <style>
-        :root {
+                :root {
+
             --mainSchemeColor: #804C3E;
-            --mainContrastSchemeColor: #FF9E75;
+
+            /* color element */
+            --mainContrastSchemeColor: #3584a4;
+            /* hover to element */
+            --mainContrastSchemeColor-darken10: #052f3f;
+
             --catalogTitleColor: #333;
 
-            --mainSchemeColorHover: #764234;
+            --mainSchemeColorHover: #1a791f;
             --mainContrastSchemeColorHover: #f5946b;
 
             --menuBorderDarken: #7b4739;
@@ -38,12 +35,36 @@
             --mainSchemeColor-lighten10: #8a5648;
             --mainSchemeColor-lighten20: #946052;
 
-            --mainContrastSchemeColor-darken10: #f5946b;
+
+
             --mainContrastSchemeColor-darken20: #eb8a61;
             --mainContrastSchemeColor-darken30: #e18057;
             --mainContrastSchemeColor-lighten10: #ffa87f;
             --mainContrastSchemeColor-lighten20: #ffb289;
         }
+
+        div>a>span{
+            background-color: var(--mainContrastSchemeColor);
+            color: white;
+            padding: 4px;
+            border-radius: 5px;
+        }
+
+        div>a>span:hover{
+            background-color: var(--mainContrastSchemeColor-darken10);
+        }
+
+        .link_btn{
+            background-color: var(--mainContrastSchemeColor);
+            padding: 4px;
+            border-radius: 5px;
+        }
+        .link_btn:hover{
+            background-color: var(--mainContrastSchemeColor-darken10);
+        }
+
+ 
+
     </style>
 
     <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/base/style.css?ver=1691644398" rel="stylesheet"
@@ -83,7 +104,7 @@
                     <div class="login_or_reg">
                         {{if .IsLogin}}
                         <a>Пользователь:{{ .NameLogin }}</a>
-                        <a href="/out">Выход</a>
+                        <a class="link_btn" href="/out">Выход</a>
                         {{else}}
                         <a href="/login">Вход</a>
                         <a href="/registration">Регистрация</a>
@@ -132,24 +153,25 @@
 
 
                         {{if .IsLogin}}
-                        <div class="orders bars" title="Редактор">
+                         <div class="orders bars" title="Редактор">
                             <a href="/orders">
-                                <i data-feather="archive"></i>
+                                 
                                 <span>Редактор</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/favorites">
-                                <i data-feather="heart"></i>
+                                 
                                 <span>Избранное</span>
                             </a>
                         </div>
-                        <div class="favorite bars">
+                        <div class="orders_history bars">
                             <a href="/orders_history">
-                                <i data-feather="heart"></i>
-                                <span>История</span>
+                                 
+                                <span>Заказы</span>
                             </a>
                         </div>
+                         
                         {{end}}
 
 

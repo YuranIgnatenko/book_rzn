@@ -47,9 +47,10 @@ func NewConnector(c config.Configuration) *Connector {
 	chan_exit := make(chan os.Signal, 2)
 	signal.Notify(chan_exit, os.Interrupt, syscall.SIGTERM)
 
+	// TODO: add sync wait group
 	go func() {
 		<-chan_exit
-		fmt.Println("[ SERVER ] -- [ OFF ]")
+		fmt.Printf("\n[ SERVER ] -- [ OFF ] -- [ %v ]\n", DateTimeNow())
 		conn.Db.Close()
 		os.Exit(1)
 	}()

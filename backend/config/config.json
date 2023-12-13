@@ -1,7 +1,7 @@
 {
     "url_prefix" : "http://",
     
-    "path_frontend": "/frontend/",
+    "path_frontend": "/frontend/html/",
     "path_backend": "/backend/",
     "path_config": "/backend/config/",
     "path_static": "static/",

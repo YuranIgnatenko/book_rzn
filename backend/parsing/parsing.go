@@ -141,16 +141,17 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 	tc_all := conn.TableTargets.GetListTargets()
 
 	if len(tc_all) <= 1 {
-		fmt.Println("Launched scrapper - started")
+		fmt.Printf("\n[ PARSER ] -- [ START ] -- [ %v ]", connector.DateNow())
 		tc_all = RangeScrapServices(lss)
 
 		for _, tc_temp := range tc_all {
 			conn.TableTargets.SaveParsingService(tc_temp)
 		}
 		ps.ListTargetCardCache = tc_all
-		fmt.Println("Launched scrapper -- finished")
+		fmt.Printf("\n[ PARSER ] -- [ FINISH ] -- [ %v ]", connector.DateNow())
 	} else {
-		fmt.Println("Launched scrapper -- no (getting from BD)")
+		fmt.Printf("\n[ PARSER ] -- [ GET FROM BD ] -- [ %v ]", connector.DateNow())
+
 		ps.ListTargetCardCache = tc_all
 	}
 	return &ps
@@ -159,9 +160,9 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 func RangeScrapServices(data []models.ServiceScraper) []models.TargetCard {
 	tc := make([]models.TargetCard, 0)
 
-	for n, service := range data {
+	for _, service := range data {
 		tc = append(tc, service.ScrapSource()...)
-		fmt.Println("Parse service start --> link n:", n, "all count --> ", len(tc))
+		fmt.Printf("\n[ PARSER ] -- [ CARD NOW ] -- [ %v ]", len(tc))
 	}
 	return tc
 }

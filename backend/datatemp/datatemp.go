@@ -98,7 +98,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 				PathTo: "home_news",
 			},
 			models.MenuCard{
-				Title:  "Приказ 804",
+				Title:  "Приказ 804 (pdf)",
 				Link:   "static/logo_docs.png",
 				PathTo: "home_804",
 			},
@@ -169,8 +169,10 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 		            padding: 15px 30px;
 		        }
 		        .topmenu li a:hover {
-		            color:  rgb(194, 104, 104);
-		        }
+					background-color: #3584a4;
+		            color:  rgb(255,255,255);
+					
+		        }mainContrastSchemeColor
 		        .submenu-link:after {
 		            content: "\f107";
 		            font-family: "FontAwesome";
@@ -232,7 +234,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 							</ul>
 						</li>
 
-						<li><a href="/book_new" class="submenu-link">Книги и Учебники</a>
+						<li><a href="/book_1_4" class="submenu-link">Книги и Учебники</a>
 							<ul class="submenu">
 								<li><a href="/book_new">Новинки</a></li>
 								<li><a href="/book_sh_middle">Для среднего специального образования</a></li>
@@ -242,14 +244,10 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 								<li><a href="/book_10_11">Для 10-11 классов</a></li>
 								<li><a href="/book_ovz">Для детей с ОВЗ</a></li>
 								<li><a href="/book_artistic">Художественная литература</a></li>
-						
-								<li><a href="/book_digit_books">Электронные книги</a></li>
 							</ul>
 						</li>
+
 						<li><a href="/book_digit_books" class="submenu-link">Электронная библиотека</a>
-							<ul class="submenu">
-								<li><a href="/book_digit_books">Электронные книги</a></li>
-							</ul>
 						</li>
 
 						<li><a href="/str_do_sh_3_4" class="submenu-link">Оборудование Дошкольное</a>
@@ -272,6 +270,11 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 								<li><a href="/str_ru_lang">Русский язык</a></li>
 								<li><a href="/str_other_lang">Иностранный язык</a></li>
 								<li><a href="/str_history">История</a></li>
+							</ul>
+						</li>
+		
+						<li><a href="/str_math" class="submenu-link">Оборудование Дополнительное</a>
+							<ul class="submenu">
 								<li><a href="/str_geograph">География</a></li>
 								<li><a href="/str_math">Математика</a></li>
 								<li><a href="/str_info">Информатика</a></li>

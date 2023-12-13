@@ -23,6 +23,12 @@ func DateNow() string {
 	return ts
 }
 
+func DateTimeNow() string {
+	t := time.Now()
+	// ts := strings.ReplaceAll(strings.Split(fmt.Sprintf("%v", t), " ")[0], "-", ".")
+	return fmt.Sprintf("%v", t)
+}
+
 // FROM bookrzn.Targets TO models.TargetCard (need targetHash)
 func TargetCardFromTargetHash(db *sql.DB, target_hash string) models.TargetCard {
 	rows, err := db.Query(fmt.Sprintf(`SELECT * FROM bookrzn.Targets WHERE target_hash = '%s';`, target_hash)) //,
