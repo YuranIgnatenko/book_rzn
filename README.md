@@ -19,15 +19,17 @@ go run main.go / ./main
 > Demo screen
 Web-interface
 ***
-Target list / search  page
-![](demo/home1.png)
-![](demo/home2.png)
-Old page add books
-![](demo/order1.png)
-![](demo/order2.png)
-History orders page
-![](demo/ord1.png)
-Editor orders page
-![](demo/ord2.png)
-Fast mail page
-![](demo/fast_mail.png)
+
+![](demo/p2/1.png)
+![](demo/p2/2.png)
+![](demo/p2/3.png)
+![](demo/p2/4.png)
+![](demo/p2/5.png)
+![](demo/p2/6.png)
+![](demo/p2/7.png)
+![](demo/p2/8.png)
+![](demo/p2/9.png)
+![](demo/p2/10.png)
+![](demo/p2/11.png)
+
+
