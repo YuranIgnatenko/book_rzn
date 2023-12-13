@@ -200,7 +200,194 @@
         <!-- ============ -->
         <!-- filter panel -->
 
-        
+        <div>
+            <div>
+                <script>
+                    const dropdown = document.querySelector('.dropdown');
+                    const checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
+                    const button = document.querySelector('.dropdown button');
+
+                    button.addEventListener('click', function () {
+                        dropdown.classList.toggle('open');
+                    });
+
+                    checkboxes.forEach(function (checkbox) {
+                        checkbox.addEventListener('change', function () {
+                            const selectedOptions = Array.from(checkboxes)
+                                .filter(function (cb) {
+                                    return cb.checked;
+                                })
+                                .map(function (cb) {
+                                    return cb.value;
+                                });
+
+                            button.textContent = selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Sel values::';
+                        });
+                    });
+                </script>
+                <style>
+                    /* .dropdown {
+                        position: relative;
+                        display: block;
+                    } */
+
+                    /* .dropdown-content {
+                        display: block;
+                        position: absolute;
+                        background-color: #cce1ee;
+                        min-width: 100%;
+                        border: 1px solid #894e4e;
+                        padding: 1px;
+                        z-index: 1;
+                    } */
+
+                    /* .dropdown-content label { */
+                    /* display: block; */
+                    /* background-color: #333; */
+                    /* text-align: left; */
+                    /* } */
+
+                    /* .dropdown:hover .dropdown-content {
+                        display: block;
+                        background-color: #bc7e6d;
+                    } */
+                    /* .panel_filters {
+                        min-width: 100%;
+                    } */
+
+                    .dropdown {
+                        border: 1px solid rgb(255, 255, 255);
+                    }
+                    .dropdown:hover {
+                        border: 1px solid rgb(122, 118, 118);
+                    }
+                    .dropdown-content{
+                        display: block;
+                    }
+
+                    .panel_block {
+                        overflow: hidden;
+                        /* border: #333;
+                        border-width: 2px; */
+                    }
+
+                    .panel_block DIV {
+                        float: left;
+                    }
+
+                    .column1 {
+                        background: #C7E3E4;
+                        width: 25%;
+                    }
+
+                    .column2 {
+                        background: #E0D2C7;
+                        width: 25%;
+                    }
+
+                    .column3 {
+                        background: #ECD5DE;
+                        width: 25%;
+                    }
+
+                    .column4 {
+                        background: #ECD5DE;
+                        width: 25%;
+                    }
+                </style>
+                <div class="panel_block">
+                    <div class="panel_filters" width="100%">
+                        <div class="dropdown column1">
+                            <button>Сортировка</button>
+                            <div class="dropdown-content">
+                                <label>
+                                    <input width="100%" type="checkbox" name="option" value="автор(А-Я)"> по Автору (A-Я)
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="автор(Я-А)"> по Автору (A-Я)
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="название(А-Я)"> по Названию
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="название(Я-А)"> по Названию
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="цена(Рост)"> по Цене
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="цена(Убывание)"> по Цене
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="dropdown column2">
+                            <button>Автор</button>
+                            <div class="dropdown-content">
+                                <label>
+                                    <input type="checkbox" name="option" value="HTML"> HTML
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="CSS"> CSS
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="JavaScript"> JavaScript
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="ReactJs"> ReactJs
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="Angular"> Angular
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="dropdown column3">
+                            <button>Предмет</button>
+                            <div class="dropdown-content">
+                                <label>
+                                    <input type="checkbox" name="option" value="HTML"> HTML
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="CSS"> CSS
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="JavaScript"> JavaScript
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="ReactJs"> ReactJs
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="Angular"> Angular
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="dropdown column4">
+                            <button>Цена</button>
+                            <div class="dropdown-content">
+                                <label>
+                                    <input type="checkbox" name="option" value="HTML"> HTML
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="CSS"> CSS
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="JavaScript"> JavaScript
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="ReactJs"> ReactJs
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="option" value="Angular"> Angular
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- filter panel -->
         <!-- ============ -->
         <hr>

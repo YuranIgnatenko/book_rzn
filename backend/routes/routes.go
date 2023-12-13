@@ -34,14 +34,14 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 		ParsingService: ps,
 		AccertPath: map[string]int{
 			//книги
-			"new_basic":     1,
-			"new_table":     1,
-			"new_boxing":    1,
-			"sh_table":      1,
-			"sh_chair":      1,
-			"office_table":  1,
-			"office_boxing": 1,
-			"sh_minitable":  1,
+			"new_basic":     0,
+			"new_table":     0,
+			"new_boxing":    0,
+			"sh_table":      0,
+			"sh_chair":      0,
+			"office_table":  0,
+			"office_boxing": 0,
+			"sh_minitable":  0,
 
 			// 	оборудование
 			"str_top":        1,
@@ -68,16 +68,16 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 			"str_tehno":      1,
 			"str_posters":    1,
 
-			// мебель
-			"book_new":         1,
-			"book_sh_middle":   1,
-			"book_do_sh":       1,
-			"book_1_4":         1,
-			"book_5_9":         1,
-			"book_10_11":       1,
-			"book_ovz":         1,
-			"book_actistic":    1,
-			"book_digit_books": 1,
+			// книги
+			"book_new":         2,
+			"book_sh_middle":   2,
+			"book_do_sh":       2,
+			"book_1_4":         2,
+			"book_5_9":         2,
+			"book_10_11":       2,
+			"book_ovz":         2,
+			"book_actistic":    2,
+			"book_digit_books": 2,
 		},
 	}
 	rout.DataTemp.TargetCards = rout.ListTargetCardCache
@@ -95,8 +95,8 @@ func (rout *Rout) DownloadFile(w http.ResponseWriter, r *http.Request) {
 }
 
 // прверяем наличия пути в карте разрешенных в качестве товаров
-func (rout *Rout) RangePathsTargetPage(w http.ResponseWriter, path string) bool {
-	return rout.AccertPath[path] == 1
+func (rout *Rout) RangePathsTargetPage(w http.ResponseWriter, path string) int {
+	return rout.AccertPath[path]
 }
 
 func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
@@ -108,11 +108,14 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	path_url := NewPathUrlArgs(r.URL.Path)
 
-	if rout.RangePathsTargetPage(w, path_url.ArgCase) {
-
+	if rout.RangePathsTargetPage(w, path_url.ArgCase) == 0 || rout.RangePathsTargetPage(w, path_url.ArgCase) == 1 {
 		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
-
 		rout.SetHTML(w, "targets.html")
+		return
+	}
+	if rout.RangePathsTargetPage(w, path_url.ArgCase) == 2 {
+		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
+		rout.SetHTML(w, "books.html")
 		return
 	}
 
