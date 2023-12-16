@@ -7,7 +7,8 @@ import (
 )
 
 type TableTargets struct {
-	DB *sql.DB
+	DB              *sql.DB
+	CachePageTarget models.PageTarget
 }
 
 func NewTableTargets() *TableTargets {
@@ -42,7 +43,7 @@ func (t_targets *TableTargets) GetTargetsCardsFromHash(target_hash string) model
 		if err != nil {
 			panic(err)
 		}
-		return card
+		// return card
 	}
 	return card
 }
@@ -190,7 +191,6 @@ func (t_targets *TableTargets) GetListTargetsFromTokenHistoryStatusON(token stri
 	}
 	return resTargetsCard
 }
-
 
 func (t_targets *TableTargets) GetListTargetsFromTokenHistoryStatusOFF(token string) []models.TargetCard {
 	rows, err := t_targets.DB.Query(fmt.Sprintf(`SELECT target_hash,count,date,id_order,status_order FROM bookrzn.OrdersHistory WHERE token = "%s" AND status_order = "off";`, token))

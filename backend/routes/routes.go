@@ -13,6 +13,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"strings"
 	"text/template"
 )
 
@@ -35,7 +37,7 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 		AccertPath: map[string]int{
 			// нельзя хранить `0` изза логики
 			// блока if в котором возврат значения
-			//книги
+			// мебель
 			"new_basic":     1,
 			"new_table":     1,
 			"new_boxing":    1,
@@ -82,7 +84,14 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 			"book_digit_books": 3,
 		},
 	}
-	rout.DataTemp.TargetCards = rout.ListTargetCardCache
+	rout.DataTemp.PageTarget.PageSize = 20
+	rout.DataTemp.PageTarget.PageNext = 2
+	rout.DataTemp.PageTarget.PageNow = 1
+	rout.DataTemp.PageTarget.PagePrev = 1
+	rout.DataTemp.PageTarget.PageDataAll = rout.ListTargetCardCache
+	// rout.DataTemp.PageTarget.PageTotal = len(rout.DataTemp.PageTarget.PageDataAll)
+
+	rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage("", 1)
 	// rout.DataTemp.OrdersCardsCms = rout.GetListOrdersCMS()
 
 	return &rout
@@ -109,14 +118,43 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	rout.DataTemp.NameLogin = rout.TableUsers.GetNameLoginFromToken(TokenValue)
 
 	path_url := NewPathUrlArgs(r.URL.Path)
-	fmt.Printf("\n%+#v\n\n", path_url)
 
 	if rout.RangePathsTargetPage(w, path_url.ArgCase) == 1 || rout.RangePathsTargetPage(w, path_url.ArgCase) == 2 {
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
+		var num_page = 1
+		if path_url.Arg1 == "" {
+			num_page = 1
+		} else {
+			path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
+			num, err := strconv.Atoi(path_url.Arg1)
+			if err != nil {
+				num_page = 1
+			} else {
+				num_page = num
+			}
+
+		}
+		rout.DataTemp.PageTarget.PageDataAll = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
+		rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
+
 		rout.SetHTML(w, "targets.html")
 		return
 	} else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 3 {
-		rout.DataTemp.TargetCards = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
+		var num_page = 1
+		if path_url.Arg1 == "" {
+			num_page = 1
+		} else {
+			path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
+			num, err := strconv.Atoi(path_url.Arg1)
+			if err != nil {
+				num_page = 1
+			} else {
+				num_page = num
+			}
+
+		}
+		rout.DataTemp.PageTarget.PageDataAll = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
+		rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
+
 		rout.SetHTML(w, "books.html")
 		return
 	}
@@ -133,8 +171,9 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "home_docs_info":
 		rout.SetHTML(w, "home_docs_info.html")
 	case "orders_history_cancel_orders":
-		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromTokenHistoryStatusOFF(TokenValue)
-		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		// rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromTokenHistoryStatusOFF(TokenValue)
+		rout.DataTemp.PageTarget.PageData = rout.TableTargets.GetListTargetsFromTokenHistoryStatusOFF(TokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.PageTarget.PageData)
 		rout.SetHTML(w, "orders_history_cancel_orders.html")
 
 	case "cancel_orders_history":
@@ -189,7 +228,8 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	// добавление в избранное
 	case "card_view":
 		target_hash := path_url.Arg1
-		rout.DataTemp.TargetCards = []models.TargetCard{rout.TableTargets.GetTargetsCardsFromHash(target_hash)}
+		// rout.DataTemp.TargetCards = []models.TargetCard{rout.TableTargets.GetTargetsCardsFromHash(target_hash)}
+		rout.DataTemp.PageTarget.PageData = []models.TargetCard{rout.TableTargets.GetTargetsCardsFromHash(target_hash)}
 		rout.SetHTML(w, "card_view.html")
 
 	// добавление в избранное
@@ -230,39 +270,41 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	//страница ИСТОРИЯ активных и прошлых заказов
 	case "orders_history":
-		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromTokenHistoryStatusON(TokenValue)
-		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		// rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromTokenHistoryStatusON(TokenValue)
+		rout.DataTemp.PageTarget.PageData = rout.TableTargets.GetListTargetsFromTokenHistoryStatusON(TokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.PageTarget.PageData)
 		rout.SetHTML(w, "orders_history.html")
 
 	case "delete_table_orders_history":
 		target_id_order := path_url.Arg1
 		rout.DeleteTableOrdersHistory(rout.GetCookieTokenValue(w, r), target_id_order)
-		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromTokenHistoryStatusOFF(TokenValue)
-		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		// rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromTokenHistoryStatusOFF(TokenValue)
+		rout.DataTemp.PageTarget.PageData = rout.TableTargets.GetListTargetsFromTokenHistoryStatusOFF(TokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.PageTarget.PageData)
 		http.Redirect(w, r, "/orders_history_cancel_orders", http.StatusPermanentRedirect)
 
 	case "edit_table_orders":
-		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(TokenValue)
-		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		rout.DataTemp.PageTarget.PageData = rout.TableTargets.GetListTargetsFromToken(TokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.PageTarget.PageData)
 		rout.SetHTML(w, "orders_editor.html")
 
 	case "delete_record_orders":
 		target_hash := path_url.Arg1
 		rout.TableOrders.DeleteRecordOrders(rout.GetCookieTokenValue(w, r), target_hash)
-		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(TokenValue)
-		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		rout.DataTemp.PageTarget.PageData = rout.TableTargets.GetListTargetsFromToken(TokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.PageTarget.PageData)
 		http.Redirect(w, r, "/orders", http.StatusPermanentRedirect)
 		// rout.SetHTML(w, "orders.html")
 
 	// страницы черновых заказов- составление
 	case "orders":
-		rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromToken(TokenValue)
-		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.TargetCards)
+		rout.DataTemp.PageTarget.PageData = rout.TableTargets.GetListTargetsFromToken(TokenValue)
+		rout.DataTemp.ListOrdersTargetCard = rout.ListOrdersFromTargetCards(rout.DataTemp.PageTarget.PageData)
 		rout.SetHTML(w, "orders.html")
 
 	// страница с избранными карточками товаров
 	case "favorites":
-		rout.DataTemp.TargetCards = rout.TargetCardsFromListFavorites(TokenValue)
+		rout.DataTemp.PageTarget.PageData = rout.TargetCardsFromListFavorites(TokenValue)
 		rout.SetHTML(w, "favorites.html")
 
 	// страница Домашняя
@@ -274,7 +316,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	// страница с поиском товара
 	case "search":
 		sub := r.FormValue("search")
-		rout.DataTemp.TargetCards = rout.FilterSearch(rout.DataTemp.TargetAll, sub)
+		rout.DataTemp.PageTarget.PageData = rout.FilterSearch(rout.DataTemp.TargetAll, sub)
 		rout.SetHTML(w, "search.html")
 
 	// страница быстрых писем\заказов

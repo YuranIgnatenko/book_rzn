@@ -91,6 +91,9 @@
         }
         
        
+        .panel_pages {
+            display: inline-block;
+        }
 
     </style>
 
@@ -235,7 +238,7 @@
 
                         <div class="items">
 
-                            {{ range .TargetCards }}
+                            {{ range .PageTarget.PageData }}
                             <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
 
                                 <div class="image">
@@ -271,6 +274,22 @@
                         </div>
                     </div>
 
+                    <hr>
+                    <center>
+                        <div class="page_num">
+                            <h3>Номер страницы : {{.PageTarget.PageNow}} / {{.PageTarget.PageTotal}}</h3>
+                            <div>
+
+                                <form class="panel_pages" action="{{.PageTarget.PageLinkPrev}}">
+                                    <button style="width: 100%;" type="submit">Назад</button>
+                                </form>
+
+                                <form class="panel_pages" action="{{.PageTarget.PageLinkNext}}">
+                                    <button style="width: 100%;" type="submit">Далее</button>
+                                </form>
+                            </div>
+                        </div>
+                    </center>
 
 
                 </div>

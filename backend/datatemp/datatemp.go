@@ -8,8 +8,9 @@ import (
 
 type DataTemp struct {
 	config.Configuration
-	TargetAll            []models.TargetCard
-	TargetCards          []models.TargetCard
+	TargetAll []models.TargetCard
+	// TargetCards          []models.TargetCard
+	PageTarget           models.PageTarget
 	MenuCards            []models.MenuCard
 	ListOrdersTargetCard models.ListOrdersTargetCard
 	FavoritesCards       []models.FavoritesCards
@@ -27,9 +28,10 @@ type DataTemp struct {
 
 func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 	return &DataTemp{
-		Configuration:        c,
-		TargetAll:            ps,
-		TargetCards:          []models.TargetCard{},
+		Configuration: c,
+		TargetAll:     ps,
+		PageTarget:    models.PageTarget{},
+		// TargetCards:          []models.TargetCard{},
 		ListOrdersTargetCard: models.ListOrdersTargetCard{},
 		FavoritesCards:       []models.FavoritesCards{},
 		OrdersCards:          []models.OrdersCards{},

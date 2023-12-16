@@ -11,10 +11,10 @@
     <meta name="viewport" content="width=1200px">
     <title>Каталог товаров</title>
 
-     
-     
+
+
     <style>
-                :root {
+        :root {
 
             --mainSchemeColor: #804C3E;
 
@@ -44,23 +44,24 @@
             --mainContrastSchemeColor-lighten20: #ffb289;
         }
 
-        div>a>span{
+        div>a>span {
             background-color: var(--mainContrastSchemeColor);
             color: white;
             padding: 4px;
             border-radius: 5px;
         }
 
-        div>a>span:hover{
+        div>a>span:hover {
             background-color: var(--mainContrastSchemeColor-darken10);
         }
 
-        .link_btn{
+        .link_btn {
             background-color: var(--mainContrastSchemeColor);
             padding: 4px;
             border-radius: 5px;
         }
-        .link_btn:hover{
+
+        .link_btn:hover {
             background-color: var(--mainContrastSchemeColor-darken10);
         }
 
@@ -89,15 +90,19 @@
             display: inline-block;
         }
 
-        .button_filter_switch{
+        .button_filter_switch {
             background-color: var(--mainContrastSchemeColor);
             padding: 4px;
             border-radius: 5px;
         }
-        .button_filter_switch:hover{
+
+        .button_filter_switch:hover {
             background-color: var(--mainContrastSchemeColor-darken10);
         }
 
+        .panel_pages {
+            display: inline-block;
+        }
     </style>
 
     <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/base/style.css?ver=1691644398" rel="stylesheet"
@@ -181,25 +186,25 @@
                             <span>Поиск</span>
                         </div>
                         {{if .IsLogin}}
-                         <div class="orders bars" title="Редактор">
+                        <div class="orders bars" title="Редактор">
                             <a href="/orders">
-                                 
+
                                 <span>Редактор</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/favorites">
-                                 
+
                                 <span>Избранное</span>
                             </a>
                         </div>
                         <div class="orders_history bars">
                             <a href="/orders_history">
-                                 
+
                                 <span>Заказы</span>
                             </a>
                         </div>
-                         
+
                         {{end}}
 
 
@@ -235,7 +240,7 @@
                 </script>
                 <style>
                     .panel_block {
-                        box-sizing: border-box;
+                        /* box-sizing: border-box; */
                     }
 
                     .filter_grid {
@@ -294,7 +299,6 @@
                         background-color: black;
                         color: white;
                     }
-                    
                 </style>
 
 
@@ -390,10 +394,11 @@
 
 
                     <script>
-                        $("#1").click(function () {
+                        $(".panel_block").toggle("fast");
+                        $("#2").click(function () {
                             $(".panel_block").slideToggle("fast");
                         });
-                        $("#2").click(function () {
+                        $("#1").click(function () {
                             $(".panel_block").slideToggle("fast");
                         });
                     </script>
@@ -416,7 +421,7 @@
 
                         <div class="items">
 
-                            {{ range .TargetCards }}
+                            {{ range .PageTarget.PageData }}
                             <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
 
                                 <div class="image">
@@ -438,7 +443,9 @@
                                         </div>
 
                                         <div class="down_elem">
-                                            <a class="more" style="margin-bottom: 5px; padding:10px; background-color:var(--mainContrastSchemeColor);" onclick="this.href='/add_favorites/{{.TargetHash}}/1'">В
+                                            <a class="more"
+                                                style="margin-bottom: 5px; padding:10px; background-color:var(--mainContrastSchemeColor);"
+                                                onclick="this.href='/add_favorites/{{.TargetHash}}/1'">В
                                                 корзину</a>
                                         </div>
                                     </div>
@@ -446,12 +453,25 @@
                                 </div>
                             </div>
                             {{ end }}
-
-
                         </div>
                     </div>
 
+                    <hr>
+                    <center>
+                        <div class="page_num">
+                            <h3>Номер страницы : {{.PageTarget.PageNow}} / {{.PageTarget.PageTotal}}</h3>
+                            <div>
 
+                                <form class="panel_pages" action="{{.PageTarget.PageLinkPrev}}">
+                                    <button style="width: 100%;" type="submit">Назад</button>
+                                </form>
+
+                                <form class="panel_pages" action="{{.PageTarget.PageLinkNext}}">
+                                    <button style="width: 100%;" type="submit">Далее</button>
+                                </form>
+                            </div>
+                        </div>
+                    </center>
 
                 </div>
 

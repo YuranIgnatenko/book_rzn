@@ -1,5 +1,65 @@
 package models
 
+import "fmt"
+
+type PageTarget struct {
+	PageNext     int
+	PagePrev     int
+	PageOld      int
+	PageTotal    int
+	PageData     []TargetCard
+	PageDataAll  []TargetCard
+	PageSize     int //recmmended 20 cards targets
+	PageNow      int
+	PageLinkNext string
+	PageLinkPrev string
+	// Page
+}
+
+func (pt *PageTarget) GetPage(link string, number_page int) []TargetCard {
+	// math.Ceil() — округление в большую сторону
+	// math.Floor() - в меньшую
+	// page_total := math.Ceil(pt.PageTotal / pt.PageSize)
+
+	count_pages := int(pt.PageTotal/pt.PageSize) + 1
+	pages := make(map[int][]TargetCard, count_pages)
+	// fmt.Println("countPage :", pages)
+
+	temp_counter_size := 0
+	temp_ind := 1
+	// all_count := 0
+
+	for _, card := range pt.PageDataAll {
+		// all_count = ind
+		if temp_counter_size == pt.PageSize {
+			temp_counter_size = 0
+			temp_ind += 1
+		}
+
+		pages[temp_ind] = append(pages[temp_ind], card)
+		temp_counter_size += 1
+	}
+
+	// fmt.Println("list_pages max page:", ))
+	pt.PageNow = number_page
+	pt.PagePrev = number_page - 1
+	pt.PageNext = number_page + 1
+	pt.PageData = pages[number_page]
+	pt.PageTotal = len(pages)
+
+	if pt.PageNext > pt.PageTotal {
+		pt.PageNext = pt.PageTotal
+	}
+	if pt.PagePrev < 1 {
+		pt.PagePrev = 1
+	}
+	pt.PageLinkNext = "/" + link + "/" + fmt.Sprint(pt.PageNext)
+	pt.PageLinkPrev = "/" + link + "/" + fmt.Sprint(pt.PagePrev)
+
+	return pages[number_page]
+
+}
+
 type ServiceScraper interface {
 	ScrapSource() []TargetCard
 }
@@ -28,6 +88,7 @@ type MenuCard struct {
 }
 
 type TargetCard struct {
+	PageNow              int
 	Autor                string
 	Title                string
 	Price                string
