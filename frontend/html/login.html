@@ -150,8 +150,8 @@
                         <br>
 
                         <form method="GET" action="/search">
-                            <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
-                                autocomplete="off" autofocus value="" />
+                            <input type="text" name="search" id="search" placeholder="Найти товар"
+                                autocomplete="off" autofocus value="{{.LastValueSearch}}"  />
                             <button type="submit">Поиск</button>
                             <div id="autocomplete"></div>
                         </form>
@@ -214,8 +214,8 @@
 
                                 <form class="login-form" action="/validation_login" method="POST">
                                     <hr>
-                                    <input type="text" name="login" placeholder="Номер телефона или почта" />
-                                    <input type="password" name="password" placeholder="Пароль" />
+                                    <input type="text" name="login" placeholder="Номер телефона или почта" required="required"/>
+                                    <input type="password" name="password" placeholder="Пароль" required="required"/>
                                     <br>
                                     <input type="submit" value="Войти" />
                                     <br>

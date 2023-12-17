@@ -186,7 +186,7 @@ func (conn *Connector) ListOrdersFromTargetCards(tc []models.TargetCard) models.
 // 	return main_target_cards_all
 // }
 
-func (conn *Connector) TargetCardsFromListFavorites(token string) []models.TargetCard {
+func (conn *Connector) TargetCardsFromListFavorites(token string) []models.Favorites {
 
 	list_targets_hash := []string{}
 	list_targets_count := []string{}
@@ -198,7 +198,7 @@ func (conn *Connector) TargetCardsFromListFavorites(token string) []models.Targe
 
 	defer rows.Close()
 
-	var favcards []models.TargetCard
+	var favcards []models.Favorites
 
 	for rows.Next() {
 		var target_hash string
@@ -222,7 +222,7 @@ func (conn *Connector) TargetCardsFromListFavorites(token string) []models.Targe
 
 		defer rows.Close()
 		for rows.Next() {
-			card := models.TargetCard{}
+			card := models.Favorites{}
 			err := rows.Scan(
 				&card.Id,
 				&card.TargetHash,

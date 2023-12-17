@@ -24,16 +24,18 @@ type Rout struct {
 	config.Configuration
 	datatemp.DataTemp
 	parsing.ParsingService
-	AccertPath map[string]int
+	AccertPath           map[string]int
+	CacheMapaTokenSearch map[string]string
 }
 
 func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt datatemp.DataTemp, ps parsing.ParsingService) *Rout {
 	rout := Rout{
-		Auth:           a,
-		Configuration:  c,
-		Connector:      conn,
-		DataTemp:       dt,
-		ParsingService: ps,
+		Auth:                 a,
+		Configuration:        c,
+		Connector:            conn,
+		DataTemp:             dt,
+		ParsingService:       ps,
+		CacheMapaTokenSearch: make(map[string]string, 0),
 		AccertPath: map[string]int{
 			// нельзя хранить `0` изза логики
 			// блока if в котором возврат значения
@@ -171,11 +173,14 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	} else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 4 {
 		fmt.Println(path_url, "2")
 		res := r.FormValue("search")
+
 		if res == "" {
-			res = rout.PageTarget.LastSearch
+			res = fmt.Sprint(rout.CacheMapaTokenSearch[TokenValue])
+		} else {
+			rout.CacheMapaTokenSearch[TokenValue] = res
 		}
 
-		fmt.Println(res)
+		rout.DataTemp.LastValueSearch = res
 
 		var num_page = 1
 		if path_url.Arg1 != "" {
@@ -190,7 +195,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 		}
 
-		rout.PageTarget.LastSearch = res
+		// rout.PageTarget.LastSearch = res
 		rout.DataTemp.PageTarget.PageDataAll = rout.FilterSearch(rout.TargetAll, res)
 		rout.PageTarget.PageTotal = len(rout.DataTemp.PageTarget.PageDataAll)
 		rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
@@ -200,6 +205,9 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch path_url.ArgCase {
+
+	case "set_filter_book":
+		fmt.Println(r.URL.Path)
 
 	case "home_news":
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
@@ -341,7 +349,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	// страница с избранными карточками товаров
 	case "favorites":
-		rout.DataTemp.PageTarget.PageData = rout.TargetCardsFromListFavorites(TokenValue)
+		rout.DataTemp.FavoritesCards = rout.TargetCardsFromListFavorites(TokenValue)
 		rout.SetHTML(w, "favorites.html")
 
 	// страница Домашняя

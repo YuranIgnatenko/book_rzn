@@ -180,8 +180,8 @@
                         <br>
 
                         <form method="GET" action="/search">
-                            <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
-                                autocomplete="off" autofocus value="" />
+                            <input type="text" name="search" id="search" placeholder="Найти товар"
+                                autocomplete="off" autofocus value="{{.LastValueSearch}}"  />
                             <button type="submit">Поиск</button>
                             <div id="autocomplete"></div>
                         </form>
@@ -305,6 +305,11 @@
                         background-color: black;
                         color: white;
                     }
+
+                    .filter_form{
+                        padding-left: 20%;
+                        padding-right: 20%;
+                    }
                 </style>
 
 
@@ -320,7 +325,7 @@
                             <div class="filter_grid">
                                 <center>
                                     <div>
-                                        <form class="filter_form" action="/test">
+                                        <form class="filter_form" action="/set_filter_book">
                                             <fieldset>
                                                 <legend class="filter_legend">Сортировать</legend>
                                                 <div class="form__group">

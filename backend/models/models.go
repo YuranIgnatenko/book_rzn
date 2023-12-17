@@ -13,7 +13,7 @@ type PageTarget struct {
 	PageNow      int
 	PageLinkNext string
 	PageLinkPrev string
-	LastSearch   string
+	// LastSearch   string
 	// Page
 }
 
@@ -206,6 +206,8 @@ type Favorites struct {
 	Comment    string
 	TargetHash string
 	Count      string
+	Source     string // site.com
+	Tag        string
 }
 
 type Orders struct {

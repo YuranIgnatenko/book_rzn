@@ -231,8 +231,7 @@
 
 
                                     <font-size=”10″ face=”Calibri”>
-                                        {{ range .TargetCards }}
-                                        <tr>
+                                        {{ range .FavoritesCards }}
                                             <td><img src="{{ .Link }}" height="100%" width="100%"></td>
                                             <td>{{ .Autor }}{{ .Title }}</td>
 
@@ -241,8 +240,8 @@
                                                 <center>
                                                     <label>Номер заказа</label>
                                                     <br>
-                                                    <input type="number" name="" placeholder="Число больше 0"
-                                                        id="{{.TargetHash}}" value="1" min="1" max="99999999999999">
+                                                    <input type="number" name="" placeholder="Число больше 0" required="required"
+                                                        id="{{.TargetHash}}" value="1" min="1" max="99999999999999" required="required">
 
                                                     <br>
                                                     <label>Количество шт./экз.</label>

@@ -62,7 +62,14 @@
         .link_btn:hover{
             background-color: var(--mainContrastSchemeColor-darken10);
         }
-
+        .input_form_field{
+            background-color: #e7dcd9;
+            color: #99e2ff;
+        }
+        .input_form_field:hover{
+            background-color: #946052;
+            color: #052f3f;
+        }
 
 
     </style>
@@ -148,8 +155,8 @@
                         <br>
 
                         <form method="GET" action="/search">
-                            <input type="text" name="search" id="search" required="required" placeholder="Найти товар"
-                                autocomplete="off" autofocus value="" />
+                            <input type="text" name="search" id="search" placeholder="Найти товар"
+                                autocomplete="off" autofocus value="{{.LastValueSearch}}"  />
                             <button type="submit">Поиск</button>
                             <div id="autocomplete"></div>
                         </form>
@@ -222,12 +229,12 @@
 
                             <div class="form">
                                 <form class="login-form" action="/create_user" method="POST">
-                                    <input type="text" name="login" placeholder="Логин" autocomplete="off" />
-                                    <input type="password" name="password" placeholder="Пароль" autocomplete="off" />
-                                    <input type="text" name="name" placeholder="Имя" autocomplete="off" />
-                                    <input type="text" name="family" placeholder="Фамилия" autocomplete="off" />
-                                    <input type="text" name="phone" placeholder="Телефон" autocomplete="off" />
-                                    <input type="email" name="email" placeholder="Почта" autocomplete="off" />
+                                    <input class="input_form_field" type="text" name="login" placeholder="Логин" autocomplete="off" required="required"/>
+                                    <input class="input_form_field" type="text" name="password" placeholder="Пароль" autocomplete="off" required="required"/>
+                                    <input class="input_form_field" type="text" name="name" placeholder="Имя" autocomplete="off" required="required"/>
+                                    <input class="input_form_field" type="text" name="family" placeholder="Фамилия" autocomplete="off" required="required"/>
+                                    <input class="input_form_field" type="text" name="phone" placeholder="Телефон" autocomplete="off" required="required"/>
+                                    <input class="input_form_field" type="email" name="email" placeholder="Почта" autocomplete="off" required="required"/>
                                     <!-- login, password, name, family, phone, email -->
 
                                     <br>

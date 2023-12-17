@@ -13,7 +13,7 @@ type DataTemp struct {
 	PageTarget           models.PageTarget
 	MenuCards            []models.MenuCard
 	ListOrdersTargetCard models.ListOrdersTargetCard
-	FavoritesCards       []models.FavoritesCards
+	FavoritesCards       []models.Favorites
 	OrdersCards          []models.OrdersCards
 	OrdersRows           []models.OrdersRows
 	SearchTarget         []models.TargetCard
@@ -21,6 +21,7 @@ type DataTemp struct {
 	NumberFastOrder      string
 	IsLogin              bool
 	IsAdmin              bool
+	LastValueSearch      string
 	NameLogin            string
 	PageMenuTemplHtml    string
 	MenuMap              []models.MenuCard
@@ -34,12 +35,13 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 		PageTarget:    models.PageTarget{},
 		// TargetCards:          []models.TargetCard{},
 		ListOrdersTargetCard: models.ListOrdersTargetCard{},
-		FavoritesCards:       []models.FavoritesCards{},
+		FavoritesCards:       []models.Favorites{},
 		OrdersCards:          []models.OrdersCards{},
 		OrdersRows:           []models.OrdersRows{},
 		SearchTarget:         []models.TargetCard{},
 		FastOrdersList:       []models.DataFastOrderOne{},
 		NumberFastOrder:      "",
+		LastValueSearch:      "",
 		IsLogin:              false,
 		IsAdmin:              false,
 		NameLogin:            "Гость",
