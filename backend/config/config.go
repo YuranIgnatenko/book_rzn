@@ -34,6 +34,8 @@ type Configuration struct {
 	Location_shops     []string `json:"location_shops"`
 	Path_logo_company  string   `json:"path_logo_company"`
 	Path_banner_home   string   `json:"path_banner_home"`
+	Path_banner_home_2 string   `json:"path_banner_home_2"`
+	Path_banner_home_3 string   `json:"path_banner_home_3"`
 	Company_name       string   `json:"company_name"`
 	Text_banner        string   `json:"text_banner"`
 	Description_banner string   `json:"description_banner"`

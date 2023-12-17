@@ -44,23 +44,24 @@
             --mainContrastSchemeColor-lighten20: #ffb289;
         }
 
-        div>a>span{
+        div>a>span {
             background-color: var(--mainContrastSchemeColor);
             color: white;
             padding: 4px;
             border-radius: 5px;
         }
 
-        div>a>span:hover{
+        div>a>span:hover {
             background-color: var(--mainContrastSchemeColor-darken10);
         }
 
-        .link_btn{
+        .link_btn {
             background-color: var(--mainContrastSchemeColor);
             padding: 4px;
             border-radius: 5px;
         }
-        .link_btn:hover{
+
+        .link_btn:hover {
             background-color: var(--mainContrastSchemeColor-darken10);
         }
 
@@ -150,8 +151,8 @@
                         <br>
 
                         <form method="GET" action="/search">
-                            <input type="text" name="search" id="search" placeholder="Найти товар"
-                                autocomplete="off" autofocus value="{{.LastValueSearch}}"  />
+                            <input type="text" name="search" id="search" placeholder="Найти товар" autocomplete="off"
+                                autofocus value="{{.LastValueSearch}}" />
                             <button type="submit">Поиск</button>
                             <div id="autocomplete"></div>
                         </form>
@@ -214,8 +215,9 @@
 
                                 <form class="login-form" action="/validation_login" method="POST">
                                     <hr>
-                                    <input type="text" name="login" placeholder="Номер телефона или почта" required="required"/>
-                                    <input type="password" name="password" placeholder="Пароль" required="required"/>
+                                    <input type="text" name="login" placeholder="Номер телефона или почта"
+                                        required="required" />
+                                    <input type="password" name="password" placeholder="Пароль" required="required" />
                                     <br>
                                     <input type="submit" value="Войти" />
                                     <br>
