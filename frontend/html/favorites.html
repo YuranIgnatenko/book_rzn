@@ -108,12 +108,17 @@
 
                     <div class="login_or_reg">
                         {{if .IsLogin}}
-                        <a href="/home">Пользователь:{{ .NameLogin }}</a>
-                        <br>
+                        <a>Пользователь:{{ .NameLogin }}</a>
+                        <hr>
                         <a class="link_btn" href="/out">Выход</a>
                         {{else}}
-                        <a href="/login">Вход</a>
-                        <a href="/registration">Регистрация</a>
+                        <a class="link_btn" href="/login">Вход</a>
+                        <hr>
+                        <a class="link_btn"  href="/registration">Регистрация</a>
+                        {{end}}
+                        {{if .IsAdmin}}
+                        <hr>
+                        <a class="link_btn" href="/cms">cms</a>
                         {{end}}
                     </div>
                 </div>

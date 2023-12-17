@@ -82,6 +82,8 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 			"book_ovz":         3,
 			"book_actistic":    3,
 			"book_digit_books": 3,
+
+			"search": 4,
 		},
 	}
 	rout.DataTemp.PageTarget.PageSize = 20
@@ -115,9 +117,18 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	rout.DataTemp.IsLogin = isFindCookie
 
 	TokenValue := rout.GetCookieTokenValue(w, r)
+	switch rout.TableUsers.GetTypeFromToken(TokenValue) {
+	case "admin":
+		rout.DataTemp.IsAdmin = true
+	default:
+		rout.DataTemp.IsAdmin = false
+	}
+
 	rout.DataTemp.NameLogin = rout.TableUsers.GetNameLoginFromToken(TokenValue)
 
 	path_url := NewPathUrlArgs(r.URL.Path)
+
+	fmt.Println(path_url, "1")
 
 	if rout.RangePathsTargetPage(w, path_url.ArgCase) == 1 || rout.RangePathsTargetPage(w, path_url.ArgCase) == 2 {
 		var num_page = 1
@@ -157,12 +168,38 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 		rout.SetHTML(w, "books.html")
 		return
+	} else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 4 {
+		fmt.Println(path_url, "2")
+		res := r.FormValue("search")
+		if res == "" {
+			res = rout.PageTarget.LastSearch
+		}
+
+		fmt.Println(res)
+
+		var num_page = 1
+		if path_url.Arg1 != "" {
+
+			path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
+			num, err := strconv.Atoi(path_url.Arg1)
+			if err != nil {
+				num_page = 1
+			} else {
+				num_page = num
+			}
+
+		}
+
+		rout.PageTarget.LastSearch = res
+		rout.DataTemp.PageTarget.PageDataAll = rout.FilterSearch(rout.TargetAll, res)
+		rout.PageTarget.PageTotal = len(rout.DataTemp.PageTarget.PageDataAll)
+		rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
+
+		rout.SetHTML(w, "search.html")
+		return
 	}
 
 	switch path_url.ArgCase {
-	case "test":
-		fmt.Println("rout test --- ok", r.URL.Path)
-		http.Redirect(w, r, "/book_do_sh", http.StatusPermanentRedirect)
 
 	case "home_news":
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
@@ -312,12 +349,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		// path_menu := path_url.Arg1
 		// rout.DataTemp.MenuCards
 		rout.SetHTML(w, "home.html")
-
-	// страница с поиском товара
-	case "search":
-		sub := r.FormValue("search")
-		rout.DataTemp.PageTarget.PageData = rout.FilterSearch(rout.DataTemp.TargetAll, sub)
-		rout.SetHTML(w, "search.html")
 
 	// страница быстрых писем\заказов
 	case "fast_mail":

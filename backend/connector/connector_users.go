@@ -72,6 +72,31 @@ func (t_users *TableUsers) GetNameLoginFromToken(token string) string {
 	return login_name
 }
 
+func (t_users *TableUsers) GetTypeFromToken(token string) string {
+	rows, err := t_users.DB.Query(fmt.Sprintf(`SELECT type FROM bookrzn.Users WHERE token = '%s' ;`, token)) //,
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	var login_name string
+
+	for rows.Next() {
+		err := rows.Scan(&login_name)
+
+		if err != nil {
+			panic(err)
+		}
+
+	}
+
+	if login_name == "" {
+		return ""
+	}
+	return login_name
+}
+
 func (t_users *TableUsers) AddUser(Login, Password, Type, Token, Name, Family, Phone, Email string) {
 	rows, err := t_users.DB.Query(
 		fmt.Sprintf(`INSERT INTO bookrzn.Users (login,password,type,token,name,family,phone,email) 

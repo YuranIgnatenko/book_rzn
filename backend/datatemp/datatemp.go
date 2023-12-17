@@ -20,6 +20,7 @@ type DataTemp struct {
 	FastOrdersList       []models.DataFastOrderOne
 	NumberFastOrder      string
 	IsLogin              bool
+	IsAdmin              bool
 	NameLogin            string
 	PageMenuTemplHtml    string
 	MenuMap              []models.MenuCard
@@ -40,6 +41,7 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 		FastOrdersList:       []models.DataFastOrderOne{},
 		NumberFastOrder:      "",
 		IsLogin:              false,
+		IsAdmin:              false,
 		NameLogin:            "Гость",
 		MenuFiles: []models.MenuCard{
 			models.MenuCard{

@@ -13,10 +13,57 @@ type PageTarget struct {
 	PageNow      int
 	PageLinkNext string
 	PageLinkPrev string
+	LastSearch   string
 	// Page
 }
 
 func (pt *PageTarget) GetPage(link string, number_page int) []TargetCard {
+	// math.Ceil() — округление в большую сторону
+	// math.Floor() - в меньшую
+	// page_total := math.Ceil(pt.PageTotal / pt.PageSize)
+
+	count_pages := int(pt.PageTotal/pt.PageSize) + 1
+	pages := make(map[int][]TargetCard, count_pages)
+	// fmt.Println("countPage :", pages)
+
+	temp_counter_size := 0
+	temp_ind := 1
+	// all_count := 0
+
+	for _, card := range pt.PageDataAll {
+		// all_count = ind
+		if temp_counter_size == pt.PageSize {
+			temp_counter_size = 0
+			temp_ind += 1
+		}
+
+		pages[temp_ind] = append(pages[temp_ind], card)
+		temp_counter_size += 1
+	}
+
+	// fmt.Println("list_pages max page:", ))
+	pt.PageNow = number_page
+	pt.PagePrev = number_page - 1
+	pt.PageNext = number_page + 1
+	pt.PageData = pages[number_page]
+	pt.PageTotal = len(pages)
+
+	if pt.PageNext > pt.PageTotal {
+		pt.PageNext = pt.PageTotal
+	}
+	if pt.PagePrev < 1 {
+		pt.PagePrev = 1
+	}
+	pt.PageLinkNext = "/" + link + "/" + fmt.Sprint(pt.PageNext)
+	pt.PageLinkPrev = "/" + link + "/" + fmt.Sprint(pt.PagePrev)
+
+	fmt.Println("pt.PageLinkNext,pt.PageLinkPrev::", pt.PageLinkNext, pt.PageLinkPrev)
+
+	return pages[number_page]
+
+}
+
+func (pt *PageTarget) GetPageSearch(link string, number_page int) []TargetCard {
 	// math.Ceil() — округление в большую сторону
 	// math.Floor() - в меньшую
 	// page_total := math.Ceil(pt.PageTotal / pt.PageSize)

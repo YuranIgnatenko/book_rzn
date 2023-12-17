@@ -11,10 +11,10 @@
     <meta name="viewport" content="width=1200px">
     <title>Поиск товаров</title>
 
-     
-     
+
+
     <style>
-                :root {
+        :root {
 
             --mainSchemeColor: #804C3E;
 
@@ -44,23 +44,24 @@
             --mainContrastSchemeColor-lighten20: #ffb289;
         }
 
-        div>a>span{
+        div>a>span {
             background-color: var(--mainContrastSchemeColor);
             color: white;
             padding: 4px;
             border-radius: 5px;
         }
 
-        div>a>span:hover{
+        div>a>span:hover {
             background-color: var(--mainContrastSchemeColor-darken10);
         }
 
-        .link_btn{
+        .link_btn {
             background-color: var(--mainContrastSchemeColor);
             padding: 4px;
             border-radius: 5px;
         }
-        .link_btn:hover{
+
+        .link_btn:hover {
             background-color: var(--mainContrastSchemeColor-darken10);
         }
 
@@ -87,6 +88,10 @@
         }
 
         .down_elem {
+            display: inline-block;
+        }
+
+        .panel_pages {
             display: inline-block;
         }
     </style>
@@ -130,10 +135,16 @@
                     <div class="login_or_reg">
                         {{if .IsLogin}}
                         <a>Пользователь:{{ .NameLogin }}</a>
+                        <hr>
                         <a class="link_btn" href="/out">Выход</a>
                         {{else}}
-                        <a href="/login">Вход</a>
-                        <a href="/registration">Регистрация</a>
+                        <a class="link_btn" href="/login">Вход</a>
+                        <hr>
+                        <a class="link_btn"  href="/registration">Регистрация</a>
+                        {{end}}
+                        {{if .IsAdmin}}
+                        <hr>
+                        <a class="link_btn" href="/cms">cms</a>
                         {{end}}
                     </div>
                 </div>
@@ -172,25 +183,25 @@
                             <span>Поиск</span>
                         </div>
                         {{if .IsLogin}}
-                         <div class="orders bars" title="Редактор">
+                        <div class="orders bars" title="Редактор">
                             <a href="/orders">
-                                 
+
                                 <span>Редактор</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/favorites">
-                                 
+
                                 <span>Избранное</span>
                             </a>
                         </div>
                         <div class="orders_history bars">
                             <a href="/orders_history">
-                                 
+
                                 <span>Заказы</span>
                             </a>
                         </div>
-                         
+
                         {{end}}
 
 
@@ -214,6 +225,188 @@
     </div>
     </header>
     <main>
+
+        <!-- ============ -->
+        <!-- filter panel -->
+
+        <div>
+            <div>
+                <script>
+
+                </script>
+                <style>
+                    .panel_block {
+                        /* box-sizing: border-box; */
+                    }
+
+                    .filter_grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+                        gap: 3rem;
+                    }
+
+                    .filter_wrapper {
+                        width: 100%;
+                        padding: min(1rem, 5vw);
+                    }
+
+                    .filter_form {
+                        padding: 0.2rem;
+                        background-color: rgba(245, 245, 245);
+                        border-radius: 0.5rem;
+                    }
+
+                    .filter_legend {
+                        font-weight: 700;
+                    }
+
+                    fieldset>*+* {
+                        margin-top: 0.5rem;
+                    }
+
+                    .filter_form>*+* {
+                        margin-top: 1.5rem;
+                    }
+
+                    .form__group {
+                        display: flex;
+                        align-items: center;
+                        margin: 0px;
+                    }
+
+
+
+
+                    .filter_input[type="checkbox"],
+                    .filter_input[type="radio"] {
+                        width: 1.5em;
+                        height: 1.5em;
+                        margin-right: 1.65rem;
+                    }
+
+                    .filter_input[type="range"],
+                    /* progress {
+                        margin-left: auto;
+                        flex: 0 1 50%;
+                    } */
+
+                    .filter_form:nth-child(2n) {
+                        color-scheme: dark;
+                        background-color: black;
+                        color: white;
+                    }
+
+                    .button_filter_switch {
+                        background-color: var(--mainContrastSchemeColor);
+                        padding: 4px;
+                        border-radius: 5px;
+                    }
+
+                    .button_filter_switch:hover {
+                        background-color: var(--mainContrastSchemeColor-darken10);
+                    }
+                </style>
+
+
+
+                <div>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                    <center>
+                        <button class="button_filter_switch" id="1">Фильтр (свернуть/развернуть)</button>
+                    </center>
+                    <div class="panel_block">
+                        <div class="filter_wrapper">
+                            <!-- <h1>Фильтр </h1> -->
+                            <div class="filter_grid">
+                                <center>
+                                    <div>
+                                        <form class="filter_form" action="/test">
+                                            <fieldset>
+                                                <legend class="filter_legend">Сортировать</legend>
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_1" value="sort_1"
+                                                        name="filter_sort_check">
+                                                    <h4>По Автору (А-Я)</h4>
+                                                </div>
+                                                <hr>
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_2" value="sort_2"
+                                                        name="filter_sort_check">
+                                                    <h4>По Автору (Я-А)</h4>
+                                                </div>
+                                                <hr>
+
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_3" value="sort_3"
+                                                        name="filter_sort_check">
+                                                    <h4>По Наименованию (А-Я)</h4>
+                                                </div>
+                                                <hr>
+
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_4" value="sort_4"
+                                                        name="filter_sort_check">
+                                                    <h4>По Наименованию (Я-А)</h4>
+                                                </div>
+                                                <hr>
+
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_5" value="sort_5"
+                                                        name="filter_sort_check">
+                                                    <h4>По Цене (Убывание)</h4>
+                                                </div>
+                                                <hr>
+
+                                                <div class="form__group">
+                                                    <input class="filter_input" type="radio" id="sort_5" value="sort_5"
+                                                        name="filter_sort_check">
+                                                    <h4>По Цене (Возрастание)</h4>
+                                                </div>
+                                            </fieldset>
+
+                                            <!-- <div class="form__group">
+                                        <label for="progress">Order progress</label>
+                                        <progress id="progress" max="100" value="70">70%</progress>
+                                    </div> -->
+
+                                            <!-- <div class="form__group">
+                                                <h4>Опция </h4>
+                                                <input type="range" min="0" max="1000" value="5" id="range_a">
+                                            </div> -->
+
+                                            <button class="button_filter_switch" type="submit">Применить фильтр</button>
+                                        </form>
+                                        <!-- <button id="1">свернуть</button> -->
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <script>
+                        $(".panel_block").toggle("fast");
+                        $("#2").click(function () {
+                            $(".panel_block").slideToggle("fast");
+                        });
+                        $("#1").click(function () {
+                            $(".panel_block").slideToggle("fast");
+                        });
+                    </script>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <!-- filter panel -->
+        <!-- ============ -->
+        <hr>
+
+
+
+
         <div class="block main">
             <div class="inner">
 
@@ -222,7 +415,7 @@
 
                         <div class="items">
 
-                            {{ range .TargetCards }}
+                            {{ range .PageTarget.PageData }}
                             <div class="item" data-discount-type="percent" data-discount="0.00" data-code="60797">
 
                                 <div class="image">
@@ -244,7 +437,8 @@
                                         </div>
 
                                         <div class="down_elem">
-                                            <a class="more" style="padding:10px"
+                                            <a class="more" 
+                                            style="margin-bottom: 5px; padding:10px; background-color:var(--mainContrastSchemeColor);"
                                                 onclick="this.href='/add_favorites/{{.TargetHash}}/1'">В
                                                 корзину</a>
                                         </div>
@@ -258,7 +452,22 @@
                         </div>
                     </div>
 
+                    <hr>
+                    <center>
+                        <div class="page_num">
+                            <h3>Номер страницы : {{.PageTarget.PageNow}} / {{.PageTarget.PageTotal}}</h3>
+                            <div>
 
+                                <form class="panel_pages" action="{{.PageTarget.PageLinkPrev}}">
+                                    <button style="padding:10px; background-color:var(--mainContrastSchemeColor);" type="submit">Назад</button>
+                                </form>
+
+                                <form class="panel_pages" action="{{.PageTarget.PageLinkNext}}">
+                                    <button style="padding:10px; background-color:var(--mainContrastSchemeColor);" type="submit">Далее</button>
+                                </form>
+                            </div>
+                        </div>
+                    </center>
 
                 </div>
 
@@ -277,7 +486,7 @@
                     </div>
                     <div class="copyright">&copy;
                         {{ .Copyright}}</div>
-                     
+
                 </div>
             </div>
 

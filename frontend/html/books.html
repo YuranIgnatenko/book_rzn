@@ -144,10 +144,16 @@
                     <div class="login_or_reg">
                         {{if .IsLogin}}
                         <a>Пользователь:{{ .NameLogin }}</a>
+                        <hr>
                         <a class="link_btn" href="/out">Выход</a>
                         {{else}}
-                        <a href="/login">Вход</a>
-                        <a href="/registration">Регистрация</a>
+                        <a class="link_btn" href="/login">Вход</a>
+                        <hr>
+                        <a class="link_btn"  href="/registration">Регистрация</a>
+                        {{end}}
+                        {{if .IsAdmin}}
+                        <hr>
+                        <a class="link_btn" href="/cms">cms</a>
                         {{end}}
                     </div>
                 </div>
@@ -315,21 +321,6 @@
                                 <center>
                                     <div>
                                         <form class="filter_form" action="/test">
-                                            <!-- <fieldset>
-                                        <legend class="filter_legend" >Сортировать</legend>
-                                        <div class="form__group">
-                                            <input type="checkbox" id="berries_1" value="strawberries" name="berries">
-                                            <label >по Автору (А-Я)</label>
-                                        </div>
-                                        <div class="form__group">
-                                            <input type="checkbox" id="berries_2" value="blueberries" name="berries">
-                                            <label >по Автору (А-Я)</label>
-                                        </div>
-                                        <div class="form__group">
-                                            <input type="checkbox" id="berries_3" value="bananas" name="berries">
-                                            <label >по Автору (А-Я)</label>
-                                        </div>
-                                    </fieldset> -->
                                             <fieldset>
                                                 <legend class="filter_legend">Сортировать</legend>
                                                 <div class="form__group">
@@ -463,11 +454,11 @@
                             <div>
 
                                 <form class="panel_pages" action="{{.PageTarget.PageLinkPrev}}">
-                                    <button style="width: 100%;" type="submit">Назад</button>
+                                    <button style="padding:10px; background-color:var(--mainContrastSchemeColor);" type="submit">Назад</button>
                                 </form>
 
                                 <form class="panel_pages" action="{{.PageTarget.PageLinkNext}}">
-                                    <button style="width: 100%;" type="submit">Далее</button>
+                                    <button style="padding:10px; background-color:var(--mainContrastSchemeColor);" type="submit">Далее</button>
                                 </form>
                             </div>
                         </div>
