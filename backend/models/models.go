@@ -1,6 +1,8 @@
 package models
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type PageTarget struct {
 	PageNext     int
@@ -15,6 +17,11 @@ type PageTarget struct {
 	PageLinkPrev string
 	// LastSearch   string
 	// Page
+}
+
+// TODO: pass func block
+func (pt *PageTarget) SortedBySwitch(filter string) []TargetCard {
+	return []TargetCard{}
 }
 
 func (pt *PageTarget) GetPage(link string, number_page int) []TargetCard {
@@ -135,7 +142,6 @@ type MenuCard struct {
 }
 
 type TargetCard struct {
-	PageNow              int
 	Autor                string
 	Title                string
 	Price                string

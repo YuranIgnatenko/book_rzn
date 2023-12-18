@@ -8,8 +8,7 @@ import (
 
 type DataTemp struct {
 	config.Configuration
-	TargetAll []models.TargetCard
-	// TargetCards          []models.TargetCard
+	TargetAll            []models.TargetCard
 	PageTarget           models.PageTarget
 	MenuCards            []models.MenuCard
 	ListOrdersTargetCard models.ListOrdersTargetCard
@@ -293,6 +292,9 @@ func NewDataTemp(c config.Configuration, ps []models.TargetCard) *DataTemp {
 						</li>
 
 						<li><a href="/str_posters" class="submenu-link">Плакаты для ПРОФ.образования</a>
+						</li>
+
+						<li><a href="/pack_games" class="submenu-link">Наборы и развлечения</a>
 						</li>
 
 					</ul>

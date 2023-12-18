@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -53,6 +54,22 @@ func NewPathUrlArgs(rUrlPath string) *PathUrlArgs {
 		Arg1:    arg1,
 		Arg2:    arg2,
 		Arg3:    arg3,
+	}
+}
+
+func GetFilterUrlArgs(rUrlPath string) *PathUrlArgs {
+	var argRow, argCase = "", ""
+	argRow = rUrlPath
+	argRow = strings.ReplaceAll(argRow, ":/", "://")
+	argRow = strings.ReplaceAll(argRow, `"`, "")
+	elems := strings.Split(argRow, "/")
+	args := elems[len(elems)-1]
+	type_filter := strings.Split(strings.Split(args, "?")[0], "=")
+	fmt.Println(type_filter)
+	return &PathUrlArgs{
+		ArgRow:  argRow,
+		ArgCase: argCase,
+		Arg1:    type_filter[1],
 	}
 }
 

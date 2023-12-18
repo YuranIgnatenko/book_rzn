@@ -325,47 +325,27 @@
                             <div class="filter_grid">
                                 <center>
                                     <div>
-                                        <form class="filter_form" action="/set_filter_book">
+                                        <form class="filter_form">
                                             <fieldset>
-                                                <legend class="filter_legend">Сортировать</legend>
-                                                <div class="form__group">
-                                                    <input class="filter_input" type="radio" id="sort_1" value="sort_1"
-                                                        name="filter_sort_check">
-                                                    <h4>По Автору (А-Я)</h4>
-                                                </div>
-                                                <hr>
-                                                <div class="form__group">
-                                                    <input class="filter_input" type="radio" id="sort_2" value="sort_2"
-                                                        name="filter_sort_check">
-                                                    <h4>По Автору (Я-А)</h4>
-                                                </div>
-                                                <hr>
-
-                                                <div class="form__group">
-                                                    <input class="filter_input" type="radio" id="sort_3" value="sort_3"
-                                                        name="filter_sort_check">
-                                                    <h4>По Наименованию (А-Я)</h4>
-                                                </div>
-                                                <hr>
-
-                                                <div class="form__group">
-                                                    <input class="filter_input" type="radio" id="sort_4" value="sort_4"
-                                                        name="filter_sort_check">
-                                                    <h4>По Наименованию (Я-А)</h4>
-                                                </div>
-                                                <hr>
-
-                                                <div class="form__group">
-                                                    <input class="filter_input" type="radio" id="sort_5" value="sort_5"
-                                                        name="filter_sort_check">
-                                                    <h4>По Цене (Убывание)</h4>
-                                                </div>
-                                                <hr>
-
-                                                <div class="form__group">
-                                                    <input class="filter_input" type="radio" id="sort_5" value="sort_5"
-                                                        name="filter_sort_check">
-                                                    <h4>По Цене (Возрастание)</h4>
+                                                <div>
+                                                    <form  action="/set_filter_book/1">
+                                                        <button style="padding:10px; background-color:var(--mainContrastSchemeColor);" type="submit">По автору (А-Я)</button>
+                                                    </form>
+                                                    <form  action="/set_filter_book/2">
+                                                        <button style="padding:10px; background-color:var(--mainContrastSchemeColor);" type="submit">По автору (Я-А)</button>
+                                                    </form>
+                                                    <form  action="/set_filter_book/3">
+                                                        <button style="padding:10px; background-color:var(--mainContrastSchemeColor);" type="submit">По наименованию (А-Я)</button>
+                                                    </form>
+                                                    <form  action="/set_filter_book/4">
+                                                        <button style="padding:10px; background-color:var(--mainContrastSchemeColor);" type="submit">По наименованию (Я-Я)</button>
+                                                    </form>
+                                                    <form  action="/set_filter_book/5">
+                                                        <button style="padding:10px; background-color:var(--mainContrastSchemeColor);" type="submit">По цене (возрастание)</button>
+                                                    </form>
+                                                    <form  action="/set_filter_book/6">
+                                                        <button style="padding:10px; background-color:var(--mainContrastSchemeColor);" type="submit">По цене (убывание)</button>
+                                                    </form>
                                                 </div>
                                             </fieldset>
 

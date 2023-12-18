@@ -26,6 +26,7 @@ type Rout struct {
 	parsing.ParsingService
 	AccertPath           map[string]int
 	CacheMapaTokenSearch map[string]string
+	CacheMapaTokenFilter map[string]string
 }
 
 func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt datatemp.DataTemp, ps parsing.ParsingService) *Rout {
@@ -36,6 +37,7 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 		DataTemp:             dt,
 		ParsingService:       ps,
 		CacheMapaTokenSearch: make(map[string]string, 0),
+		CacheMapaTokenFilter: make(map[string]string, 0),
 		AccertPath: map[string]int{
 			// нельзя хранить `0` изза логики
 			// блока if в котором возврат значения
@@ -86,6 +88,8 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 			"book_digit_books": 3,
 
 			"search": 4,
+
+			"pack_games": 5,
 		},
 	}
 	rout.DataTemp.PageTarget.PageSize = 20
@@ -130,8 +134,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	path_url := NewPathUrlArgs(r.URL.Path)
 
-	fmt.Println(path_url, "1")
-
 	if rout.RangePathsTargetPage(w, path_url.ArgCase) == 1 || rout.RangePathsTargetPage(w, path_url.ArgCase) == 2 {
 		var num_page = 1
 		if path_url.Arg1 == "" {
@@ -146,7 +148,9 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 			}
 
 		}
+		path_url.ArgCase = "nau804"
 		rout.DataTemp.PageTarget.PageDataAll = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
+		rout.DataTemp.PageTarget.SortedBySwitch(rout.CacheMapaTokenFilter[TokenValue])
 		rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
 
 		rout.SetHTML(w, "targets.html")
@@ -171,7 +175,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.SetHTML(w, "books.html")
 		return
 	} else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 4 {
-		fmt.Println(path_url, "2")
 		res := r.FormValue("search")
 
 		if res == "" {
@@ -192,9 +195,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 			} else {
 				num_page = num
 			}
-
 		}
-
 		// rout.PageTarget.LastSearch = res
 		rout.DataTemp.PageTarget.PageDataAll = rout.FilterSearch(rout.TargetAll, res)
 		rout.PageTarget.PageTotal = len(rout.DataTemp.PageTarget.PageDataAll)
@@ -202,12 +203,39 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 		rout.SetHTML(w, "search.html")
 		return
+
+	} else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 5 {
+		var num_page = 1
+		if path_url.Arg1 != "" {
+
+			path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
+			num, err := strconv.Atoi(path_url.Arg1)
+			if err != nil {
+				num_page = 1
+			} else {
+				num_page = num
+			}
+		}
+		// rout.PageTarget.LastSearch = res
+		rout.DataTemp.PageTarget.PageDataAll = rout.FilterSearch(rout.TargetAll, "nau804")
+		rout.PageTarget.PageTotal = len(rout.DataTemp.PageTarget.PageDataAll)
+		rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
+
+		rout.SetHTML(w, "targets.html")
+		return
+
 	}
 
 	switch path_url.ArgCase {
 
 	case "set_filter_book":
+		fmt.Println(">>>>>>>>>>>>>")
 		fmt.Println(r.URL.Path)
+		// pa := GetFilterUrlArgs(r.URL.Path)
+		rout.CacheMapaTokenFilter[TokenValue] = path_url.Arg1
+		// rout.DataTemp.PageTarget.PageData = rout.TableTargets.GetListTargetsFromTokenHistoryStatusOFF(TokenValue)
+		// fmt.Println(pa.Arg1)
+		http.Redirect(w, r, "/book_1_4", http.StatusPermanentRedirect)
 
 	case "home_news":
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
