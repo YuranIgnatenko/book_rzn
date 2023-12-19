@@ -38,59 +38,6 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 		ParsingService:       ps,
 		CacheMapaTokenSearch: make(map[string]string, 0),
 		CacheMapaTokenFilter: make(map[string]string, 0),
-		AccertPath: map[string]int{
-			// нельзя хранить `0` изза логики
-			// блока if в котором возврат значения
-			// мебель
-			"new_basic":     1,
-			"new_table":     1,
-			"new_boxing":    1,
-			"sh_table":      1,
-			"sh_chair":      1,
-			"office_table":  1,
-			"office_boxing": 1,
-			"sh_minitable":  1,
-
-			// 	оборудование
-			"str_top":        2,
-			"str_psiholog":   2,
-			"str_do_sh_3_4":  2,
-			"str_do_sh_4_5":  2,
-			"str_do_sh_5_6":  2,
-			"str_do_sh_6_7":  2,
-			"str_sh_started": 2,
-			"str_phisic":     2,
-			"str_himiya":     2,
-			"str_biologiya":  2,
-			"str_litra":      2,
-			"str_ru_lang":    2,
-			"str_other_lang": 2,
-			"str_history":    2,
-			"str_geograph":   2,
-			"str_math":       2,
-			"str_info":       2,
-			"str_obg":        2,
-			"str_eco":        2,
-			"str_izo":        2,
-			"str_music":      2,
-			"str_tehno":      2,
-			"str_posters":    2,
-
-			// книги
-			"book_new":         3,
-			"book_sh_middle":   3,
-			"book_do_sh":       3,
-			"book_1_4":         3,
-			"book_5_9":         3,
-			"book_10_11":       3,
-			"book_ovz":         3,
-			"book_actistic":    3,
-			"book_digit_books": 3,
-
-			"search": 4,
-
-			"naura": 5,
-		},
 	}
 	rout.DataTemp.PageTarget.PageSize = 20
 	rout.DataTemp.PageTarget.PageNext = 2
@@ -133,98 +80,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	rout.DataTemp.NameLogin = rout.TableUsers.GetNameLoginFromToken(TokenValue)
 
 	path_url := NewPathUrlArgs(r.URL.Path)
-
-	// if rout.RangePathsTargetPage(w, path_url.ArgCase) == 1 || rout.RangePathsTargetPage(w, path_url.ArgCase) == 2 {
-	// 	var num_page = 1
-	// 	if path_url.Arg1 == "" {
-	// 		num_page = 1
-	// 	} else {
-	// 		path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
-	// 		num, err := strconv.Atoi(path_url.Arg1)
-	// 		if err != nil {
-	// 			num_page = 1
-	// 		} else {
-	// 			num_page = num
-	// 		}
-
-	// 	}
-	// 	rout.DataTemp.PageTarget.PageDataAll = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
-	// 	rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
-
-	// 	rout.SetHTML(w, "targets.html")
-	// 	return
-	// } else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 3 {
-	// 	var num_page = 1
-	// 	if path_url.Arg1 == "" {
-	// 		num_page = 1
-	// 	} else {
-	// 		path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
-	// 		num, err := strconv.Atoi(path_url.Arg1)
-	// 		if err != nil {
-	// 			num_page = 1
-	// 		} else {
-	// 			num_page = num
-	// 		}
-
-	// 	}
-	// 	rout.DataTemp.PageTarget.PageDataAll = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
-	// 	rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
-
-	// 	rout.SetHTML(w, "books.html")
-	// 	return
-	// } else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 4 {
-	// 	fmt.Println(path_url, "2")
-	// 	res := r.FormValue("search")
-
-	// 	if res == "" {
-	// 		res = fmt.Sprint(rout.CacheMapaTokenSearch[TokenValue])
-	// 	} else {
-	// 		rout.CacheMapaTokenSearch[TokenValue] = res
-	// 	}
-
-	// 	rout.DataTemp.LastValueSearch = res
-
-	// 	var num_page = 1
-	// 	if path_url.Arg1 != "" {
-
-	// 		path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
-	// 		num, err := strconv.Atoi(path_url.Arg1)
-	// 		if err != nil {
-	// 			num_page = 1
-	// 		} else {
-	// 			num_page = num
-	// 		}
-
-	// 	}
-
-	// 	// rout.PageTarget.LastSearch = res
-	// 	rout.DataTemp.PageTarget.PageDataAll = rout.FilterSearch(rout.TargetAll, res)
-	// 	rout.PageTarget.PageTotal = len(rout.DataTemp.PageTarget.PageDataAll)
-	// 	rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
-
-	// 	rout.SetHTML(w, "search.html")
-	// 	return
-	// }
-	//  else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 5 {
-	// var num_page = 1
-	// if path_url.Arg1 == "" {
-	// num_page = 1
-	// } else {
-	// path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
-	// num, err := strconv.Atoi(path_url.Arg1)
-	// if err != nil {
-	// num_page = 1
-	// } else {
-	// num_page = num
-	// }
-	//
-	// }
-	// rout.DataTemp.PageTarget.PageDataAll = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
-	// rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
-	//
-	// rout.SetHTML(w, "books.html")
-	// return
-	// }
 
 	switch path_url.ArgCase {
 	case
@@ -392,7 +247,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "home_804":
 		rout.DownloadFile(w, r)
 		rout.SetHTML(w, "home_804.html")
-		
+
 	case "home_vk":
 		http.Redirect(w, r, "https://vk.com/magazin_rzn", http.StatusPermanentRedirect)
 
