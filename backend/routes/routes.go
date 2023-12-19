@@ -89,7 +89,7 @@ func NewRout(a auth.Auth, c config.Configuration, conn connector.Connector, dt d
 
 			"search": 4,
 
-			"pack_games": 5,
+			"naura": 5,
 		},
 	}
 	rout.DataTemp.PageTarget.PageSize = 20
@@ -134,7 +134,108 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	path_url := NewPathUrlArgs(r.URL.Path)
 
-	if rout.RangePathsTargetPage(w, path_url.ArgCase) == 1 || rout.RangePathsTargetPage(w, path_url.ArgCase) == 2 {
+	// if rout.RangePathsTargetPage(w, path_url.ArgCase) == 1 || rout.RangePathsTargetPage(w, path_url.ArgCase) == 2 {
+	// 	var num_page = 1
+	// 	if path_url.Arg1 == "" {
+	// 		num_page = 1
+	// 	} else {
+	// 		path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
+	// 		num, err := strconv.Atoi(path_url.Arg1)
+	// 		if err != nil {
+	// 			num_page = 1
+	// 		} else {
+	// 			num_page = num
+	// 		}
+
+	// 	}
+	// 	rout.DataTemp.PageTarget.PageDataAll = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
+	// 	rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
+
+	// 	rout.SetHTML(w, "targets.html")
+	// 	return
+	// } else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 3 {
+	// 	var num_page = 1
+	// 	if path_url.Arg1 == "" {
+	// 		num_page = 1
+	// 	} else {
+	// 		path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
+	// 		num, err := strconv.Atoi(path_url.Arg1)
+	// 		if err != nil {
+	// 			num_page = 1
+	// 		} else {
+	// 			num_page = num
+	// 		}
+
+	// 	}
+	// 	rout.DataTemp.PageTarget.PageDataAll = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
+	// 	rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
+
+	// 	rout.SetHTML(w, "books.html")
+	// 	return
+	// } else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 4 {
+	// 	fmt.Println(path_url, "2")
+	// 	res := r.FormValue("search")
+
+	// 	if res == "" {
+	// 		res = fmt.Sprint(rout.CacheMapaTokenSearch[TokenValue])
+	// 	} else {
+	// 		rout.CacheMapaTokenSearch[TokenValue] = res
+	// 	}
+
+	// 	rout.DataTemp.LastValueSearch = res
+
+	// 	var num_page = 1
+	// 	if path_url.Arg1 != "" {
+
+	// 		path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
+	// 		num, err := strconv.Atoi(path_url.Arg1)
+	// 		if err != nil {
+	// 			num_page = 1
+	// 		} else {
+	// 			num_page = num
+	// 		}
+
+	// 	}
+
+	// 	// rout.PageTarget.LastSearch = res
+	// 	rout.DataTemp.PageTarget.PageDataAll = rout.FilterSearch(rout.TargetAll, res)
+	// 	rout.PageTarget.PageTotal = len(rout.DataTemp.PageTarget.PageDataAll)
+	// 	rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
+
+	// 	rout.SetHTML(w, "search.html")
+	// 	return
+	// }
+	//  else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 5 {
+	// var num_page = 1
+	// if path_url.Arg1 == "" {
+	// num_page = 1
+	// } else {
+	// path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
+	// num, err := strconv.Atoi(path_url.Arg1)
+	// if err != nil {
+	// num_page = 1
+	// } else {
+	// num_page = num
+	// }
+	//
+	// }
+	// rout.DataTemp.PageTarget.PageDataAll = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
+	// rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
+	//
+	// rout.SetHTML(w, "books.html")
+	// return
+	// }
+
+	switch path_url.ArgCase {
+	case
+		"new_basic",
+		"new_table",
+		"new_boxing",
+		"sh_table",
+		"sh_chair",
+		"office_table",
+		"office_boxing",
+		"sh_minitable":
 		var num_page = 1
 		if path_url.Arg1 == "" {
 			num_page = 1
@@ -154,8 +255,60 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
 
 		rout.SetHTML(w, "targets.html")
-		return
-	} else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 3 {
+
+	case
+		"str_top",
+		"str_psiholog",
+		"str_do_sh_3_4",
+		"str_do_sh_4_5",
+		"str_do_sh_5_6",
+		"str_do_sh_6_7",
+		"str_sh_started",
+		"str_phisic",
+		"str_himiya",
+		"str_biologiya",
+		"str_litra",
+		"str_ru_lang",
+		"str_other_lang",
+		"str_history",
+		"str_geograph",
+		"str_math",
+		"str_info",
+		"str_obg",
+		"str_eco",
+		"str_izo",
+		"str_music",
+		"str_tehno",
+		"str_posters",
+		"naura":
+		var num_page = 1
+		if path_url.Arg1 == "" {
+			num_page = 1
+		} else {
+			path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
+			num, err := strconv.Atoi(path_url.Arg1)
+			if err != nil {
+				num_page = 1
+			} else {
+				num_page = num
+			}
+
+		}
+		rout.DataTemp.PageTarget.PageDataAll = rout.FilterCards(rout.TargetAll, path_url.ArgCase)
+		rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
+
+		rout.SetHTML(w, "targets.html")
+
+	case
+		"book_new",
+		"book_sh_middle",
+		"book_do_sh",
+		"book_1_4",
+		"book_5_9",
+		"book_10_11",
+		"book_ovz",
+		"book_actistic",
+		"book_digit_books":
 		var num_page = 1
 		if path_url.Arg1 == "" {
 			num_page = 1
@@ -173,8 +326,8 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
 
 		rout.SetHTML(w, "books.html")
-		return
-	} else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 4 {
+
+	case "search":
 		res := r.FormValue("search")
 
 		if res == "" {
@@ -202,31 +355,6 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 		rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
 
 		rout.SetHTML(w, "search.html")
-		return
-
-	} else if rout.RangePathsTargetPage(w, path_url.ArgCase) == 5 {
-		var num_page = 1
-		if path_url.Arg1 != "" {
-
-			path_url.Arg1 = strings.ReplaceAll(path_url.Arg1, "?", "")
-			num, err := strconv.Atoi(path_url.Arg1)
-			if err != nil {
-				num_page = 1
-			} else {
-				num_page = num
-			}
-		}
-		// rout.PageTarget.LastSearch = res
-		rout.DataTemp.PageTarget.PageDataAll = rout.FilterSearch(rout.TargetAll, "nau804")
-		rout.PageTarget.PageTotal = len(rout.DataTemp.PageTarget.PageDataAll)
-		rout.DataTemp.PageTarget.PageData = rout.DataTemp.PageTarget.GetPage(path_url.ArgCase, num_page)
-
-		rout.SetHTML(w, "targets.html")
-		return
-
-	}
-
-	switch path_url.ArgCase {
 
 	case "set_filter_book":
 		fmt.Println(">>>>>>>>>>>>>")
@@ -239,10 +367,13 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 
 	case "home_news":
 		http.Redirect(w, r, "/home", http.StatusPermanentRedirect)
+
 	case "home_contacts_address":
 		rout.SetHTML(w, "home_contacts_address.html")
+
 	case "home_docs_info":
 		rout.SetHTML(w, "home_docs_info.html")
+
 	case "orders_history_cancel_orders":
 		// rout.DataTemp.TargetCards = rout.TableTargets.GetListTargetsFromTokenHistoryStatusOFF(TokenValue)
 		rout.DataTemp.PageTarget.PageData = rout.TableTargets.GetListTargetsFromTokenHistoryStatusOFF(TokenValue)
@@ -261,6 +392,7 @@ func (rout *Rout) ServerRoutHtml(w http.ResponseWriter, r *http.Request) {
 	case "home_804":
 		rout.DownloadFile(w, r)
 		rout.SetHTML(w, "home_804.html")
+		
 	case "home_vk":
 		http.Redirect(w, r, "https://vk.com/magazin_rzn", http.StatusPermanentRedirect)
 
