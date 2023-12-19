@@ -5,10 +5,6 @@ import (
 	"backend/connector"
 	"backend/models"
 	"fmt"
-	"io"
-	"io/ioutil"
-	"log"
-	"net/http"
 )
 
 func TargetHash(autor, title, price, image string) string {
@@ -130,6 +126,8 @@ func NewParsingService(c config.Configuration, conn connector.Connector) *Parsin
 		NewServiceStronikum([]string{"https://stronikum.ru/3535_Muzika"}, "str_music"),
 		NewServiceStronikum([]string{"https://stronikum.ru/3549_Tehnologiya"}, "str_tehno"),
 		NewServiceStronikum([]string{"https://stronikum.ru/3650_Plakati_dlya_PROFOBRAZOVANIYA"}, "str_posters"),
+
+		NewServiceNaura([]string{"https://nau-ra.ru/education/pr804"}, "naura"),
 	}
 
 	ps := ParsingService{
@@ -165,30 +163,4 @@ func RangeScrapServices(data []models.ServiceScraper) []models.TargetCard {
 		fmt.Printf("\n[ PARSER ] -- [ CARD NOW ] -- [ %v ]", len(tc))
 	}
 	return tc
-}
-
-func htmlToString(link string) string {
-	res, err := http.Get(link)
-	if err != nil {
-		log.Fatal(err)
-	}
-	content, err := io.ReadAll(res.Body)
-	res.Body.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
-	return string(content)
-}
-
-func getHTMLContent(url string) (string, error) {
-	resp, err := http.Get(url)
-	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
-	content, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return "", err
-	}
-	return string(content), nil
 }
