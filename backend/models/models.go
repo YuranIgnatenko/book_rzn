@@ -64,27 +64,18 @@ func (pt *PageTarget) GetPage(link string, number_page int) []TargetCard {
 	pt.PageLinkNext = "/" + link + "/" + fmt.Sprint(pt.PageNext)
 	pt.PageLinkPrev = "/" + link + "/" + fmt.Sprint(pt.PagePrev)
 
-	fmt.Println("pt.PageLinkNext,pt.PageLinkPrev::", pt.PageLinkNext, pt.PageLinkPrev)
-
 	return pages[number_page]
 
 }
 
 func (pt *PageTarget) GetPageSearch(link string, number_page int) []TargetCard {
-	// math.Ceil() — округление в большую сторону
-	// math.Floor() - в меньшую
-	// page_total := math.Ceil(pt.PageTotal / pt.PageSize)
-
 	count_pages := int(pt.PageTotal/pt.PageSize) + 1
 	pages := make(map[int][]TargetCard, count_pages)
-	// fmt.Println("countPage :", pages)
 
 	temp_counter_size := 0
 	temp_ind := 1
-	// all_count := 0
 
 	for _, card := range pt.PageDataAll {
-		// all_count = ind
 		if temp_counter_size == pt.PageSize {
 			temp_counter_size = 0
 			temp_ind += 1
@@ -94,7 +85,6 @@ func (pt *PageTarget) GetPageSearch(link string, number_page int) []TargetCard {
 		temp_counter_size += 1
 	}
 
-	// fmt.Println("list_pages max page:", ))
 	pt.PageNow = number_page
 	pt.PagePrev = number_page - 1
 	pt.PageNext = number_page + 1
@@ -118,16 +108,7 @@ type ServiceScraper interface {
 	ScrapSource() []TargetCard
 }
 
-// type OrdersCardsCms struct {
-// 	Name     string
-// 	Date     string
-// 	Phone    string
-// 	Email    string
-// 	Token    string
-// 	Targets  []TargetCard
-// 	CountAll string
-// 	PriceAll string
-// }
+
 
 type ListOrdersTargetCard struct {
 	Orders              map[string][]TargetCard // {"1":[]TargetCard{...}, "2":[]TargetCard{...}} --> key=id_order from bookrzn.Orders

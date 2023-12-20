@@ -40,6 +40,7 @@ func NewPathUrlArgs(rUrlPath string) *PathUrlArgs {
 		arg3 = elems[3]
 		// default:
 	}
+
 	return &PathUrlArgs{
 		ArgRow:  argRow,
 		ArgCase: argCase,

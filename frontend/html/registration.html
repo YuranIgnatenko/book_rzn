@@ -43,35 +43,36 @@
             --mainContrastSchemeColor-lighten20: #ffb289;
         }
 
-        div>a>span{
+        div>a>span {
             background-color: var(--mainContrastSchemeColor);
             color: white;
             padding: 4px;
             border-radius: 5px;
         }
 
-        div>a>span:hover{
+        div>a>span:hover {
             background-color: var(--mainContrastSchemeColor-darken10);
         }
 
-        .link_btn{
+        .link_btn {
             background-color: var(--mainContrastSchemeColor);
             padding: 4px;
             border-radius: 5px;
         }
-        .link_btn:hover{
+
+        .link_btn:hover {
             background-color: var(--mainContrastSchemeColor-darken10);
         }
-        .input_form_field{
-            background-color: #e7dcd9;
-            color: #99e2ff;
-        }
-        .input_form_field:hover{
+
+        .input_form_field {
             background-color: #946052;
-            color: #052f3f;
+            color: #104d64;
         }
 
-
+        .input_form_field:hover {
+            background-color: #946052;
+            color: #000000;
+        }
     </style>
 
     <link href="http://new15942715563356.myaddshop.ru/css/shop/themes/base/style.css?ver=1691644398" rel="stylesheet"
@@ -124,7 +125,7 @@
                         {{else}}
                         <a class="link_btn" href="/login">Вход</a>
                         <hr>
-                        <a class="link_btn"  href="/registration">Регистрация</a>
+                        <a class="link_btn" href="/registration">Регистрация</a>
                         {{end}}
                         {{if .IsAdmin}}
                         <hr>
@@ -155,8 +156,8 @@
                         <br>
 
                         <form method="GET" action="/search">
-                            <input type="text" name="search" id="search" placeholder="Найти товар"
-                                autocomplete="off" autofocus value="{{.LastValueSearch}}"  />
+                            <input type="text" name="search" id="search" placeholder="Найти товар" autocomplete="off"
+                                autofocus value="{{.LastValueSearch}}" />
                             <button type="submit">Поиск</button>
                             <div id="autocomplete"></div>
                         </form>
@@ -171,23 +172,23 @@
                         {{if .IsLogin}}
                         <div class="orders bars" title="Редактор">
                             <a href="/orders">
-                                 
+
                                 <span>Редактор</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/favorites">
-                                 
+
                                 <span>Избранное</span>
                             </a>
                         </div>
                         <div class="orders_history bars">
                             <a href="/orders_history">
-                                 
+
                                 <span>Заказы</span>
                             </a>
                         </div>
-                         
+
                         {{end}}
 
 
@@ -219,7 +220,7 @@
                     <div class="auth-inner">
 
                         <div class="breadcrumb">
-                            <span><a href="/">Главная</a> / </span>
+                            <span><a href="/home">Главная</a> / </span>
                             <span>Регистрация</span>
                         </div>
 
@@ -229,16 +230,23 @@
 
                             <div class="form">
                                 <form class="login-form" action="/create_user" method="POST">
-                                    <input class="input_form_field" type="text" name="login" placeholder="Логин" autocomplete="off" required="required"/>
-                                    <input class="input_form_field" type="text" name="password" placeholder="Пароль" autocomplete="off" required="required"/>
-                                    <input class="input_form_field" type="text" name="name" placeholder="Имя" autocomplete="off" required="required"/>
-                                    <input class="input_form_field" type="text" name="family" placeholder="Фамилия" autocomplete="off" required="required"/>
-                                    <input class="input_form_field" type="text" name="phone" placeholder="Телефон" autocomplete="off" required="required"/>
-                                    <input class="input_form_field" type="email" name="email" placeholder="Почта" autocomplete="off" required="required"/>
+                                    <input class="input_form_field" type="text" name="login" placeholder="Логин"
+                                        autocomplete="off" required="required" />
+                                    <input class="input_form_field" type="text" name="password" placeholder="Пароль"
+                                        autocomplete="off" required="required" />
+                                    <input class="input_form_field" type="text" name="name" placeholder="Имя"
+                                        autocomplete="off" required="required" />
+                                    <input class="input_form_field" type="text" name="family" placeholder="Фамилия"
+                                        autocomplete="off" required="required" />
+                                    <input class="input_form_field" type="text" name="phone" placeholder="Телефон"
+                                        autocomplete="off" required="required" />
+                                    <input class="input_form_field" type="email" name="email" placeholder="Почта"
+                                        autocomplete="off" required="required" />
                                     <!-- login, password, name, family, phone, email -->
 
                                     <br>
-                                    <input type="submit" value="Зарегистрировать" style="padding:10px; background-color:var(--mainContrastSchemeColor);" />
+                                    <input type="submit" value="Зарегистрировать"
+                                        style="padding:10px; background-color:var(--mainContrastSchemeColor);" />
                                     <br>
                                     <p class="message">Зарегистрированы? <a href="/login">Войти</a></p>
                                 </form>

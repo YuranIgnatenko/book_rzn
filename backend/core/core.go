@@ -23,24 +23,9 @@ type Core struct {
 }
 
 func (c *Core) SetHandlers() {
-	// http.HandleFunc("/favorites", c.CookieUser(http.HandlerFunc(c.OpenHtmlFavorites)))
-	// http.HandleFunc("/orders", c.CookieUser(http.HandlerFunc(c.OpenHtmlOrders)))
-	// http.HandleFunc("/fast_order", c.OpenHtmlFastOrder)
-	// http.HandleFunc("/fast_order_save", c.OpenHtmlFastOrderSave)
-	// http.HandleFunc("/home", c.OpenHtmlHome)
-	// http.HandleFunc("/out", c.CookieUser(http.HandlerFunc(c.OpenHtmlout)))
-	// http.HandleFunc("/login", c.OpenHtmlLogin)
-	// http.HandleFunc("/registration", c.OpenHtmlRegistry)
-	// http.HandleFunc("/cms", c.CookieAdmin(http.HandlerFunc(c.OpenHtmlCms)))
-	// http.HandleFunc("/404", c.OpenHtml404)
-	// http.HandleFunc("/create_user", c.OpenHtmlCreateUser)
-	// http.HandleFunc("/login_check", c.OpenHtmlLoginCheck)
-	// http.HandleFunc("/prosv", c.OpenHtmlProsv)
-	// http.HandleFunc("/804", c.OpenHtml804)
-	// http.HandleFunc("/search", c.OpenHtmlSearch)
-	// http.HandleFunc("/for_school", c.OpenHtmlForSchool)
+	// c.CookieConfirm(http.HandlerFunc(c.ServerRoutHtml))
 
-	http.HandleFunc("/", c.ServerRoutHtml) // c.CookieConfirm(http.HandlerFunc(c.ServerRoutHtml)))
+	http.HandleFunc("/", c.ServerSwitchRout)
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))

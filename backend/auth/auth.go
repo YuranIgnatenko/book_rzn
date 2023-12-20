@@ -129,8 +129,10 @@ func (a *Auth) GetCookieAdmin(w http.ResponseWriter, r *http.Request) bool {
 	if err != nil {
 		switch {
 		case errors.Is(err, http.ErrNoCookie):
+			fmt.Println("error:", err)
 			http.Redirect(w, r, "/404", http.StatusSeeOther)
 		default:
+			fmt.Println("error: default admin")
 			http.Error(w, "server error", http.StatusInternalServerError)
 		}
 		return false

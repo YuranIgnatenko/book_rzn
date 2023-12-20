@@ -9,8 +9,7 @@
     <meta name="description" content="" />
     <!-- <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport"> -->
     <meta name="viewport" content="width=1200px">
-    <title>Страница входа</title>
-
+    <title>Вход</title>
 
 
     <style>
@@ -65,25 +64,14 @@
             background-color: var(--mainContrastSchemeColor-darken10);
         }
 
-        /* .button_form {
-            background-color: var(--mainContrastSchemeColor);
-            color: var(--mainContrastSchemeColor);
+        .input_form_field {
+            background-color: #946052;
+            color: #104d64;
         }
 
-        .button_form:hover {
-            background-color: var(--mainContrastSchemeColor);
-            color: var(--mainContrastSchemeColor-darken10);
-        } */
-    </style>
-    <style>
-        body>main>div>div>div>div>div.registration_login_wrapper>div.form>form>input:hover {
-            background-color: var(--mainContrastSchemeColor-darken10);
-            /* color: var(--mainContrastSchemeColor-darken10); */
-        }
-
-        body>main>div>div>div>div>div.registration_login_wrapper>div.form>form>input {
-            background-color: var(--mainContrastSchemeColor);
-            /* color: var(--mainContrastSchemeColor); */
+        .input_form_field:hover {
+            background-color: #946052;
+            color: #000000;
         }
     </style>
 
@@ -96,16 +84,23 @@
 
     <script>
         window.shop_currency = 'руб.';
-        window.shop_id = '1';
+        window.shop_id = '1010';
         window.customer_discount = '';
         window.template_class = 'michigan';
         window.item_img_zoom = '0';
         window.promo_discount = null;
         window.promo_title = null;
         window.one_click_buy = 1;
-    </script>
+    </script> <!-- gsc start -->
+
+    <!-- gsc end -->
+
+    <!-- ywm start -->
+
+    <!-- ywm end -->
 
 
+    <!-- Подключите тут важные скрипты и стили. -->
 </head>
 
 <body class=" michigan  rate_1 shop_1010" data-template="michigan" data-color-scheme="spicy">
@@ -123,8 +118,17 @@
                     </div>
 
                     <div class="login_or_reg">
-                        <a href="/login">Вход</a>
-                        <a href="/registration">Регистрация</a>
+                        {{if .IsLogin}}
+                        <a>Пользователь:{{ .NameLogin }}</a>
+                        <hr>
+                        <a class="link_btn" href="/out">Выход</a>
+                        {{else}}
+                        <a class="link_btn" href="/registration">Регистрация</a>
+                        {{end}}
+                        {{if .IsAdmin}}
+                        <hr>
+                        <a class="link_btn" href="/cms">cms</a>
+                        {{end}}
                     </div>
                 </div>
             </div>
@@ -144,8 +148,7 @@
                         <!-- FART ORDER  -->
 
                         <form action="/fast_mail">
-                            <button class="button_fast_mail" style="width: 100%;" type="submit">Написать
-                                письмо*</button>
+                            <button style="width: 100%;" type="submit">Написать письмо*</button>
                         </form>
 
                         <br>
@@ -157,40 +160,52 @@
                             <div id="autocomplete"></div>
                         </form>
                     </div>
+
                     <div class="header-middle-right">
                         <div class="search_open bars" title="Поиск по товарам">
                             <i data-feather="search"></i>
                             <span>Поиск</span>
                         </div>
-                        <!-- {{if .IsLogin}}
+
+                        {{if .IsLogin}}
                         <div class="orders bars" title="Редактор">
                             <a href="/orders">
-                                 
+
                                 <span>Редактор</span>
                             </a>
                         </div>
                         <div class="favorite bars">
                             <a href="/favorites">
-                                 
+
                                 <span>Избранное</span>
                             </a>
                         </div>
                         <div class="orders_history bars">
                             <a href="/orders_history">
-                                 
-                                <span>История</span>
+
+                                <span>Заказы</span>
                             </a>
                         </div>
-                        {{end}} -->
+
+                        {{end}}
+
+
                     </div>
                 </div>
             </div>
 
+            <div>
+                <hr>
+            </div>
+
             <div class="header-bottom">
                 <div class="inner">
-
                     {{ .PageMenuTemplHtml }}
                 </div>
+            </div>
+
+            <div>
+                <hr>
             </div>
     </div>
     </header>
@@ -203,43 +218,41 @@
                     <div class="auth-inner">
 
                         <div class="breadcrumb">
-                            <span><a href="/">Главная</a> / </span>
+                            <span><a href="/home">Главная</a> / </span>
                             <span>Вход</span>
                         </div>
 
                         <h1 class="shop-title">Вход</h1>
 
-
                         <div class="registration_login_wrapper">
+
                             <div class="form">
-
                                 <form class="login-form" action="/validation_login" method="POST">
-                                    <hr>
-                                    <input type="text" name="login" placeholder="Номер телефона или почта"
-                                        required="required" />
-                                    <input type="password" name="password" placeholder="Пароль" required="required" />
+                                    <input class="input_form_field" type="text" name="login" placeholder="Логин"
+                                        autocomplete="off" required="required" />
+                                    <input class="input_form_field" type="text" name="password" placeholder="Пароль"
+                                        autocomplete="off" required="required" />
+
                                     <br>
-                                    <input type="submit" value="Войти" />
+                                    <input type="submit" value="Войти"
+                                        style="padding:10px; background-color:var(--mainContrastSchemeColor);" />
                                     <br>
-                                    <hr>
-                                    <p class="message">Не зарегистрированы? <a href="/registration">Создать аккаунт</a>
-                                    </p>
-                                    <hr>
+                                    <p class="message">Быстрая регистрация <a href="/registration">тут</a></p>
                                 </form>
-
-
 
                             </div>
                             <div class="registr_descr">
-                                <div class="title">Я – новый покупатель</div>
-                                <p>Регистрация на сайте позволит быстро оформлять заказы, управлять заказами через
-                                    личный кабинет, в полном объеме использовать возможности нашего сайта.
+                                <div class="title">Зачем нужна регистрация?</div>
+                                <p>Зарегистрировавшись на сайте, Вы сможете получить личный кабинет, что позволит Вам
+                                    отслеживать историю заказов, быстрее оформлять заказы в нашем Интернет магазине. Вся
+                                    информация о Вас будет доступна в любое время, и ее не нужно будет вводить повторно.
                                 </p>
-                                <a href="/registration">Зарегистрироваться</a>
                             </div>
                         </div>
 
                     </div>
+
+
                 </div>
 
             </div>
@@ -260,81 +273,11 @@
 
                 </div>
             </div>
-            <!-- <div class="fmenu">
-                    <div class="footer_subtitle">О магазине</div>
-                    <ul>
-                        <li>
-                            <a href="">Главная</a>
-                        </li>
-                        <li>
-                            <a href="/sales">Акции</a>
-                        </li>
-                        <li>
-                            <a href="{{ .Full_url_add}}/about">О компании</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/dostavka-i-oplata/">Доставка и оплата</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/kontakty/">Контакты</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/news/" class="" title="Новости">Новости</a>
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/articles/" class="" title="Статьи">Статьи</a>
-                        </li>
-
-                    </ul>
-
-                </div>
-                <div class="fmenu catalog">
-                    <div class="footer_subtitle">Каталог</div>
-                    <ul>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/shkafy-i-mebelnye-stenki/"
-                                class="" title="Шкафы и мебельные стенки">Шкафы и мебельные стенки</a>
-
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/stellazhi-i-polki/" class=""
-                                title="Стеллажи и полки">Стеллажи и полки</a>
-
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/komody-i-garderoby/" class=""
-                                title="Комоды и гардеробы">Комоды и гардеробы</a>
-
-                        </li>
-                        <li>
-                            <a href="http://new15942715563356.myaddshop.ru/categories/stoly-i-stulya/" class=""
-                                title="Столы и стулья">Столы и стулья</a>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="fmenu contact_us">
-                    <div class="footer_subtitle">Свяжитесь с нами</div>
-                    <div class="address">{{ .location_office}}</div>
-                    <div>
-                        <span class="mail_span">E-mail:</span>
-                        <a href="mailto:{{ .Email}}">{{ .Email}}</a>
-                    </div>
-
-                    <a class="footer_phone" href="tel:{{ .Phone}}">{{ .Phone}}</a> 
-                    <div class="social">
-                        <a target="_blank" href="https://vk.com/magazin_rzn" class="link_vk"></a>
-                        <a target="_blank" href="https://facebook.com/#" class="link_fb"></a>
-                        <a target="_blank" href="https://ok.ru/#" class="link_ok"></a>
-                        <a target="_blank" href="https://www.instagram.com/#" class="link_instagram"></a>
-                        <a target="_blank" href="https://www.youtube.com/#" class="link_youtube"></a> -->
-        </div>
-
-        </div>
         </div>
         </div>
     </footer>
 
+    <!-- 16 ms -->
 </body>
 
 </html>
