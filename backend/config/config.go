@@ -2,7 +2,7 @@ package config
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"os"
 )
 
@@ -48,9 +48,10 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	file, _ := os.Open(path_config)
 	defer file.Close()
-	byteValue, _ := ioutil.ReadAll(file)
+	byteValue, _ := io.ReadAll(file)
 	var conf Configuration
 	json.Unmarshal(byteValue, &conf)
-
+	conf.DB_user = "bookrzn"
+	conf.DB_password = "password"
 	return &conf
 }

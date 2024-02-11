@@ -35,7 +35,7 @@
     "description_banner":"",
 
     "db_user":"bookrzn",
-    "db_password":"book1995",
+    "db_password":"password",
     "db_hostname":"localhost:3306",
     "db_database":"bookrzn"
 
