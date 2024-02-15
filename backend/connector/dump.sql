@@ -39,7 +39,7 @@ CREATE TABLE Targets(
     image VARCHAR(255),
     comment VARCHAR(255),
     url_source VARCHAR(255),
-    tagget_type VARCHAR(255)
+    target_type VARCHAR(255)
 
 );
 

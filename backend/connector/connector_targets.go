@@ -52,7 +52,7 @@ func (t_targets *TableTargets) SaveParsingService(tc models.TargetCard) {
 	rows, err := t_targets.DB.Query(
 		fmt.Sprintf(`INSERT bookrzn.Targets (target_hash,autor,title,price,image,comment,url_source,target_type) 
 		VALUES ( '%v','%v','%v', '%v','%v','%v','%v', '%v');`,
-			tc.TargetHash, tc.Autor, tc.Title, tc.Price, tc.Link, tc.Comment, tc.Source, tc.Tag)) //,
+			tc.TargetHash, tc.Autor, fmt.Sprintf(tc.Title), tc.Price, tc.Link, tc.Comment, tc.Source, tc.Tag)) //,
 	if err != nil {
 		panic(err)
 	}
